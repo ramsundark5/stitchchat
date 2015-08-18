@@ -1,20 +1,30 @@
 import { ADD_MESSAGE, DELETE_MESSAGE, EDIT_MESSAGE, SELECT_MESSAGE, SELECT_ALL, DELETE_SELECTED, CLEAR_SELECTED } from '../constants/ActionTypes';
 import uuid from 'node-uuid';
+import Immutable from 'immutable';
 
-const initialState = [{
+/*let initialState = Immutable.Map([{
     text: 'Use Redux',
     selected: false,
     id: 0
-}];
+}]);*/
+
+const initialState = [];
+
 
 export default function messages(state = initialState, action) {
     switch (action.type) {
         case ADD_MESSAGE:
-            return [{
+            let newMessage = {
                 id: uuid(),
                 selected: false,
-                text: action.text,
-            }, ...state];
+                text: action.text
+            };
+
+            let newState = Immutable
+                .fromJS(state)
+                .push(newMessage)
+                .toJS();
+            return newState;
 
         case DELETE_MESSAGE:
             return state.filter(message =>
