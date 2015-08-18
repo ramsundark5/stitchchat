@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "dedent": "^0.4.0",
+    "node-uuid": "^1.4.3",
     "react-native": "^0.8.0",
     "react-redux": "^0.8.2",
     "redux": "^1.0.1",
@@ -19,4 +20,3 @@
     "eslint-plugin-react": "^2.5.2"
   }
 }
-

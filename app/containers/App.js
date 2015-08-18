@@ -1,17 +1,17 @@
 import React, { Component } from 'react-native';
-import TodoApp from './TodoApp';
+import MessagePage from './MessagePage';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux/native';
-import rootReducer from '../reducers';
+import rootMessageReducer from '../reducers/rootMessageReducer';
 
-const store = createStore(rootReducer);
+const store = createStore(rootMessageReducer);
 
 export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        {() => <TodoApp /> }
-      </Provider>
-    );
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                {() => <MessagePage /> }
+            </Provider>
+        );
+    }
 }
