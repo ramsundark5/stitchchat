@@ -4,12 +4,12 @@ import Message from '../models/Message';
 
 const initialState = [];
 
-export default function messages(state = initialState, action) {
+export default function messages(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_MESSAGE:
             let newMessage = new Message(action.text);
-            return [newMessage, ...state];
+            return state.concat(newMessage);
 
         case Action.DELETE_MESSAGE:
             return state.filter(message =>
@@ -19,7 +19,7 @@ export default function messages(state = initialState, action) {
         case Action.UPDATE_MESSAGE_STATUS:
             return state.map(message =>
                     message.id === action.id ?
-                        Object.assign({}, message, {text: action.status}) :
+                        Object.assign({}, message, {status: action.status}) :
                         message
             );
 
@@ -31,7 +31,7 @@ export default function messages(state = initialState, action) {
             );
 
         case Action.SELECT_ALL:
-            const areAllSelected = state.every(message => message.marked);
+            const areAllSelected = state.every(message => message.selected);
             return state.map(message => Object.assign({}, message, {
                 selected: !areAllSelected
             }));
@@ -39,9 +39,9 @@ export default function messages(state = initialState, action) {
         case Action.CLEAR_SELECTED:
             return state.filter(message => message.selected === false);
 
-        case Action.DELETE_SELECTED:
+        case Action.DELETE_SELECTED_MESSAGE:
             return state.filter(message =>
-                message.selected === true
+                message.selected === false
             );
 
         default:
