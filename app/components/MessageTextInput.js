@@ -30,7 +30,7 @@ class MessageTextInput extends Component {
             <View>
                 <TextInput
                     placeholder={this.props.placeholder}
-                    autoFocus='true'
+                    autoFocus={true}
                     value={this.state.text}
                     style={styles.default}
                     onBlur={(event) => this.handleBlur(event.nativeEvent.text)}

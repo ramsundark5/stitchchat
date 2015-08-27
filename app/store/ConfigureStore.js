@@ -3,12 +3,13 @@
  */
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import loggerMiddleware from 'redux-logger';
+import createLogger from 'redux-logger';
 import RootReducer from '../reducers/RootReducer';
 import { devTools, persistState } from 'redux-devtools';
 
 let finalCreateStore;
-let middlewares = [thunkMiddleware, loggerMiddleware];
+let loggerMiddleware = createLogger();
+let middlewares      = [thunkMiddleware, loggerMiddleware];
 
 
 // In production, we want to use just the middleware.

@@ -8,10 +8,6 @@ class MessageItem extends Component {
         };
     }
 
-    handleDoubleClick() {
-        this.setState({editing: true});
-    }
-
     handleSave(id, text) {
         if (text.length === 0) {
             this.props.deleteMessage(id);
@@ -35,7 +31,7 @@ class MessageItem extends Component {
                         onValueChange={() => this.handleSelectedClick(message.id)}
                         style={{marginBottom: 20}}
                         value={message.selected}/>
-                    <Text onPress={this.handleDoubleClick.bind(this)} style={styles.default}>
+                    <Text style={styles.default}>
                         {message.text}
                     </Text>
                 </View>
@@ -46,7 +42,6 @@ class MessageItem extends Component {
 
 MessageItem.propTypes = {
     message: PropTypes.object.isRequired,
-    editMessage: PropTypes.func.isRequired,
     deleteMessage: PropTypes.func.isRequired,
     selectMessage: PropTypes.func.isRequired
 };
