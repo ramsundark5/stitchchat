@@ -4,7 +4,6 @@ import MessageItem from './MessageItem';
 class MessageList extends Component {
     constructor(props, context) {
         super(props, context);
-        this.actions = props.actions;
     }
 
     render() {
@@ -17,15 +16,13 @@ class MessageList extends Component {
                 <ListView
                     dataSource={messagesDS}
                     renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData} {...actions}/>}/>
+                <TouchableHighlight underlayColor="transparent" onPress={actions.deleteSelected}>
+                    <Text>Delete</Text>
+                </TouchableHighlight>
             </View>
         );
     }
 
-    renderTodoRow(rowData, sectionID, rowID) {
-        return (
-            <TodoItem key={rowData.id} todo={rowData}/>
-        );
-    }
 }
 
 MessageList.propTypes = {

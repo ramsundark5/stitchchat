@@ -1,6 +1,7 @@
 import expect from 'expect';
 import * as types from '../../app/constants/ActionTypes';
 import * as actions from '../../app/actions/MessageActions';
+import * as Status from '../../app/constants/MessageConstants.js';
 
 describe('Message actions tests', () => {
 
@@ -31,4 +32,11 @@ describe('Message actions tests', () => {
         });
     });
 
+    it('updateMessage should create UPDATE_MESSAGE_STATUS action', () => {
+        expect(actions.updateMessageStatus(1, Status.STATUS_RECEIPT_RECEIVED)).toEqual({
+            type: types.UPDATE_MESSAGE_STATUS,
+            id: 1,
+            status: Status.STATUS_RECEIPT_RECEIVED
+        });
+    });
 });

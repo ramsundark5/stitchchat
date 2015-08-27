@@ -1,5 +1,6 @@
 import uuid from 'node-uuid';
 import * as Status from '../constants/MessageConstants.js';
+import * as _ from 'lodash';
 
 export default class Message{
     constructor(text) {
@@ -7,6 +8,7 @@ export default class Message{
         this.text        = text;
         this.selected    = false;
         this.status      = Status.STATUS_PENDING;
+        this.sequenceId  = _.uniqueId('message'); //used for sorting
     }
 }
 

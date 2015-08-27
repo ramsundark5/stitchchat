@@ -32,3 +32,11 @@ export function deleteSelected() {
         type: Actions.DELETE_SELECTED_MESSAGE
     };
 }
+
+export function updateMessageStatus(id, status) {
+    return {
+        type: Actions.UPDATE_MESSAGE_STATUS,
+        id,
+        status
+    };
+}
