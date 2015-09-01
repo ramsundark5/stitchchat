@@ -1,5 +1,7 @@
-import React, { Component, PropTypes, View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
+import React, { Component, PropTypes, View } from 'react-native';
 import MessageTextInput from './MessageTextInput';
+import { Icon } from 'react-native-icons';
+import {commons, iconColor, iconSize} from '../styles/Styles';
 
 class MessageComposer extends Component {
 
@@ -15,21 +17,14 @@ class MessageComposer extends Component {
                 <MessageTextInput newMessage={true}
                                   onSave={this.handleSave.bind(this)}
                                   placeholder='Type here'/>
+                <Icon name='material|face'
+                      size={iconSize} color={iconColor}
+                      style={commons.defaultTextInput}
+                />
             </View>
         );
     }
 }
-
-var styles = StyleSheet.create({
-    default: {
-        height: 26,
-        borderWidth: 0.5,
-        borderColor: '#0f0f0f',
-        flex: 1,
-        fontSize: 13,
-        padding: 4,
-    }
-});
 
 MessageComposer.propTypes = {
     addMessage: PropTypes.func.isRequired

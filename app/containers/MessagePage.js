@@ -1,4 +1,4 @@
-import React, { Component, View, StyleSheet } from 'react-native';
+import React, { Component, View, StyleSheet, ScrollView, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import MessageComposer from '../components/MessageComposer';
@@ -12,8 +12,12 @@ class MessagePage extends Component {
 
         return (
             <View style={styles.container}>
-                <MessageComposer addMessage={actions.addMessage}/>
-                <MessageList messages={messages} actions={actions}/>
+                <View style={{flex: 1}}>
+                    <MessageList messages={messages} actions={actions}/>
+                </View>
+                <View style={{flex: 0}}>
+                    <MessageComposer addMessage={actions.addMessage}/>
+                </View>
             </View>
         );
     }
@@ -28,6 +32,7 @@ function mapStateToProps(state) {
 var styles = StyleSheet.create({
     container: {
         marginTop: 40,
+        flex: 1,
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: '#d6d7da',

@@ -23,6 +23,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A21578C91B93595800632D35 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = A236D9A11B8A33E0001835DD /* FontAwesome.otf */; };
+		A21578CA1B93595800632D35 /* Material-Design-Iconic-Font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A236D9A51B8A33E0001835DD /* Material-Design-Iconic-Font.ttf */; };
 		A236D9931B8817B2001835DD /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A236D9921B881776001835DD /* libReactNativeIcons.a */; };
 /* End PBXBuildFile section */
 
@@ -580,6 +582,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A21578C91B93595800632D35 /* FontAwesome.otf in Resources */,
+				A21578CA1B93595800632D35 /* Material-Design-Iconic-Font.ttf in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,

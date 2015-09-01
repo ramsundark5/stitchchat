@@ -1,4 +1,5 @@
-import React, { Component, View, Text, TextInput, TouchableHighlight, PropTypes, StyleSheet, SwitchIOS } from 'react-native';
+import React, { Component, View, Text, PropTypes, SwitchIOS } from 'react-native';
+import {commons} from '../styles/Styles';
 
 class MessageItem extends Component {
     constructor(props, context) {
@@ -25,16 +26,14 @@ class MessageItem extends Component {
         const {message, selectMessage, deleteMessage} = this.props;
         let element;
         return (
-            <View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <SwitchIOS
-                        onValueChange={() => this.handleSelectedClick(message.id)}
-                        style={{marginBottom: 20}}
-                        value={message.selected}/>
-                    <Text style={styles.default}>
-                        {message.text}
-                    </Text>
-                </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                <SwitchIOS
+                    onValueChange={() => this.handleSelectedClick(message.id)}
+                    style={{marginBottom: 20}}
+                    value={message.selected}/>
+                <Text style={commons.defaultText}>
+                    {message.text}
+                </Text>
             </View>
         );
     }
@@ -45,17 +44,5 @@ MessageItem.propTypes = {
     deleteMessage: PropTypes.func.isRequired,
     selectMessage: PropTypes.func.isRequired
 };
-
-var styles = StyleSheet.create({
-    page: {
-        paddingBottom: 300,
-    },
-    default: {
-        height: 20,
-        flex: 1,
-        fontSize: 13,
-        padding: 4,
-    }
-});
 
 export default MessageItem;
