@@ -1,7 +1,7 @@
-import React, { Component, PropTypes, View } from 'react-native';
+import React, { Component, PropTypes, View, Text, TextInput } from 'react-native';
 import MessageTextInput from './MessageTextInput';
 import { Icon } from 'react-native-icons';
-import {commons, iconColor, iconSize} from '../styles/Styles';
+import {commons, defaultIconColor, defaultIconSize} from '../styles/Styles';
 
 class MessageComposer extends Component {
 
@@ -13,14 +13,14 @@ class MessageComposer extends Component {
 
     render() {
         return (
-            <View>
+            <View style={commons.horizontalNoWrap}>
                 <MessageTextInput newMessage={true}
+                                  style={commons.defaultTextInput}
                                   onSave={this.handleSave.bind(this)}
                                   placeholder='Type here'/>
                 <Icon name='material|face'
-                      size={iconSize} color={iconColor}
-                      style={commons.defaultTextInput}
-                />
+                      size={defaultIconSize} color={defaultIconColor}
+                      style={commons.defaultIcon}/>
             </View>
         );
     }

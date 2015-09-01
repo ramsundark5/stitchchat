@@ -20,16 +20,13 @@ class MessageTextInput extends Component {
 
     render() {
         return (
-                <View>
-                    <TextInput
-                        placeholder={this.props.placeholder}
-                        autoFocus={true}
-                        value={this.state.text}
-                        style={commons.defaultTextInput}
-                        onChange={(event) => this.handleChange(event.nativeEvent.text)}
-                        onSubmitEditing={(event) => this.handleSubmit(event.nativeEvent.text)}/>
-
-                </View>
+            <TextInput
+                placeholder={this.props.placeholder}
+                autoFocus={true}
+                value={this.state.text}
+                style={this.props.style}
+                onChange={(event) => this.handleChange(event.nativeEvent.text)}
+                onSubmitEditing={(event) => this.handleSubmit(event.nativeEvent.text)}/>
         );
     }
 }
