@@ -23,8 +23,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A2040DEF1B9666C400F31F68 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A236D9A41B8A33E0001835DD /* ionicons.ttf */; };
 		A21578C91B93595800632D35 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = A236D9A11B8A33E0001835DD /* FontAwesome.otf */; };
-		A21578CA1B93595800632D35 /* Material-Design-Iconic-Font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A236D9A51B8A33E0001835DD /* Material-Design-Iconic-Font.ttf */; };
 		A236D9931B8817B2001835DD /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A236D9921B881776001835DD /* libReactNativeIcons.a */; };
 /* End PBXBuildFile section */
 
@@ -156,6 +156,7 @@
 		A236D9A41B8A33E0001835DD /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		A236D9A51B8A33E0001835DD /* Material-Design-Iconic-Font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Material-Design-Iconic-Font.ttf"; sourceTree = "<group>"; };
 		A236D9A61B8A33E0001835DD /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
+		A26C11501B96AB700063C9CC /* MaterialIcons-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MaterialIcons-Regular.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/MaterialIcons-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,6 +320,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A26C11501B96AB700063C9CC /* MaterialIcons-Regular.ttf */,
 				A236D9941B8A33E0001835DD /* FontAwesomeKit */,
 				13B07FAE1A68108700A75B9A /* stitchchat */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -582,8 +584,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2040DEF1B9666C400F31F68 /* ionicons.ttf in Resources */,
 				A21578C91B93595800632D35 /* FontAwesome.otf in Resources */,
-				A21578CA1B93595800632D35 /* Material-Design-Iconic-Font.ttf in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,

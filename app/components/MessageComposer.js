@@ -13,15 +13,10 @@ class MessageComposer extends Component {
 
     render() {
         return (
-            <View style={commons.horizontalNoWrap}>
-                <MessageTextInput newMessage={true}
-                                  style={commons.defaultTextInput}
-                                  onSave={this.handleSave.bind(this)}
-                                  placeholder='Type here'/>
-                <Icon name='material|face'
-                      size={defaultIconSize} color={defaultIconColor}
-                      style={commons.defaultIcon}/>
-            </View>
+            <MessageTextInput newMessage={true}
+                              style={commons.defaultTextInput}
+                              onSave={this.handleSave.bind(this)}
+                              placeholder='Type here'/>
         );
     }
 }

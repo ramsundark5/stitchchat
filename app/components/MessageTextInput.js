@@ -1,5 +1,6 @@
-import React, { Component, View, TextInput, Text, PropTypes } from 'react-native';
-import {commons} from '../styles/Styles';
+import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
+import {commons, defaultIconColor, defaultIconSize} from '../styles/Styles';
+import { Icon } from 'react-native-icons';
 
 class MessageTextInput extends Component {
     constructor(props, context) {
@@ -9,8 +10,8 @@ class MessageTextInput extends Component {
         };
     }
 
-    handleSubmit(text) {
-        this.props.onSave(text);
+    handleSubmit() {
+        this.props.onSave(this.state.text);
         this.setState({text: ''});
     }
 
@@ -20,13 +21,21 @@ class MessageTextInput extends Component {
 
     render() {
         return (
-            <TextInput
-                placeholder={this.props.placeholder}
-                autoFocus={true}
-                value={this.state.text}
-                style={this.props.style}
-                onChange={(event) => this.handleChange(event.nativeEvent.text)}
-                onSubmitEditing={(event) => this.handleSubmit(event.nativeEvent.text)}/>
+            <View style={commons.horizontalNoWrap}>
+                <TextInput
+                    placeholder={this.props.placeholder}
+                    autoFocus={true}
+                    multiline={true}
+                    value={this.state.text}
+                    style={this.props.style}
+                    onChange={(event) => this.handleChange(event.nativeEvent.text)}
+                    />
+                <TouchableHighlight onPress={this.handleSubmit.bind(this)}>
+                    <Icon name='ion|android-send'
+                        size={defaultIconSize} color={defaultIconColor}
+                        style={commons.defaultIcon}/>
+                </TouchableHighlight>
+            </View>
         );
     }
 }

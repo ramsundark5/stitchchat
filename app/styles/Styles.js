@@ -17,7 +17,6 @@ export const commons = StyleSheet.create({
     defaultText: {
         height: defaultTextInputHeight,
         fontSize: defaultFontSize,
-        padding: 4,
     },
     defaultIcon: {
         padding: 4,
@@ -29,6 +28,34 @@ export const commons = StyleSheet.create({
     horizontalNoWrap:{
         flexDirection : 'row',
         flexWrap: 'nowrap'
-    }
+    },
+    self: {
+        fontSize: 16,
+        padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#444444',
+        color: '#ffffff',
+    },
+    messagesList: {
+      flex: 1,
+    },
+    messagesSender: {
+        padding: 5,
+        margin: 10,
+        flexWrap: 'wrap',
+        backgroundColor: '#ff0000',
+        alignSelf: 'flex-end',
+        borderRadius: 10
+    },
+
+    messagesReceiver: {
+        padding: 5,
+        margin: 10,
+        backgroundColor: '#ff0000',
+        alignSelf: 'flex-start',
+        borderRadius: 10
+    },
+
 });
 

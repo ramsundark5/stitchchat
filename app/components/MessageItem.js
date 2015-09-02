@@ -26,11 +26,11 @@ class MessageItem extends Component {
         const {message, selectMessage, deleteMessage} = this.props;
         let element;
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <SwitchIOS
+            <View style={commons.messagesSender}>
+                {/* <SwitchIOS
                     onValueChange={() => this.handleSelectedClick(message.id)}
                     style={{marginBottom: 20}}
-                    value={message.selected}/>
+                    value={message.selected}/>*/}
                 <Text style={commons.defaultText}>
                     {message.text}
                 </Text>

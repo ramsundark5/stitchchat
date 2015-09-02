@@ -1,5 +1,6 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
 import MessageItem from './MessageItem';
+import {commons} from '../styles/Styles';
 
 class MessageList extends Component {
     constructor(props, context) {
@@ -12,13 +13,13 @@ class MessageList extends Component {
         messagesDS = messagesDS.cloneWithRows(messages);
 
         return (
-            <View>
+            <View style={commons.messagesList}>
                 <ListView
                     dataSource={messagesDS}
                     renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData} {...actions}/>}/>
                 <TouchableHighlight underlayColor="transparent" onPress={actions.deleteSelected}>
                     <Text>Delete</Text>
-                </TouchableHighlight>
+                 </TouchableHighlight>
             </View>
         );
     }
