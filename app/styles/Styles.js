@@ -18,9 +18,12 @@ export const commons = StyleSheet.create({
         height: defaultTextInputHeight,
         fontSize: defaultFontSize,
     },
+    defaultIconContainer:{
+    },
     defaultIcon: {
         padding: 4,
         width: defaultIconSize,
+        height: defaultIconSize,
     },
     pullRight:{
         alignSelf: 'flex-end',
@@ -40,15 +43,24 @@ export const commons = StyleSheet.create({
     messagesList: {
       flex: 1,
     },
-    messagesSender: {
+    messageWrapper:{
+        flex: 1
+    },
+    message: {
         padding: 5,
+        //flexDirection : 'column',
         margin: 10,
-        flexWrap: 'wrap',
+        //flexWrap: 'wrap',
+        //flex: 1,
         backgroundColor: '#ff0000',
-        alignSelf: 'flex-end',
         borderRadius: 10
     },
-
+    pullRight:{
+        alignSelf: 'flex-end'
+    },
+    pullLeft:{
+        alignSelf: 'flex-start'
+    },
     messagesReceiver: {
         padding: 5,
         margin: 10,

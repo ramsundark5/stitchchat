@@ -1,5 +1,5 @@
 {
-  "name": "stitch-chat",
+  "name": "stitchchat",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,11 +7,15 @@
     "test": "mocha --recursive --compilers js:babel/register"
   },
   "dependencies": {
+    "crypto": "0.0.3",
     "immutable": "^3.7.4",
+    "lodash": "^3.10.1",
     "node-uuid": "^1.4.3",
-    "react-native": "^0.8.0",
+    "react-native": "^0.10.1",
+    "react-native-icons": "^0.3.6",
     "react-redux": "^0.8.2",
     "redux": "^1.0.1",
+    "redux-logger": "^1.0.6",
     "redux-promise": "^0.5.0",
     "redux-thunk": "^0.1.0"
   },

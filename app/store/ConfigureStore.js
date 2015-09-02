@@ -5,7 +5,7 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import RootReducer from '../reducers/RootReducer';
-import { devTools, persistState } from 'redux-devtools';
+//import { devTools, persistState } from 'redux-devtools';
 
 let finalCreateStore;
 let loggerMiddleware = createLogger();

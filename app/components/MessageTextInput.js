@@ -30,7 +30,8 @@ class MessageTextInput extends Component {
                     style={this.props.style}
                     onChange={(event) => this.handleChange(event.nativeEvent.text)}
                     />
-                <TouchableHighlight onPress={this.handleSubmit.bind(this)}>
+                <TouchableHighlight style={commons.defaultIconContainer}
+                                    onPress={this.handleSubmit.bind(this)}>
                     <Icon name='ion|android-send'
                         size={defaultIconSize} color={defaultIconColor}
                         style={commons.defaultIcon}/>

@@ -1,4 +1,3 @@
-import regenerator from 'regenerator/runtime';
 import React from 'react-native';
 import App from './app/containers/App';
 
