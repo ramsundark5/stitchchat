@@ -3,7 +3,7 @@ import uuid from 'node-uuid';
 import Message from '../models/Message';
 import * as _ from 'lodash';
 
-const initialState = [];
+const initialState = [new Message('asdas \n dadasdas \n awewae')];
 
 export default function messages(state = initialState, action = {}) {
     switch (action.type) {
