@@ -3,7 +3,15 @@ import uuid from 'node-uuid';
 import Message from '../models/Message';
 import * as _ from 'lodash';
 
-const initialState = [new Message('asdas \n dadasdas \n awewae')];
+let testSenderMessage1   = new Message('asdas \ndadasdas \nawewae');
+testSenderMessage1.owner = true;
+let testReceiverMessage1 = new Message('asdas \ndadasdas \noiwqeuqwej');
+testReceiverMessage1.owner= false;
+let testSenderMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
+testSenderMessage2.owner = true;
+let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
+testReceiverMessage2.owner = false;
+const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
 
 export default function messages(state = initialState, action = {}) {
     switch (action.type) {

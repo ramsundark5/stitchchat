@@ -28,7 +28,7 @@ export const commons = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     pullLeft:{
-        alignSelf: 'flex-end',
+        alignSelf: 'flex-start',
     },
     horizontalNoWrap:{
         flexDirection : 'row',

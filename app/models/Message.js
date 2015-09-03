@@ -9,6 +9,7 @@ export default class Message{
         this.selected    = false;
         this.status      = Status.STATUS_PENDING;
         this.sequenceId  = _.uniqueId('message'); //used for sorting
+        this.owner       = true;
     }
 }
 

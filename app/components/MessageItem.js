@@ -16,15 +16,18 @@ class MessageItem extends Component {
 
     render() {
         const {message} = this.props;
+        let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
+        let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
+        let msgAlign     = message.owner? commons.pullRight : commons.pullLeft;
         return (
-            <View style={[messageStyle.msgItemContainer, commons.pullRight]}
+            <TouchableHighlight style={[messageStyle.msgItemContainer, msgAlign]}
                                 onLongPress={() => this.handleSelectedClick(message.id)}>
-                <View style={[messageStyle.msgItem, messageStyle.msgItemSender]}>
-                    <Text style={messageStyle.msgSentText}>
+                <View style={[messageStyle.msgItem, msgItemStyle]}>
+                    <Text style={msgTextStyle}>
                         {message.text}
                     </Text>
                 </View>
-            </View>
+            </TouchableHighlight>
         );
     }
 }

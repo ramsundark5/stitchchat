@@ -14,14 +14,21 @@ export const messageStyle = StyleSheet.create({
         marginBottom: 20,
     },
     msgItem: {
-        margin: 15, // Offset for the image
-        padding: 10,
+        paddingTop: 8,
+        flexDirection: 'column',
+        paddingBottom: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
         borderRadius: 15,
     },
     msgItemSender: {
+        marginRight: 10, // Offset for the image
+        marginLeft: 35,
         backgroundColor: senderMessageBgColor,
     },
     msgItemReceiver: {
+        marginRight: 35, // Offset for the image
+        marginLeft: 10,
         backgroundColor: receiverMessageBgColor,
     },
     msgSentText: {
@@ -30,7 +37,7 @@ export const messageStyle = StyleSheet.create({
     },
     msgReceivedText: {
         fontSize: 14,
-        color: receiverMessageBgColor,
+        color: receiverMessageTextColor,
     },
     msgImage: {
         width: 24,
