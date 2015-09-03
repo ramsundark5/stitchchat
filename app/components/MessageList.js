@@ -1,6 +1,6 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
 import MessageItem from './MessageItem';
-import {commons} from '../styles/Styles';
+import {messageStyle} from '../styles/MessageStyle';
 
 class MessageList extends Component {
     constructor(props, context) {
@@ -13,7 +13,7 @@ class MessageList extends Component {
         messagesDS = messagesDS.cloneWithRows(messages);
 
         return (
-            <View style={commons.messagesList}>
+            <View style={messageStyle.messageListContainer}>
                 <ListView
                     dataSource={messagesDS}
                     renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData} {...actions}/>}/>

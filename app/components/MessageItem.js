@@ -1,5 +1,6 @@
 import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
 import {commons} from '../styles/Styles';
+import {messageStyle} from '../styles/MessageStyle';
 
 class MessageItem extends Component {
     constructor(props, context) {
@@ -9,26 +10,21 @@ class MessageItem extends Component {
         };
     }
 
-    handleSave(id, text) {
-        if (text.length === 0) {
-            this.props.deleteMessage(id);
-        }
-    }
-
     handleSelectedClick(id) {
         this.props.selectMessage(id);
     }
 
     render() {
-        const {message, selectMessage, deleteMessage} = this.props;
+        const {message} = this.props;
         return (
-            <TouchableHighlight style={[commons.message, commons.pullRight]}
+            <View style={[messageStyle.msgItemContainer, commons.pullRight]}
                                 onLongPress={() => this.handleSelectedClick(message.id)}>
-
-                    <Text style={commons.defaultText}>
+                <View style={[messageStyle.msgItem, messageStyle.msgItemSender]}>
+                    <Text style={messageStyle.msgSentText}>
                         {message.text}
                     </Text>
-            </TouchableHighlight>
+                </View>
+            </View>
         );
     }
 }
