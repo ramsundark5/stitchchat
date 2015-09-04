@@ -4,4 +4,4 @@
 export const STATUS_PENDING               = 'PENDING';
 export const STATUS_SENT                  = 'SENT';
 export const STATUS_RECEIVED              = 'RECEIVED';
-export const STATUS_RECEIPT_RECEIVED      = 'SENT_RECEIPT_RECEIVED';
+export const STATUS_READ_CONFIRM          = 'SENT_RECEIPT_RECEIVED';

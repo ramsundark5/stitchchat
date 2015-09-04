@@ -10,6 +10,7 @@ export default class Message{
         this.status      = Status.STATUS_PENDING;
         this.sequenceId  = _.uniqueId('message'); //used for sorting
         this.owner       = true;
+        this.date        = new Date().toJSON();
     }
 }
 

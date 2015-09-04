@@ -5,12 +5,16 @@ import * as _ from 'lodash';
 
 let testSenderMessage1   = new Message('asdas \ndadasdas \nawewae');
 testSenderMessage1.owner = true;
+testSenderMessage1.date  = new Date(1998, 11, 17);
 let testReceiverMessage1 = new Message('asdas \ndadasdas \noiwqeuqwej');
 testReceiverMessage1.owner= false;
+testReceiverMessage1.date  = new Date(1995, 10, 23);
 let testSenderMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
 testSenderMessage2.owner = true;
+testSenderMessage2.date  = new Date(1995, 10, 23);
 let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
 testReceiverMessage2.owner = false;
+testReceiverMessage2.date  = new Date(2015, 2, 1);
 const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
 
 export default function messages(state = initialState, action = {}) {

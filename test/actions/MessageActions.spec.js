@@ -33,10 +33,10 @@ describe('Message actions tests', () => {
     });
 
     it('updateMessage should create UPDATE_MESSAGE_STATUS action', () => {
-        expect(actions.updateMessageStatus(1, Status.STATUS_RECEIPT_RECEIVED)).toEqual({
+        expect(actions.updateMessageStatus(1, Status.STATUS_READ_CONFIRM)).toEqual({
             type: types.UPDATE_MESSAGE_STATUS,
             id: 1,
-            status: Status.STATUS_RECEIPT_RECEIVED
+            status: Status.STATUS_READ_CONFIRM
         });
     });
 });
