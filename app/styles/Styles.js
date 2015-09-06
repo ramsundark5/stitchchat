@@ -1,37 +1,41 @@
 import { StyleSheet } from 'react-native';
 
-export const defaultFontSize    = 14;
-export const smallFontSize      = 14;
-export const bgColor            = '';
-export const headerColor        = '';
-export const defaultIconColor   = '#333333';
-export const defaultIconSize    = 30;
-export const smallIconSize      = 16;
-export const defaultTextInputHeight = 26;
+
+export const defaultStyle = {
+    fontSize           : 14,
+    smallFontSize      : 14,
+    bgColor            :'#ff0000',
+    headerColor        :'',
+    iconColor          : '#333333',
+    iconSize           : 30,
+    smallIconSize      : 16,
+    textInputHeight    : 26
+};
+
 export const commons = StyleSheet.create({
     defaultTextInput: {
-        height: defaultTextInputHeight,
-        fontSize: defaultFontSize,
-        padding: 4,
-        flex: 1,
+        height  : defaultStyle.textInputHeight,
+        fontSize: defaultStyle.fontSize,
+        padding : 4,
+        flex    : 1,
     },
     defaultText: {
-        fontSize: defaultFontSize,
+        fontSize: defaultStyle.fontSize,
     },
     smallText: {
-        fontSize: smallFontSize,
+        fontSize    : defaultStyle.smallFontSize,
         paddingRight: 4
     },
     defaultIconContainer:{
     },
     defaultIcon: {
        // padding: 4,
-        width: defaultIconSize,
-        height: defaultIconSize,
+        width : defaultStyle.fontSize,
+        height: defaultStyle.iconSize,
     },
     smallIcon: {
-        width: smallIconSize,
-        height: smallIconSize,
+        width : defaultStyle.smallIconSize,
+        height: defaultStyle.smallIconSize,
     },
     pullRight:{
         alignSelf: 'flex-end',
@@ -41,7 +45,10 @@ export const commons = StyleSheet.create({
     },
     horizontalNoWrap:{
         flexDirection : 'row',
-        flexWrap: 'nowrap'
+        flexWrap      : 'nowrap'
+    },
+    messageComposer:{
+        backgroundColor: defaultStyle.bgColor,
     }
 });
 

@@ -1,5 +1,5 @@
 import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
-import {commons, smallIconSize} from '../styles/Styles';
+import {commons, defaultStyle} from '../styles/Styles';
 import {messageStyle} from '../styles/MessageStyle';
 import { Icon } from 'react-native-icons';
 import * as Status from '../constants/MessageConstants.js';
@@ -7,34 +7,39 @@ import * as Status from '../constants/MessageConstants.js';
 class MessageItem extends Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            editing: false
-        };
     }
 
-    handleSelectedClick(id) {
+    selectMessage(id) {
         this.props.selectMessage(id);
     }
 
-    getStatusIcon(state){
+    selectMessageOnlyInEditingMode(id){
+        if(this.props.isEditing){
+            this.selectMessage(id);
+        }
+    }
+
+    getStatusIcon(msgStatus){
         let statusIconName = 'ion|load-c';
-        if(state === Status.STATUS_SENT){
+        if(msgStatus === Status.STATUS_SENT){
             statusIconName = 'ion|android-done';
         }
-        else if(state === Status.STATUS_RECEIVED){
+        else if(msgStatus === Status.STATUS_RECEIVED){
             statusIconName = 'ion|android-done-all';
         }
         return statusIconName;
     }
     render() {
-        const {message} = this.props;
+        const {message, isEditing} = this.props;
         let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
         let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
         let msgAlign     = message.owner? commons.pullRight : commons.pullLeft;
         let statusIcon   = this.getStatusIcon(message.state);
+        let messageBgColor = message.selected ? messageStyle.msgSelected : messageStyle.msgUnselected;
         return (
-            <TouchableHighlight style={[messageStyle.msgItemContainer, msgAlign]}
-                                onLongPress={() => this.handleSelectedClick(message.id)}>
+            <TouchableHighlight style={[messageStyle.msgItemContainer, msgAlign, messageBgColor]}
+                                onPress = {() => this.selectMessageOnlyInEditingMode(message.id)}
+                                onLongPress={() => this.selectMessage(message.id)}>
                 <View style={[messageStyle.msgItem, msgItemStyle]}>
                     <Text style={msgTextStyle}>
                         {message.text}
@@ -42,7 +47,7 @@ class MessageItem extends Component {
                     <View style={[commons.horizontalNoWrap, commons.pullRight]}>
                         <Text style={commons.smallText}>sent</Text>
                         <Icon name={statusIcon}
-                              size={smallIconSize}
+                              size={defaultStyle.smallIconSize}
                               style={commons.smallIcon}/>
                     </View>
                 </View>
@@ -53,7 +58,6 @@ class MessageItem extends Component {
 
 MessageItem.propTypes = {
     message: PropTypes.object.isRequired,
-    deleteMessage: PropTypes.func.isRequired,
     selectMessage: PropTypes.func.isRequired
 };
 

@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
-
+import {defaultStyle, commons} from './Styles'
 const senderMessageBgColor     = '#257DF7';
 const receiverMessageBgColor   = '#D1D1D1';
 const senderMessageTextColor   = '#FFFFFF';
 const receiverMessageTextColor = '#000000';
+const selectedColor            = '#ff0000';
 export const messageStyle = StyleSheet.create({
     messageListContainer: {
         flex: 1,
@@ -53,5 +54,16 @@ export const messageStyle = StyleSheet.create({
         position: 'absolute',
         top: 2,
         right: 3,
+    },
+    msgSelected: {
+        backgroundColor: selectedColor,
+    },
+    msgUnselected: {
+        backgroundColor: 'transparent',
+    },
+    msgDivider:{
+        alignSelf: 'center',
+        backgroundColor: 'green',
+        marginBottom: 5
     }
 });

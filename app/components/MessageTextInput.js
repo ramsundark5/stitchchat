@@ -1,5 +1,5 @@
 import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
-import {commons, defaultIconColor, defaultIconSize} from '../styles/Styles';
+import {commons, defaultStyle} from '../styles/Styles';
 import { Icon } from 'react-native-icons';
 
 class MessageTextInput extends Component {
@@ -33,7 +33,7 @@ class MessageTextInput extends Component {
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={this.handleSubmit.bind(this)}>
                     <Icon name='ion|android-send'
-                        size={defaultIconSize} color={defaultIconColor}
+                        size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                         style={commons.defaultIcon}/>
                 </TouchableHighlight>
             </View>

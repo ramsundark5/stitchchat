@@ -11,7 +11,7 @@ class MessageList extends Component {
 
     renderSectionHeader(sectionData, sectionID){
         return(
-          <View><Text style={commons.defaultText}>{sectionID}</Text></View>
+          <View style={messageStyle.msgDivider}><Text style={commons.defaultText}>{sectionID}</Text></View>
         );
     }
 
@@ -28,7 +28,7 @@ class MessageList extends Component {
         return groupedMessage;
     }
     render() {
-        const { messages, actions } = this.props;
+        const { messages, isEditing, actions } = this.props;
         let groupedMessages = this.groupMessagesByDate(messages);
         let messagesDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
@@ -40,8 +40,8 @@ class MessageList extends Component {
                 <ListView
                     dataSource={messagesDS}
                     renderSectionHeader={this.renderSectionHeader}
-                    renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData} {...actions}/>}/>
-                <TouchableHighlight underlayColor="transparent" onPress={actions.deleteSelected}>
+                    renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData} isEditing={isEditing} {...actions}/>}/>
+                <TouchableHighlight onPress={actions.deleteSelected}>
                     <Text>Delete</Text>
                  </TouchableHighlight>
             </View>

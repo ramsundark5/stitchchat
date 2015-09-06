@@ -7,13 +7,13 @@ import * as MessageActions from '../actions/MessageActions';
 
 class MessagePage extends Component {
     render() {
-        const { messages, dispatch } = this.props;
+        const { messages, dispatch, isEditing } = this.props;
         const actions = bindActionCreators(MessageActions, dispatch);
 
         return (
             <View style={styles.container}>
                 <View style={{flex: 1}}>
-                    <MessageList messages={messages} actions={actions}/>
+                    <MessageList messages={messages} isEditing={isEditing} actions={actions}/>
                 </View>
                 <View style={{flex: 0}}>
                     <MessageComposer addMessage={actions.addMessage}/>
@@ -25,7 +25,8 @@ class MessagePage extends Component {
 
 function mapStateToProps(state) {
     return {
-        messages: state.messages
+        messages: state.messages,
+        isEditing: state.isEditing
     };
 }
 

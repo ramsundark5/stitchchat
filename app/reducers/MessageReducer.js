@@ -15,9 +15,10 @@ testSenderMessage2.date  = new Date(1995, 10, 23);
 let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
 testReceiverMessage2.owner = false;
 testReceiverMessage2.date  = new Date(2015, 2, 1);
+
 const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
 
-export default function messages(state = initialState, action = {}) {
+export function messages(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_MESSAGE:
@@ -61,6 +62,26 @@ export default function messages(state = initialState, action = {}) {
             return state.filter(message =>
                 message.selected === false
             );
+
+        default:
+            return state;
+    }
+}
+
+export function isEditing(state = false, action = {}) {
+    switch (action.type) {
+
+        case Action.START_EDITING_STATE:
+            return true;
+
+        case Action.END_EDITING_STATE:
+            return false;
+
+        case Action.SELECT_MESSAGE:
+            return true;
+
+        case Action.DELETE_SELECTED_MESSAGE:
+            return false;
 
         default:
             return state;

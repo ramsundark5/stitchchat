@@ -40,3 +40,15 @@ export function updateMessageStatus(id, status) {
         status
     };
 }
+
+export function startEditing() {
+    return {
+        type: Actions.START_EDITING_STATE,
+    };
+}
+
+export function endEditing() {
+    return {
+        type: Actions.END_EDITING_STATE,
+    };
+}
