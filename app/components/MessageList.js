@@ -40,7 +40,8 @@ class MessageList extends Component {
                 <ListView
                     dataSource={messagesDS}
                     renderSectionHeader={this.renderSectionHeader}
-                    renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData} isEditing={isEditing} {...actions}/>}/>
+                    renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData}
+                                                isEditing={isEditing} {...actions}/>}/>
                 <TouchableHighlight onPress={actions.deleteSelected}>
                     <Text>Delete</Text>
                  </TouchableHighlight>

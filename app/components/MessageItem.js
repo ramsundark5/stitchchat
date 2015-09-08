@@ -10,7 +10,7 @@ class MessageItem extends Component {
     }
 
     selectMessage(id) {
-        this.props.selectMessage(id);
+        this.props.selectAndSetEditingMode(id);
     }
 
     selectMessageOnlyInEditingMode(id){

@@ -65,5 +65,10 @@ export const messageStyle = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: 'green',
         marginBottom: 5
+    },
+    msgOptions:{
+        flexDirection : 'row',
+        flexWrap      : 'nowrap',
+        justifyContent: 'space-around',
     }
 });

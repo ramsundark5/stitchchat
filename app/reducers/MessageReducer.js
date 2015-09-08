@@ -77,9 +77,6 @@ export function isEditing(state = false, action = {}) {
         case Action.END_EDITING_STATE:
             return false;
 
-        case Action.SELECT_MESSAGE:
-            return true;
-
         case Action.DELETE_SELECTED_MESSAGE:
             return false;
 
@@ -87,3 +84,4 @@ export function isEditing(state = false, action = {}) {
             return state;
     }
 }
+

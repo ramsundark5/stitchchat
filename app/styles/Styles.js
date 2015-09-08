@@ -30,7 +30,7 @@ export const commons = StyleSheet.create({
     },
     defaultIcon: {
        // padding: 4,
-        width : defaultStyle.fontSize,
+        width : defaultStyle.iconSize,
         height: defaultStyle.iconSize,
     },
     smallIcon: {

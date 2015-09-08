@@ -16,7 +16,7 @@ class MessagePage extends Component {
                     <MessageList messages={messages} isEditing={isEditing} actions={actions}/>
                 </View>
                 <View style={{flex: 0}}>
-                    <MessageComposer addMessage={actions.addMessage}/>
+                    <MessageComposer addMessage={actions.addMessage} isEditing={isEditing} actions={actions}/>
                 </View>
             </View>
         );

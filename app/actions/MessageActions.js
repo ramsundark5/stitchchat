@@ -52,3 +52,22 @@ export function endEditing() {
         type: Actions.END_EDITING_STATE,
     };
 }
+
+export function selectAndSetEditingMode(id) {
+    return (dispatch, getState) => {
+        //first complete the select action
+        dispatch(selectMessage(id));
+
+        //even though the word dispatch sounds async, this is a sync action. getstate() will return
+        //current state after any changes from the previous dispatch
+        let currentState = getState();
+
+        let atleastOneSelected = currentState.messages.some(message => message.selected);
+        if(!atleastOneSelected){
+            dispatch(endEditing());
+        }
+        else if(!currentState.isEditing){
+            dispatch(startEditing());
+        }
+    };
+}
