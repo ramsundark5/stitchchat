@@ -1,5 +1,5 @@
 import expect from 'expect';
-import messages from '../../app/reducers/MessageReducer';
+import {messages} from '../../app/reducers/MessageReducer';
 import Message from '../../app/models/Message'
 import * as types from '../../app/constants/ActionTypes';
 import * as Status from '../../app/constants/MessageConstants.js';

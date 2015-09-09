@@ -16,7 +16,8 @@ let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahs
 testReceiverMessage2.owner = false;
 testReceiverMessage2.date  = new Date(2015, 2, 1);
 
-const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
+//const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
+const initialState = [];
 
 export function messages(state = initialState, action = {}) {
     switch (action.type) {
@@ -68,20 +69,4 @@ export function messages(state = initialState, action = {}) {
     }
 }
 
-export function isEditing(state = false, action = {}) {
-    switch (action.type) {
-
-        case Action.START_EDITING_STATE:
-            return true;
-
-        case Action.END_EDITING_STATE:
-            return false;
-
-        case Action.DELETE_SELECTED_MESSAGE:
-            return false;
-
-        default:
-            return state;
-    }
-}
 
