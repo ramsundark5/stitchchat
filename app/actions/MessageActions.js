@@ -1,4 +1,6 @@
 import * as Actions from '../constants/ActionTypes';
+import Clipboard from 'react-native-clipboard';
+import * as _ from 'lodash';
 
 export function addMessage(text) {
     return {
@@ -24,6 +26,12 @@ export function selectMessage(id) {
 export function selectAll() {
     return {
         type: Actions.SELECT_ALL
+    };
+}
+
+export function clearSelected() {
+    return {
+        type: Actions.CLEAR_SELECTED
     };
 }
 
@@ -70,4 +78,24 @@ export function selectAndSetEditingMode(id) {
             dispatch(startEditing());
         }
     };
+}
+
+export function copySelectedMessages(){
+    return (dispatch, getState) => {
+
+        let currentState = getState();
+        copyMessagesToClipBoard(currentState.messages);
+
+        dispatch(endEditing());
+        dispatch(clearSelected());
+    }
+}
+
+function copyMessagesToClipBoard(messages){
+    let copiedMessageList = messages.filter(message =>
+        message.selected === true
+    );
+    let copiedTextList = _.pluck(copiedMessageList, 'text');
+    let copiedMessages = copiedTextList.join('\n');
+    Clipboard.set(copiedMessages);
 }

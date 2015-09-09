@@ -12,6 +12,7 @@
     "lodash": "^3.10.1",
     "node-uuid": "^1.4.3",
     "react-native": "^0.10.1",
+    "react-native-clipboard": "0.0.1",
     "react-native-icons": "^0.3.6",
     "react-redux": "^0.8.2",
     "redux": "^1.0.1",

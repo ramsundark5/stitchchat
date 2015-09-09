@@ -6,11 +6,11 @@ import {messageStyle} from '../styles/MessageStyle';
 class MessageOptionsBox extends Component {
 
     render() {
-        const { isEditing, actions } = this.props;
+        const { actions } = this.props;
         return (
             <View style={[messageStyle.msgOptions]}>
                 <TouchableHighlight style={[commons.defaultIconContainer]}
-                                    onPress={this.copySelected}>
+                                    onPress={actions.copySelectedMessages}>
                     <Icon name='ion|ios-copy'
                           size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
