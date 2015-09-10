@@ -1,6 +1,8 @@
 import React, { Navigator } from 'react-native';
 import MessagePage from './MessagePage';
 import PhotoGallery from '../components/media/PhotoGallery';
+import NavigationBar from 'react-native-navbar';
+import {navStyle} from '../styles/NavBarStyles';
 
 class Router {
     constructor(navigator) {
@@ -23,7 +25,13 @@ class Router {
         this.push(props, {
             component: MessagePage,
             name: 'messageview',
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            navigationBar: (
+                <NavigationBar
+                    title='Gallery'
+                    prevTitle = 'Done'
+                    style= {navStyle.navBarContainer}/>
+            )
         })
     }
 
@@ -31,7 +39,13 @@ class Router {
         this.push(props, {
             component: PhotoGallery,
             name: 'galleryview',
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            navigationBar: (
+                <NavigationBar
+                    title='Gallery'
+                    prevTitle = 'Done'
+                    style= {navStyle.navBarContainer}/>
+            )
         })
     }
 

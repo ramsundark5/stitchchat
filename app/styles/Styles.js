@@ -47,6 +47,9 @@ export const commons = StyleSheet.create({
         flexDirection : 'row',
         flexWrap      : 'nowrap'
     },
+    stretch:{
+        alignItems: 'stretch',
+    },
     messageComposer:{
         backgroundColor: defaultStyle.bgColor,
     }

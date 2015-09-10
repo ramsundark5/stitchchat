@@ -5,6 +5,7 @@ const receiverMessageBgColor   = '#D1D1D1';
 const senderMessageTextColor   = '#FFFFFF';
 const receiverMessageTextColor = '#000000';
 const selectedColor            = '#ff0000';
+
 export const messageStyle = StyleSheet.create({
     messageListContainer: {
         flex: 1,

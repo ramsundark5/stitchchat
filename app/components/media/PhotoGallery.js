@@ -6,7 +6,7 @@ class PhotoGallery extends Component {
         super(props, context);
         this.state = {
             images: [],
-            selected: '',
+            selected: ''
         };
     }
 
@@ -14,15 +14,13 @@ class PhotoGallery extends Component {
         const fetchParams = {
             first: 25,
         };
-        CameraRoll.getPhotos(fetchParams, this.storeImages, this.logImageError);
+        CameraRoll.getPhotos(fetchParams, this.storeImages.bind(this), this.logImageError.bind(this));
     }
 
     storeImages(data) {
         const assets = data.edges;
         const images = assets.map((asset) => asset.node.image);
-        this.setState({
-            images: images,
-        });
+        this.setState({images: images});
     }
 
     logImageError(err) {
