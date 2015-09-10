@@ -16,8 +16,8 @@ let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahs
 testReceiverMessage2.owner = false;
 testReceiverMessage2.date  = new Date(2015, 2, 1);
 
-const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
-//const initialState = [];
+//const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
+const initialState = [];
 
 export function messages(state = initialState, action = {}) {
     switch (action.type) {
@@ -65,6 +65,9 @@ export function messages(state = initialState, action = {}) {
             return state.filter(message =>
                 message.selected === false
             );
+
+        case Action.LOAD_OLDER_MESSAGES:
+            return state;
 
         default:
             return state;

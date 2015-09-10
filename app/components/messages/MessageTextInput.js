@@ -1,5 +1,5 @@
 import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
-import {commons, defaultStyle} from '../styles/Styles';
+import {commons, defaultStyle} from '../../styles/Styles';
 import { Icon } from 'react-native-icons';
 
 class MessageTextInput extends Component {

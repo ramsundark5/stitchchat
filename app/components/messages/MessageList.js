@@ -1,7 +1,8 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
+import RefreshableListView from 'react-native-refreshable-listview';
 import MessageItem from './MessageItem';
-import {messageStyle} from '../styles/MessageStyle';
-import {commons, smallIconSize} from '../styles/Styles';
+import {messageStyle} from '../../styles/MessageStyle';
+import {commons, smallIconSize} from '../../styles/Styles';
 import moment from 'moment';
 
 class MessageList extends Component {
@@ -9,7 +10,7 @@ class MessageList extends Component {
         super(props, context);
     }
 
-    renderSectionHeader(sectionData, sectionID){
+    renderSectionHeader(sectionDatma, sectionID){
         return(
           <View style={messageStyle.msgDivider}><Text style={commons.defaultText}>{sectionID}</Text></View>
         );
@@ -27,6 +28,10 @@ class MessageList extends Component {
         }
         return groupedMessage;
     }
+
+    loadOlderMessages(){
+        this.props.actions.loadOlderMessages();
+    }
     render() {
         const { messages, isEditing, actions } = this.props;
         let groupedMessages = this.groupMessagesByDate(messages);
@@ -34,12 +39,13 @@ class MessageList extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
         messagesDS = messagesDS.cloneWithRowsAndSections(groupedMessages);
-
         return (
             <View style={messageStyle.messageListContainer}>
-                <ListView
+                <RefreshableListView
                     dataSource={messagesDS}
                     renderSectionHeader={this.renderSectionHeader}
+                    loadData={actions.loadOlderMessages}
+                    refreshDescription="Loading messages"
                     renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData}
                                                 isEditing={isEditing} {...actions}/>}/>
                 <TouchableHighlight onPress={actions.deleteSelected}>

@@ -1,8 +1,8 @@
 import React, { Component, View, StyleSheet, ScrollView, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
-import MessageComposer from '../components/MessageComposer';
-import MessageList from '../components/MessageList';
+import MessageComposer from '../components/messages/MessageComposer';
+import MessageList from '../components/messages/MessageList';
 import * as MessageActions from '../actions/MessageActions';
 
 class MessagePage extends Component {

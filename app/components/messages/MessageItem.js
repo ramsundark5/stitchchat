@@ -1,8 +1,8 @@
 import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
-import {commons, defaultStyle} from '../styles/Styles';
-import {messageStyle} from '../styles/MessageStyle';
+import {commons, defaultStyle} from '../../styles/Styles';
+import {messageStyle} from '../../styles/MessageStyle';
 import { Icon } from 'react-native-icons';
-import * as Status from '../constants/MessageConstants.js';
+import * as Status from '../../constants/MessageConstants.js';
 
 class MessageItem extends Component {
     constructor(props, context) {

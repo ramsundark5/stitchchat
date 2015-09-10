@@ -80,6 +80,12 @@ export function selectAndSetEditingMode(id) {
     };
 }
 
+export function loadOlderMessages(){
+    return {
+        type: Actions.LOAD_OLDER_MESSAGES,
+    };
+}
+
 export function copySelectedMessages(){
     return (dispatch, getState) => {
 

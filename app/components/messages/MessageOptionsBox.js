@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-icons';
-import {commons, defaultStyle} from '../styles/Styles';
-import {messageStyle} from '../styles/MessageStyle';
+import {commons, defaultStyle} from '../../styles/Styles';
+import {messageStyle} from '../../styles/MessageStyle';
 
 class MessageOptionsBox extends Component {
 
