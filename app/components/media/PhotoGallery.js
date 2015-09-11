@@ -1,4 +1,6 @@
 import React, { Component, StyleSheet, View, ScrollView, Image, CameraRoll, TouchableHighlight, NativeModules, PropTypes } from 'react-native';
+import FileUploadService from '../../services/FileUploadService';
+import {HelloManager} from 'NativeModules';
 
 class PhotoGallery extends Component {
 
@@ -17,7 +19,14 @@ class PhotoGallery extends Component {
         CameraRoll.getPhotos(fetchParams, this.storeImages.bind(this), this.logImageError.bind(this));
     }
 
-    storeImages(data) {
+    async storeImages(data) {
+        try{
+            let result =  await HelloManager.sayHello("hello buddy");
+            console.log('swift output is '+ result);
+        }catch(error){
+            console.log('error '+ error);
+        }
+
         const assets = data.edges;
         const images = assets.map((asset) => asset.node.image);
         this.setState({images: images});
@@ -28,12 +37,12 @@ class PhotoGallery extends Component {
     }
 
     selectImage(uri) {
-        /*NativeModules.ReadImageData.readImage(uri, (image) => {
+        NativeModules.ReadImageData.readImage(uri, (image) => {
             this.setState({
                 selected: image,
             });
             console.log(image);
-        });*/
+        });
     }
 
     render() {
@@ -42,7 +51,7 @@ class PhotoGallery extends Component {
                 <View style={styles.imageGrid}>
                     { this.state.images.map((image) => {
                         return (
-                            <TouchableHighlight onPress={this.selectImage.bind(null, image.uri)}>
+                            <TouchableHighlight key={image.uri} onPress={this.selectImage.bind(null, image.uri)}>
                                 <Image style={styles.image} source={{ uri: image.uri }} />
                             </TouchableHighlight>
                         );

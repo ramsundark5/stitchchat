@@ -8,6 +8,17 @@ import {commons} from '../styles/Styles';
 import MediaOptions from '../components/media/MediaOptions';
 
 class MessagePage extends Component {
+
+    _renderMediaOptions(isEditing, router){
+        //don't show media options in editing state
+        if(isEditing){
+            return;
+        }
+        return(
+            <MediaOptions router={router}/>
+        );
+    }
+
     render() {
         const { messages, dispatch, isEditing, router } = this.props;
         const actions = bindActionCreators(MessageActions, dispatch);
@@ -18,7 +29,7 @@ class MessagePage extends Component {
                     <MessageList messages={messages} isEditing={isEditing} actions={actions} router={router}/>
                 </View>
                 <View style={[{flex: 0}, commons.horizontalNoWrap]}>
-                    <MediaOptions router={router}/>
+                    {this._renderMediaOptions(isEditing, router)}
                     <View style={{flex: 1}}>
                         <MessageComposer addMessage={actions.addMessage} isEditing={isEditing} actions={actions}/>
                     </View>
