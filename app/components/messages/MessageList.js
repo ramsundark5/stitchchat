@@ -19,7 +19,7 @@ class MessageList extends Component {
     groupMessagesByDate(messages){
         let groupedMessage = {};
         for(let i=0; i < messages.length; i++){
-            let date = messages[i].date;
+            let date = messages[i].timestamp;
             let formattedDate = moment(date).format('MM/DD/YYYY');
             if(!groupedMessage[formattedDate]){
                 groupedMessage[formattedDate] = [];

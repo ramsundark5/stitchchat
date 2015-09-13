@@ -24,7 +24,6 @@ class MessageTextInput extends Component {
             <View style={commons.horizontalNoWrap}>
                 <TextInput
                     placeholder={this.props.placeholder}
-                    autoFocus={true}
                     multiline={true}
                     value={this.state.text}
                     style={this.props.style}

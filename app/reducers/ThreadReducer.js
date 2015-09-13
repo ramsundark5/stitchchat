@@ -26,10 +26,10 @@ export function messages(state = initialState, action = {}) {
             let newMessage = new Message(action.text);
             return state.concat(newMessage);
 
-       /* case Action.RECEIVE_MESSAGE:
-            let receivedMessage = action.message;
-            receivedMessage.sequenceId = _.uniqueId('message');
-            return state.concat(receivedMessage);*/
+        /* case Action.RECEIVE_MESSAGE:
+         let receivedMessage = action.message;
+         receivedMessage.sequenceId = _.uniqueId('message');
+         return state.concat(receivedMessage);*/
 
         case Action.DELETE_MESSAGE:
             return state.filter(message =>
