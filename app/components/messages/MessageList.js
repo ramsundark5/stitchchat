@@ -40,7 +40,7 @@ class MessageList extends Component {
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
         messagesDS = messagesDS.cloneWithRowsAndSections(groupedMessages);
         return (
-            <View style={messageStyle.messageListContainer}>
+            <View style={commons.listContainer}>
                 <RefreshableListView
                     dataSource={messagesDS}
                     renderSectionHeader={this.renderSectionHeader}

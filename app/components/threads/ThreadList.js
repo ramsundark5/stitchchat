@@ -17,12 +17,12 @@ class ThreadList extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2 });
         threadsDS = threadsDS.cloneWithRows(threads);
         return (
-            <View style={messageStyle.messageListContainer}>
+            <View style={commons.listContainer}>
                 <ListView
                     dataSource={threadsDS}
                     loadData={actions.loadOlderThreads()}
                     refreshDescription="Loading messages"
-                    renderRow={(rowData) => <ThreadItem key={rowData.id} message={rowData}
+                    renderRow={(rowData) => <ThreadItem key={rowData.id} thread={rowData}
                                                 isEditing={isEditing} {...actions}/>}/>
                 <TouchableHighlight onPress={actions.deleteSelected}>
                     <Text>Delete</Text>
@@ -33,7 +33,7 @@ class ThreadList extends Component {
 
 }
 
-MessageList.propTypes = {
+ThreadList.propTypes = {
     threads: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };

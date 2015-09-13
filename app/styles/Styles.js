@@ -13,6 +13,9 @@ export const defaultStyle = {
 };
 
 export const commons = StyleSheet.create({
+    listContainer: {
+        flex: 1,
+    },
     defaultTextInput: {
         height  : defaultStyle.textInputHeight,
         fontSize: defaultStyle.fontSize,

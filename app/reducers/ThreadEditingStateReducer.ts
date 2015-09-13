@@ -3,16 +3,16 @@
  */
 import * as Action from '../constants/ActionTypes';
 
-export function isEditing(state = false, action = {}) {
+export function isThreadInEditingState(state = false, action = {}) {
     switch (action.type) {
 
-        case Action.START_MESSAGE_EDITING_STATE:
+        case Action.START_THREAD_EDITING_STATE:
             return true;
 
-        case Action.END_MESSAGE_EDITING_STATE:
+        case Action.END_THREAD_EDITING_STATE:
             return false;
 
-        case Action.DELETE_SELECTED_MESSAGE:
+        case Action.DELETE_SELECTED_THREAD:
             return false;
 
         default:

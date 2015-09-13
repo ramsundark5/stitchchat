@@ -1,7 +1,6 @@
 export default class Thread{
     constructor(){
         this.id              = 0;
-        this.messageId       = '';
         this.contactId       = '';
         this.groupId         = '';
         this.direction       = 0; //sent or received
@@ -12,5 +11,6 @@ export default class Thread{
         this.lastMessageTime = 0;
         this.extras          = '';
         this.isMuted         = false;
+        this.selected        = false;
     }
 }

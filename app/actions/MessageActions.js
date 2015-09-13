@@ -31,7 +31,7 @@ export function selectAll() {
 
 export function clearSelected() {
     return {
-        type: Actions.CLEAR_SELECTED
+        type: Actions.CLEAR_SELECTED_MESSAGE
     };
 }
 
@@ -51,13 +51,13 @@ export function updateMessageStatus(id, status) {
 
 export function startEditing() {
     return {
-        type: Actions.START_EDITING_STATE,
+        type: Actions.START_MESSAGE_EDITING_STATE,
     };
 }
 
 export function endEditing() {
     return {
-        type: Actions.END_EDITING_STATE,
+        type: Actions.END_MESSAGE_EDITING_STATE,
     };
 }
 

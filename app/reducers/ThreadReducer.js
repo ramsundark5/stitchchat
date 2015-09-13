@@ -19,54 +19,46 @@ testReceiverMessage2.timestamp  = new Date(2015, 2, 1);
 //const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
 const initialState = [];
 
-export function messages(state = initialState, action = {}) {
+export function threads(state = initialState, action = {}) {
     switch (action.type) {
 
-        case Action.ADD_MESSAGE:
-            let newMessage = new Message(action.text);
-            return state.concat(newMessage);
+        case Action.ADD_THREAD:
+            let newThread = new Thread(action.recipientId);
+            return state.concat(newThread);
 
-        /* case Action.RECEIVE_MESSAGE:
-         let receivedMessage = action.message;
-         receivedMessage.sequenceId = _.uniqueId('message');
-         return state.concat(receivedMessage);*/
-
-        case Action.DELETE_MESSAGE:
-            return state.filter(message =>
-                message.id !== action.id
+        case Action.DELETE_THREAD:
+            return state.filter(thread =>
+                thread.id !== thread.id
             );
 
-        case Action.UPDATE_MESSAGE_STATUS:
-            return state.map(message =>
-                    message.id === action.id ?
-                        Object.assign({}, message, {status: action.status}) :
-                        message
+        case Action.UPDATE_THREAD:
+            return state.map(thread =>
+                    thread.id === action.thread.id ?
+                        Object.assign({}, thread, {lastMessageTime: action.thread.lastMessageTime,
+                                                   lastMessageText: action.thread.lastMessageText,
+                                                   lastMessageTime: action.thread.lastMessageTime,
+                                                   direction: action.thread.direction}) :
+                        thread
             );
 
-        case Action.SELECT_MESSAGE:
-            return state.map(message =>
-                    message.id === action.id ?
-                        Object.assign({}, message, {selected: !message.selected}) :
-                        message
+        case Action.SELECT_THREAD:
+            return state.map(thread =>
+                    thread.id === action.id ?
+                        Object.assign({}, thread, {selected: !thread.selected}) :
+                        thread
             );
 
-        case Action.SELECT_ALL:
-            const areAllSelected = state.every(message => message.selected);
-            return state.map(message => Object.assign({}, message, {
-                selected: !areAllSelected
-            }));
-
-        case Action.CLEAR_SELECTED:
-            return state.map(message => Object.assign({}, message, {
+        case Action.CLEAR_SELECTED_THREAD:
+            return state.map(thread => Object.assign({}, thread, {
                 selected: false
             }));
 
-        case Action.DELETE_SELECTED_MESSAGE:
-            return state.filter(message =>
-                message.selected === false
+        case Action.DELETE_SELECTED_THREAD:
+            return state.filter(thread =>
+                thread.selected === false
             );
 
-        case Action.LOAD_OLDER_MESSAGES:
+        case Action.LOAD_MORE_THREADS:
             return state;
 
         default:

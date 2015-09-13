@@ -7,9 +7,6 @@ const receiverMessageTextColor = '#000000';
 const selectedColor            = '#ff0000';
 
 export const messageStyle = StyleSheet.create({
-    messageListContainer: {
-        flex: 1,
-    },
     msgItemContainer: {  // F. hack. Can't align multiple items to right, I need to nest them inside a parent.
         flex: 1,
         flexDirection: 'column',
