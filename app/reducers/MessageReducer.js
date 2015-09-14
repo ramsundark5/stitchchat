@@ -18,7 +18,7 @@ testReceiverMessage2.owner = false;
 testReceiverMessage2.timestamp  = new Date(2015, 2, 1);
 
 let samplemessages = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
-const initialState = { messages : samplemessages, isEditing: false};
+const initialState = { messages : [], isEditing: false};
 
 export function messageState(state = initialState, action = {}) {
     switch (action.type) {

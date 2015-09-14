@@ -4,9 +4,9 @@ import Message from '../../app/models/Message'
 import * as types from '../../app/constants/ActionTypes';
 import * as Status from '../../app/constants/MessageConstants.js';
 import uuid from 'node-uuid';
-import { fromJS, Map } from 'immutable';
+import sinon from 'sinon';
 
-describe.only('Message reducer tests', () => {
+describe('Message reducer tests', () => {
 
     let state;
     beforeEach(() => {

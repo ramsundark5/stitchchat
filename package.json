@@ -22,7 +22,8 @@
     "redux-logger": "^1.0.6",
     "redux-promise": "^0.5.0",
     "redux-thunk": "^0.1.0",
-    "regenerator": "^0.8.36"
+    "regenerator": "^0.8.36",
+    "sinon": "^1.16.1"
   },
   "devDependencies": {
     "babel": "^5.8.21",
