@@ -1,8 +1,8 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
 import RefreshableListView from 'react-native-refreshable-listview';
 import MessageItem from './MessageItem';
-import {messageStyle} from '../../styles/MessageStyle';
-import {commons, smallIconSize} from '../../styles/Styles';
+import {messageStyle} from '../../styles/MessageStyles';
+import {commons, smallIconSize} from '../../styles/CommonStyles';
 import moment from 'moment';
 
 class MessageList extends Component {

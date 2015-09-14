@@ -4,7 +4,7 @@ import { connect } from 'react-redux/native';
 import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
 import * as ThreadActions from '../actions/ThreadActions';
-import {commons} from '../styles/Styles';
+import {commons} from '../styles/CommonStyles';
 
 class InboxPage extends Component {
 

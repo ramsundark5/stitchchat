@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 export const defaultStyle = {
     fontSize           : 14,
-    smallFontSize      : 14,
+    smallFontSize      : 12,
     bgColor            :'#ff0000',
     headerColor        :'',
     iconColor          : '#333333',
@@ -55,6 +55,12 @@ export const commons = StyleSheet.create({
     },
     messageComposer:{
         backgroundColor: defaultStyle.bgColor,
-    }
+    },
+    separator: {
+        height: 1,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: '#dddddd'
+    },
 });
 

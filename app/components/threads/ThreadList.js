@@ -1,6 +1,6 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
-import {messageStyle} from '../../styles/MessageStyle';
-import {commons, smallIconSize} from '../../styles/Styles';
+import {messageStyle} from '../../styles/MessageStyles';
+import {commons, smallIconSize} from '../../styles/CommonStyles';
 import moment from 'moment';
 import ThreadItem from './ThreadItem';
 
@@ -13,7 +13,7 @@ class ThreadList extends Component {
         this.props.actions.loadMoreThreads();
     }
     render() {
-        const { threads, isEditing, actions } = this.props;
+        const { threads, isEditing, actions, router } = this.props;
         let threadsDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2 });
         threadsDS = threadsDS.cloneWithRows(threads);
@@ -22,9 +22,8 @@ class ThreadList extends Component {
                 <ListView
                     dataSource={threadsDS}
                     loadData={actions.loadMoreThreads()}
-                    refreshDescription="Loading messages"
-                    renderRow={(rowData) => <ThreadItem key={rowData.id} thread={rowData}
-                                                isEditing={isEditing} {...actions}/>}/>
+                    renderRow={this.renderThreadItem.bind(this)}/>
+
                 <TouchableHighlight onPress={actions.deleteSelected}>
                     <Text>Delete</Text>
                 </TouchableHighlight>
@@ -32,6 +31,14 @@ class ThreadList extends Component {
         );
     }
 
+    renderThreadItem(rowData, sectionID, rowID) {
+        return (
+            <ThreadItem key={rowData.id} thread={rowData}
+                         router = {this.props.router}
+                         isEditing={this.props.isEditing}
+                         {...this.props.actions}/>
+        );
+    }
 }
 
 ThreadList.propTypes = {

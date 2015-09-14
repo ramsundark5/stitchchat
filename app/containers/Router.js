@@ -25,11 +25,12 @@ class Router {
         this.push(props, {
             component: MessagePage,
             name: 'messageview',
+            sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
                     title='Gallery'
-                    prevTitle = 'Done'
+                    prevTitle = 'Back'
                     style= {navStyle.navBarContainer}/>
             )
         })

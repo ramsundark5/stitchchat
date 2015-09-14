@@ -4,7 +4,7 @@ import { connect } from 'react-redux/native';
 import MessageComposer from '../components/messages/MessageComposer';
 import MessageList from '../components/messages/MessageList';
 import * as MessageActions from '../actions/MessageActions';
-import {commons} from '../styles/Styles';
+import {commons} from '../styles/CommonStyles';
 import MediaOptions from '../components/media/MediaOptions';
 
 class MessagePage extends Component {

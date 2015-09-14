@@ -1,8 +1,8 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
 import ThreadOptionsBox from './ThreadOptionsBox';
 import { Icon } from 'react-native-icons';
-import {commons, defaultStyle} from '../../styles/Styles';
-import {messageStyle} from '../../styles/MessageStyle';
+import {commons, defaultStyle} from '../../styles/CommonStyles';
+import {threadStyle} from '../../styles/ThreadStyles';
 
 class ThreadComposer extends Component {
 
@@ -21,7 +21,7 @@ class ThreadComposer extends Component {
         }
         else{
             return (
-                <View style={[messageStyle.msgOptions]}>
+                <View style={[threadStyle.threadOptions]}>
                     <TouchableHighlight style={commons.defaultIconContainer}
                                         onPress={actions.deleteSelected}>
                         <Icon name='ion|ios-search'

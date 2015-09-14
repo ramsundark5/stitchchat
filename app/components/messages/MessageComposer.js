@@ -2,7 +2,7 @@ import React, { Component, PropTypes, View, Text, TextInput } from 'react-native
 import MessageTextInput from './MessageTextInput';
 import MessageOptionsBox from './MessageOptionsBox';
 import { Icon } from 'react-native-icons';
-import {commons} from '../../styles/Styles';
+import {commons} from '../../styles/CommonStyles';
 
 class MessageComposer extends Component {
 

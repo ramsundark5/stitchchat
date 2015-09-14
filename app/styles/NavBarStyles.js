@@ -11,5 +11,9 @@ export const navStyle = StyleSheet.create({
         paddingBottom: 5,
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',
         borderBottomWidth: 1 / React.PixelRatio.get(),
+    },
+
+    opaqueSceneStyle: {
+        backfaceVisibility : 'hidden',
     }
 });
