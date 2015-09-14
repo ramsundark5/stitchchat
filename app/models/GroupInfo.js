@@ -1,4 +1,4 @@
-export default class Group{
+export default class GroupInfo{
     constructor(){
         this.id                = 0;
         this.name              = '';

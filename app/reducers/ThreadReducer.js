@@ -1,62 +1,60 @@
 import * as Action from '../constants/ActionTypes';
 import uuid from 'node-uuid';
-import Message from '../models/Message';
+import Thread from '../models/Thread';
 import * as _ from 'lodash';
 
-let testSenderMessage1   = new Message('asdas \ndadasdas \nawewae');
-testSenderMessage1.owner = true;
-testSenderMessage1.timestamp  = new Date(1998, 11, 17);
-let testReceiverMessage1 = new Message('asdas \ndadasdas \noiwqeuqwej');
-testReceiverMessage1.owner= false;
-testReceiverMessage1.timestamp  = new Date(1995, 10, 23);
-let testSenderMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
-testSenderMessage2.owner = true;
-testSenderMessage2.timestamp  = new Date(1995, 10, 23);
-let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
-testReceiverMessage2.owner = false;
-testReceiverMessage2.timestamp  = new Date(2015, 2, 1);
+const initialState = { threads : [], isEditing: false};
 
-//const initialState = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
-const initialState = [];
-
-export function threads(state = initialState, action = {}) {
+export function threadState(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_THREAD:
-            let newThread = new Thread(action.recipientId);
-            return state.concat(newThread);
+            let newThread = new Thread(action.recipientContactInfo, action.isGroupThread, action.groupInfo);
+            let threadsAfterAdd = state.threads.concat(newThread);
+            let newStateAfterAdd =  _.assign({}, state, { 'threads' : threadsAfterAdd });
+            return newStateAfterAdd;
 
         case Action.DELETE_THREAD:
-            return state.filter(thread =>
-                thread.id !== thread.id
+            let threadsAfterDelete = state.threads.filter(thread =>
+                thread.id !== action.id
             );
+            let newStateAfterDelete =  _.assign({}, state, { 'threads' : threadsAfterDelete });
+            return newStateAfterDelete;
 
         case Action.UPDATE_THREAD:
-            return state.map(thread =>
+            let threadsAfterUpdate =  state.threads.map(thread =>
                     thread.id === action.thread.id ?
-                        Object.assign({}, thread, {lastMessageTime: action.thread.lastMessageTime,
-                                                   lastMessageText: action.thread.lastMessageText,
-                                                   lastMessageTime: action.thread.lastMessageTime,
-                                                   direction: action.thread.direction}) :
+                        Object.assign({}, thread, action.thread) :
                         thread
             );
+
+            let newStateAfterUpdate =  _.assign({}, state, { 'threads' : threadsAfterUpdate });
+            return newStateAfterUpdate;
 
         case Action.SELECT_THREAD:
-            return state.map(thread =>
+            let threadsAfterSelect =  state.threads.map(thread =>
                     thread.id === action.id ?
-                        Object.assign({}, thread, {selected: !thread.selected}) :
+                        _.assign({}, thread, {selected: !thread.selected}) :
                         thread
             );
+            let atleastOneSelected = threadsAfterSelect.some(thread => thread.selected);
+            let newStateAfterSelect =  _.assign({}, state, { 'threads' : threadsAfterSelect, 'isEditing': atleastOneSelected });
+            return newStateAfterSelect;
 
         case Action.CLEAR_SELECTED_THREAD:
-            return state.map(thread => Object.assign({}, thread, {
+            let threadsAfterClearSelected = state.threads.map(thread => _.assign({}, thread, {
                 selected: false
             }));
+            let newStateAfterClearSelected =  _.assign({}, state, { 'threads' : threadsAfterClearSelected, 'isEditing': false });
+            return newStateAfterClearSelected ;
 
         case Action.DELETE_SELECTED_THREAD:
-            return state.filter(thread =>
+            let threadsAfterDeleteSelected = state.threads.filter(thread =>
                 thread.selected === false
             );
+            let newStateAfterDeleteSelected =  _.assign({}, state, { 'threads' : threadsAfterDeleteSelected, 'isEditing': false });
+            return newStateAfterDeleteSelected;
+
 
         case Action.LOAD_MORE_THREADS:
             return state;

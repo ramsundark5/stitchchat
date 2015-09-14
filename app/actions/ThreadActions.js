@@ -1,10 +1,14 @@
 import * as Actions from '../constants/ActionTypes';
 import * as _ from 'lodash';
+import Contact from '../models/Contact';
+import GroupInfo from '../models/GroupInfo';
 
-export function addThread(recipientId) {
+export function addThread(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo) {
     return {
         type: Actions.ADD_THREAD,
-        recipientId
+        recipientContactInfo,
+        isGroupThread,
+        groupInfo
     };
 }
 

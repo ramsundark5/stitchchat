@@ -53,9 +53,6 @@ export function messageState(state = initialState, action = {}) {
                         message
             );
             let atleastOneSelected = messagesAfterSelect.some(message => message.selected);
-            if(!atleastOneSelected){
-
-            }
             let newStateAfterSelect =  _.assign({}, state, { 'messages' : messagesAfterSelect, 'isEditing': atleastOneSelected });
             return newStateAfterSelect;
 
@@ -64,7 +61,8 @@ export function messageState(state = initialState, action = {}) {
             let messagesAfterSelectAll =  state.map(message => _.assign({}, message, {
                 selected: !areAllSelected
             }));
-            let newStateAfterSelectAll =  _.assign({}, state, { 'messages' : messagesAfterSelectAll, 'isEditing': true });
+            let enableEditingMode = messagesAfterSelectAll.some(message => message.selected);
+            let newStateAfterSelectAll =  _.assign({}, state, { 'messages' : messagesAfterSelectAll, 'isEditing': enableEditingMode });
             return newStateAfterSelectAll;
 
         case Action.CLEAR_SELECTED_MESSAGE:

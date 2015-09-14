@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import {messageState} from './MessageReducer';
+import {threadState} from './ThreadReducer';
 
 const RootReducer = combineReducers({
-    messageState
+    messageState,
+    threadState
 });
 
 export default RootReducer;
