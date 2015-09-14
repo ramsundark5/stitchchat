@@ -41,8 +41,8 @@ class MessagePage extends Component {
 
 function mapStateToProps(state) {
     return {
-        messages: state.messages,
-        isEditing: state.isEditing
+        messages: state.messageState.messages,
+        isEditing: state.messageState.isEditing
     };
 }
 

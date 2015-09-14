@@ -1,5 +1,4 @@
 import * as Actions from '../constants/ActionTypes';
-import Clipboard from 'react-native-clipboard';
 import * as _ from 'lodash';
 
 export function addMessage(text) {
@@ -61,25 +60,6 @@ export function endEditing() {
     };
 }
 
-export function selectAndSetEditingMode(id) {
-    return (dispatch, getState) => {
-        //first complete the select action
-        dispatch(selectMessage(id));
-
-        //even though the word dispatch sounds async, this is a sync action. getstate() will return
-        //current state after any changes from the previous dispatch
-        let currentState = getState();
-
-        let atleastOneSelected = currentState.messages.some(message => message.selected);
-        if(!atleastOneSelected){
-            dispatch(endEditing());
-        }
-        else if(!currentState.isEditing){
-            dispatch(startEditing());
-        }
-    };
-}
-
 export function loadOlderMessages(){
     return {
         type: Actions.LOAD_OLDER_MESSAGES,
@@ -87,21 +67,7 @@ export function loadOlderMessages(){
 }
 
 export function copySelectedMessages(){
-    return (dispatch, getState) => {
-
-        let currentState = getState();
-        copyMessagesToClipBoard(currentState.messages);
-
-        dispatch(endEditing());
-        dispatch(clearSelected());
-    }
-}
-
-function copyMessagesToClipBoard(messages){
-    let copiedMessageList = messages.filter(message =>
-        message.selected === true
-    );
-    let copiedTextList = _.pluck(copiedMessageList, 'text');
-    let copiedMessages = copiedTextList.join('\n');
-    Clipboard.set(copiedMessages);
+    return {
+        type: Actions.COPY_SELECTED_MESSAGE,
+    };
 }

@@ -8,6 +8,7 @@ export const UPDATE_MESSAGE_STATUS          = 'UPDATE_MESSAGE_STATUS';
 export const START_MESSAGE_EDITING_STATE    = 'START_MESSAGE_EDITING_STATE';
 export const END_MESSAGE_EDITING_STATE      = 'END_MESSAGE_EDITING_STATE';
 export const LOAD_OLDER_MESSAGES            = 'LOAD_OLDER_MESSAGES';
+export const COPY_SELECTED_MESSAGE          = 'COPY_SELECTED_MESSAGE';
 
 export const ADD_THREAD                     = 'ADD_THREAD';
 export const DELETE_THREAD                  = 'DELETE_THREAD';
