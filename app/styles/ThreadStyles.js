@@ -34,5 +34,15 @@ export const threadStyle = StyleSheet.create({
     timestamp: {
         flex: 0,
         fontSize: defaultStyle.smallFontSize
+    },
+    badgeContainer: {
+        borderRadius: 100,
+        fontWeight: 'bold',
+        width: 20,
+        flex: 0
+    },
+    badgeText: {
+        fontSize: defaultStyle.smallFontSize
     }
+
 });

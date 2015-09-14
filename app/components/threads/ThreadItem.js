@@ -21,14 +21,29 @@ class ThreadItem extends Component {
                         <Text style={[threadStyle.title]}>{thread.recipientContactInfo.phoneNumber}</Text>
                         <Text style={[threadStyle.timestamp]}>{thread.lastMessageTime}</Text>
                     </View>
-                    <Text style={threadStyle.lastMessageText} numberOfLines={1}>
-                        {thread.lastMessageText}
-                    </Text>
+                    {this._renderTimeStamp(thread)}
                     <View style={commons.separator}/>
                 </View>
             </TouchableHighlight>
         );
     }
+
+    _renderBadge(){
+        return(
+            <View style={threadStyle.badgeContainer}>
+                <Text style={defaultStyle.badgeText}>10</Text>
+            </View>
+        );
+    }
+
+    _renderTimeStamp(thread){
+        return (
+            <Text style={threadStyle.lastMessageText} numberOfLines={1}>
+                {thread.lastMessageText}
+            </Text>
+        );
+    }
+
 }
 
 ThreadItem.propTypes = {

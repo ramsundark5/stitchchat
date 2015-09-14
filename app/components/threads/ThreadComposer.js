@@ -6,17 +6,11 @@ import {threadStyle} from '../../styles/ThreadStyles';
 
 class ThreadComposer extends Component {
 
-    handleSave(text) {
-        if (text.length !== 0) {
-            this.props.addMessage(text);
-        }
-    }
-
     render() {
         const { isEditing, actions } = this.props;
         if(isEditing){
             return(
-                <MessageOptionsBox isEditing={isEditing} actions={actions}/>
+                <ThreadOptionsBox isEditing={isEditing} actions={actions}/>
             );
         }
         else{
