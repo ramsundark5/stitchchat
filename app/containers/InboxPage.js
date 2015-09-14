@@ -28,7 +28,7 @@ class InboxPage extends Component {
                     <ThreadList threads={threads} isEditing={isEditing} actions={actions} router={router}/>
                 </View>
                 <View style={[{flex: 0}, commons.horizontalNoWrap]}>
-                        <ThreadComposer addThread={actions.addThread} isEditing={isEditing} actions={actions}/>
+                    <ThreadComposer addThread={actions.addThread} isEditing={isEditing} actions={actions}/>
                 </View>
             </View>
         );
@@ -37,8 +37,8 @@ class InboxPage extends Component {
 
 function mapStateToProps(state) {
     return {
-        threads: state.threads,
-        isEditing: state.isEditing
+        threads: state.threadState.threads,
+        isEditing: state.threadState.isEditing
     };
 }
 

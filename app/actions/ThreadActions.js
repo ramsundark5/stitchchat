@@ -44,3 +44,9 @@ export function updateThread(thread) {
         thread
     };
 }
+
+export function loadMoreThreads(){
+    return{
+        type: Actions.LOAD_MORE_THREADS
+    }
+}

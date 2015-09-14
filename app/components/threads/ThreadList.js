@@ -2,14 +2,15 @@ import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes }
 import {messageStyle} from '../../styles/MessageStyle';
 import {commons, smallIconSize} from '../../styles/Styles';
 import moment from 'moment';
+import ThreadItem from './ThreadItem';
 
 class ThreadList extends Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    loadOlderThreads(){
-        this.props.actions.loadOlderThreads();
+    loadMoreThreads(){
+        this.props.actions.loadMoreThreads();
     }
     render() {
         const { threads, isEditing, actions } = this.props;
@@ -20,7 +21,7 @@ class ThreadList extends Component {
             <View style={commons.listContainer}>
                 <ListView
                     dataSource={threadsDS}
-                    loadData={actions.loadOlderThreads()}
+                    loadData={actions.loadMoreThreads()}
                     refreshDescription="Loading messages"
                     renderRow={(rowData) => <ThreadItem key={rowData.id} thread={rowData}
                                                 isEditing={isEditing} {...actions}/>}/>

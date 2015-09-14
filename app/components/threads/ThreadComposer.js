@@ -1,7 +1,8 @@
-import React, { Component, PropTypes, View, Text, TextInput } from 'react-native';
+import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
 import ThreadOptionsBox from './ThreadOptionsBox';
 import { Icon } from 'react-native-icons';
-import {commons} from '../../styles/Styles';
+import {commons, defaultStyle} from '../../styles/Styles';
+import {messageStyle} from '../../styles/MessageStyle';
 
 class ThreadComposer extends Component {
 
@@ -46,8 +47,8 @@ class ThreadComposer extends Component {
 }
 
 ThreadComposer.propTypes = {
-    addNewThread: PropTypes.func.isRequired,
-    addNewGroupThread: PropTypes.func.isRequired
+    //addNewThread: PropTypes.func.isRequired,
+    //addNewGroupThread: PropTypes.func.isRequired
 };
 
 export default ThreadComposer;

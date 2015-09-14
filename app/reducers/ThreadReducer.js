@@ -1,9 +1,28 @@
 import * as Action from '../constants/ActionTypes';
 import uuid from 'node-uuid';
 import Thread from '../models/Thread';
+import Contact from '../models/Contact';
+import GroupInfo from '../models/GroupInfo';
 import * as _ from 'lodash';
 
-const initialState = { threads : [], isEditing: false};
+let firstContact = new Contact();
+firstContact.phoneNumber = '1111111111';
+let firstThread = new Thread(firstContact, false, null);
+firstThread.lastMessageText = 'test first message';
+
+let secondContact = new Contact();
+secondContact.phoneNumber = '2222222222';
+let secondThread = new Thread(secondContact, false, null);
+secondThread.lastMessageText = 'test second message';
+
+let thirdContact = new Contact();
+thirdContact.phoneNumber = '3333333333';
+let thirdThread = new Thread(thirdContact, false, null);
+thirdThread.lastMessageText = 'test third message';
+
+let threadList = [firstThread, secondThread, thirdThread];
+//const initialState = { threads : [], isEditing: false};
+const initialState = { threads : threadList, isEditing: false};
 
 export function threadState(state = initialState, action = {}) {
     switch (action.type) {

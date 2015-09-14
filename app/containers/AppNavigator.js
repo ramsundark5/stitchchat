@@ -1,5 +1,6 @@
 import React, { Component, View, Navigator, PropTypes } from 'react-native';
 import MessagePage from '../containers/MessagePage';
+import InboxPage from '../containers/InboxPage';
 import Router from './Router';
 import NavigationBar from 'react-native-navbar';
 import {navStyle} from '../styles/NavBarStyles';
@@ -11,10 +12,10 @@ class AppNavigator extends Component {
         this.initialRoute = {
             name: 'messageview',
             index: 0,
-            component: MessagePage,
+            component: InboxPage,
             navigationBar: (
                 <NavigationBar
-                    title = 'Messages'
+                    title = 'Inbox'
                     hidePrev = {true}
                     style = {navStyle.navBarContainer}
                     />
