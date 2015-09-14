@@ -40,11 +40,4 @@ describe('Message actions tests', () => {
         });
     });
 
-    /*it('selectAndSetEditingMode should dispatch SELECT_MESSAGE action',() =>{
-        expect(actions.selectAndSetEditingMode(1)).toEqual({
-            type: types.UPDATE_MESSAGE_STATUS,
-            id: 1,
-            status: Status.STATUS_READ_CONFIRM
-        });
-    });*/
 });

@@ -24,7 +24,6 @@ describe('Message reducer tests', () => {
             text: 'first message'
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        let arr = stateAfterFirstAdd.messages;
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
 
         let secondNewMessageAction = {
@@ -155,6 +154,42 @@ describe('Message reducer tests', () => {
         expect(stateAfterDeleteSelected.messages[0].selected).toBe(false);
         expect(stateAfterDeleteSelected.messages.length).toBe(1);
         expect(stateAfterDeleteSelected.isEditing).toBe(false);
+    });
+
+    it('CLEAR_SELECTED should clear the selected message', () => {
+        let firstNewMessageAction = {
+            type: types.ADD_MESSAGE,
+            text: 'first message'
+        };
+        let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
+        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].selected).toBe(false);
+
+        let secondNewMessageAction = {
+            type: types.ADD_MESSAGE,
+            text: 'second message'
+        };
+        let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
+        expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
+
+        let firstMessageId = stateAfterFirstAdd.messages[0].id;
+        let selectAction = {
+            type: types.SELECT_MESSAGE,
+            id: firstMessageId
+        };
+
+        let stateAfterMessageSelect = messageState(stateAfterSecondAdd, selectAction);
+        expect(stateAfterMessageSelect.messages[0].selected).toBe(true);
+        expect(stateAfterMessageSelect.messages[1].selected).toBe(false);
+        expect(stateAfterMessageSelect.isEditing).toBe(true);
+
+        let clearSelectedAction = {
+            type: types.CLEAR_SELECTED_MESSAGE
+        };
+
+        let stateAfterClearSelected = messageState(stateAfterMessageSelect, clearSelectedAction);
+        expect(stateAfterClearSelected.messages[0].selected).toBe(false);
+        expect(stateAfterClearSelected.isEditing).toBe(false);
     });
 
 });

@@ -187,4 +187,48 @@ describe('Thread reducer tests', () => {
         expect(stateAfterDeleteSelected.isEditing).toBe(false);
     });
 
+    it('CLEAR_SELECTED should clear the selected Thread', () => {
+        let firstContact = new Contact();
+        firstContact.phoneNumber = '1111111111';
+        let firstNewThreadAction = {
+            type: types.ADD_THREAD,
+            recipientContactInfo: firstContact,
+            isGroupThread: false,
+            groupInfo: null
+        };
+
+        let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
+        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+
+        let secondContact = new Contact();
+        secondContact.phoneNumber = '2222222222';
+        let secondNewThreadAction = {
+            type: types.ADD_THREAD,
+            recipientContactInfo: secondContact,
+            isGroupThread: false,
+            groupInfo: null
+        };
+        let stateAfterSecondAdd = threadState(stateAfterFirstAdd, secondNewThreadAction);
+        expect(stateAfterSecondAdd.threads[1].recipientContactInfo.phoneNumber).toEqual('2222222222');
+
+        let firstThreadId = stateAfterFirstAdd.threads[0].id;
+        let selectAction = {
+            type: types.SELECT_THREAD,
+            id: firstThreadId
+        };
+
+        let stateAfterThreadSelect = threadState(stateAfterSecondAdd, selectAction);
+        expect(stateAfterThreadSelect.threads[0].selected).toBe(true);
+        expect(stateAfterThreadSelect.threads[1].selected).toBe(false);
+        expect(stateAfterThreadSelect.isEditing).toBe(true);
+
+        let clearSelectedAction = {
+            type: types.CLEAR_SELECTED_THREAD
+        };
+
+        let stateAfterClearSelected = threadState(stateAfterThreadSelect, clearSelectedAction);
+        expect(stateAfterClearSelected.threads[0].selected).toBe(false);
+        expect(stateAfterClearSelected.isEditing).toBe(false);
+    });
+
 });
