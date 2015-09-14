@@ -12,7 +12,7 @@ class AppNavigator extends Component {
         this.initialRoute = {
             name: 'messageview',
             index: 0,
-            component: InboxPage,
+            component: MessagePage,
             navigationBar: (
                 <NavigationBar
                     title = 'Inbox'

@@ -1,0 +1,3 @@
+rootProject.name = 'stitchchat'
+
+include ':app'

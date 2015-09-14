@@ -46,12 +46,18 @@ class MessageList extends Component {
                     renderSectionHeader={this.renderSectionHeader}
                     loadData={actions.loadOlderMessages}
                     refreshDescription="Loading messages"
-                    renderRow={(rowData) => <MessageItem key={rowData.id} message={rowData}
-                                                isEditing={isEditing} {...actions}/>}/>
+                    renderRow={this.renderMessageItem.bind(this)}/>
                 <TouchableHighlight onPress={actions.deleteSelected}>
                     <Text>Delete</Text>
                  </TouchableHighlight>
             </View>
+        );
+    }
+
+    renderMessageItem(rowData, sectionID, rowID) {
+        return (
+            <MessageItem key={rowData.id} message={rowData}
+                         isEditing={this.props.isEditing} {...this.props.actions}/>
         );
     }
 
