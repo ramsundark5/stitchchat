@@ -3,19 +3,22 @@ import {commons, defaultStyle} from '../../styles/CommonStyles';
 import {messageStyle} from '../../styles/MessageStyles';
 import { Icon } from 'react-native-icons';
 import * as Status from '../../constants/MessageConstants.js';
+import MQTTClient from '../../utils/MQTTClient';
 
 class MessageItem extends Component {
     constructor(props, context) {
         super(props, context);
+        this.mqtt = new MQTTClient();
     }
 
-    selectMessage(id) {
-        this.props.selectMessage(id);
+    selectMessage(message) {
+        this.props.selectMessage(message.id);
     }
 
-    selectMessageOnlyInEditingMode(id){
+    selectMessageOnlyInEditingMode(message){
+        this.mqtt.publish(message);
         if(this.props.isEditing){
-            this.selectMessage(id);
+            this.selectMessage(message.id);
         }
     }
 
@@ -34,25 +37,29 @@ class MessageItem extends Component {
         let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
         let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
         let msgAlign     = message.owner? commons.pullRight : commons.pullLeft;
-        let statusIcon   = this.getStatusIcon(message.state);
         let messageBgColor = message.selected ? messageStyle.msgSelected : messageStyle.msgUnselected;
         return (
             <TouchableHighlight style={[messageStyle.msgItemContainer, msgAlign, messageBgColor]}
-                                onPress = {() => this.selectMessageOnlyInEditingMode(message.id)}
-                                onLongPress={() => this.selectMessage(message.id)}>
+                                onPress = {() => this.selectMessageOnlyInEditingMode(message)}
+                                onLongPress={() => this.selectMessage(message)}>
                 <View style={[messageStyle.msgItem, msgItemStyle]}>
                     <Text style={msgTextStyle}>
                         {message.text}
                     </Text>
-                    <View style={[commons.horizontalNoWrap, commons.pullRight]}>
-                        <Text style={commons.smallText}>sent</Text>
-                        <Icon name={statusIcon}
-                              size={defaultStyle.smallIconSize}
-                              style={commons.smallIcon}/>
-                    </View>
+                    {this._renderStatusIcon(message)}
                 </View>
             </TouchableHighlight>
         );
+    }
+
+    _renderStatusIcon(message){
+        let statusIcon   = this.getStatusIcon(message.state);
+        <View style={[commons.horizontalNoWrap, commons.pullRight]}>
+            <Text style={commons.smallText}>sent</Text>
+            <Icon name={statusIcon}
+                  size={defaultStyle.smallIconSize}
+                  style={commons.smallIcon}/>
+        </View>
     }
 }
 

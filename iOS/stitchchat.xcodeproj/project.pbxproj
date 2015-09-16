@@ -25,6 +25,14 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */; };
 		A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A29AC1E31B98B46D00B29901 /* ionicons.ttf */; };
+		A2F214D81BA8DCE300EDAC0F /* MQTTDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */; };
+		A2F214D91BA8DCE300EDAC0F /* MQTTEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */; };
+		A2F214DA1BA8DCE300EDAC0F /* MQTTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */; };
+		A2F214DB1BA8DCE300EDAC0F /* MQTTPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D01BA8DCE300EDAC0F /* MQTTPersistence.m */; };
+		A2F214DC1BA8DCE300EDAC0F /* MQTTSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D21BA8DCE300EDAC0F /* MQTTSession.m */; };
+		A2F214DD1BA8DCE300EDAC0F /* MQTTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D41BA8DCE300EDAC0F /* MQTTSessionManager.m */; };
+		A2F214DE1BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D61BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m */; };
+		A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */; };
 		A2F2340E1BA09E2B000A5A9E /* libRNClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */; };
 		A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */; };
 		A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F234121BA35ED9000A5A9E /* HelloManager.swift */; };
@@ -116,6 +124,13 @@
 			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
 			remoteInfo = ReactNativeIcons;
 		};
+		A2F2148B1BA8C07400EDAC0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2F214871BA8C07400EDAC0F /* CocoaMQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8BF70340198DDB7900A220F6;
+			remoteInfo = CocoaMQTT;
+		};
 		A2F2340C1BA0036A000A5A9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */;
@@ -149,6 +164,25 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
 		A29AC1E31B98B46D00B29901 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
+		A2F214871BA8C07400EDAC0F /* CocoaMQTT.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CocoaMQTT.xcodeproj; path = "../../../Downloads/CocoaMQTT-master/CocoaMQTT.xcodeproj"; sourceTree = "<group>"; };
+		A2F214C71BA8DCE300EDAC0F /* MQTTClient-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MQTTClient-Prefix.pch"; sourceTree = "<group>"; };
+		A2F214C81BA8DCE300EDAC0F /* MQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTClient.h; sourceTree = "<group>"; };
+		A2F214C91BA8DCE300EDAC0F /* MQTTDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTDecoder.h; sourceTree = "<group>"; };
+		A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTDecoder.m; sourceTree = "<group>"; };
+		A2F214CB1BA8DCE300EDAC0F /* MQTTEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTEncoder.h; sourceTree = "<group>"; };
+		A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTEncoder.m; sourceTree = "<group>"; };
+		A2F214CD1BA8DCE300EDAC0F /* MQTTMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTMessage.h; sourceTree = "<group>"; };
+		A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTMessage.m; sourceTree = "<group>"; };
+		A2F214CF1BA8DCE300EDAC0F /* MQTTPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPersistence.h; sourceTree = "<group>"; };
+		A2F214D01BA8DCE300EDAC0F /* MQTTPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTPersistence.m; sourceTree = "<group>"; };
+		A2F214D11BA8DCE300EDAC0F /* MQTTSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSession.h; sourceTree = "<group>"; };
+		A2F214D21BA8DCE300EDAC0F /* MQTTSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTSession.m; sourceTree = "<group>"; };
+		A2F214D31BA8DCE300EDAC0F /* MQTTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSessionManager.h; sourceTree = "<group>"; };
+		A2F214D41BA8DCE300EDAC0F /* MQTTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTSessionManager.m; sourceTree = "<group>"; };
+		A2F214D51BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSSLSecurityPolicy.h; sourceTree = "<group>"; };
+		A2F214D61BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTSSLSecurityPolicy.m; sourceTree = "<group>"; };
+		A2F214DF1BA8DDAB00EDAC0F /* RNMQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMQTTClient.h; sourceTree = "<group>"; };
+		A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMQTTClient.m; sourceTree = "<group>"; };
 		A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNClipboard.xcodeproj; path = "../node_modules/react-native-clipboard/RNClipboard.xcodeproj"; sourceTree = "<group>"; };
 		A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-file-upload/FileUpload.m"; sourceTree = "<group>"; };
 		A2F234111BA35ED8000A5A9E /* stitchchat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stitchchat-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -317,6 +351,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A2F214C51BA8DCE300EDAC0F /* MQTTClient */,
+				A2F214871BA8C07400EDAC0F /* CocoaMQTT.xcodeproj */,
 				A2F234141BA35FB1000A5A9E /* HelloManager.m */,
 				A2F234121BA35ED9000A5A9E /* HelloManager.swift */,
 				A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */,
@@ -348,6 +384,39 @@
 				A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A2F214881BA8C07400EDAC0F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2F2148C1BA8C07400EDAC0F /* CocoaMQTT */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A2F214C51BA8DCE300EDAC0F /* MQTTClient */ = {
+			isa = PBXGroup;
+			children = (
+				A2F214C71BA8DCE300EDAC0F /* MQTTClient-Prefix.pch */,
+				A2F214C81BA8DCE300EDAC0F /* MQTTClient.h */,
+				A2F214C91BA8DCE300EDAC0F /* MQTTDecoder.h */,
+				A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */,
+				A2F214CB1BA8DCE300EDAC0F /* MQTTEncoder.h */,
+				A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */,
+				A2F214CD1BA8DCE300EDAC0F /* MQTTMessage.h */,
+				A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */,
+				A2F214CF1BA8DCE300EDAC0F /* MQTTPersistence.h */,
+				A2F214D01BA8DCE300EDAC0F /* MQTTPersistence.m */,
+				A2F214D11BA8DCE300EDAC0F /* MQTTSession.h */,
+				A2F214D21BA8DCE300EDAC0F /* MQTTSession.m */,
+				A2F214D31BA8DCE300EDAC0F /* MQTTSessionManager.h */,
+				A2F214D41BA8DCE300EDAC0F /* MQTTSessionManager.m */,
+				A2F214D51BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.h */,
+				A2F214D61BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m */,
+				A2F214DF1BA8DDAB00EDAC0F /* RNMQTTClient.h */,
+				A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */,
+			);
+			path = MQTTClient;
 			sourceTree = "<group>";
 		};
 		A2F233FE1BA00369000A5A9E /* Products */ = {
@@ -423,6 +492,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = A2F214881BA8C07400EDAC0F /* Products */;
+					ProjectRef = A2F214871BA8C07400EDAC0F /* CocoaMQTT.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -558,6 +631,13 @@
 			remoteRef = A29AC1E01B98B20000B29901 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		A2F2148C1BA8C07400EDAC0F /* CocoaMQTT */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = CocoaMQTT;
+			remoteRef = A2F2148B1BA8C07400EDAC0F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -602,10 +682,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */,
+				A2F214DB1BA8DCE300EDAC0F /* MQTTPersistence.m in Sources */,
 				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
+				A2F214D81BA8DCE300EDAC0F /* MQTTDecoder.m in Sources */,
+				A2F214DD1BA8DCE300EDAC0F /* MQTTSessionManager.m in Sources */,
+				A2F214DA1BA8DCE300EDAC0F /* MQTTMessage.m in Sources */,
+				A2F214DE1BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				A2F214DC1BA8DCE300EDAC0F /* MQTTSession.m in Sources */,
+				A2F214D91BA8DCE300EDAC0F /* MQTTEncoder.m in Sources */,
+				A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +761,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/ramsundar/Downloads/MQTT-Client-Framework-master/MQTTClient/dist",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -692,6 +784,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/ramsundar/Downloads/MQTT-Client-Framework-master/MQTTClient/dist",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

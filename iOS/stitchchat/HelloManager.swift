@@ -1,10 +1,4 @@
-//
-//  Hello.swift
-//  stitchchat
-//
-//  Created by Ramsundar Kuppusamy on 9/11/15.
-//  Copyright (c) 2015 Facebook. All rights reserved.
-//
+
 
 import Foundation
 
