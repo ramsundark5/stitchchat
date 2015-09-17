@@ -4,6 +4,7 @@ import InboxPage from '../containers/InboxPage';
 import Router from './Router';
 import NavigationBar from 'react-native-navbar';
 import {navStyle} from '../styles/NavBarStyles';
+import AppInitService from '../services/AppInitService';
 
 class AppNavigator extends Component {
 
@@ -21,6 +22,7 @@ class AppNavigator extends Component {
                     />
             )
         }
+        new AppInitService();
     }
 
     renderScene(route, navigator) {

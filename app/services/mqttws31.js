@@ -1362,6 +1362,9 @@ Paho.MQTT = (function (global) {
         else this._trace("Client._socket_send", wireMessage);
 
         var encodedMessage = wireMessage.encode();
+        console.log('encodedMessage is '+encodedMessage);
+        var decodedMessage = String.fromCharCode.apply(null, new Uint8Array(encodedMessage));
+        console.log('decoded message is '+ decodedMessage);
         this.socket.send(encodedMessage);
         /* We have proved to the server we are alive. */
         this.sendPinger.reset();

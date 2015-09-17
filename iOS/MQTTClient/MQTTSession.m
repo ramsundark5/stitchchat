@@ -79,7 +79,6 @@
                           willQoS:0
                    willRetainFlag:NO
                     protocolLevel:4
-                    //protocolLevel:3
                           runLoop:nil
                           forMode:nil];
 }

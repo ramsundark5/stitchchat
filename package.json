@@ -17,6 +17,7 @@
     "react-native-icons": "^0.3.6",
     "react-native-navbar": "^0.8.2",
     "react-native-refreshable-listview": "^1.3.0",
+    "react-native-swift-socketio": "0.0.6",
     "react-redux": "^0.8.2",
     "redux": "^1.0.1",
     "redux-logger": "^1.0.6",

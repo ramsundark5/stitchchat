@@ -341,8 +341,7 @@
 - (void)connected:(MQTTSession *)session sessionPresent:(BOOL)sessionPresent {
     if (self.clean || !self.reconnectFlag || !sessionPresent) {
         if (self.subscriptions && [self.subscriptions count]) {
-            //[self.session subscribeAndWaitToTopics:self.subscriptions];
-              [self.session subscribeToTopics:self.subscriptions];
+            [self.session subscribeToTopics:self.subscriptions];
         }
         self.reconnectFlag = TRUE;
     }
@@ -353,7 +352,7 @@
 {
     if (self.state == MQTTSessionManagerStateStarting) {
         self.state = MQTTSessionManagerStateConnecting;
-        [self.session connectAndWaitToHost:self.host
+        [self.session connectToHost:self.host
                                port:self.port
                            usingSSL:self.tls];
     }

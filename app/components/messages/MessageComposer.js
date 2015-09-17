@@ -3,8 +3,14 @@ import MessageTextInput from './MessageTextInput';
 import MessageOptionsBox from './MessageOptionsBox';
 import { Icon } from 'react-native-icons';
 import {commons} from '../../styles/CommonStyles';
+import MQTTClient from '../../utils/MQTTClient';
 
 class MessageComposer extends Component {
+    constructor(props, context) {
+        super(props, context);
+        let mqtt = new MQTTClient();
+        mqtt.init();
+    }
 
     handleSave(text) {
         if (text.length !== 0) {
