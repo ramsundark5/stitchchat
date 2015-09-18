@@ -3,7 +3,7 @@ import {commons, defaultStyle} from '../../styles/CommonStyles';
 import {messageStyle} from '../../styles/MessageStyles';
 import { Icon } from 'react-native-icons';
 import * as Status from '../../constants/MessageConstants.js';
-import MQTTClient from '../../utils/MQTTClient';
+import MQTTClient from '../../transport/MQTTClient';
 
 class MessageItem extends Component {
     constructor(props, context) {

@@ -1,6 +1,6 @@
 //
 //  SocketLogger.swift
-//  Socket.IO-Client-Swift
+//  SocketIO-Swift
 //
 //  Created by Erik Little on 4/11/15.
 //
@@ -24,38 +24,51 @@
 
 import Foundation
 
-var Logger: SocketLogger = DefaultSocketLogger()
+private let MESSAGE_LENGTH_MAX = 10000
 
-public protocol SocketLogger {
-    /// Whether to log or not
-    var log: Bool {get set}
-    
-    /// Normal log messages
-    func log(message: String, type: String, args: AnyObject...)
-    
-    /// Error Messages
-    func error(message: String, type: String, args: AnyObject...)
+protocol SocketLogClient {
+    var log:Bool {get set}
+    var logType:String {get}
 }
 
-public extension SocketLogger {
-    func log(message: String, type: String, args: AnyObject...) {
-        abstractLog("Log", message: message, type: type, args: args)
+final class SocketLogger {
+    private static let printQueue = dispatch_queue_create("printQueue", DISPATCH_QUEUE_SERIAL)
+    
+    private static func shorten(item:AnyObject) -> CVarArgType {
+        var str = toString(item)
+        
+        if count(str) > MESSAGE_LENGTH_MAX {
+            let endIndex = advance(str.startIndex, MESSAGE_LENGTH_MAX)
+            
+            str = str.substringToIndex(endIndex)
+        }
+        
+        return str
     }
     
-    func error(message: String, type: String, args: AnyObject...) {
-        abstractLog("ERROR", message: message, type: type, args: args)
+    static func log(message:String, client:SocketLogClient, altType:String? = nil, args:AnyObject...) {
+        if !client.log {
+            return
+        }
+        
+        dispatch_async(printQueue) {[type = client.logType] in
+            let newArgs = args.map(SocketLogger.shorten)
+            let replaced = String(format: message, arguments: newArgs)
+            
+            NSLog("%@: %@", altType ?? type, replaced)
+        }
     }
     
-    private func abstractLog(logType: String, message: String, type: String, args: [AnyObject]) {
-        guard log else { return }
+    static func err(message:String, client:SocketLogClient, altType:String? = nil, args:AnyObject...) {
+        if !client.log {
+            return
+        }
         
-        let newArgs = args.map {arg -> CVarArgType in String(arg)}
-        let replaced = String(format: message, arguments: newArgs)
-        
-        NSLog("%@ %@: %@", logType, type, replaced)
+        dispatch_async(printQueue) {[type = client.logType] in
+            let newArgs = args.map(SocketLogger.shorten)
+            let replaced = String(format: message, arguments: newArgs)
+            
+            NSLog("ERROR %@: %@", altType ?? type, replaced)
+        }
     }
-}
-
-struct DefaultSocketLogger: SocketLogger {
-    var log = false
 }

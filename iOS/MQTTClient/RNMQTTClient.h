@@ -7,12 +7,14 @@
 //
 #import <UIKit/UIKit.h>
 #import "RCTBridgeModule.h"
-#import "MQTTSession.h"
+#import "MQTTSessionManager.h"
 
 #ifndef stitchchat_RNMQTTClient_h
 #define stitchchat_RNMQTTClient_h
 #endif
 
-@interface RNMQTTClient : NSObject<MQTTSessionDelegate, RCTBridgeModule>
+@interface RNMQTTClient : NSObject<MQTTSessionManagerDelegate, RCTBridgeModule>
+
+//+ (MQTTSession*)mqttSession;
 
 @end
