@@ -30,9 +30,10 @@ RCT_EXPORT_METHOD(connect:(NSString *)host port:(NSInteger)port)
   self.session.keepAliveInterval = 6100;
   self.session.cleanSessionFlag = YES;
   
-  [self.session connectToHost:host port:1883 usingSSL:NO];
-  [self.session subscribeToTopic:topicName atLevel:MQTTQosLevelAtLeastOnce];
+  [self.session connectAndWaitToHost:host port:1883 usingSSL:NO];
+  [self.session subscribeAndWaitToTopic:topicName atLevel:MQTTQosLevelAtLeastOnce];
 }
+
 
 RCT_EXPORT_METHOD(send:(NSString*)message
                   resolver:(RCTPromiseResolveBlock)resolve
@@ -45,6 +46,11 @@ RCT_EXPORT_METHOD(send:(NSString*)message
     if (message) {
       resolve(message);
     }
+}
+
+- (dispatch_queue_t)methodQueue
+{
+  return dispatch_get_main_queue();
 }
 
 - (void)newMessage:(MQTTSession *)session

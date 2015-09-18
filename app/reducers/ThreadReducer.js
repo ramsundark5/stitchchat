@@ -1,5 +1,4 @@
 import * as Action from '../constants/ActionTypes';
-import uuid from 'node-uuid';
 import Thread from '../models/Thread';
 import Contact from '../models/Contact';
 import GroupInfo from '../models/GroupInfo';

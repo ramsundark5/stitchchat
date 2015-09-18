@@ -6,6 +6,7 @@ import RootReducer from '../reducers/RootReducer';
 import ConfigureStore from '../store/ConfigureStore';
 import AppNavigator from './AppNavigator';
 const store = ConfigureStore();
+//global.Buffer = global.Buffer || require('buffer').Buffer;
 
 export default class App extends Component {
     render() {

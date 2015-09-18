@@ -1,5 +1,4 @@
 import * as Action from '../constants/ActionTypes';
-import uuid from 'node-uuid';
 import Message from '../models/Message';
 import * as _ from 'lodash';
 import {copyMessagesToClipBoard} from '../services/CopyService';

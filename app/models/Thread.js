@@ -1,10 +1,10 @@
 import Contact from './Contact';
 import GroupInfo from './GroupInfo';
-import uuid from 'node-uuid';
+import * as _ from 'lodash';
 
 export default class Thread{
     constructor(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo){
-        this.id                     = uuid.v4();
+        this.id                     = _.uniqueId('thread');
         this.recipientContactInfo   = recipientContactInfo;
         this.isGroupThread          = isGroupThread;
         this.groupInfo              = groupInfo;
