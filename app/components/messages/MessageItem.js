@@ -16,7 +16,7 @@ class MessageItem extends Component {
     }
 
     selectMessageOnlyInEditingMode(message){
-        this.mqtt.publish(message);
+        this.mqtt.publish('MQTTChat', message);
         if(this.props.isEditing){
             this.selectMessage(message.id);
         }

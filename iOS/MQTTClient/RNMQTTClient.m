@@ -40,8 +40,19 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
 
   NSData* encodedWillMessage = nil;
   
-  if (willMessage != (id)[NSNull null] && willMessage.length > 0 ){
+  //set default willTopic and willMessage if not defined
+  if( willTopic == (id)[NSNull null] || willTopic.length <= 0 ){
+    willTopic = [NSString stringWithFormat:@"%@/%@",
+                 [UIDevice currentDevice].name,
+                 @"status"];
+  }
+  if ( willMessage == (id)[NSNull null] || willMessage.length <= 0 ){
+    willMessage = @"offline";
     encodedWillMessage = [willMessage dataUsingEncoding:NSUTF8StringEncoding];
+  }
+  
+  if(keepAlive <= 0){
+    keepAlive = 60;
   }
   /*
    * MQTTClient: create an instance of MQTTSessionManager once and connect
@@ -54,17 +65,17 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
     
       [self.manager connectTo:host
                        port:port
-                        tls:tls
-                  keepalive:keepAlive
-                      clean:cleanSession
-                       auth:auth
-                       user:user
-                       pass:password
-                  willTopic:willTopic
-                       will:encodedWillMessage
-                    willQos:willQos
-             willRetainFlag:willRetainFlag
-               withClientId:clientId];
+                          tls:tls
+                    keepalive:keepAlive
+                        clean:cleanSession
+                         auth:auth
+                         user:user
+                         pass:password
+                    willTopic:willTopic
+                         will:encodedWillMessage
+                      willQos:willQos
+               willRetainFlag:willRetainFlag
+                 withClientId:clientId];
   } else {
       [self.manager connectToLast];
   }
@@ -73,16 +84,16 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
    * MQTTCLient: observe the MQTTSessionManager's state to display the connection status
    */
   
-  [self.manager addObserver:self
+  /*[self.manager addObserver:self
                  forKeyPath:@"state"
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                    context:nil];
+                    context:nil];*/
   
 }
 
 
-RCT_EXPORT_METHOD(publish:(NSString*)message
-                  topicName:(NSString*) topicName
+RCT_EXPORT_METHOD(publish:(NSString*)topicName
+                  message:(NSString*) message
                   qosLevel:(NSInteger) qosLevel
                   retain:(BOOL) retain) {
   

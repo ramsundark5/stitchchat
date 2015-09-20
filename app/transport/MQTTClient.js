@@ -8,23 +8,35 @@ class MQTTClient{
         //console.log('native mods are '+NM);
     }
     init(){
-        this.connect("broker.mqttdashboard.com", 1883);
-        var subscription = NativeAppEventEmitter.addListener(
+        var connectionDetails = {
+            host: 'broker.mqttdashboard.com',
+            port: 1883,
+            tls : false
+        }
+        this.connect(connectionDetails);
+        this.subscribeTo('MQTTChatReceive', 1);
+        NativeAppEventEmitter.addListener(
             'onMessageReceived',
             (message) => console.log(message)
         );
     }
 
-    connect(host, port, clientId){
-        RNMQTTClient.connect(host, port);
+    connect(connectionDetails){
+        RNMQTTClient.connect(connectionDetails);
     }
 
-    publish(message){
-        RNMQTTClient.send(message.text);
+    publish(topicName, message, qosLevel = 0, retain = false){
+        if(!topicName){
+            throw("topic name is required to publish message");
+        }
+        if(!message || !message.text){
+            throw("message is required to publish message");
+        }
+        RNMQTTClient.publish(topicName, message.text, qosLevel, retain);
     }
 
-    subscribe(){
-
+    subscribeTo(topicName, qosLevel){
+        RNMQTTClient.subscribeTo(topicName, qosLevel);
     }
 
     onReceiveMessage(message){
