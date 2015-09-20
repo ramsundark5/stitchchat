@@ -15,6 +15,4 @@
 
 @interface RNMQTTClient : NSObject<MQTTSessionManagerDelegate, RCTBridgeModule>
 
-//+ (MQTTSession*)mqttSession;
-
 @end

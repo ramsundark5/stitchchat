@@ -5,6 +5,7 @@
 #import "RNMQTTClient.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
+#import "RCTConvert.h"
 
 @import UIKit.UIPasteboard;
 
@@ -20,37 +21,52 @@
 @synthesize bridge = _bridge;
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(connect:(NSString *)host port:(NSInteger)port)
+RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
 {
   
-  NSString* topicName = @"MQTTChatReceive";
+  NSString *host          = [RCTConvert NSString:connectionDetails[@"host"]];
+  NSInteger port          = [RCTConvert NSInteger:connectionDetails[@"port"]];
+  BOOL      tls           = [RCTConvert BOOL:connectionDetails[@"tls"]];
+  NSInteger keepAlive     = [RCTConvert NSInteger:connectionDetails[@"keepAlive"]];
+  BOOL cleanSession       = [RCTConvert BOOL:connectionDetails[@"cleanSession"]];
+  BOOL auth               = [RCTConvert BOOL:connectionDetails[@"auth"]];
+  NSString *user          = [RCTConvert NSString:connectionDetails[@"username"]];
+  NSString *password      = [RCTConvert NSString:connectionDetails[@"password"]];
+  NSString *willTopic     = [RCTConvert NSString:connectionDetails[@"willTopic"]];
+  NSString *willMessage   = [RCTConvert NSString:connectionDetails[@"willMessage"]];
+  NSInteger willQos       = [RCTConvert NSInteger:connectionDetails[@"willQos"]];
+  BOOL willRetainFlag     = [RCTConvert BOOL:connectionDetails[@"willRetainFlag"]];
+  NSString *clientId      = [RCTConvert NSString:connectionDetails[@"clientId"]];
+
+  NSData* encodedWillMessage = nil;
+  
+  if (willMessage != (id)[NSNull null] && willMessage.length > 0 ){
+    encodedWillMessage = [willMessage dataUsingEncoding:NSUTF8StringEncoding];
+  }
   /*
    * MQTTClient: create an instance of MQTTSessionManager once and connect
    * will is set to let the broker indicate to other subscribers if the connection is lost
    */
   if (!self.manager) {
-    self.manager = [[MQTTSessionManager alloc] init];
-    self.manager.delegate = self;
-    self.manager.subscriptions = [[NSMutableDictionary alloc] init];
-    [self.manager.subscriptions setObject:[NSNumber numberWithInt:MQTTQosLevelAtLeastOnce]
-                                   forKey: topicName];
-    [self.manager connectTo:host
+      self.manager = [[MQTTSessionManager alloc] init];
+      self.manager.delegate = self;
+      self.manager.subscriptions = [[NSMutableDictionary alloc] init];
+    
+      [self.manager connectTo:host
                        port:port
-                        tls:FALSE
-                  keepalive:60
-                      clean:true
-                       auth:false
-                       user:nil
-                       pass:nil
-                  willTopic:[NSString stringWithFormat:@"%@/%@",
-                             @"example/12345",
-                             [UIDevice currentDevice].name]
-                       will:[@"offline" dataUsingEncoding:NSUTF8StringEncoding]
-                    willQos:MQTTQosLevelAtLeastOnce
-             willRetainFlag:FALSE
-               withClientId:nil];
+                        tls:tls
+                  keepalive:keepAlive
+                      clean:cleanSession
+                       auth:auth
+                       user:user
+                       pass:password
+                  willTopic:willTopic
+                       will:encodedWillMessage
+                    willQos:willQos
+             willRetainFlag:willRetainFlag
+               withClientId:clientId];
   } else {
-    [self.manager connectToLast];
+      [self.manager connectToLast];
   }
   
   /*
@@ -65,31 +81,23 @@ RCT_EXPORT_METHOD(connect:(NSString *)host port:(NSInteger)port)
 }
 
 
-RCT_EXPORT_METHOD(send:(NSString*)message
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(publish:(NSString*)message
+                  topicName:(NSString*) topicName
+                  qosLevel:(NSInteger) qosLevel
+                  retain:(BOOL) retain) {
   
   [self.manager sendData:[message dataUsingEncoding:NSUTF8StringEncoding]
-                   topic: @"MQTTChat"
-                     qos:MQTTQosLevelAtLeastOnce
-                  retain:FALSE];
-    if (message) {
-      resolve(message);
-    }
+                   topic: topicName
+                     qos:qosLevel
+                  retain:retain];
 }
 
-- (void)newMessage:(MQTTSession *)session
-              data:(NSData *)data
-           onTopic:(NSString *)topic
-               qos:(MQTTQosLevel)qos
-          retained:(BOOL)retained
-               mid:(unsigned int)mid{
+RCT_EXPORT_METHOD(subscribeTo:(NSString*) topicName
+                            qosLevel:(NSInteger) qosLevel) {
   
-    NSString *contents = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
-                                               body:@{@"data": contents}];
-  
-  
+  [self.manager.subscriptions setObject:[NSNumber numberWithInt:qosLevel]
+                                 forKey: topicName];
+
 }
 
 /*
@@ -100,39 +108,51 @@ RCT_EXPORT_METHOD(send:(NSString*)message
    * MQTTClient: process received message
    */
   
-  NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  NSLog(@"MQTTSession received data");
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
+    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
                                                body:@{@"data": dataString}];
   
 }
 
-RCT_EXPORT_METHOD(disconnect:(id)sender) {
-  [self.manager disconnect];
+RCT_EXPORT_METHOD(initWithPersistence:(BOOL)persistent
+                              maxWindowSize:(NSUInteger)maxWindowSize
+                                maxMessages:(NSUInteger)maxMessages
+                                    maxSize:(NSUInteger)maxSize) {
+  
+  self.manager = [[MQTTSessionManager alloc] initWithPersistence:persistent
+                                                   maxWindowSize:maxWindowSize
+                                                     maxMessages:maxMessages
+                                                         maxSize:maxSize];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  switch (self.manager.state) {
-    case MQTTSessionManagerStateClosed:
-      NSLog(@"MQTTSession is closed");
-      break;
-    case MQTTSessionManagerStateClosing:
-      NSLog(@"MQTTSession is closing");
-      break;
-    case MQTTSessionManagerStateConnected:
-      NSLog(@"MQTTSession connected");
-      break;
-    case MQTTSessionManagerStateConnecting:
-      NSLog(@"MQTTSession still connecting");
-      break;
-    case MQTTSessionManagerStateError:
-      NSLog(@"MQTTSession errored out");
-      break;
-    case MQTTSessionManagerStateStarting:
-    default:
-      NSLog(@"MQTTSession is starting");
-      break;
-  }
+RCT_EXPORT_METHOD(disconnect:(id)sender) {
+    [self.manager disconnect];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
+                        change:(NSDictionary *)change
+                        context:(void *)context {
+    switch (self.manager.state) {
+        case MQTTSessionManagerStateClosed:
+          NSLog(@"MQTTSession is closed");
+          break;
+        case MQTTSessionManagerStateClosing:
+          //NSLog(@"MQTTSession is closing");
+          break;
+        case MQTTSessionManagerStateConnected:
+          NSLog(@"MQTTSession connected");
+          break;
+        case MQTTSessionManagerStateConnecting:
+          //NSLog(@"MQTTSession still connecting");
+          break;
+        case MQTTSessionManagerStateError:
+          NSLog(@"MQTTSession errored out");
+          break;
+        case MQTTSessionManagerStateStarting:
+        default:
+          //NSLog(@"MQTTSession is starting");
+          break;
+    }
 }
 
 /** Always run on main queue. Else MQTT is not able to maintain live connection.*/
