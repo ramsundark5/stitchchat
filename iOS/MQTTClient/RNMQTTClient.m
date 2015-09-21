@@ -84,10 +84,10 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
    * MQTTCLient: observe the MQTTSessionManager's state to display the connection status
    */
   
-  /*[self.manager addObserver:self
+  [self.manager addObserver:self
                  forKeyPath:@"state"
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                    context:nil];*/
+                    context:nil];
   
 }
 
@@ -148,20 +148,20 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
           NSLog(@"MQTTSession is closed");
           break;
         case MQTTSessionManagerStateClosing:
-          //NSLog(@"MQTTSession is closing");
+          NSLog(@"MQTTSession is closing");
           break;
         case MQTTSessionManagerStateConnected:
           NSLog(@"MQTTSession connected");
           break;
         case MQTTSessionManagerStateConnecting:
-          //NSLog(@"MQTTSession still connecting");
+          NSLog(@"MQTTSession still connecting");
           break;
         case MQTTSessionManagerStateError:
           NSLog(@"MQTTSession errored out");
           break;
         case MQTTSessionManagerStateStarting:
         default:
-          //NSLog(@"MQTTSession is starting");
+          NSLog(@"MQTTSession is starting");
           break;
     }
 }
@@ -172,6 +172,10 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
   return dispatch_get_main_queue();
   //can't get it to work off of main queue. this needs to be fixed.
   //return dispatch_queue_create("net.stitchchat.MQTTClient", DISPATCH_QUEUE_SERIAL);
+}
+
+- (void)dealloc {
+  [self.manager removeObserver:self forKeyPath:@"state"];
 }
 
 @end
