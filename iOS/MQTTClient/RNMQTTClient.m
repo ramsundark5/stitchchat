@@ -143,27 +143,36 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
                         change:(NSDictionary *)change
                         context:(void *)context {
+  
     switch (self.manager.state) {
         case MQTTSessionManagerStateClosed:
           NSLog(@"MQTTSession is closed");
           break;
         case MQTTSessionManagerStateClosing:
-          NSLog(@"MQTTSession is closing");
+          //NSLog(@"MQTTSession is closing");
           break;
         case MQTTSessionManagerStateConnected:
           NSLog(@"MQTTSession connected");
           break;
         case MQTTSessionManagerStateConnecting:
-          NSLog(@"MQTTSession still connecting");
+          //NSLog(@"MQTTSession still connecting");
           break;
         case MQTTSessionManagerStateError:
           NSLog(@"MQTTSession errored out");
           break;
         case MQTTSessionManagerStateStarting:
         default:
-          NSLog(@"MQTTSession is starting");
+          //NSLog(@"MQTTSession is starting");
           break;
     }
+  
+    NSNumber* newStatusVal = [NSNumber numberWithInt:self.manager.state];
+    [self onStatusChanged: newStatusVal];
+}
+
+-(void) onStatusChanged:(NSNumber *) newStatus{
+  [self.bridge.eventDispatcher sendAppEventWithName:@"onStatusChanged"
+                                               body:newStatus];
 }
 
 /** Always run on main queue. Else MQTT is not able to maintain live connection.*/

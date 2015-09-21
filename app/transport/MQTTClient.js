@@ -15,10 +15,8 @@ class MQTTClient{
         }
         this.connect(connectionDetails);
         this.subscribeTo('MQTTChatReceive', 1);
-        NativeAppEventEmitter.addListener(
-            'onMessageReceived',
-            (message) => console.log(message)
-        );
+        NativeAppEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
+        NativeAppEventEmitter.addListener( 'onStatusChanged', this.onStatusChanged);
     }
 
     connect(connectionDetails){
@@ -39,8 +37,12 @@ class MQTTClient{
         RNMQTTClient.subscribeTo(topicName, qosLevel);
     }
 
-    onReceiveMessage(message){
+    onStatusChanged(newStatus){
+        console.log("new status is "+newStatus);
+    }
 
+    onReceiveMessaged(message){
+        console.log(message);
     }
 
     onConnected(){
