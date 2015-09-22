@@ -1,3 +1,6 @@
+/android/app/.idea
+/android/stitchchat.iml
+/android/app/app.iml
 # OSX
 #
 .DS_Store
