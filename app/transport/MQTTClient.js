@@ -8,6 +8,9 @@ class MQTTClient{
         //console.log('native mods are '+NM);
     }
     init(){
+        if(!RNMQTTClient){
+            return;
+        }
         var connectionDetails = {
             host: 'broker.mqttdashboard.com',
             port: 1883,
