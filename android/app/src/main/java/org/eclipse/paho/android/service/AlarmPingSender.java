@@ -31,11 +31,11 @@ import org.eclipse.paho.client.mqttv3.internal.ClientComms;
 /**
  * Default ping sender implementation on Android. It is based on AlarmManager.
  *
- * <p>This class implements the {@link MqttPingSender} pinger interface
+ * <p>This class implements the {@link org.eclipse.paho.client.mqttv3.MqttPingSender} pinger interface
  * allowing applications to send ping packet to server every keep alive interval.
  * </p>
  *
- * @see MqttPingSender
+ * @see org.eclipse.paho.client.mqttv3.MqttPingSender
  */
 class AlarmPingSender implements MqttPingSender {
 	// Identifier for Intents, log messages, etc..

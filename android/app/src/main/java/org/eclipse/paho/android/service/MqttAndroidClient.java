@@ -53,7 +53,7 @@ import javax.net.ssl.TrustManagerFactory;
 /**
  * Enables an android application to communicate with an MQTT server using non-blocking methods.
  * <p>
- * Implementation of the MQTT asynchronous client interface {@link IMqttAsyncClient} , using the MQTT
+ * Implementation of the MQTT asynchronous client interface {@link org.eclipse.paho.client.mqttv3.IMqttAsyncClient} , using the MQTT
  * android service to actually interface with MQTT server. It provides android applications a simple programming interface to all features of the MQTT version 3.1
  * specification including:
  * <ul>
@@ -70,17 +70,17 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 
 	/**
 	 *
-	 * The Acknowledgment mode for messages received from {@link MqttCallback#messageArrived(String, MqttMessage)}
+	 * The Acknowledgment mode for messages received from {@link org.eclipse.paho.client.mqttv3.MqttCallback#messageArrived(String, org.eclipse.paho.client.mqttv3.MqttMessage)}
 	 *
 	 */
 	public enum Ack {
 		/**
-		 * As soon as the {@link MqttCallback#messageArrived(String, MqttMessage)} returns,
+		 * As soon as the {@link org.eclipse.paho.client.mqttv3.MqttCallback#messageArrived(String, org.eclipse.paho.client.mqttv3.MqttMessage)} returns,
 		 * the message has been acknowledged as received .
 		 */
 		AUTO_ACK,
 		/**
-		 * When {@link MqttCallback#messageArrived(String, MqttMessage)} returns, the message
+		 * When {@link org.eclipse.paho.client.mqttv3.MqttCallback#messageArrived(String, org.eclipse.paho.client.mqttv3.MqttMessage)} returns, the message
 		 * will not be acknowledged as received, the application will have to make an acknowledgment call
 		 * to {@link MqttAndroidClient} using {@link MqttAndroidClient#acknowledgeMessage(String)}
 		 */
@@ -278,7 +278,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * the client has been closed it cannot be reused. For instance attempts to
 	 * connect will fail.
 	 *
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if the client is not disconnected.
 	 */
 	@Override
@@ -292,15 +292,15 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	/**
 	 * Connects to an MQTT server using the default options.
 	 * <p>
-	 * The default options are specified in {@link MqttConnectOptions} class.
+	 * The default options are specified in {@link org.eclipse.paho.client.mqttv3.MqttConnectOptions} class.
 	 * </p>
 	 *
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for any connected problems
 	 * @return token used to track and wait for the connect to complete. The
 	 *         token will be passed to the callback methods if a callback is
 	 *         set.
-	 * @see #connect(MqttConnectOptions, Object, IMqttActionListener)
+	 * @see #connect(org.eclipse.paho.client.mqttv3.MqttConnectOptions, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken connect() throws MqttException {
@@ -312,16 +312,16 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * Connects to an MQTT server using the provided connect options.
 	 * <p>
 	 * The connection will be established using the options specified in the
-	 * {@link MqttConnectOptions} parameter.
+	 * {@link org.eclipse.paho.client.mqttv3.MqttConnectOptions} parameter.
 	 * </p>
 	 *
 	 * @param options
 	 *            a set of connection parameters that override the defaults.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for any connected problems
 	 * @return token used to track and wait for the connect to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @see #connect(MqttConnectOptions, Object, IMqttActionListener)
+	 * @see #connect(org.eclipse.paho.client.mqttv3.MqttConnectOptions, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken connect(MqttConnectOptions options) throws MqttException {
@@ -331,7 +331,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	/**
 	 * Connects to an MQTT server using the default options.
 	 * <p>
-	 * The default options are specified in {@link MqttConnectOptions} class.
+	 * The default options are specified in {@link org.eclipse.paho.client.mqttv3.MqttConnectOptions} class.
 	 * </p>
 	 *
 	 * @param userContext
@@ -340,11 +340,11 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * @param callback
 	 *            optional listener that will be notified when the connect
 	 *            completes. Use null if not required.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for any connected problems
 	 * @return token used to track and wait for the connect to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @see #connect(MqttConnectOptions, Object, IMqttActionListener)
+	 * @see #connect(org.eclipse.paho.client.mqttv3.MqttConnectOptions, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken connect(Object userContext, IMqttActionListener callback)
@@ -356,7 +356,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * Connects to an MQTT server using the specified options.
 	 * <p>
 	 * The server to connect to is specified on the constructor. It is
-	 * recommended to call {@link #setCallback(MqttCallback)} prior to
+	 * recommended to call {@link #setCallback(org.eclipse.paho.client.mqttv3.MqttCallback)} prior to
 	 * connecting in order that messages destined for the client can be accepted
 	 * as soon as the client is connected.
 	 * </p>
@@ -364,9 +364,9 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * The method returns control before the connect completes. Completion can
 	 * be tracked by:
 	 * <ul>
-	 * <li>Waiting on the returned token {@link IMqttToken#waitForCompletion()}
+	 * <li>Waiting on the returned token {@link org.eclipse.paho.client.mqttv3.IMqttToken#waitForCompletion()}
 	 * or</li>
-	 * <li>Passing in a callback {@link IMqttActionListener}</li>
+	 * <li>Passing in a callback {@link org.eclipse.paho.client.mqttv3.IMqttActionListener}</li>
 	 * </ul>
 	 * </p>
 	 *
@@ -380,7 +380,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completes. Use null if not required.
 	 * @return token used to track and wait for the connect to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for any connected problems, including communication errors
 	 */
 
@@ -474,14 +474,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * An attempt is made to quiesce the client allowing outstanding work to
 	 * complete before disconnecting. It will wait for a maximum of 30 seconds
 	 * for work to quiesce before disconnecting. This method must not be called
-	 * from inside {@link MqttCallback} methods.
+	 * from inside {@link org.eclipse.paho.client.mqttv3.MqttCallback} methods.
 	 * </p>
 	 *
 	 * @return token used to track and wait for disconnect to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for problems encountered while disconnecting
-	 * @see #disconnect(long, Object, IMqttActionListener)
+	 * @see #disconnect(long, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken disconnect() throws MqttException {
@@ -498,7 +498,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * An attempt is made to quiesce the client allowing outstanding work to
 	 * complete before disconnecting. It will wait for a maximum of the
 	 * specified quiesce time for work to complete before disconnecting. This
-	 * method must not be called from inside {@link MqttCallback} methods.
+	 * method must not be called from inside {@link org.eclipse.paho.client.mqttv3.MqttCallback} methods.
 	 * </p>
 	 *
 	 * @param quiesceTimeout
@@ -508,9 +508,9 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * @return token used to track and wait for disconnect to complete. The
 	 *         token will be passed to the callback methods if a callback is
 	 *         set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for problems encountered while disconnecting
-	 * @see #disconnect(long, Object, IMqttActionListener)
+	 * @see #disconnect(long, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken disconnect(long quiesceTimeout) throws MqttException {
@@ -528,7 +528,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * An attempt is made to quiesce the client allowing outstanding work to
 	 * complete before disconnecting. It will wait for a maximum of 30 seconds
 	 * for work to quiesce before disconnecting. This method must not be called
-	 * from inside {@link MqttCallback} methods.
+	 * from inside {@link org.eclipse.paho.client.mqttv3.MqttCallback} methods.
 	 * </p>
 	 *
 	 * @param userContext
@@ -539,9 +539,9 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completes. Use null if not required.
 	 * @return token used to track and wait for the disconnect to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for problems encountered while disconnecting
-	 * @see #disconnect(long, Object, IMqttActionListener)
+	 * @see #disconnect(long, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken disconnect(Object userContext,
@@ -556,7 +556,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	/**
 	 * Disconnects from the server.
 	 * <p>
-	 * The client will wait for {@link MqttCallback} methods to complete. It
+	 * The client will wait for {@link org.eclipse.paho.client.mqttv3.MqttCallback} methods to complete. It
 	 * will then wait for up to the quiesce timeout to allow for work which has
 	 * already been initiated to complete. For instance when a QoS 2 message has
 	 * started flowing to the server but the QoS 2 flow has not completed.It
@@ -569,15 +569,15 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * delivered this time.
 	 * </p>
 	 * <p>
-	 * This method must not be called from inside {@link MqttCallback} methods.
+	 * This method must not be called from inside {@link org.eclipse.paho.client.mqttv3.MqttCallback} methods.
 	 * </p>
 	 * <p>
 	 * The method returns control before the disconnect completes. Completion
 	 * can be tracked by:
 	 * <ul>
-	 * <li>Waiting on the returned token {@link IMqttToken#waitForCompletion()}
+	 * <li>Waiting on the returned token {@link org.eclipse.paho.client.mqttv3.IMqttToken#waitForCompletion()}
 	 * or</li>
-	 * <li>Passing in a callback {@link IMqttActionListener}</li>
+	 * <li>Passing in a callback {@link org.eclipse.paho.client.mqttv3.IMqttActionListener}</li>
 	 * </ul>
 	 * </p>
 	 *
@@ -593,7 +593,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completes. Use null if not required.
 	 * @return token used to track and wait for the disconnect to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for problems encountered while disconnecting
 	 */
 	@Override
@@ -610,7 +610,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	/**
 	 * Publishes a message to a topic on the server.
 	 * <p>
-	 * A convenience method, which will create a new {@link MqttMessage} object
+	 * A convenience method, which will create a new {@link org.eclipse.paho.client.mqttv3.MqttMessage} object
 	 * with a byte array payload and the specified QoS, and then publish it.
 	 * </p>
 	 *
@@ -625,14 +625,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            whether or not this message should be retained by the server.
 	 * @return token used to track and wait for the publish to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttPersistenceException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttPersistenceException
 	 *             when a problem occurs storing the message
 	 * @throws IllegalArgumentException
 	 *             if value of QoS is not 0, 1 or 2.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for other errors encountered while publishing the message.
 	 *             For instance, too many messages are being processed.
-	 * @see #publish(String, MqttMessage, Object, IMqttActionListener)
+	 * @see #publish(String, org.eclipse.paho.client.mqttv3.MqttMessage, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttDeliveryToken publish(String topic, byte[] payload, int qos,
@@ -642,7 +642,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 
 	/**
 	 * Publishes a message to a topic on the server. Takes an
-	 * {@link MqttMessage} message and delivers it to the server at the
+	 * {@link org.eclipse.paho.client.mqttv3.MqttMessage} message and delivers it to the server at the
 	 * requested quality of service.
 	 *
 	 * @param topic
@@ -651,14 +651,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            to deliver to the server
 	 * @return token used to track and wait for the publish to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttPersistenceException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttPersistenceException
 	 *             when a problem occurs storing the message
 	 * @throws IllegalArgumentException
 	 *             if value of QoS is not 0, 1 or 2.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for other errors encountered while publishing the message.
 	 *             For instance client not connected.
-	 * @see #publish(String, MqttMessage, Object, IMqttActionListener)
+	 * @see #publish(String, org.eclipse.paho.client.mqttv3.MqttMessage, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttDeliveryToken publish(String topic, MqttMessage message)
@@ -669,7 +669,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	/**
 	 * Publishes a message to a topic on the server.
 	 * <p>
-	 * A convenience method, which will create a new {@link MqttMessage} object
+	 * A convenience method, which will create a new {@link org.eclipse.paho.client.mqttv3.MqttMessage} object
 	 * with a byte array payload, the specified QoS and retained, then publish it.
 	 * </p>
 	 *
@@ -690,14 +690,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            has completed to the requested quality of service
 	 * @return token used to track and wait for the publish to complete. The
 	 *         token will be passed to any callback that has been set.
-	 * @throws MqttPersistenceException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttPersistenceException
 	 *             when a problem occurs storing the message
 	 * @throws IllegalArgumentException
 	 *             if value of QoS is not 0, 1 or 2.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for other errors encountered while publishing the message.
 	 *             For instance client not connected.
-	 * @see #publish(String, MqttMessage, Object, IMqttActionListener)
+	 * @see #publish(String, org.eclipse.paho.client.mqttv3.MqttMessage, Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttDeliveryToken publish(String topic, byte[] payload, int qos,
@@ -770,12 +770,12 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * The method returns control before the publish completes. Completion can
 	 * be tracked by:
 	 * <ul>
-	 * <li>Setting an {@link IMqttAsyncClient#setCallback(MqttCallback)} where
-	 * the {@link MqttCallback#deliveryComplete(IMqttDeliveryToken)} method will
+	 * <li>Setting an {@link org.eclipse.paho.client.mqttv3.IMqttAsyncClient#setCallback(org.eclipse.paho.client.mqttv3.MqttCallback)} where
+	 * the {@link org.eclipse.paho.client.mqttv3.MqttCallback#deliveryComplete(org.eclipse.paho.client.mqttv3.IMqttDeliveryToken)} method will
 	 * be called.</li>pu
 	 * <li>Waiting on the returned token {@link org.eclipse.paho.client.mqttv3.MqttToken#waitForCompletion()}
 	 * or</li>
-	 * <li>Passing in a callback {@link IMqttActionListener} to this method</li>
+	 * <li>Passing in a callback {@link org.eclipse.paho.client.mqttv3.IMqttActionListener} to this method</li>
 	 * </ul>
 	 * </p>
 	 *
@@ -791,14 +791,14 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            has completed to the requested quality of service
 	 * @return token used to track and wait for the publish to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttPersistenceException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttPersistenceException
 	 *             when a problem occurs storing the message
 	 * @throws IllegalArgumentException
 	 *             if value of QoS is not 0, 1 or 2.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for other errors encountered while publishing the message.
 	 *             For instance, client not connected.
-	 * @see MqttMessage
+	 * @see org.eclipse.paho.client.mqttv3.MqttMessage
 	 */
 	@Override
 	public IMqttDeliveryToken publish(String topic, MqttMessage message,
@@ -826,12 +826,12 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            subscription.
 	 * @return token used to track and wait for the subscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttSecurityException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttSecurityException
 	 *             for security related problems
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for non security related problems
 	 *
-	 * @see #subscribe(String[], int[], Object, IMqttActionListener)
+	 * @see #subscribe(String[], int[], Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken subscribe(String topic, int qos) throws MqttException,
@@ -858,12 +858,12 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            subscription.
 	 * @return token used to track and wait for the subscription to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttSecurityException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttSecurityException
 	 *             for security related problems
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             for non security related problems
 	 *
-	 * @see #subscribe(String[], int[], Object, IMqttActionListener)
+	 * @see #subscribe(String[], int[], Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken subscribe(String[] topic, int[] qos)
@@ -890,10 +890,10 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completed
 	 * @return token used to track and wait for the subscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if there was an error when registering the subscription.
 	 *
-	 * @see #subscribe(String[], int[], Object, IMqttActionListener)
+	 * @see #subscribe(String[], int[], Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken subscribe(String topic, int qos, Object userContext,
@@ -912,7 +912,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * subscribing to each one individually.
 	 * </p>
 	 * <p>
-	 * The {@link #setCallback(MqttCallback)} method should be called before
+	 * The {@link #setCallback(org.eclipse.paho.client.mqttv3.MqttCallback)} method should be called before
 	 * this method, otherwise any received messages will be discarded.
 	 * </p>
 	 * <p>
@@ -1009,7 +1009,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * <ul>
 	 * <li>Waiting on the supplied token {@link org.eclipse.paho.client.mqttv3.MqttToken#waitForCompletion()}
 	 * or</li>
-	 * <li>Passing in a callback {@link IMqttActionListener} to this method</li>
+	 * <li>Passing in a callback {@link org.eclipse.paho.client.mqttv3.IMqttActionListener} to this method</li>
 	 * </ul>
 	 * </p>
 	 *
@@ -1030,7 +1030,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completed
 	 * @return token used to track and wait for the subscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if there was an error registering the subscription.
 	 * @throws IllegalArgumentException
 	 *             if the two supplied arrays are not the same size.
@@ -1053,10 +1053,10 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            on an earlier subscribe.
 	 * @return token used to track and wait for the unsubscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if there was an error unregistering the subscription.
 	 *
-	 * @see #unsubscribe(String[], Object, IMqttActionListener)
+	 * @see #unsubscribe(String[], Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken unsubscribe(String topic) throws MqttException {
@@ -1071,10 +1071,10 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            one specified on an earlier subscription.
 	 * @return token used to track and wait for the unsubscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if there was an error unregistering the subscription.
 	 *
-	 * @see #unsubscribe(String[], Object, IMqttActionListener)
+	 * @see #unsubscribe(String[], Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken unsubscribe(String[] topic) throws MqttException {
@@ -1095,10 +1095,10 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completed
 	 * @return token used to track and wait for the unsubscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if there was an error unregistering the subscription.
 	 *
-	 * @see #unsubscribe(String[], Object, IMqttActionListener)
+	 * @see #unsubscribe(String[], Object, org.eclipse.paho.client.mqttv3.IMqttActionListener)
 	 */
 	@Override
 	public IMqttToken unsubscribe(String topic, Object userContext,
@@ -1129,7 +1129,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * <ul>
 	 * <li>Waiting on the returned token {@link org.eclipse.paho.client.mqttv3.MqttToken#waitForCompletion()}
 	 * or</li>
-	 * <li>Passing in a callback {@link IMqttActionListener} to this method</li>
+	 * <li>Passing in a callback {@link org.eclipse.paho.client.mqttv3.IMqttActionListener} to this method</li>
 	 * </ul>
 	 * </p>
 	 *
@@ -1144,7 +1144,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            completed
 	 * @return token used to track and wait for the unsubscribe to complete. The
 	 *         token will be passed to callback methods if set.
-	 * @throws MqttException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttException
 	 *             if there was an error unregistering the subscription.
 	 */
 	@Override
@@ -1163,7 +1163,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * If a client has been restarted and there are messages that were in the
 	 * process of being delivered when the client stopped, this method returns a
 	 * token for each in-flight message to enable the delivery to be tracked.
-	 * Alternately the {@link MqttCallback#deliveryComplete(IMqttDeliveryToken)}
+	 * Alternately the {@link org.eclipse.paho.client.mqttv3.MqttCallback#deliveryComplete(org.eclipse.paho.client.mqttv3.IMqttDeliveryToken)}
 	 * callback can be used to track the delivery of outstanding messages.
 	 * </p>
 	 * <p>
@@ -1195,13 +1195,13 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 * Other events that track the progress of an individual operation such as
 	 * connect and subscribe can be tracked using the {@link org.eclipse.paho.client.mqttv3.MqttToken} returned
 	 * from each non-blocking method or using setting a
-	 * {@link IMqttActionListener} on the non-blocking method.
+	 * {@link org.eclipse.paho.client.mqttv3.IMqttActionListener} on the non-blocking method.
 	 * <p>
 	 *
 	 * @param callback
 	 *            which will be invoked for certain asynchronous events
 	 *
-	 * @see MqttCallback
+	 * @see org.eclipse.paho.client.mqttv3.MqttCallback
 	 */
 	@Override
 	public void setCallback(MqttCallback callback) {
@@ -1294,11 +1294,11 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 
 	/**
 	 * Acknowledges a message received on the
-	 * {@link MqttCallback#messageArrived(String, MqttMessage)}
+	 * {@link org.eclipse.paho.client.mqttv3.MqttCallback#messageArrived(String, org.eclipse.paho.client.mqttv3.MqttMessage)}
 	 *
 	 * @param messageId
 	 *            the messageId received from the MqttMessage (To access this
-	 *            field you need to cast {@link MqttMessage} to
+	 *            field you need to cast {@link org.eclipse.paho.client.mqttv3.MqttMessage} to
 	 *            {@link ParcelableMqttMessage})
 	 * @return whether or not the message was successfully acknowledged
 	 */
@@ -1537,7 +1537,7 @@ public class MqttAndroidClient extends BroadcastReceiver implements
 	 *            is generated
 	 * @return SSLSocketFactory used to connect to the server with SSL
 	 *         authentication
-	 * @throws MqttSecurityException
+	 * @throws org.eclipse.paho.client.mqttv3.MqttSecurityException
 	 *             if there was any error when getting the SSLSocketFactory
 	 */
 	public SSLSocketFactory getSSLSocketFactory (InputStream keyStore, String password) throws MqttSecurityException {

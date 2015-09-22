@@ -51,6 +51,6 @@ public interface MqttTraceHandler {
 	 *            the exception
 	 */
 	public abstract void traceException(String source, String message,
-										Exception e);
+                                        Exception e);
 
 }

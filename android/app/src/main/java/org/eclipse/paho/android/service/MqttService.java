@@ -308,8 +308,8 @@ public class MqttService extends Service implements MqttTraceHandler {
    *            arbitrary data to be passed back to the application
    * @param activityToken
    *            arbitrary identifier to be passed back to the Activity
-   * @throws MqttSecurityException
-   * @throws MqttException
+   * @throws org.eclipse.paho.client.mqttv3.MqttSecurityException
+   * @throws org.eclipse.paho.client.mqttv3.MqttException
    */
   public void connect(String clientHandle, MqttConnectOptions connectOptions,
       String invocationContext, String activityToken)
@@ -420,8 +420,8 @@ public class MqttService extends Service implements MqttTraceHandler {
    *            arbitrary data to be passed back to the application
    * @param activityToken
    *            arbitrary identifier to be passed back to the Activity
-   * @throws MqttPersistenceException
-   * @throws MqttException
+   * @throws org.eclipse.paho.client.mqttv3.MqttPersistenceException
+   * @throws org.eclipse.paho.client.mqttv3.MqttException
    * @return token for tracking the operation
    */
   public IMqttDeliveryToken publish(String clientHandle, String topic,
@@ -446,8 +446,8 @@ public class MqttService extends Service implements MqttTraceHandler {
    *            arbitrary data to be passed back to the application
    * @param activityToken
    *            arbitrary identifier to be passed back to the Activity
-   * @throws MqttPersistenceException
-   * @throws MqttException
+   * @throws org.eclipse.paho.client.mqttv3.MqttPersistenceException
+   * @throws org.eclipse.paho.client.mqttv3.MqttException
    * @return token for tracking the operation
    */
   public IMqttDeliveryToken publish(String clientHandle, String topic,
@@ -578,7 +578,7 @@ public class MqttService extends Service implements MqttTraceHandler {
   // Extend Service
 
   /**
-   * @see Service#onCreate()
+   * @see android.app.Service#onCreate()
    */
   @Override
   public void onCreate() {
@@ -596,7 +596,7 @@ public class MqttService extends Service implements MqttTraceHandler {
 
 
 	/**
-	 * @see Service#onDestroy()
+	 * @see android.app.Service#onDestroy()
 	 */
 	@Override
 	public void onDestroy() {
@@ -619,7 +619,7 @@ public class MqttService extends Service implements MqttTraceHandler {
 	}
 
   /**
-   * @see Service#onBind(Intent)
+   * @see android.app.Service#onBind(android.content.Intent)
    */
   @Override
   public IBinder onBind(Intent intent) {
@@ -633,7 +633,7 @@ public class MqttService extends Service implements MqttTraceHandler {
   }
 
   /**
-   * @see Service#onStartCommand(Intent,int,int)
+   * @see android.app.Service#onStartCommand(android.content.Intent,int,int)
    */
   @Override
   public int onStartCommand(final Intent intent, int flags, final int startId) {

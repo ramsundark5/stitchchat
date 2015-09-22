@@ -31,7 +31,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  * 	private void messageArrivedAction(Bundle data) {
  * 		ParcelableMqttMessage message = (ParcelableMqttMessage) data
  * 			.getParcelable(MqttServiceConstants.CALLBACK_MESSAGE_PARCEL);
- *		<i>Use the normal {@link MqttMessage} methods on the the message object.</i>
+ *		<i>Use the normal {@link org.eclipse.paho.client.mqttv3.MqttMessage} methods on the the message object.</i>
  * 	}
  *
  * </code>

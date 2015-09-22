@@ -22,7 +22,7 @@ import java.util.Iterator;
  * </p>
  * <ul>
  * <li>A Service should store messages as they arrive via
- * {@link #storeArrived(String, String, MqttMessage)}.
+ * {@link #storeArrived(String, String, org.eclipse.paho.client.mqttv3.MqttMessage)}.
  * <li>When a message has been passed to the consuming entity,
  * {@link #discardArrived(String, String)} should be called.
  * <li>To recover messages which have not been definitely passed to the
@@ -68,7 +68,7 @@ interface MessageStore {
 	 * @return a unique identifier for it
 	 */
 	public String storeArrived(String clientHandle, String Topic,
-							   MqttMessage message);
+                               MqttMessage message);
 
 	/**
 	 * Discard a message - called when we are certain that an arrived message
