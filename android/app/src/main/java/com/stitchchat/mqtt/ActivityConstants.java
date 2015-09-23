@@ -33,9 +33,9 @@ public class ActivityConstants {
   static final int defaultKeepAlive = 10;
   /** Default SSL enabled flag*/
   static final boolean defaultSsl = false;
-  /** Default message retained flag */
+  /** Default willMessage willRetainFlag flag */
   static final boolean defaultRetained = false;
-  /** Default last will message*/
+  /** Default last will willMessage*/
   static final MqttMessage defaultLastWill = null;
   /** Default port*/
   static final int defaultPort = 1883;
@@ -52,31 +52,31 @@ public class ActivityConstants {
   /* Bundle Keys */
 
   /** Server Bundle Key **/
-  static final String server = "server";
+  static final String host = "host";
   /** Port Bundle Key **/
   static final String port = "port";
   /** ClientID Bundle Key **/
   static final String clientId = "clientId";
   /** Topic Bundle Key **/
-  static final String topic = "topic";
+  static final String willTopic = "willTopic";
   /** History Bundle Key **/
   static final String history = "history";
   /** Message Bundle Key **/
-  static final String message = "message";
+  static final String willMessage = "willMessage";
   /** Retained Flag Bundle Key **/
-  static final String retained = "retained";
+  static final String willRetainFlag = "willRetainFlag";
   /** QOS Value Bundle Key **/
-  static final String qos = "qos";
+  static final String willQos = "willQos";
   /** User name Bundle Key **/
   static final String username = "username";
   /** Password Bundle Key **/
   static final String password = "password";
   /** Keep Alive value Bundle Key **/
-  static final String keepalive = "keepalive";
+  static final String keepAlive = "keepAlive";
   /** Timeout Bundle Key **/
   static final String timeout = "timeout";
   /** SSL Enabled Flag Bundle Key **/
-  static final String ssl = "ssl";
+  static final String tls = "tls";
   /** SSL Key File Bundle Key **/
   static final String ssl_key = "ssl_key";
   /** Connections Bundle Key **/
@@ -86,6 +86,7 @@ public class ActivityConstants {
   /** Action Bundle Key **/
   static final String action = "action";
 
+  static final String mqttVersion = "mqttVersion";
   /* Property names */
 
   /** Property name for the history field in {@link Connection} object for use with {@link java.beans.PropertyChangeEvent} **/

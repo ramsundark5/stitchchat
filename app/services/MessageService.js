@@ -7,9 +7,9 @@ class MessageService{
         let wsport = 8080; // port for above
         this.client = new Paho.MQTT.Client(wsbroker, wsport,
             "myclientid_" + parseInt(Math.random() * 100, 10));
-        this.client.trace = function(traceMsg){
+        /*this.client.trace = function(traceMsg){
             console.log(traceMsg);
-        };
+        };*/
         this.client.onConnectionLost = function (responseObject) {
             console.log("connection lost: " + responseObject.errorMessage);
         };

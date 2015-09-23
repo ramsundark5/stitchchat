@@ -17,7 +17,6 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import com.stitchchat.R;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import android.content.Context;
 import android.text.Html;
@@ -131,50 +130,6 @@ public class Connection {
     this.context = context;
     this.client = client;
     this.sslConnection = sslConnection;
-    history = new ArrayList<String>();
-    StringBuffer sb = new StringBuffer();
-    sb.append("Client: ");
-    sb.append(clientId);
-    sb.append(" created");
-    addAction(sb.toString());
-  }
-
-  /**
-   * Add an action to the history of the client
-   * @param action the history item to add
-   */
-  public void addAction(String action) {
-
-    Object[] args = new String[1];
-    SimpleDateFormat sdf = new SimpleDateFormat(context.getString(R.string.dateFormat));
-    args[0] = sdf.format(new Date());
-
-    String timestamp = context.getString(R.string.timestamp, args);
-    history.add(action + timestamp);
-
-    notifyListeners(new PropertyChangeEvent(this, ActivityConstants.historyProperty, null, null));
-  }
-
-  /**
-   * Generate an array of Spanned items representing the history of this
-   * connection. 
-   * 
-   * @return an array of history entries
-   */
-  public Spanned[] history() {
-
-    int i = 0;
-    Spanned[] array = new Spanned[history.size()];
-
-    for (String s : history) {
-      if (s != null) {
-        array[i] = Html.fromHtml(s);
-        i++;
-      }
-    }
-
-    return array;
-
   }
 
   /**
@@ -218,22 +173,22 @@ public class Connection {
     switch (status) {
 
       case CONNECTED :
-        sb.append(context.getString(R.string.connectedto));
+        sb.append("Connected to");
         break;
       case DISCONNECTED :
-        sb.append(context.getString(R.string.disconnected));
+        sb.append("Disconnected from");
         break;
       case NONE :
-        sb.append(context.getString(R.string.no_status));
+        sb.append("Unknown connection status to");
         break;
       case CONNECTING :
-        sb.append(context.getString(R.string.connecting));
+        sb.append("Connecting to");
         break;
       case DISCONNECTING :
-        sb.append(context.getString(R.string.disconnecting));
+        sb.append("Disconnecting from");
         break;
       case ERROR :
-        sb.append(context.getString(R.string.connectionError));
+        sb.append("An error occurred connecting to");
     }
     sb.append(" ");
     sb.append(host);

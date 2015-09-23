@@ -95,12 +95,19 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
 RCT_EXPORT_METHOD(publish:(NSString*)topicName
                   message:(NSString*) message
                   qosLevel:(NSInteger) qosLevel
-                  retain:(BOOL) retain) {
+                  retain:(BOOL) retain
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
   
-  [self.manager sendData:[message dataUsingEncoding:NSUTF8StringEncoding]
+  UInt16 msgId = [self.manager sendData:[message dataUsingEncoding:NSUTF8StringEncoding]
                    topic: topicName
                      qos:qosLevel
                   retain:retain];
+  
+  NSNumber *messageId = [NSNumber numberWithUnsignedInt:msgId];
+  
+  resolve(messageId);
+  
 }
 
 RCT_EXPORT_METHOD(subscribeTo:(NSString*) topicName
@@ -171,7 +178,7 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
 }
 
 -(void) onStatusChanged:(NSNumber *) newStatus{
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onStatusChanged"
+  [self.bridge.eventDispatcher sendAppEventWithName:@"onConnectionStatusChanged"
                                                body:newStatus];
 }
 
