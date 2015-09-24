@@ -62,7 +62,7 @@ public class MqttCallbackHandler implements MqttCallback {
   public void messageArrived(String topic, MqttMessage message) throws Exception {
 
     String parsedMessage = new String(message.getPayload());
-    Log.e(this.getClass().getCanonicalName(),
+    Log.d(this.getClass().getCanonicalName(),
             "Message arrived with data: " + parsedMessage);
     this.reactApplicationContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
