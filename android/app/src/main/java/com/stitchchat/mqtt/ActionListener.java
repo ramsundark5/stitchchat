@@ -51,18 +51,30 @@ class ActionListener implements IMqttActionListener {
     private Action action;
     /** {@link Context} for performing various operations **/
     private ReactApplicationContext reactApplicationContext;
+    /** The arguments passed to be used for formatting strings**/
+    private String[] additionalArgs;
+    /** Handle of the {@link Connection} this action was being executed on **/
+    private String clientHandle;
 
     /**
      * Creates a generic action listener for actions performed form any activity
      *
-     * @param context
+     * @param reactApplicationContext
      *            The application context
      * @param action
      *            The action that is being performed
+     * @param clientHandle
+     *            The handle for the client which the action is being performed
+     *            on
+     * @param additionalArgs
+     *            Used for as arguments for string formating
      */
-    public ActionListener(ReactApplicationContext reactApplicationContext, Action action) {
+    public ActionListener(ReactApplicationContext reactApplicationContext, Action action,
+                          String clientHandle, String... additionalArgs) {
         this.reactApplicationContext = reactApplicationContext;
         this.action = action;
+        this.clientHandle = clientHandle;
+        this.additionalArgs = additionalArgs;
     }
 
     /**

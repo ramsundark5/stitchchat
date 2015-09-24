@@ -7,7 +7,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-
+import com.stitchchat.mqtt.Connection.ConnectionStatus;
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -90,6 +90,14 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
         }
 
         uri = uri + host + ":" + port;
+        // create a client handle
+        if(clientId == null){
+            //UUID randomClientId = UUID.randomUUID();
+            //clientId = randomClientId.toString();
+            clientId = "mqttTest";
+        }
+        clientHandle = uri + clientId;
+        //clientHandle = uri;
 
         MqttAndroidClient client;
         client = Connections.getInstance(reactApplicationContext).createClient(reactApplicationContext, uri, clientId);
@@ -112,13 +120,6 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
             }
         }
 
-        // create a client handle
-        if(clientId == null){
-            UUID randomClientId = UUID.randomUUID();
-            clientId = randomClientId.toString();
-        }
-        //clientHandle = uri + clientId;
-        clientHandle = uri;
         // connection options
         Connection connection = new Connection(clientHandle, clientId, host, port,
                 reactApplicationContext, client, ssl);
@@ -134,6 +135,12 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
         if (password !=null && !password.equals(ActivityConstants.empty)) {
             conOpt.setPassword(password.toCharArray());
         }
+        String[] actionArgs = new String[1];
+        actionArgs[0] = clientId;
+        connection.changeConnectionStatus(ConnectionStatus.CONNECTING);
+
+        final ActionListener callback = new ActionListener(reactApplicationContext,
+                ActionListener.Action.CONNECT, clientHandle, actionArgs);
 
         boolean doConnect = true;
 
@@ -146,15 +153,18 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
             catch (Exception e) {
                 Log.e(this.getClass().getCanonicalName(), "Exception Occured", e);
                 doConnect = false;
+                callback.onFailure(null, e);
             }
         }
+
         client.setCallback(new MqttCallbackHandler(reactApplicationContext, clientHandle));
+        client.setTraceCallback(new MqttTraceCallback());
 
         connection.addConnectionOptions(conOpt);
         Connections.getInstance(reactApplicationContext).addConnection(connection);
         if (doConnect) {
             try {
-                client.connect(conOpt, reactApplicationContext, null);
+                client.connect(conOpt, null, callback);
             }
             catch (MqttException e) {
                 Log.e(this.getClass().getCanonicalName(),
