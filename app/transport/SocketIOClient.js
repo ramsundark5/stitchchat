@@ -1,15 +1,7 @@
 window.navigator.userAgent = 'react-native';
 import io from 'socket.io-client/socket.io';
-let instance = null;
 
-export default class SocketIOClient{
-    constructor() {
-        if(!instance){
-            instance = this;
-            this.init();
-        }
-        return instance;
-    }
+class SocketIOClient{
 
     init(){
         this.socket = io('localhost:3000', {jsonp: false});
@@ -44,5 +36,5 @@ export default class SocketIOClient{
     }
 }
 
-
+module.exports = new SocketIOClient();
 
