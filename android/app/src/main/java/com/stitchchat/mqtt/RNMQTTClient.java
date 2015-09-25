@@ -1,5 +1,7 @@
 package com.stitchchat.mqtt;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
@@ -30,7 +32,17 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void connect(ReadableMap connectionDetails){
+    public void connect(final ReadableMap connectionDetails){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("UI thread", "I am the UI thread");
+                connectInternal(connectionDetails);
+            }
+        });
+    }
+
+    public void connectInternal(ReadableMap connectionDetails){
 
         MqttConnectOptions conOpt = new MqttConnectOptions();
     /*
@@ -202,7 +214,11 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
     @ReactMethod
     public void subscribeTo(String topicName, int qosLevel)
     {
-        try {
+        Subscription newSubscription = new Subscription(topicName, qosLevel);
+        Connection connection = Connections.getInstance(reactApplicationContext)
+                .getConnection(clientHandle);
+        connection.getSubscriptions().add(newSubscription);
+        /*try {
             MqttAndroidClient mqttAndroidClient = Connections.getInstance(reactApplicationContext)
                     .getConnection(clientHandle).getClient();
             mqttAndroidClient.subscribe(topicName, qosLevel);
@@ -212,6 +228,15 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
         }
         catch (MqttException e) {
             Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + topicName, e);
-        }
+        }*/
+    }
+
+    @ReactMethod
+    public void unSubscribeTo(String topicName, int qosLevel)
+    {
+        Subscription newSubscription = new Subscription(topicName, qosLevel);
+        Connection connection = Connections.getInstance(reactApplicationContext)
+                .getConnection(clientHandle);
+        connection.getSubscriptions().remove(newSubscription);
     }
 }

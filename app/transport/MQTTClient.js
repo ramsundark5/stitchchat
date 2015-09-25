@@ -1,11 +1,15 @@
-import { NativeModules } from 'react-native';
-import { NativeAppEventEmitter } from 'react-native';
-//import { RCTDeviceEventEmitter } from 'react-native';
+//var { NativeModules } = require('react-native');
+var NativeModules = require('react-native').NativeModules;
+//import {RNMQTTClient} from 'NativeModules';
+var { NativeAppEventEmitter } = require('react-native');
 var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+import {store} from '../containers/App';
+import * as MessageActions from '../actions/MessageActions';
+
 class MQTTClient{
 
     constructor(){
-        console.log('native mods are '+NativeModules);
+        console.log('native mods are ');
         this.mqttClient = NativeModules.RNMQTTClient;
     }
 
@@ -55,6 +59,7 @@ class MQTTClient{
     }
 
     onReceiveMessaged(message){
+        store.dispatch(MessageActions.addMessage(message));
         console.log(message);
     }
 

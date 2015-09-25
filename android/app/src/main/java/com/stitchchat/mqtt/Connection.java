@@ -17,6 +17,10 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import android.content.Context;
 import android.text.Html;
@@ -63,6 +67,7 @@ public class Connection {
   /** Persistence id, used by {@link Persistence} **/
   private long persistenceId = -1;
 
+  private Set<Subscription> subscriptions = new HashSet<>();
   /**
    * Connections status for  a connection
    */
@@ -345,4 +350,10 @@ public class Connection {
   public long persistenceId() {
     return persistenceId;
   }
+
+
+  public Set<Subscription> getSubscriptions() {
+    return subscriptions;
+  }
+
 }
