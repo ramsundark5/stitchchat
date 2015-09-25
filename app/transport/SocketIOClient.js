@@ -1,11 +1,22 @@
-//import SocketIO from 'react-native-swift-socketio';
+window.navigator.userAgent = 'react-native';
+import io from 'socket.io-client/socket.io';
+let instance = null;
 
 export default class SocketIOClient{
-    constructor(){
-       /* this.socket = new SocketIO('localhost:3000', {});
+    constructor() {
+        if(!instance){
+            instance = this;
+            this.init();
+        }
+        return instance;
+    }
+
+    init(){
+        this.socket = io('localhost:3000', {jsonp: false});
         this.state = { status: 'Not connected' };
         this.socket.connect();
-        this.initListeners();*/
+        this.initListeners();
+        this.socket.emit('add user', 'React native');
     }
 
     initListeners(){
@@ -24,18 +35,14 @@ export default class SocketIOClient{
             console.log('typing event is here: ', data);
         });
 
-        // Manually join namespace
-        this.socket.joinNamespace()
-
-        // Leave namespace, back to '/'
-        this.socket.leaveNamespace()
     }
 
-    send(message){
+    publish(topic, msgObj){
         // Emit an event to server
-        this.socket.emit('new message', {some: 'data'});
+        var data = { username: 'React native', message: msgObj.text}
+        this.socket.emit('new message', msgObj.text);
     }
 }
-// Connect!
+
 
 

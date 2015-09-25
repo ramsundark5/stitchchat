@@ -1,16 +1,19 @@
 //var { NativeModules } = require('react-native');
-var NativeModules = require('react-native').NativeModules;
+//works for android
+//var NativeModules = require('react-native').NativeModules;
+//works for ios
 //import {RNMQTTClient} from 'NativeModules';
-var { NativeAppEventEmitter } = require('react-native');
-var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-import {store} from '../containers/App';
-import * as MessageActions from '../actions/MessageActions';
+//var { NativeAppEventEmitter } = require('react-native');
+//var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+//import {store} from '../containers/App';
+//import * as MessageActions from '../actions/MessageActions';
 
 class MQTTClient{
 
-    constructor(){
+    /*constructor(){
         console.log('native mods are ');
-        this.mqttClient = NativeModules.RNMQTTClient;
+        //this.mqttClient = NativeModules.RNMQTTClient;
+        //this.mqttClient = new SocketIOClient();
     }
 
     init(){
@@ -74,7 +77,7 @@ class MQTTClient{
     disconnect(){
 
     }
-
+*/
 
 }
 module.exports = MQTTClient;

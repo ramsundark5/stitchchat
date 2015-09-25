@@ -2,13 +2,12 @@ import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight 
 import {commons, defaultStyle} from '../../styles/CommonStyles';
 import {messageStyle} from '../../styles/MessageStyles';
 import { Icon } from 'react-native-icons';
-import * as Status from '../../constants/MessageConstants.js';
-import MQTTClient from '../../transport/MQTTClient';
+import * as Status from '../../constants/MessageConstants';
+import MessageService from '../../services/MessageService';
 
 class MessageItem extends Component {
     constructor(props, context) {
         super(props, context);
-        this.mqtt = new MQTTClient();
     }
 
     selectMessage(message) {
@@ -16,7 +15,7 @@ class MessageItem extends Component {
     }
 
     selectMessageOnlyInEditingMode(message){
-        this.mqtt.publish('MQTTChat', message);
+        MessageService.sendMessage(message);
         if(this.props.isEditing){
             this.selectMessage(message.id);
         }
