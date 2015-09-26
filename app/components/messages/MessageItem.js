@@ -15,7 +15,7 @@ class MessageItem extends Component {
     }
 
     selectMessageOnlyInEditingMode(message){
-        MessageService.sendMessage(message);
+        MessageService.sendMessage('1111', message);
         if(this.props.isEditing){
             this.selectMessage(message.id);
         }

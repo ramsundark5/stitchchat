@@ -1,6 +1,7 @@
 window.navigator.userAgent = 'react-native';
 import io from 'socket.io-client/socket.io';
 
+var currentUserId = "+13392247442";
 class SocketIOClient{
 
     init(){
@@ -8,31 +9,46 @@ class SocketIOClient{
         this.state = { status: 'Not connected' };
         this.socket.connect();
         this.initListeners();
-        this.socket.emit('add user', 'React native');
     }
 
     initListeners(){
         // An event to be fired on connection to socket
+        let socketref = this.socket;
         this.socket.on('connect', () => {
             console.log('Wahey -> connected!');
+
+            // Connected, let's sign-up for to receive messages for this room
+            socketref.emit('room', currentUserId);
+        });
+
+        /*let socketref = this.socket;
+        this.socket.on('connect', function() {
+            console.log('Wahey -> connected!');
+            // Connected, let's sign-up for to receive messages for this room
+            socketref.emit('room', currentUserId);
+        });*/
+
+        this.socket.on('message', function(data) {
+            console.log('Incoming message:', data);
         });
 
         // Event called when 'someEvent' it emitted by server
-        this.socket.on('new message', (data) => {
+        this.socket.on('+13392247442', (data) => {
             console.log('Some message was sent, check out this data: ', data);
         });
-
-        // Event called when 'someEvent' it emitted by server
-        this.socket.on('typing', (data) => {
-            console.log('typing event is here: ', data);
-        });
-
     }
 
-    publish(topic, msgObj){
-        // Emit an event to server
-        var data = { username: 'React native', message: msgObj.text}
-        this.socket.emit('new message', msgObj.text);
+    startConversation(recipientId){
+        this.socket.join(recipientId);
+    }
+
+    publish(recipientId, message){
+        this.socket.emit('message', {
+            recipientId: recipientId,
+            fromId: currentUserId,
+            type: 'message',
+            data: message
+        });
     }
 }
 
