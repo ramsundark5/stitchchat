@@ -1,18 +1,18 @@
 //var { NativeModules } = require('react-native');
 //works for android
-//var NativeModules = require('react-native').NativeModules;
+var NativeModules = require('react-native').NativeModules;
 //works for ios
 //import {RNMQTTClient} from 'NativeModules';
 //var { NativeAppEventEmitter } = require('react-native');
-//var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-//import {store} from '../containers/App';
-//import * as MessageActions from '../actions/MessageActions';
+var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+import {store} from '../containers/App';
+import * as MessageActions from '../actions/MessageActions';
 
 class MQTTClient{
 
-    /*constructor(){
+    constructor(){
         console.log('native mods are ');
-        //this.mqttClient = NativeModules.RNMQTTClient;
+        this.mqttClient = NativeModules.RNMQTTClient;
         //this.mqttClient = new SocketIOClient();
     }
 
@@ -28,11 +28,12 @@ class MQTTClient{
 
         this.connect(connectionDetails);
         this.subscribeTo('MQTTChatReceive', 1);
-        if(NativeAppEventEmitter){
+       /* if(NativeAppEventEmitter){
             NativeAppEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
             NativeAppEventEmitter.addListener( 'onStatusChanged', this.onStatusChanged);
-        }
+        }*/
         if(RCTDeviceEventEmitter){
+            console.log('device event emitter registered from JS');
             RCTDeviceEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
             RCTDeviceEventEmitter.addListener( 'onStatusChanged', this.onStatusChanged);
         }
@@ -62,8 +63,8 @@ class MQTTClient{
     }
 
     onReceiveMessaged(message){
-        store.dispatch(MessageActions.addMessage(message));
-        console.log(message);
+        //store.dispatch(MessageActions.addMessage("message received from mqtt"));
+        console.log("received message in UI "+ message);
     }
 
     onConnected(){
@@ -77,7 +78,7 @@ class MQTTClient{
     disconnect(){
 
     }
-*/
+
 
 }
-module.exports = MQTTClient;
+module.exports = new MQTTClient();

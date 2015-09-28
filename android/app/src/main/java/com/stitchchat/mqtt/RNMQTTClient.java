@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
@@ -18,28 +19,29 @@ import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
-public class RNMQTTClient extends ReactContextBaseJavaModule {
+import javax.annotation.Nullable;
 
-    private ReactApplicationContext reactApplicationContext;
+public class RNMQTTClient extends ReactContextBaseJavaModule{
+
     private String SSL_CERT_PASSWORD = "mqtttest";
     private String clientHandle;
+    private static RNMQTTClient instance;
+
+    public static RNMQTTClient instance(){
+        return instance;
+    }
 
     public RNMQTTClient(ReactApplicationContext reactApplicationContext){
         super(reactApplicationContext);
-        this.reactApplicationContext = reactApplicationContext;
     }
 
     @ReactMethod
     public void connect(final ReadableMap connectionDetails){
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("UI thread", "I am the UI thread");
-                connectInternal(connectionDetails);
-            }
-        });
+        connectInternal(connectionDetails);
     }
 
     public void connectInternal(ReadableMap connectionDetails){
@@ -112,7 +114,7 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
         //clientHandle = uri;
 
         MqttAndroidClient client;
-        client = Connections.getInstance(reactApplicationContext).createClient(reactApplicationContext, uri, clientId);
+        client = Connections.getInstance(getReactApplicationContext()).createClient(getReactApplicationContext(), uri, clientId);
 
         if (ssl){
             try {
@@ -134,7 +136,7 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
 
         // connection options
         Connection connection = new Connection(clientHandle, clientId, host, port,
-                reactApplicationContext, client, ssl);
+                getReactApplicationContext(), client, ssl);
 
         // connect client
         conOpt.setMqttVersion(mqttVersion);
@@ -151,7 +153,7 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
         actionArgs[0] = clientId;
         connection.changeConnectionStatus(ConnectionStatus.CONNECTING);
 
-        final ActionListener callback = new ActionListener(reactApplicationContext,
+        final ActionListener callback = new ActionListener(getReactApplicationContext(),
                 ActionListener.Action.CONNECT, clientHandle, actionArgs);
 
         boolean doConnect = true;
@@ -169,11 +171,12 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
             }
         }
 
-        client.setCallback(new MqttCallbackHandler(reactApplicationContext, clientHandle));
+        client.setCallback(new MqttCallbackHandler(getReactApplicationContext(), clientHandle));
+        //client.setCallback(this);
         client.setTraceCallback(new MqttTraceCallback());
 
         connection.addConnectionOptions(conOpt);
-        Connections.getInstance(reactApplicationContext).addConnection(connection);
+        Connections.getInstance(getReactApplicationContext()).addConnection(connection);
         if (doConnect) {
             try {
                 client.connect(conOpt, null, callback);
@@ -186,6 +189,25 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
 
     }
 
+    public void completePendingSubscriptions(){
+        Connection conn = Connections.getInstance(getReactApplicationContext()).getConnection(clientHandle);
+        Set<Subscription> pendingSubscriptions = conn.getSubscriptions();
+        if(pendingSubscriptions != null && !pendingSubscriptions.isEmpty()){
+            for(Subscription subscription : pendingSubscriptions){
+                 try {
+                    MqttAndroidClient mqttAndroidClient = conn.getClient();
+                    mqttAndroidClient.subscribe(subscription.getTopicName(), subscription.getQosLevel());
+                }
+                catch (MqttSecurityException e) {
+                    Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + subscription.getTopicName(), e);
+                }
+                catch (MqttException e) {
+                    Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + subscription.getTopicName(), e);
+                }
+            }
+        }
+    }
+
     @Override
     public String getName() {
         return "RNMQTTClient";
@@ -194,9 +216,10 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
     @ReactMethod
     public void publish(String topic, String message, int qos, boolean retained){
         try {
-            IMqttDeliveryToken deliveryToken = Connections.getInstance(reactApplicationContext).getConnection(clientHandle)
+            IMqttDeliveryToken deliveryToken = Connections.getInstance(getReactApplicationContext()).getConnection(clientHandle)
                     .getClient().publish(topic, message.getBytes(), qos, retained);
             //successCallback.invoke(deliveryToken.getMessageId());
+            //completePendingSubscriptions();
         }
         catch (MqttSecurityException e) {
             Log.e(this.getClass().getCanonicalName(), "Failed to publish a message ", e);
@@ -214,13 +237,15 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
     @ReactMethod
     public void subscribeTo(String topicName, int qosLevel)
     {
-        Subscription newSubscription = new Subscription(topicName, qosLevel);
-        Connection connection = Connections.getInstance(reactApplicationContext)
+       /* Subscription newSubscription = new Subscription(topicName, qosLevel);
+        Connection connection = Connections.getInstance(getReactApplicationContext())
                 .getConnection(clientHandle);
-        connection.getSubscriptions().add(newSubscription);
-        /*try {
-            MqttAndroidClient mqttAndroidClient = Connections.getInstance(reactApplicationContext)
-                    .getConnection(clientHandle).getClient();
+        connection.getSubscriptions().add(newSubscription);*/
+
+        try {
+            Connection conn = Connections.getInstance(getReactApplicationContext())
+                    .getConnection(clientHandle);
+            MqttAndroidClient mqttAndroidClient = conn.getClient();
             mqttAndroidClient.subscribe(topicName, qosLevel);
         }
         catch (MqttSecurityException e) {
@@ -228,15 +253,16 @@ public class RNMQTTClient extends ReactContextBaseJavaModule {
         }
         catch (MqttException e) {
             Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + topicName, e);
-        }*/
+        }
     }
 
     @ReactMethod
     public void unSubscribeTo(String topicName, int qosLevel)
     {
         Subscription newSubscription = new Subscription(topicName, qosLevel);
-        Connection connection = Connections.getInstance(reactApplicationContext)
+        Connection connection = Connections.getInstance(getReactApplicationContext())
                 .getConnection(clientHandle);
         connection.getSubscriptions().remove(newSubscription);
     }
+
 }

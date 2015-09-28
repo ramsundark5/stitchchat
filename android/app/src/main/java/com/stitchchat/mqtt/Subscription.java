@@ -22,6 +22,14 @@ public class Subscription {
         this.topicName = topicName;
     }
 
+    public int getQosLevel() {
+        return qosLevel;
+    }
+
+    public void setQosLevel(int qosLevel) {
+        this.qosLevel = qosLevel;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

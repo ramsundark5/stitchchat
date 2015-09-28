@@ -19,7 +19,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import javax.annotation.Nullable;
 
 /**
  * Handles call backs from the MQTT Client
@@ -58,7 +63,7 @@ public class MqttCallbackHandler implements MqttCallback {
   /**
    * @see MqttCallback#messageArrived(String, MqttMessage)
    */
-  @Override
+ /* @Override
   public void messageArrived(String topic, MqttMessage message) throws Exception {
 
     String parsedMessage = new String(message.getPayload());
@@ -67,8 +72,25 @@ public class MqttCallbackHandler implements MqttCallback {
     this.reactApplicationContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit("onMessageArrived", parsedMessage);
-  }
+  }*/
 
+    @Override
+    public void messageArrived(String topic, MqttMessage message) throws Exception {
+        String parsedMessage = new String(message.getPayload());
+        Log.d(this.getClass().getCanonicalName(),
+                "Message arrived with data: " + parsedMessage);
+        WritableMap params = new WritableNativeMap();
+        params.putString("data", parsedMessage);
+        sendEvent(this.reactApplicationContext, "onMessageArrived", params);
+    }
+
+    private void sendEvent(ReactContext reactContext,
+                           String eventName,
+                           @Nullable Object params) {
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
+    }
   /**
    * @see MqttCallback#deliveryComplete(IMqttDeliveryToken)
    */

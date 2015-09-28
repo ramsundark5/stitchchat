@@ -7,19 +7,14 @@
 #import "RCTEventDispatcher.h"
 #import "RCTConvert.h"
 
-@import UIKit.UIPasteboard;
-
-@interface RNMQTTClient ()
-/*
- * MQTTClient: keep a strong reference to your MQTTSessionManager here
- */
-@property (strong, nonatomic) MQTTSessionManager *manager;
-@property (strong, nonatomic) NSDictionary *mqttSettings;
-@end
-
 @implementation RNMQTTClient
 @synthesize bridge = _bridge;
 RCT_EXPORT_MODULE();
+
+- (id)init{
+  self = [super init];
+  return self;
+}
 
 RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
 {
@@ -127,7 +122,7 @@ RCT_EXPORT_METHOD(subscribeTo:(NSString*) topicName
    */
   
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"onMessageReceived"
                                                body:@{@"data": dataString}];
   
 }
@@ -178,7 +173,7 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
 }
 
 -(void) onStatusChanged:(NSNumber *) newStatus{
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onConnectionStatusChanged"
+  [self.bridge.eventDispatcher sendDeviceEventWithName:@"onConnectionStatusChanged"
                                                body:newStatus];
 }
 

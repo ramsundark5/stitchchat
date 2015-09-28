@@ -12,6 +12,7 @@
  */
 package com.stitchchat.mqtt;
 
+import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
@@ -23,7 +24,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 /**
  * This Class handles receiving information from the
- * {@link MqttAndroidClient} and updating the {@link Connection} associated with 
+ * {@link MqttAndroidClient} and updating the {@link Connection} associated with
  * the action
  */
 class ActionListener implements IMqttActionListener {

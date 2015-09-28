@@ -1,9 +1,9 @@
-import SocketIOClient from '../transport/SocketIOClient';
+import MessageService from '../services/MessageService';
 
 export default class AppInitService{
 
     constructor(){
-        SocketIOClient.init();
+        MessageService.init();
     }
 
 }
