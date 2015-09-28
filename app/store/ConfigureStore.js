@@ -7,26 +7,22 @@ import createLogger from 'redux-logger';
 import RootReducer from '../reducers/RootReducer';
 //import { devTools, persistState } from 'redux-devtools';
 
-let finalCreateStore;
 let loggerMiddleware = createLogger();
-let middlewares      = [thunkMiddleware, loggerMiddleware];
+let middlewares      = [thunkMiddleware];
 
-
-// In production, we want to use just the middleware.
-// In development, we want to use some store enhancers from redux-devtools.
-// UglifyJS will eliminate the dead code depending on the build environment.
-
-if (process.env.NODE_ENV === 'production') {
-    finalCreateStore = applyMiddleware(...middlewares)(createStore);
-}
-else {
-    finalCreateStore = compose(
-        applyMiddleware(...middlewares),
-        //devTools(),
-        createStore
-    );
+if (process.env.NODE_ENV != 'production') {
+    middlewares.push(loggerMiddleware);
 }
 
-export default function ConfigureStore(initialState) {
-    return finalCreateStore(RootReducer, initialState);
+const createStoreWithMiddleware = compose(
+    applyMiddleware(...middlewares)
+    //devTools(),
+)(createStore);
+
+function ConfigureStore(initialState) {
+    console.log('inside configure store');
+    const store = createStoreWithMiddleware(RootReducer, initialState);
+    return store;
 }
+
+module.exports = ConfigureStore();

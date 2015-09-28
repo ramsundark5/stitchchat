@@ -50,3 +50,10 @@ export function loadMoreThreads(){
         type: Actions.LOAD_MORE_THREADS
     }
 }
+
+export function setCurrentThread(thread) {
+    return {
+        type: Actions.SET_CURRENT_THREAD,
+        thread
+    };
+}

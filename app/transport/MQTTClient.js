@@ -1,14 +1,12 @@
 var NativeModules = require('react-native').NativeModules;
 var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-import {store} from '../containers/App';
+import store from '../store/ConfigureStore';
 import * as MessageActions from '../actions/MessageActions';
 
 class MQTTClient{
 
     constructor(){
-        console.log('native mods are ');
         this.mqttClient = NativeModules.RNMQTTClient;
-        //this.mqttClient = new SocketIOClient();
     }
 
     init(){
@@ -25,11 +23,8 @@ class MQTTClient{
 
         this.subscribeTo('MQTTChatReceive', 1);
 
-        if(RCTDeviceEventEmitter){
-            console.log('device event emitter registered from JS');
-            RCTDeviceEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
-            RCTDeviceEventEmitter.addListener( 'onStatusChanged', this.onStatusChanged);
-        }
+        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
+        RCTDeviceEventEmitter.addListener( 'onStatusChanged', this.onStatusChanged);
 
     }
 
@@ -45,7 +40,6 @@ class MQTTClient{
             throw("message is required to publish message");
         }
         this.mqttClient.publish(topicName, message.text, qosLevel, retain);
-        //this.subscribeTo('MQTTChatReceive', 1);
     }
 
     subscribeTo(topicName, qosLevel){

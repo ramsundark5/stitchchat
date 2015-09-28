@@ -20,8 +20,8 @@ let thirdThread = new Thread(thirdContact, false, null);
 thirdThread.lastMessageText = 'test third message';
 
 let threadList = [firstThread, secondThread, thirdThread];
-//const initialState = { threads : [], isEditing: false};
-const initialState = { threads : threadList, isEditing: false};
+//const initialState = { threads : [], isEditing: false, currentThread: null};
+const initialState = { threads : threadList, isEditing: false, currentThread: null};
 
 export function threadState(state = initialState, action = {}) {
     switch (action.type) {
@@ -73,6 +73,10 @@ export function threadState(state = initialState, action = {}) {
             let newStateAfterDeleteSelected =  _.assign({}, state, { 'threads' : threadsAfterDeleteSelected, 'isEditing': false });
             return newStateAfterDeleteSelected;
 
+        case Action.SET_CURRENT_THREAD:
+            let currentThread = action.thread;
+            let newStateAfterSettingCurrentThread =  _.assign({}, state, { 'currentThread': currentThread });
+            return newStateAfterSettingCurrentThread;
 
         case Action.LOAD_MORE_THREADS:
             return state;

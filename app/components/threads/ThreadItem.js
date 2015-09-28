@@ -9,11 +9,12 @@ class ThreadItem extends Component {
     }
 
     openMessagesPage(thread){
+        this.props.setCurrentThread(thread);
         this.props.router.toMessageView(thread);
     }
 
     render() {
-        const {thread, isEditing, router} = this.props;
+        const {thread, isEditing, router, actions} = this.props;
         return (
             <TouchableHighlight onPress={() => this.openMessagesPage(thread)}>
                 <View>

@@ -3,7 +3,6 @@ import {messageState} from '../../app/reducers/MessageReducer';
 import Message from '../../app/models/Message'
 import * as types from '../../app/constants/ActionTypes';
 import * as Status from '../../app/constants/MessageConstants.js';
-import uuid from 'node-uuid';
 import sinon from 'sinon';
 
 describe('Message reducer tests', () => {

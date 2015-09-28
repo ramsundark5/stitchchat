@@ -20,6 +20,7 @@ export const START_THREAD_EDITING_STATE     = 'START_MESSAGE_EDITING_STATE';
 export const END_THREAD_EDITING_STATE       = 'END_MESSAGE_EDITING_STATE';
 export const ADD_GROUP_THREAD               = 'ADD_GROUP_THREAD';
 export const LOAD_MORE_THREADS              = 'LOAD_MORE_THREADS';
+export const SET_CURRENT_THREAD             = 'SET_CURRENT_THREAD';
 
 export const BLOCK_CONTACT                  = 'BLOCK_CONTACT';
 export const UNBLOCK_CONTACT                = 'UNBLOCK_CONTACT';
