@@ -81,7 +81,7 @@ public class MqttCallbackHandler implements MqttCallback {
                 "Message arrived with data: " + parsedMessage);
         WritableMap params = new WritableNativeMap();
         params.putString("data", parsedMessage);
-        sendEvent(this.reactApplicationContext, "onMessageArrived", params);
+        sendEvent(this.reactApplicationContext, "onMessageReceived", parsedMessage);
     }
 
     private void sendEvent(ReactContext reactContext,

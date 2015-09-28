@@ -57,7 +57,7 @@ class MQTTClient{
     }
 
     onReceiveMessaged(message){
-        //store.dispatch(MessageActions.addMessage("message received from mqtt"));
+        store.dispatch(MessageActions.addMessage(message));
         console.log("received message in UI "+ message);
     }
 
