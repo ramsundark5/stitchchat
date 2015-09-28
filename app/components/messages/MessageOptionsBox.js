@@ -6,25 +6,28 @@ import {messageStyle} from '../../styles/MessageStyles';
 class MessageOptionsBox extends Component {
 
     render() {
-        const { actions } = this.props;
+        const { copySelectedMessages, forwardSelected, deleteSelected } = this.props;
         return (
             <View style={[messageStyle.msgOptions]}>
                 <TouchableHighlight style={[commons.defaultIconContainer]}
-                                    onPress={actions.copySelectedMessages}>
+                                    onPress={copySelectedMessages}>
                     <Icon name='ion|ios-copy'
-                          size={defaultStyle.iconSize} color={defaultStyle.iconColor}
+                          size={defaultStyle.iconSize}
+                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
                 <TouchableHighlight style={commons.defaultIconContainer}
-                                    onPress={actions.forwardSelected}>
+                                    onPress={forwardSelected}>
                     <Icon name='ion|forward'
-                          size={defaultStyle.iconSize} color={defaultStyle.iconColor}
+                          size={defaultStyle.iconSize}
+                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
                 <TouchableHighlight style={commons.defaultIconContainer}
-                                    onPress={actions.deleteSelected}>
+                                    onPress={deleteSelected}>
                     <Icon name='ion|ios-trash'
-                          size={defaultStyle.iconSize} color={defaultStyle.iconColor}
+                          size={defaultStyle.iconSize}
+                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
             </View>
@@ -33,6 +36,9 @@ class MessageOptionsBox extends Component {
 }
 
 MessageOptionsBox.propTypes = {
+    copySelectedMessages: PropTypes.func.isRequired,
+    forwardSelected: PropTypes.func.isRequired,
+    deleteSelected: PropTypes.func.isRequired
 };
 
 export default MessageOptionsBox;

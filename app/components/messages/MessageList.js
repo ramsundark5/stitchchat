@@ -30,10 +30,10 @@ class MessageList extends Component {
     }
 
     loadOlderMessages(){
-        this.props.actions.loadOlderMessages();
+        this.props.loadOlderMessages();
     }
     render() {
-        const { messages, isEditing, actions } = this.props;
+        const { messages, loadOlderMessages, deleteSelected} = this.props;
         let groupedMessages = this.groupMessagesByDate(messages);
         let messagesDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
@@ -44,10 +44,10 @@ class MessageList extends Component {
                 <RefreshableListView
                     dataSource={messagesDS}
                     renderSectionHeader={this.renderSectionHeader}
-                    loadData={actions.loadOlderMessages}
+                    loadData={loadOlderMessages}
                     refreshDescription="Loading messages"
                     renderRow={this.renderMessageItem.bind(this)}/>
-                <TouchableHighlight onPress={actions.deleteSelected}>
+                <TouchableHighlight onPress={deleteSelected}>
                     <Text>Delete</Text>
                  </TouchableHighlight>
             </View>
@@ -57,7 +57,7 @@ class MessageList extends Component {
     renderMessageItem(rowData, sectionID, rowID) {
         return (
             <MessageItem key={rowData.id} message={rowData}
-                         isEditing={this.props.isEditing} {...this.props.actions}/>
+                         isEditing={this.props.isEditing} selectMessage={this.props.selectMessage}/>
         );
     }
 
@@ -65,7 +65,8 @@ class MessageList extends Component {
 
 MessageList.propTypes = {
     messages: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    selectMessage: PropTypes.func.isRequired,
+    loadOlderMessages: PropTypes.func.isRequired
 };
 
 export default MessageList;

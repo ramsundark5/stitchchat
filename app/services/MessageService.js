@@ -7,9 +7,13 @@ class MessageService{
         MQTTClient.init();
     }
 
-    sendMessage(message){
-        //SocketIOClient.publish('MQTTChat', message);
-        MQTTClient.publish('MQTTChat', message);
+    sendMessage(topic, message){
+        try{
+            MQTTClient.publish('MQTTChat', message);
+        }catch(err){
+            console.log(err);
+        }
+
     }
 }
 

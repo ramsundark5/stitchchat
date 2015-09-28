@@ -17,7 +17,7 @@ class MessageItem extends Component {
     selectMessageOnlyInEditingMode(message){
         MessageService.sendMessage('1111', message);
         if(this.props.isEditing){
-            this.selectMessage(message.id);
+            this.selectMessage(message);
         }
     }
 
@@ -32,7 +32,7 @@ class MessageItem extends Component {
         return statusIconName;
     }
     render() {
-        const {message, isEditing} = this.props;
+        const {message} = this.props;
         let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
         let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
         let msgAlign     = message.owner? commons.pullRight : commons.pullLeft;
@@ -64,7 +64,8 @@ class MessageItem extends Component {
 
 MessageItem.propTypes = {
     message: PropTypes.object.isRequired,
-    selectMessage: PropTypes.func.isRequired
+    selectMessage: PropTypes.func.isRequired,
+    isEditing: PropTypes.bool.isRequired
 };
 
 export default MessageItem;

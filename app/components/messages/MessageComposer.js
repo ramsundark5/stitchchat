@@ -9,24 +9,20 @@ class MessageComposer extends Component {
         super(props, context);
     }
 
-    handleSave(text) {
-        if (text.length !== 0) {
-            this.props.addMessage(text);
-        }
-    }
-
     render() {
         const { isEditing, actions } = this.props;
         if(isEditing){
             return(
-                <MessageOptionsBox isEditing={isEditing} actions={actions}/>
+                <MessageOptionsBox isEditing={isEditing} actions={actions}
+                                   copySelectedMessages={actions.copySelectedMessages}
+                                   forwardSelected={actions.forwardSelected}
+                                   deleteSelected={actions.deleteSelected}/>
             );
         }
        else{
             return (
-                <MessageTextInput newMessage={true}
-                                  style={commons.defaultTextInput}
-                                  onSave={this.handleSave.bind(this)}
+                <MessageTextInput style={commons.defaultTextInput}
+                                  addMessage = {actions.addMessage}
                                   placeholder='Type here'/>
             );
         }
@@ -34,7 +30,8 @@ class MessageComposer extends Component {
 }
 
 MessageComposer.propTypes = {
-    addMessage: PropTypes.func.isRequired
+    actions: PropTypes.object.isRequired,
+    isEditing: PropTypes.bool.isRequired
 };
 
 export default MessageComposer;

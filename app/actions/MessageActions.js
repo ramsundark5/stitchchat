@@ -71,3 +71,9 @@ export function copySelectedMessages(){
         type: Actions.COPY_SELECTED_MESSAGE,
     };
 }
+
+export function forwardSelected(){
+    return {
+        type: Actions.FORWARD_SELECTED_MESSAGE,
+    };
+}

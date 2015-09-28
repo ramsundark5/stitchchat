@@ -11,7 +11,9 @@ class MessageTextInput extends Component {
     }
 
     handleSubmit() {
-        this.props.onSave(this.state.text);
+        if (state.text.length !== 0) {
+            this.props.addMessage(this.state.text);
+        }
         this.setState({text: ''});
     }
 
@@ -41,10 +43,9 @@ class MessageTextInput extends Component {
 }
 
 MessageTextInput.propTypes = {
-    onSave: PropTypes.func.isRequired,
+    addMessage: PropTypes.func.isRequired,
     text: PropTypes.string,
-    placeholder: PropTypes.string,
-    newMessage: PropTypes.bool
+    placeholder: PropTypes.string
 };
 
 export default MessageTextInput;

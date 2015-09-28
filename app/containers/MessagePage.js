@@ -20,30 +20,27 @@ class MessagePage extends Component {
     }
 
     render() {
-        const { messages, dispatch, isEditing, router } = this.props;
-        const actions = bindActionCreators(MessageActions, dispatch);
+        const { messages, messageActions, isEditing, router } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={{flex: 1}}>
-                    <MessageList messages={messages} isEditing={isEditing} actions={actions} router={router}/>
+                    <MessageList messages={messages}
+                                 isEditing={isEditing}
+                                 selectMessage={messageActions.selectMessage}
+                                 loadOlderMessages={messageActions.loadOlderMessages}
+                                 router={router}/>
                 </View>
                 <View style={[{flex: 0}, commons.horizontalNoWrap]}>
                     {this._renderMediaOptions(isEditing, router)}
                     <View style={{flex: 1}}>
-                        <MessageComposer addMessage={actions.addMessage} isEditing={isEditing} actions={actions}/>
+                        <MessageComposer isEditing={isEditing}
+                                         actions={messageActions}/>
                     </View>
                 </View>
             </View>
         );
     }
-}
-
-function mapStateToProps(state) {
-    return {
-        messages: state.messageState.messages,
-        isEditing: state.messageState.isEditing
-    };
 }
 
 var styles = StyleSheet.create({
@@ -54,4 +51,18 @@ var styles = StyleSheet.create({
         borderColor: '#d6d7da',
     }
 });
-export default connect(mapStateToProps)(MessagePage);
+
+function mapStateToProps(state) {
+    return {
+        messages: state.messageState.messages,
+        isEditing: state.messageState.isEditing
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        messageActions: bindActionCreators(MessageActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagePage);
