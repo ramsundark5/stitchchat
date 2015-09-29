@@ -9,7 +9,7 @@ describe('Message reducer tests', () => {
 
     let state;
     beforeEach(() => {
-        state = { messages:[], isEditing: false};
+        state = { messages:[], isEditing: false, currentThread: null};
     });
 
     it('initial state should be empty array', () => {

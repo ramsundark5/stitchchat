@@ -49,7 +49,9 @@ class ThreadItem extends Component {
 
 ThreadItem.propTypes = {
     thread: PropTypes.object.isRequired,
-    selectThread: PropTypes.func.isRequired
+    selectThread: PropTypes.func.isRequired,
+    setCurrentThread: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 export default ThreadItem;

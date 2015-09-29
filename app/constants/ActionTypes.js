@@ -1,3 +1,4 @@
+export const LOAD_MESSAGES_FOR_THREAD      =  'LOAD_MESSAGES_FOR_THREAD';
 export const ADD_MESSAGE                    = 'ADD_MESSAGE';
 export const DELETE_MESSAGE                 = 'DELETE_MESSAGE';
 export const SELECT_MESSAGE                 = 'SELECT_MESSAGE';
@@ -22,6 +23,7 @@ export const END_THREAD_EDITING_STATE       = 'END_MESSAGE_EDITING_STATE';
 export const ADD_GROUP_THREAD               = 'ADD_GROUP_THREAD';
 export const LOAD_MORE_THREADS              = 'LOAD_MORE_THREADS';
 export const SET_CURRENT_THREAD             = 'SET_CURRENT_THREAD';
+export const SEARCH_THREADS                 = 'SEARCH_THREADS';
 
 export const BLOCK_CONTACT                  = 'BLOCK_CONTACT';
 export const UNBLOCK_CONTACT                = 'UNBLOCK_CONTACT';

@@ -3,7 +3,16 @@ import * as _ from 'lodash';
 import Contact from '../models/Contact';
 import GroupInfo from '../models/GroupInfo';
 
-export function addThread(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo) {
+export function addNewThread(recipientContactInfo: Contact) {
+    return {
+        type: Actions.ADD_THREAD,
+        recipientContactInfo,
+        false,
+        null
+    };
+}
+
+export function addNewGroupThread(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo) {
     return {
         type: Actions.ADD_THREAD,
         recipientContactInfo,
@@ -55,5 +64,12 @@ export function setCurrentThread(thread) {
     return {
         type: Actions.SET_CURRENT_THREAD,
         thread
+    };
+}
+
+export function searchThreads(searchText) {
+    return {
+        type: Actions.SEARCH_THREADS,
+        searchText
     };
 }

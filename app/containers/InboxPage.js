@@ -8,27 +8,24 @@ import {commons} from '../styles/CommonStyles';
 
 class InboxPage extends Component {
 
-    _renderMediaOptions(isEditing, router){
-        //don't show media options in editing state
-        if(isEditing){
-            return;
-        }
-        return(
-            <MediaOptions router={router}/>
-        );
-    }
-
     render() {
-        const { threads, dispatch, isEditing, router } = this.props;
-        const actions = bindActionCreators(ThreadActions, dispatch);
+        const { threads, threadActions, isEditing, router } = this.props;
 
         return (
             <View style={styles.container}>
                 <View style={{flex: 1}}>
-                    <ThreadList threads={threads} isEditing={isEditing} actions={actions} router={router}/>
+                    <ThreadList threads={threads}
+                                loadMoreThreads={threadActions.loadMoreThreads}
+                                selectThread={threadActions.selectThread}
+                                setCurrentThread={threadActions.loadMoreThreads}
+                                isEditing={isEditing}
+                                router={router}/>
                 </View>
                 <View style={[{flex: 0}, commons.horizontalNoWrap]}>
-                    <ThreadComposer addThread={actions.addThread} isEditing={isEditing} actions={actions}/>
+                    <ThreadComposer addNewThread={threadActions.addNewThread}
+                                    addNewGroupThread={threadActions.addNewGroupThread}
+                                    searchThreads={threadActions.searchThreads}
+                                    isEditing={isEditing}/>
                 </View>
             </View>
         );
@@ -42,6 +39,12 @@ function mapStateToProps(state) {
     };
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        threadActions: bindActionCreators(ThreadActions, dispatch)
+    };
+}
+
 var styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -50,4 +53,4 @@ var styles = StyleSheet.create({
         borderColor: '#d6d7da',
     }
 });
-export default connect(mapStateToProps)(InboxPage);
+export default connect(mapStateToProps, mapDispatchToProps)(InboxPage);

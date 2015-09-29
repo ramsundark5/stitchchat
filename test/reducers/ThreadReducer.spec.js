@@ -230,7 +230,7 @@ describe('Thread reducer tests', () => {
         expect(stateAfterClearSelected.isEditing).toBe(false);
     });
 
-    it.only('SET_CURRENT_THREAD should set the selected Thread', () => {
+    it('SET_CURRENT_THREAD should set the selected Thread', () => {
         let firstContact = new Contact();
         firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {

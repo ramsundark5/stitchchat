@@ -1,6 +1,14 @@
 import * as Actions from '../constants/ActionTypes';
 import * as _ from 'lodash';
 
+export function loadMessagesForThread(thread) {
+
+    return {
+        type: Actions.LOAD_MESSAGES_FOR_THREAD,
+        messages
+    };
+}
+
 export function addMessage(text) {
     return {
         type: Actions.ADD_MESSAGE,

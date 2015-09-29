@@ -7,14 +7,13 @@ export default class Message{
         this.sequenceId             = _.uniqueId('message'); //used for sorting
         this.threadId               = '';
         this.senderId               = '';
-        this.recipientContactInfo   = '';
-        this.groupInfo              = '';
+        this.receiverId             = '';
         this.isGroupThread          = false;
         this.text                   = text;
         this.selected               = false;
         this.status                 = Status.STATUS_PENDING;
         this.owner                  = true;
-        this.timestamp              = new Date().toJSON();
+        this.timestamp              = 0;
         this.direction              = 0; //sent or received
         this.thumbImageUrl          = '';
         this.mediaUrl               = '';
@@ -24,6 +23,7 @@ export default class Message{
         this.longitude              = '';
         this.needsPush              = true; //indicates pending/draft message
         this.type                   = '';
+        this.ttl                    = 0;
         this.extras                 = '';
     }
 }

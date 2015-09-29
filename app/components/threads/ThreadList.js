@@ -10,10 +10,11 @@ class ThreadList extends Component {
     }
 
     loadMoreThreads(){
-        this.props.actions.loadMoreThreads();
+        this.props.loadMoreThreads();
     }
+
     render() {
-        const { threads, isEditing, actions, router } = this.props;
+        const { threads } = this.props;
         let threadsDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2 });
         threadsDS = threadsDS.cloneWithRows(threads);
@@ -21,29 +22,31 @@ class ThreadList extends Component {
             <View style={commons.listContainer}>
                 <ListView
                     dataSource={threadsDS}
-                    loadData={actions.loadMoreThreads()}
+                    loadData={this.loadMoreThreads()}
                     renderRow={this.renderThreadItem.bind(this)}/>
-
-                <TouchableHighlight onPress={actions.deleteSelected}>
-                    <Text>Delete</Text>
-                </TouchableHighlight>
             </View>
         );
     }
 
     renderThreadItem(rowData, sectionID, rowID) {
         return (
-            <ThreadItem key={rowData.id} thread={rowData}
-                         router = {this.props.router}
-                         isEditing={this.props.isEditing}
-                         {...this.props.actions}/>
+            <ThreadItem  key={rowData.id}
+                         thread={rowData}
+                         router={this.props.router}
+                         selectThread={this.props.selectThread}
+                         setCurrentThread={this.props.setCurrentThread}
+                         isEditing={this.props.isEditing}/>
         );
     }
 }
 
 ThreadList.propTypes = {
     threads: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    loadMoreThreads: PropTypes.func.isRequired,
+    selectThread: PropTypes.func.isRequired,
+    setCurrentThread: PropTypes.func.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 export default ThreadList;
