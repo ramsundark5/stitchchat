@@ -1,6 +1,6 @@
 import expect from 'expect';
 import {messageState} from '../../app/reducers/MessageReducer';
-import Message from '../../app/models/Message'
+import Message from '../../app/models/Message';
 import * as types from '../../app/constants/ActionTypes';
 import * as Status from '../../app/constants/MessageConstants.js';
 import sinon from 'sinon';
@@ -18,32 +18,36 @@ describe('Message reducer tests', () => {
     });
 
     it('ADD_MESSAGE should add message instance to existing collection', () => {
+        let firstNewMessage = new Message('first message');
         let firstNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'first message'
+            message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
 
+        let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'second message'
+            message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
         expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
     });
 
     it('DELETE_MESSAGE should delete from existing collection', () => {
+        let firstNewMessage = new Message('first message');
         let firstNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'first message'
+            message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
 
+        let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'second message'
+            message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
         expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
@@ -60,9 +64,10 @@ describe('Message reducer tests', () => {
     });
 
     it('SELECT_MESSAGE should select or unselect the given message', () => {
+        let firstNewMessage = new Message('first message');
         let firstNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'first message'
+            message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
@@ -89,9 +94,10 @@ describe('Message reducer tests', () => {
     });
 
     it('UPDATE_MESSAGE_STATUS should update status of the given message', () => {
+        let firstNewMessage = new Message('first message');
         let firstNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'first message'
+            message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
@@ -118,17 +124,18 @@ describe('Message reducer tests', () => {
     });
 
     it('DELETE_SELECTED should delete the selected message', () => {
+        let firstNewMessage = new Message('first message');
         let firstNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'first message'
+            message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
-        expect(stateAfterFirstAdd.messages[0].selected).toBe(false);
 
+        let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'second message'
+            message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
         expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
@@ -156,17 +163,18 @@ describe('Message reducer tests', () => {
     });
 
     it('CLEAR_SELECTED should clear the selected message', () => {
+        let firstNewMessage = new Message('first message');
         let firstNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'first message'
+            message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
         expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
-        expect(stateAfterFirstAdd.messages[0].selected).toBe(false);
 
+        let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
             type: types.ADD_MESSAGE,
-            text: 'second message'
+            message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
         expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');

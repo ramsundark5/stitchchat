@@ -24,7 +24,7 @@ export function messageState(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_MESSAGE:
-            let newMessage = new Message(action.text);
+            let newMessage = action.message;//new Message(action.text);
             let messagesAfterAdd = state.messages.concat(newMessage)
             let newStateAfterAdd =  _.assign({}, state, { 'messages' : messagesAfterAdd });
             return newStateAfterAdd;
@@ -87,6 +87,11 @@ export function messageState(state = initialState, action = {}) {
             return messageState(state, {
                 type: Action.CLEAR_SELECTED_MESSAGE
             });
+
+        case Action.LOAD_MESSAGES_FOR_THREAD:
+            let messagesForThread = action.messages;
+            let newStateAfterLoadingMessages =  _.assign({}, state, { 'messages' : messagesForThread });
+            return newStateAfterLoadingMessages ;
 
         case Action.LOAD_OLDER_MESSAGES:
             return state;

@@ -3,6 +3,7 @@ import {messageStyle} from '../../styles/MessageStyles';
 import {commons, smallIconSize} from '../../styles/CommonStyles';
 import moment from 'moment';
 import ThreadItem from './ThreadItem';
+import LoginService from '../../services/LoginService';
 
 class ThreadList extends Component {
     constructor(props, context) {
@@ -11,6 +12,16 @@ class ThreadList extends Component {
 
     loadMoreThreads(){
         this.props.loadMoreThreads();
+    }
+
+    showLoginPage(){
+        let DigitsLogin = new LoginService();
+        DigitsLogin.startLoginProcess();
+    }
+
+    logout(){
+        let DigitsLogin = new LoginService();
+        DigitsLogin.logout();
     }
 
     render() {
@@ -24,6 +35,12 @@ class ThreadList extends Component {
                     dataSource={threadsDS}
                     loadData={this.loadMoreThreads()}
                     renderRow={this.renderThreadItem.bind(this)}/>
+                <TouchableHighlight onPress={this.showLoginPage.bind(this)}>
+                    <Text>Login</Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={this.logout.bind(this)}>
+                    <Text>Logout</Text>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -35,6 +52,7 @@ class ThreadList extends Component {
                          router={this.props.router}
                          selectThread={this.props.selectThread}
                          setCurrentThread={this.props.setCurrentThread}
+                         loadMessagesForThread={this.props.loadMessagesForThread}
                          isEditing={this.props.isEditing}/>
         );
     }
@@ -45,6 +63,7 @@ ThreadList.propTypes = {
     loadMoreThreads: PropTypes.func.isRequired,
     selectThread: PropTypes.func.isRequired,
     setCurrentThread: PropTypes.func.isRequired,
+    loadMessagesForThread: PropTypes.func.isRequired,
     isEditing: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired
 };

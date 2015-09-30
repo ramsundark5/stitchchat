@@ -1,18 +1,20 @@
 import * as Actions from '../constants/ActionTypes';
 import * as _ from 'lodash';
+import MessageDao from '../dao/MessageDao';
 
-export function loadMessagesForThread(thread) {
-
+export function loadMessagesForThread(messages){
+    if(!messages){
+        messages = [];
+    }
     return {
         type: Actions.LOAD_MESSAGES_FOR_THREAD,
         messages
     };
 }
-
-export function addMessage(text) {
+export function addMessage(message: Message) {
     return {
         type: Actions.ADD_MESSAGE,
-        text
+        message
     };
 }
 

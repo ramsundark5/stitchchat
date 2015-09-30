@@ -23,8 +23,13 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A24386591BBC55A40056262F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24386551BBC55A40056262F /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
+		A243865A1BBC55A40056262F /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24386561BBC55A40056262F /* DigitsKit.framework */; settings = {ASSET_TAGS = (); }; };
+		A243865B1BBC55A40056262F /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A24386571BBC55A40056262F /* DigitsKitResources.bundle */; settings = {ASSET_TAGS = (); }; };
+		A243865C1BBC55A40056262F /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24386581BBC55A40056262F /* TwitterCore.framework */; settings = {ASSET_TAGS = (); }; };
 		A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */; };
 		A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A29AC1E31B98B46D00B29901 /* ionicons.ttf */; };
+		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; settings = {ASSET_TAGS = (); }; };
 		A2F214D81BA8DCE300EDAC0F /* MQTTDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */; };
 		A2F214D91BA8DCE300EDAC0F /* MQTTEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */; };
 		A2F214DA1BA8DCE300EDAC0F /* MQTTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */; };
@@ -155,8 +160,13 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A24386551BBC55A40056262F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		A24386561BBC55A40056262F /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
+		A24386571BBC55A40056262F /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
+		A24386581BBC55A40056262F /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
 		A29AC1E31B98B46D00B29901 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
+		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
 		A2F214C71BA8DCE300EDAC0F /* MQTTClient-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MQTTClient-Prefix.pch"; sourceTree = "<group>"; };
 		A2F214C81BA8DCE300EDAC0F /* MQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTClient.h; sourceTree = "<group>"; };
 		A2F214C91BA8DCE300EDAC0F /* MQTTDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTDecoder.h; sourceTree = "<group>"; };
@@ -197,11 +207,14 @@
 				A2F2340E1BA09E2B000A5A9E /* libRNClipboard.a in Frameworks */,
 				A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				A243865A1BBC55A40056262F /* DigitsKit.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
+				A24386591BBC55A40056262F /* Fabric.framework in Frameworks */,
+				A243865C1BBC55A40056262F /* TwitterCore.framework in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -343,6 +356,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A243865D1BBC560D0056262F /* RNDigits */,
+				A24386551BBC55A40056262F /* Fabric.framework */,
+				A24386561BBC55A40056262F /* DigitsKit.framework */,
+				A24386571BBC55A40056262F /* DigitsKitResources.bundle */,
+				A24386581BBC55A40056262F /* TwitterCore.framework */,
 				A2F214C51BA8DCE300EDAC0F /* MQTTClient */,
 				A2F234141BA35FB1000A5A9E /* HelloManager.m */,
 				A2F234121BA35ED9000A5A9E /* HelloManager.swift */,
@@ -367,6 +385,14 @@
 				00E356EE1AD99517003FC87E /* stitchchatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A243865D1BBC560D0056262F /* RNDigits */ = {
+			isa = PBXGroup;
+			children = (
+				A2B411B11BBC74A900918E9E /* DigitsLogin.m */,
+			);
+			name = RNDigits;
 			sourceTree = "<group>";
 		};
 		A29AC1D31B98B20000B29901 /* Products */ = {
@@ -438,6 +464,7 @@
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				A24386541BBC553F0056262F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -632,6 +659,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A243865B1BBC55A40056262F /* DigitsKitResources.bundle in Resources */,
 				A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -640,6 +668,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A24386541BBC553F0056262F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 23808b29e720fdcab2c94658f15d779eb2b33a98 7d74b7230bbae12127db4f806d52d4e70e145b2b2f463cceb83bfa11039d13c3";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		00E356EA1AD99517003FC87E /* Sources */ = {
@@ -656,6 +700,7 @@
 			files = (
 				A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */,
 				A2F214DB1BA8DCE300EDAC0F /* MQTTPersistence.m in Sources */,
+				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
 				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
 				A2F214D81BA8DCE300EDAC0F /* MQTTDecoder.m in Sources */,
 				A2F214DD1BA8DCE300EDAC0F /* MQTTSessionManager.m in Sources */,
@@ -737,6 +782,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/ramsundar/Downloads/MQTT-Client-Framework-master/MQTTClient/dist",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -746,6 +792,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/stitchchat/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stitchchat;
 				PRODUCT_NAME = stitchchat;
 				SWIFT_OBJC_BRIDGING_HEADER = "stitchchat-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -760,6 +807,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/ramsundar/Downloads/MQTT-Client-Framework-master/MQTTClient/dist",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -769,6 +817,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/stitchchat/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stitchchat;
 				PRODUCT_NAME = stitchchat;
 				SWIFT_OBJC_BRIDGING_HEADER = "stitchchat-Bridging-Header.h";
 			};

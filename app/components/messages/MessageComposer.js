@@ -10,7 +10,7 @@ class MessageComposer extends Component {
     }
 
     render() {
-        const { isEditing, actions } = this.props;
+        const { isEditing, currentThread, actions } = this.props;
         if(isEditing){
             return(
                 <MessageOptionsBox isEditing={isEditing} actions={actions}
@@ -22,7 +22,8 @@ class MessageComposer extends Component {
        else{
             return (
                 <MessageTextInput style={commons.defaultTextInput}
-                                  addMessage = {actions.addMessage}
+                                  addMessage={actions.addMessage}
+                                  currentThread={currentThread}
                                   placeholder='Type here'/>
             );
         }
@@ -31,6 +32,7 @@ class MessageComposer extends Component {
 
 MessageComposer.propTypes = {
     actions: PropTypes.object.isRequired,
+    currentThread: PropTypes.object.isRequired,
     isEditing: PropTypes.bool.isRequired
 };
 

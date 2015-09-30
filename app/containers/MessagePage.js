@@ -20,7 +20,7 @@ class MessagePage extends Component {
     }
 
     render() {
-        const { messages, messageActions, isEditing, router } = this.props;
+        const { messages, messageActions, isEditing, currentThread, router } = this.props;
 
         return (
             <View style={styles.container}>
@@ -35,6 +35,7 @@ class MessagePage extends Component {
                     {this._renderMediaOptions(isEditing, router)}
                     <View style={{flex: 1}}>
                         <MessageComposer isEditing={isEditing}
+                                         currentThread={currentThread}
                                          actions={messageActions}/>
                     </View>
                 </View>
@@ -53,9 +54,11 @@ var styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
+    console.log("mapStateToProps is triggered in message page");
     return {
         messages: state.messageState.messages,
-        isEditing: state.messageState.isEditing
+        isEditing: state.messageState.isEditing,
+        currentThread: state.threadState.currentThread
     };
 }
 

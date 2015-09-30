@@ -2,6 +2,7 @@ import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight 
 import {commons, defaultStyle} from '../../styles/CommonStyles';
 import {threadStyle} from '../../styles/ThreadStyles';
 import { Icon } from 'react-native-icons';
+import MessageDao from '../../dao/MessageDao';
 
 class ThreadItem extends Component {
     constructor(props, context) {
@@ -11,10 +12,17 @@ class ThreadItem extends Component {
     openMessagesPage(thread){
         this.props.setCurrentThread(thread);
         this.props.router.toMessageView(thread);
+        this.loadMessagesForThread(thread);
+    }
+
+    async loadMessagesForThread(thread){
+        let messagesStr = await MessageDao.getMessages(thread.id);
+        let messages = JSON.parse(messagesStr);
+        this.props.loadMessagesForThread(messages);
     }
 
     render() {
-        const {thread, isEditing, router, actions} = this.props;
+        const {thread} = this.props;
         return (
             <TouchableHighlight onPress={() => this.openMessagesPage(thread)}>
                 <View>

@@ -1,4 +1,3 @@
-//import SocketIOClient from '../transport/SocketIOClient';
 import MQTTClient from '../transport/MQTTClient';
 
 class MessageService{

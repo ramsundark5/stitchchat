@@ -4,12 +4,13 @@ import { connect } from 'react-redux/native';
 import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
 import * as ThreadActions from '../actions/ThreadActions';
+import * as MessageActions from '../actions/MessageActions';
 import {commons} from '../styles/CommonStyles';
 
 class InboxPage extends Component {
 
     render() {
-        const { threads, threadActions, isEditing, router } = this.props;
+        const { threads, threadActions, messageActions, isEditing, router } = this.props;
 
         return (
             <View style={styles.container}>
@@ -17,7 +18,8 @@ class InboxPage extends Component {
                     <ThreadList threads={threads}
                                 loadMoreThreads={threadActions.loadMoreThreads}
                                 selectThread={threadActions.selectThread}
-                                setCurrentThread={threadActions.loadMoreThreads}
+                                setCurrentThread={threadActions.setCurrentThread}
+                                loadMessagesForThread={messageActions.loadMessagesForThread}
                                 isEditing={isEditing}
                                 router={router}/>
                 </View>
@@ -41,7 +43,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        threadActions: bindActionCreators(ThreadActions, dispatch)
+        threadActions: bindActionCreators(ThreadActions, dispatch),
+        messageActions: bindActionCreators(MessageActions, dispatch)
     };
 }
 

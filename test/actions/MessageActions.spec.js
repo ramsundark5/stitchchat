@@ -2,13 +2,15 @@ import expect from 'expect';
 import * as types from '../../app/constants/ActionTypes';
 import * as actions from '../../app/actions/MessageActions';
 import * as Status from '../../app/constants/MessageConstants.js';
+import Message from '../../app/models/Message';
 
 describe('Message actions tests', () => {
 
     it('addMessage should create ADD_MESSAGE action', () => {
-        expect(actions.addMessage('Use Redux')).toEqual({
+        let newMessage = new Message('Use Redux');
+        expect(actions.addMessage(newMessage)).toEqual({
             type: types.ADD_MESSAGE,
-            text: 'Use Redux'
+            message: newMessage
         });
     });
 

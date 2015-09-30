@@ -2,7 +2,7 @@ import * as Status from '../constants/MessageConstants.js';
 import * as _ from 'lodash';
 
 export default class Message{
-    constructor(text) {
+    constructor(text, threadId) {
         this.id                     = _.uniqueId('message');
         this.sequenceId             = _.uniqueId('message'); //used for sorting
         this.threadId               = '';
