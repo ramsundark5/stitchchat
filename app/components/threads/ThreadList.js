@@ -16,7 +16,7 @@ class ThreadList extends Component {
 
     showLoginPage(){
         let DigitsLogin = new LoginService();
-        DigitsLogin.startLoginProcess();
+        DigitsLogin.showLoginPage();
     }
 
     logout(){

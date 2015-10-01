@@ -1,5 +1,5 @@
-var NativeModules = require('react-native').NativeModules;
-var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+import {NativeModules} from 'react-native';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 export default class LoginService{
 

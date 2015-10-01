@@ -6,8 +6,14 @@ import ThreadComposer from '../components/threads/ThreadComposer';
 import * as ThreadActions from '../actions/ThreadActions';
 import * as MessageActions from '../actions/MessageActions';
 import {commons} from '../styles/CommonStyles';
+import LoginService from '../services/LoginService';
 
 class InboxPage extends Component {
+
+    componentWillMount(){
+        let DigitsLogin = new LoginService();
+        DigitsLogin.showLoginPage();
+    }
 
     render() {
         const { threads, threadActions, messageActions, isEditing, router } = this.props;

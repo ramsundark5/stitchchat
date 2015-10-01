@@ -1,5 +1,5 @@
-var NativeModules = require('react-native').NativeModules;
-var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+import {NativeModules} from 'react-native';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import store from '../store/ConfigureStore';
 import * as MessageActions from '../actions/MessageActions';
 
