@@ -4,21 +4,33 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.crashlytics.android.Crashlytics;
+import com.digits.sdk.android.Digits;
 import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
-import com.stitchchat.mqtt.StitchChatPackage;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "";
+    private static final String TWITTER_SECRET = "";
+
 
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new Digits());
         mReactRootView = new ReactRootView(this);
 
         mReactInstanceManager = ReactInstanceManager.builder()

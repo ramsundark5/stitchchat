@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
       android:allowBackup="true"
@@ -24,6 +26,9 @@
         <!-- Mqtt Service -->
         <service android:name="org.eclipse.paho.android.service.MqttService" >
         </service>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="23808b29e720fdcab2c94658f15d779eb2b33a98" />
 
     </application>
 

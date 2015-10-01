@@ -15,13 +15,11 @@ class ThreadList extends Component {
     }
 
     showLoginPage(){
-        let DigitsLogin = new LoginService();
-        DigitsLogin.showLoginPage();
+        LoginService.showLoginPage();
     }
 
     logout(){
-        let DigitsLogin = new LoginService();
-        DigitsLogin.logout();
+        LoginService.logout();
     }
 
     render() {
