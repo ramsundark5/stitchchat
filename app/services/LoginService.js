@@ -1,9 +1,10 @@
 import {NativeModules} from 'react-native';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
-export default class LoginService{
+class LoginService{
     constructor(){
-        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess);
+        RCTDeviceEventEmitter.addListener('registrationSuccessIOS', this.onRegistrationSuccessIOS);
+        RCTDeviceEventEmitter.addListener('registrationSuccessIAndroid', this.onRegistrationSuccessAndroid);
         RCTDeviceEventEmitter.addListener('registrationCancelled', this.onRegistrationCancelled);
     }
 
@@ -17,8 +18,12 @@ export default class LoginService{
         DigitsLogin.logout();
     }
 
-    onRegistrationSuccess(data){
+    onRegistrationSuccessIOS(data){
         console.log(data.phoneNumber +"/"+ data.authToken);
+    }
+
+    onRegistrationSuccessAndroid(data){
+        console.log(data.phoneNumber +"/"+ data. X-Auth-Service-Provider);
     }
 
     onRegistrationCancelled(reason){

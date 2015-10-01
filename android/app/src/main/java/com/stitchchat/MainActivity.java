@@ -2,6 +2,7 @@ package com.stitchchat;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.crashlytics.android.Crashlytics;
@@ -13,14 +14,12 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
+
+import java.util.Properties;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
-
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "";
-    private static final String TWITTER_SECRET = "";
-
 
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
@@ -29,8 +28,19 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new Digits());
+
+        try{
+            PropertyReader propertyReader = new PropertyReader(this);
+            Properties properties = propertyReader.getMyProperties("application.properties");
+            String TWITTER_KEY = properties.getProperty("TWITTER_KEY");
+            String TWITTER_SECRET = properties.getProperty("TWITTER_SECRET");
+
+            TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+            Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new Digits());
+        }catch(Exception e){
+            Log.e(this.getClass().getCanonicalName(), "Error configuring Digits auth", e);
+        }
+
         mReactRootView = new ReactRootView(this);
 
         mReactInstanceManager = ReactInstanceManager.builder()

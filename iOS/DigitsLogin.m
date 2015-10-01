@@ -40,7 +40,7 @@ RCT_EXPORT_METHOD(startLoginProcess) {
     }
     
     if(session != nil){
-      [self.bridge.eventDispatcher sendDeviceEventWithName:@"registrationSuccess"
+      [self.bridge.eventDispatcher sendDeviceEventWithName:@"registrationSuccessIOS"
                                                       body:@{@"phoneNumber": session.phoneNumber,
                                                              @"authToken":session.authToken,
                                                              @"authTokenSecret":session.authTokenSecret,

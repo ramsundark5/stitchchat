@@ -32,3 +32,4 @@ node_modules/
 /android/.gradle
 /android/app/build
 npm-debug.log
+/android/app/fabric.properties

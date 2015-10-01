@@ -11,8 +11,7 @@ import LoginService from '../services/LoginService';
 class InboxPage extends Component {
 
     componentWillMount(){
-        let DigitsLogin = new LoginService();
-        DigitsLogin.showLoginPage();
+        LoginService.showLoginPage();
     }
 
     render() {
