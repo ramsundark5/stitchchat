@@ -1,12 +1,8 @@
 package com.stitchchat.mqtt;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
@@ -19,11 +15,7 @@ import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
 
 public class RNMQTTClient extends ReactContextBaseJavaModule{
 
