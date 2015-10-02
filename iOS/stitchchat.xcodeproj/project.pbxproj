@@ -781,7 +781,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/ramsundar/Downloads/MQTT-Client-Framework-master/MQTTClient/dist",
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -806,7 +805,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/ramsundar/Downloads/MQTT-Client-Framework-master/MQTTClient/dist",
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
