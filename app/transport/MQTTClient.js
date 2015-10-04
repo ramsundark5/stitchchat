@@ -1,4 +1,4 @@
-import {NativeModules} from 'react-native';
+import {NativeModules, Platform} from 'react-native';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import store from '../store/ConfigureStore';
 import * as MessageActions from '../actions/MessageActions';
@@ -11,16 +11,15 @@ class MQTTClient{
     }
 
     async init(){
-        console.log("inside init method of MQTT clinet");
         let phoneNumber = await AsyncStorage.getItem("phoneNumber");
+        if(!phoneNumber){
+            phoneNumber = '3392247442';
+        }
         if(phoneNumber){
             console.log("got phone number from async storage as "+ phoneNumber);
             this.connect(phoneNumber);
         }
-        else{
-            this.connect("3392247442");
-        }
-        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
+        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
         //RCTDeviceEventEmitter.addListener('onStatusChanged', this.onStatusChanged);
         RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnectionInitialized.bind(this));
     }
@@ -36,7 +35,8 @@ class MQTTClient{
         if(!this.mqttClient){
             return;
         }
-        let currentInstance = this;
+        console.log('platform is '+Platform);
+        //this.mqttClient.connect(connectionDetails);
         this.mqttClient.connect(connectionDetails, 'MQTTChatReceive', 1);
     }
 
@@ -63,7 +63,7 @@ class MQTTClient{
         console.log("new status is "+newStatus);
     }
 
-    onReceiveMessaged(message){
+    onMessageReceived(message){
         store.dispatch(MessageActions.addMessage(message));
         console.log("received message in UI "+ message);
     }

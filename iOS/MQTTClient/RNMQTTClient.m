@@ -16,7 +16,9 @@ RCT_EXPORT_MODULE();
   return self;
 }
 
-RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
+RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails
+                          topicName:(NSString*) topicName
+                          qosLevel:(NSInteger) qosLevel)
 {
   
   NSString *host          = [RCTConvert NSString:connectionDetails[@"host"]];
@@ -49,6 +51,9 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails)
   if(keepAlive <= 0){
     keepAlive = 60;
   }
+  
+  [self subscribeTo:topicName qosLevel:qosLevel];
+  
   /*
    * MQTTClient: create an instance of MQTTSessionManager once and connect
    * will is set to let the broker indicate to other subscribers if the connection is lost

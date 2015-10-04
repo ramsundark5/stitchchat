@@ -165,7 +165,6 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
         }
 
         client.setCallback(new MqttCallbackHandler(getReactApplicationContext(), clientHandle));
-        //client.setCallback(this);
         client.setTraceCallback(new MqttTraceCallback());
 
         connection.addConnectionOptions(conOpt);
@@ -193,7 +192,6 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
             IMqttDeliveryToken deliveryToken = Connections.getInstance(getReactApplicationContext()).getConnection(clientHandle)
                     .getClient().publish(topic, message.getBytes(), qos, retained);
             //successCallback.invoke(deliveryToken.getMessageId());
-            //completePendingSubscriptions();
         }
         catch (MqttSecurityException e) {
             Log.e(this.getClass().getCanonicalName(), "Failed to publish a message ", e);
