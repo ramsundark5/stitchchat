@@ -1,4 +1,6 @@
 import React, { Navigator } from 'react-native';
+import InboxPage from './InboxPage';
+import LoginPage from './LoginPage';
 import MessagePage from './MessagePage';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from 'react-native-navbar';
@@ -19,6 +21,36 @@ class Router {
 
     pop() {
         this.navigator.pop()
+    }
+
+    toLoginView(props) {
+        this.push(props, {
+            component: LoginPage,
+            name: 'loginview',
+            sceneStyle: navStyle.opaqueSceneStyle,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            navigationBar: (
+                <NavigationBar
+                    title='Inbox'
+                    hidePrev = {true}
+                    style= {navStyle.navBarContainer}/>
+            )
+        })
+    }
+
+    toInboxView(props) {
+        this.push(props, {
+            component: InboxPage,
+            name: 'inboxview',
+            sceneStyle: navStyle.opaqueSceneStyle,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            navigationBar: (
+                <NavigationBar
+                    title='Inbox'
+                    hidePrev = {true}
+                    style= {navStyle.navBarContainer}/>
+            )
+        })
     }
 
     toMessageView(props) {

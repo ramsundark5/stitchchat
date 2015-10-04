@@ -31,11 +31,11 @@
         <service android:name="org.eclipse.paho.android.service.MqttService" >
         </service>
 
-        <service android:name=".gcm.RNInstanceIDListenerService" android:exported="false">
+       <!-- <service android:name=".gcm.RNInstanceIDListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
             </intent-filter>
-        </service>
+        </service>-->
 
         <meta-data
             android:name="io.fabric.ApiKey"

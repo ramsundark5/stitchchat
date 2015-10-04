@@ -6,13 +6,16 @@ class MessageService{
         MQTTClient.init();
     }
 
+    sendMessage(message){
+        sendMessage('stitchchat/messages',message);
+    }
+
     sendMessage(topic, message){
         try{
-            MQTTClient.publish('MQTTChat', message);
+            MQTTClient.publish(topic, message);
         }catch(err){
-            console.log(err);
+            console.log("error publishing message" +err);
         }
-
     }
 }
 

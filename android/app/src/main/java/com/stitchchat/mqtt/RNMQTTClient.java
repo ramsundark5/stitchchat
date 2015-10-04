@@ -32,8 +32,9 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
     }
 
     @ReactMethod
-    public void connect(final ReadableMap connectionDetails){
+    public void connect(final ReadableMap connectionDetails, String topicName, int qosLevel){
         connectInternal(connectionDetails);
+        subscribeTo(topicName, qosLevel);
     }
 
     public void connectInternal(ReadableMap connectionDetails){
@@ -53,6 +54,7 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
      * client.connect(options);
      *
      */
+
 
         // The basic client information
         String host             = connectionDetails.hasKey(ActivityConstants.host)
@@ -89,7 +91,6 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
         if (ssl) {
             Log.e("SSLConnection", "Doing an SSL Connect");
             uri = "ssl://";
-
         }
         else {
             uri = "tcp://";
@@ -181,25 +182,6 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
 
     }
 
-    public void completePendingSubscriptions(){
-        Connection conn = Connections.getInstance(getReactApplicationContext()).getConnection(clientHandle);
-        Set<Subscription> pendingSubscriptions = conn.getSubscriptions();
-        if(pendingSubscriptions != null && !pendingSubscriptions.isEmpty()){
-            for(Subscription subscription : pendingSubscriptions){
-                 try {
-                    MqttAndroidClient mqttAndroidClient = conn.getClient();
-                    mqttAndroidClient.subscribe(subscription.getTopicName(), subscription.getQosLevel());
-                }
-                catch (MqttSecurityException e) {
-                    Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + subscription.getTopicName(), e);
-                }
-                catch (MqttException e) {
-                    Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + subscription.getTopicName(), e);
-                }
-            }
-        }
-    }
-
     @Override
     public String getName() {
         return "RNMQTTClient";
@@ -229,21 +211,11 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
     @ReactMethod
     public void subscribeTo(String topicName, int qosLevel)
     {
-       /* Subscription newSubscription = new Subscription(topicName, qosLevel);
-        Connection connection = Connections.getInstance(getReactApplicationContext())
-                .getConnection(clientHandle);
-        connection.getSubscriptions().add(newSubscription);*/
-
         try {
-            Connection conn = Connections.getInstance(getReactApplicationContext())
-                    .getConnection(clientHandle);
+            Connection conn = Connections.getInstance(getReactApplicationContext()).getConnection(clientHandle);
             MqttAndroidClient mqttAndroidClient = conn.getClient();
             mqttAndroidClient.subscribe(topicName, qosLevel);
-        }
-        catch (MqttSecurityException e) {
-            Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + topicName, e);
-        }
-        catch (MqttException e) {
+        } catch (Exception e) {
             Log.e(this.getClass().getCanonicalName(), "Failed to subscribe to" + topicName, e);
         }
     }
@@ -251,10 +223,13 @@ public class RNMQTTClient extends ReactContextBaseJavaModule{
     @ReactMethod
     public void unSubscribeTo(String topicName, int qosLevel)
     {
-        Subscription newSubscription = new Subscription(topicName, qosLevel);
-        Connection connection = Connections.getInstance(getReactApplicationContext())
-                .getConnection(clientHandle);
-        connection.getSubscriptions().remove(newSubscription);
+        try {
+            Connection conn = Connections.getInstance(getReactApplicationContext()).getConnection(clientHandle);
+            MqttAndroidClient mqttAndroidClient = conn.getClient();
+            mqttAndroidClient.unsubscribe(topicName);
+        } catch (MqttException e) {
+            Log.e(this.getClass().getCanonicalName(), "Failed to unsubscribe to" + topicName, e);
+        }
     }
 
 }

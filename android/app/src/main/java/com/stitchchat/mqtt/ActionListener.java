@@ -86,7 +86,6 @@ class ActionListener implements IMqttActionListener {
      */
     @Override
     public void onSuccess(IMqttToken asyncActionToken) {
-        String actionMessage = "";
         switch (action) {
             case CONNECT :
                 connect();
@@ -127,7 +126,9 @@ class ActionListener implements IMqttActionListener {
      * then notify the user of success.
      */
     private void disconnect() {
-
+        this.reactApplicationContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onMQTTDisconnected", "Disconnected Successfully");
     }
 
     /**

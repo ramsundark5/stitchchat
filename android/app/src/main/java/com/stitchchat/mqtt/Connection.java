@@ -67,7 +67,6 @@ public class Connection {
   /** Persistence id, used by {@link Persistence} **/
   private long persistenceId = -1;
 
-  private Set<Subscription> subscriptions = new HashSet<>();
   /**
    * Connections status for  a connection
    */
@@ -349,11 +348,6 @@ public class Connection {
    */
   public long persistenceId() {
     return persistenceId;
-  }
-
-
-  public Set<Subscription> getSubscriptions() {
-    return subscriptions;
   }
 
 }

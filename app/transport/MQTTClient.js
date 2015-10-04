@@ -2,6 +2,7 @@ import {NativeModules} from 'react-native';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import store from '../store/ConfigureStore';
 import * as MessageActions from '../actions/MessageActions';
+import React, { AsyncStorage } from 'react-native';
 
 class MQTTClient{
 
@@ -9,27 +10,39 @@ class MQTTClient{
         this.mqttClient = NativeModules.RNMQTTClient;
     }
 
-    init(){
+    async init(){
+        console.log("inside init method of MQTT clinet");
+        let phoneNumber = await AsyncStorage.getItem("phoneNumber");
+        if(phoneNumber){
+            console.log("got phone number from async storage as "+ phoneNumber);
+            this.connect(phoneNumber);
+        }
+        else{
+            this.connect("3392247442");
+        }
+        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
+        //RCTDeviceEventEmitter.addListener('onStatusChanged', this.onStatusChanged);
+        RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnectionInitialized.bind(this));
+    }
+
+    connect(phoneNumber){
         var connectionDetails = {
             host: 'broker.mqttdashboard.com',
             port: 1883,
-            tls : false
+            tls : false,
+            clientId: phoneNumber
         }
+
         if(!this.mqttClient){
             return;
         }
-
-        this.connect(connectionDetails);
-
-        this.subscribeTo('MQTTChatReceive', 1);
-
-        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onReceiveMessaged);
-        RCTDeviceEventEmitter.addListener( 'onStatusChanged', this.onStatusChanged);
-
+        let currentInstance = this;
+        this.mqttClient.connect(connectionDetails, 'MQTTChatReceive', 1);
     }
 
-    connect(connectionDetails){
-        this.mqttClient.connect(connectionDetails);
+    onConnectionInitialized(){
+        console.log("connection initialized invoked");
+        this.subscribeTo('MQTTChatReceive', 1);
     }
 
     publish(topicName, message, qosLevel = 0, retain = false){
@@ -53,10 +66,6 @@ class MQTTClient{
     onReceiveMessaged(message){
         store.dispatch(MessageActions.addMessage(message));
         console.log("received message in UI "+ message);
-    }
-
-    onConnected(){
-
     }
 
     onDisconnected(){
