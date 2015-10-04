@@ -1,8 +1,9 @@
-import {NativeModules, Platform} from 'react-native';
+import {NativeModules} from 'react-native';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import store from '../store/ConfigureStore';
 import * as MessageActions from '../actions/MessageActions';
 import React, { AsyncStorage } from 'react-native';
+var {Platform} = React;
 
 class MQTTClient{
 
@@ -35,7 +36,7 @@ class MQTTClient{
         if(!this.mqttClient){
             return;
         }
-        console.log('platform is '+Platform);
+        console.log('platform is '+Platform.OS);
         //this.mqttClient.connect(connectionDetails);
         this.mqttClient.connect(connectionDetails, 'MQTTChatReceive', 1);
     }
