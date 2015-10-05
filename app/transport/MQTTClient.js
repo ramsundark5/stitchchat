@@ -46,7 +46,8 @@ class MQTTClient{
         if(!message || !message.text){
             throw("message is required to publish message");
         }
-        this.mqttClient.publish(topicName, message.text, qosLevel, retain);
+        let messageJson = JSON.stringify(message);
+        this.mqttClient.publish(topicName, messageJson, qosLevel, retain);
     }
 
     subscribeTo(topicName, qosLevel){

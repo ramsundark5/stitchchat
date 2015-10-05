@@ -2,7 +2,6 @@ import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from
 import {commons, defaultStyle} from '../../styles/CommonStyles';
 import { Icon } from 'react-native-icons';
 import Message from '../../models/Message';
-import MessageDao from '../../dao/MessageDao';
 
 class MessageTextInput extends Component {
     constructor(props, context) {
@@ -15,19 +14,14 @@ class MessageTextInput extends Component {
     handleSubmit() {
         if (this.state.text.length > 0) {
             let currentThread = this.props.currentThread;
-            let newMessage = new Message(this.state.text, currentThread);
+            let newMessage = new Message(this.state.text, currentThread.id);
             this.props.addMessage(newMessage);
-            this.addMessageToDB(currentThread.id, newMessage);
         }
         this.setState({text: ''});
     }
 
     handleChange(changedtext) {
         this.setState({text: changedtext});
-    }
-
-    addMessageToDB(threadId, newMessage){
-        MessageDao.putMessage(threadId, newMessage);
     }
 
     render() {

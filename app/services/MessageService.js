@@ -3,6 +3,8 @@ import store from '../store/ConfigureStore';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as MessageActions from '../actions/MessageActions';
 import * as AppConfig from '../config/AppConfig';
+import Message from '../models/Message';
+import MessageDao from '../dao/MessageDao';
 
 class MessageService{
 
@@ -12,13 +14,15 @@ class MessageService{
         RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
     }
 
-    sendMessage(message){
-        sendMessage(AppConfig.PUBLISH_TOPIC, message);
+    sendMessage(message:Message){
+        this.sendMessageToTopic(AppConfig.PUBLISH_TOPIC, message);
+        MessageDao.putMessage(message.threadId, message);
     }
 
-    sendMessage(topic, message){
+    sendMessageToTopic(topic:String, message:Message){
         try{
-            MQTTClient.publish(topic, message);
+            let transportMessage = message.getMessageForTransport();
+            MQTTClient.publish(topic, transportMessage);
         }catch(err){
             console.log("error publishing message" +err);
         }
@@ -30,8 +34,14 @@ class MessageService{
     }
 
     onMessageReceived(message){
-        store.dispatch(MessageActions.addMessage(message));
-        console.log("received message in UI "+ message);
+        if(message && message.data){
+            let messageObj = JSON.parse(message.data);
+            //store.dispatch(MessageActions.addMessage(message));
+            console.log("received message in UI "+ messageObj.text);
+        }else{
+            console.log("got empty messages. something is wrong.");
+        }
+
     }
 }
 

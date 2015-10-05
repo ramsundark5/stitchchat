@@ -1,6 +1,5 @@
 import * as Actions from '../constants/ActionTypes';
 import * as _ from 'lodash';
-import MessageDao from '../dao/MessageDao';
 
 export function loadMessagesForThread(messages){
     if(!messages){
@@ -12,6 +11,10 @@ export function loadMessagesForThread(messages){
     };
 }
 export function addMessage(message: Message) {
+    let MessageService = require('../services/MessageService');
+    //console.log('MessageService is' + MessageService);
+    MessageService.sendMessage(message);
+    //MessageService.sendMessage('1111', message);
     return {
         type: Actions.ADD_MESSAGE,
         message

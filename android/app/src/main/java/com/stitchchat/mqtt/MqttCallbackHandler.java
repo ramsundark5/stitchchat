@@ -63,16 +63,6 @@ public class MqttCallbackHandler implements MqttCallback {
   /**
    * @see MqttCallback#messageArrived(String, MqttMessage)
    */
- /* @Override
-  public void messageArrived(String topic, MqttMessage message) throws Exception {
-
-    String parsedMessage = new String(message.getPayload());
-    Log.d(this.getClass().getCanonicalName(),
-            "Message arrived with data: " + parsedMessage);
-    this.reactApplicationContext
-            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-            .emit("onMessageArrived", parsedMessage);
-  }*/
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
@@ -81,7 +71,7 @@ public class MqttCallbackHandler implements MqttCallback {
                 "Message arrived with data: " + parsedMessage);
         WritableMap params = new WritableNativeMap();
         params.putString("data", parsedMessage);
-        sendEvent(this.reactApplicationContext, "onMessageReceived", parsedMessage);
+        sendEvent(this.reactApplicationContext, "onMessageReceived", params);
     }
 
     private void sendEvent(ReactContext reactContext,
