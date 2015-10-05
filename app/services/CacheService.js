@@ -6,11 +6,11 @@ class CacheService{
     }
 
     set(key, value){
-        cache.set(key, value);
+        this.cache.set(key, value);
     }
 
     get(key){
-        return cache.get(key);
+        return this.cache.get(key);
     }
 
     setAndPersist(key, value){

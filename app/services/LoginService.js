@@ -1,7 +1,7 @@
 import {NativeModules} from 'react-native';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import React, { AsyncStorage } from 'react-native';
-import CacheService from '../services/CacheService';
+import CacheService from './CacheService';
 
 class LoginService{
     constructor(){

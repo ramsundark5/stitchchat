@@ -1,9 +1,7 @@
 import {NativeModules} from 'react-native';
-import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-import store from '../store/ConfigureStore';
-import * as MessageActions from '../actions/MessageActions';
 import React, { AsyncStorage } from 'react-native';
 var {Platform} = React;
+import * as AppConfig from '../config/AppConfig';
 
 class MQTTClient{
 
@@ -14,15 +12,13 @@ class MQTTClient{
     async init(){
         let phoneNumber = await AsyncStorage.getItem("phoneNumber");
         if(!phoneNumber){
-            phoneNumber = '3392247442';
+            phoneNumber = '%2B13392247442';
         }
         if(phoneNumber){
             console.log("got phone number from async storage as "+ phoneNumber);
             this.connect(phoneNumber);
         }
-        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
-        //RCTDeviceEventEmitter.addListener('onStatusChanged', this.onStatusChanged);
-        RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnectionInitialized.bind(this));
+
     }
 
     connect(phoneNumber){
@@ -37,13 +33,10 @@ class MQTTClient{
             return;
         }
         console.log('platform is '+Platform.OS);
-        //this.mqttClient.connect(connectionDetails);
-        this.mqttClient.connect(connectionDetails, 'MQTTChatReceive', 1);
-    }
-
-    onConnectionInitialized(){
-        console.log("connection initialized invoked");
-        this.subscribeTo('MQTTChatReceive', 1);
+        let encodedPhoneNumber = encodeURIComponent(phoneNumber);
+        console.log('encodedPhoneNumber is '+encodedPhoneNumber);
+        let inboxSubscribeTopic = AppConfig.INBOX_TOPIC_PREFIX + encodedPhoneNumber;
+        this.mqttClient.connect(connectionDetails, inboxSubscribeTopic, 1);
     }
 
     publish(topicName, message, qosLevel = 0, retain = false){
@@ -64,17 +57,8 @@ class MQTTClient{
         console.log("new status is "+newStatus);
     }
 
-    onMessageReceived(message){
-        store.dispatch(MessageActions.addMessage(message));
-        console.log("received message in UI "+ message);
-    }
-
-    onDisconnected(){
-
-    }
-
     disconnect(){
-
+        this.mqttClient.disconnect();
     }
 
 

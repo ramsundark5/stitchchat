@@ -52,8 +52,6 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails
     keepAlive = 60;
   }
   
-  [self subscribeTo:topicName qosLevel:qosLevel];
-  
   /*
    * MQTTClient: create an instance of MQTTSessionManager once and connect
    * will is set to let the broker indicate to other subscribers if the connection is lost
@@ -89,6 +87,7 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
                     context:nil];
   
+  [self subscribeTo:topicName qosLevel:qosLevel];
 }
 
 
