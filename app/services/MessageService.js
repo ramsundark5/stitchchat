@@ -22,7 +22,10 @@ class MessageService{
     sendMessageToTopic(topic:String, message:Message){
         try{
             let transportMessage = message.getMessageForTransport();
-            MQTTClient.publish(topic, transportMessage);
+            let transportMessageWrapper = {};
+            transportMessageWrapper.header = {};
+            transportMessageWrapper.message = transportMessage;
+            MQTTClient.publish(topic, transportMessageWrapper);
         }catch(err){
             console.log("error publishing message" +err);
         }
@@ -35,7 +38,8 @@ class MessageService{
 
     onMessageReceived(message){
         if(message && message.data){
-            let messageObj = JSON.parse(message.data);
+            let messageWrapperObj = JSON.parse(message.data);
+            let messageObj = messageWrapperObj.message;
             //store.dispatch(MessageActions.addMessage(message));
             console.log("received message in UI "+ messageObj.text);
         }else{

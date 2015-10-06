@@ -43,7 +43,7 @@ class MQTTClient{
         if(!topicName){
             throw("topic name is required to publish message");
         }
-        if(!message || !message.text){
+        if(!message){
             throw("message is required to publish message");
         }
         let messageJson = JSON.stringify(message);
