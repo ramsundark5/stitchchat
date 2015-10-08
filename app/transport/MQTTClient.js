@@ -23,7 +23,7 @@ class MQTTClient{
 
     connect(phoneNumber){
         var connectionDetails = {
-            host: 'broker.mqttdashboard.com',
+            host: 'localhost',
             port: 1883,
             tls : false,
             clientId: phoneNumber

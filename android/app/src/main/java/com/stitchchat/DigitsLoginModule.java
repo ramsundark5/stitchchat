@@ -41,7 +41,7 @@ public class DigitsLoginModule extends ReactContextBaseJavaModule {
             // Do something on success
             getReactApplicationContext()
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit("registrationSuccessAndroid", responseData);
+                    .emit("registrationSuccess", responseData);
         }
 
         @Override

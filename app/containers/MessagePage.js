@@ -31,7 +31,7 @@ class MessagePage extends Component {
                                  loadOlderMessages={messageActions.loadOlderMessages}
                                  router={router}/>
                 </View>
-                <View style={[{flex: 0}, commons.horizontalNoWrap]}>
+                <View style={[commons.horizontalNoWrap]}>
                     {this._renderMediaOptions(isEditing, router)}
                     <View style={{flex: 1}}>
                         <MessageComposer isEditing={isEditing}

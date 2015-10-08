@@ -25,6 +25,8 @@ RCT_EXPORT_METHOD(startLoginProcess) {
   //digitsAppearance.logoImage = [UIImage imageNamed:yourImageFilename];
   
   Digits *digits = [Digits sharedInstance];
+  DGTOAuthSigning *oauthSigning = [[DGTOAuthSigning alloc] initWithAuthConfig:digits.authConfig authSession:digits.session];
+  NSDictionary *authHeaders = [oauthSigning OAuthEchoHeadersToVerifyCredentials];
   [self showLoginPage: digits digitsAppearance:digitsAppearance];
   
 }
@@ -40,11 +42,12 @@ RCT_EXPORT_METHOD(startLoginProcess) {
     }
     
     if(session != nil){
-      [self.bridge.eventDispatcher sendDeviceEventWithName:@"registrationSuccessIOS"
-                                                      body:@{@"phoneNumber": session.phoneNumber,
-                                                             @"authToken":session.authToken,
-                                                             @"authTokenSecret":session.authTokenSecret,
-                                                             @"digitsUserId":session.userID}];
+      DGTOAuthSigning *oauthSigning = [[DGTOAuthSigning alloc] initWithAuthConfig:digits.authConfig authSession:session];
+      NSDictionary *authHeaders = [oauthSigning OAuthEchoHeadersToVerifyCredentials];
+      NSMutableDictionary *mutableAuthHeader = [authHeaders mutableCopy];
+      [mutableAuthHeader setObject:session.phoneNumber forKey:@"phoneNumber"];
+      [self.bridge.eventDispatcher sendDeviceEventWithName:@"registrationSuccess"
+                                                      body:mutableAuthHeader];
     }
     
   }];

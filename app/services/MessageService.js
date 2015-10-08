@@ -24,6 +24,8 @@ class MessageService{
             let transportMessage = message.getMessageForTransport();
             let transportMessageWrapper = {};
             transportMessageWrapper.header = {};
+            transportMessageWrapper.header.username = "+13392247442";
+            transportMessageWrapper.header.password = "+13392247442";
             transportMessageWrapper.message = transportMessage;
             MQTTClient.publish(topic, transportMessageWrapper);
         }catch(err){

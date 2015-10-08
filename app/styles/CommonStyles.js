@@ -62,5 +62,10 @@ export const commons = StyleSheet.create({
         marginRight: 10,
         backgroundColor: '#dddddd'
     },
+    verticalWrap:{
+        flexDirection : 'column',
+        flexWrap      : 'wrap',
+        alignItems: 'flex-start'
+    }
 });
 

@@ -27,13 +27,13 @@ class MessageTextInput extends Component {
     render() {
         return (
             <View style={commons.horizontalNoWrap}>
-                <TextInput
-                    placeholder={this.props.placeholder}
-                    multiline={true}
-                    value={this.state.text}
-                    style={this.props.style}
-                    onChange={(event) => this.handleChange(event.nativeEvent.text)}
-                    />
+                    <TextInput
+                        placeholder={this.props.placeholder}
+                        multiline={true}
+                        value={this.state.text}
+                        style={this.props.style}
+                        onChange={(event) => this.handleChange(event.nativeEvent.text)}
+                        />
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={this.handleSubmit.bind(this)}>
                     <Icon name='ion|android-send'
