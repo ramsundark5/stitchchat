@@ -11,30 +11,35 @@ class MQTTClient{
 
     async init(){
         let phoneNumber = await AsyncStorage.getItem("phoneNumber");
+        let token = await AsyncStorage.getItem("token");
         if(!phoneNumber){
             phoneNumber = '%2B13392247442';
         }
-        if(phoneNumber){
+        if(phoneNumber && token){
             console.log("got phone number from async storage as "+ phoneNumber);
-            this.connect(phoneNumber);
+            console.log("got token from async storage as "+ token);
+            this.connect(phoneNumber, token);
         }
-
     }
 
-    connect(phoneNumber){
+    connect(phoneNumber, token){
+        let encodedPhoneNumber = encodeURIComponent(phoneNumber);
+        console.log('encodedPhoneNumber is '+encodedPhoneNumber);
+
         var connectionDetails = {
             host: 'localhost',
             port: 1883,
             tls : false,
-            clientId: phoneNumber
+            clientId: phoneNumber,
+            username: phoneNumber,
+            password: token,
+            auth: true
         }
 
         if(!this.mqttClient){
             return;
         }
         console.log('platform is '+Platform.OS);
-        let encodedPhoneNumber = encodeURIComponent(phoneNumber);
-        console.log('encodedPhoneNumber is '+encodedPhoneNumber);
         let inboxSubscribeTopic = AppConfig.INBOX_TOPIC_PREFIX + encodedPhoneNumber;
         this.mqttClient.connect(connectionDetails, inboxSubscribeTopic, 1);
     }

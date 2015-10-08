@@ -152,16 +152,16 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
   
     switch (self.manager.state) {
         case MQTTSessionManagerStateClosed:
-        [self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTDisconnected"
-                                                        body:@"Disonnected succesfully"];
+        //[self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTDisconnected"
+          //                                              body:@"Disonnected succesfully"];
           NSLog(@"MQTTSession is closed");
           break;
         case MQTTSessionManagerStateClosing:
           //NSLog(@"MQTTSession is closing");
           break;
         case MQTTSessionManagerStateConnected:
-         [self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTConnected"
-                                                        body:@"Connected succesfully"];
+         //[self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTConnected"
+           //                                             body:@"Connected succesfully"];
           NSLog(@"MQTTSession connected");
           break;
         case MQTTSessionManagerStateConnecting:
@@ -177,7 +177,7 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
     }
   
     NSNumber* newStatusVal = [NSNumber numberWithInt:self.manager.state];
-    [self onStatusChanged: newStatusVal];
+    //[self onStatusChanged: newStatusVal];
 }
 
 -(void) onStatusChanged:(NSNumber *) newStatus{

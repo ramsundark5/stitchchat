@@ -2,6 +2,7 @@ import {NativeModules} from 'react-native';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import React, { AsyncStorage } from 'react-native';
 import CacheService from './CacheService';
+import MQTTClient from '../transport/MQTTClient';
 
 class LoginService{
     constructor(){
@@ -21,6 +22,7 @@ class LoginService{
 
     onRegistrationSuccess(data){
         console.log(data.phoneNumber +"/"+ data.authToken);
+        let serverVerifiedPhoneNumber = data.phoneNumber;
         CacheService.setAndPersist("phoneNumber", data.phoneNumber);
         var options = {
             method: 'GET',
@@ -32,26 +34,20 @@ class LoginService{
                 'phoneNumber': data['phoneNumber']
             }
         };
+
         fetch('http://localhost:3000/register', options)
-            .then(function(res) {
-                console.log("response is "+res);
-                return res.json();
+            .then((response) => response.json())
+            .then((jsonData) => {
+                let jwtToken = jsonData.jwt;
+                CacheService.setAndPersist("token", jwtToken);
+                MQTTClient.connect(serverVerifiedPhoneNumber, jwtToken);
+            }).catch((error) => {
+                console.log('auth failed'+ error);
             })
     }
 
     onRegistrationCancelled(reason){
         console.log(reason);
-    }
-
-    async putMessage(threadId, newMessage){
-        let threadMessagesStr = await AsyncStorage.getItem(threadId);
-        let threadMessages = JSON.parse(threadMessagesStr);
-        if(!threadMessages || threadMessages.constructor != Array){
-            threadMessages = [];
-        }
-        threadMessages.push(newMessage);
-        let stringMsg = JSON.stringify(threadMessages);
-        AsyncStorage.setItem(threadId, stringMsg);
     }
 
 }
