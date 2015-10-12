@@ -5,12 +5,12 @@ import GroupInfo from '../models/GroupInfo';
 import * as _ from 'lodash';
 
 let firstContact = new Contact();
-firstContact.phoneNumber = '1111111111';
+firstContact.phoneNumber = '+13392247873';
 let firstThread = new Thread(firstContact, false, null);
 firstThread.lastMessageText = 'test first message';
 
 let secondContact = new Contact();
-secondContact.phoneNumber = '2222222222';
+secondContact.phoneNumber = '+919443096961';
 let secondThread = new Thread(secondContact, false, null);
 secondThread.lastMessageText = 'test second message';
 

@@ -40,7 +40,7 @@ class MQTTClient{
             return;
         }
         console.log('platform is '+Platform.OS);
-        let inboxSubscribeTopic = AppConfig.INBOX_TOPIC_PREFIX + encodedPhoneNumber;
+        let inboxSubscribeTopic = AppConfig.PRIVATE_PUBSUB_TOPIC + encodedPhoneNumber;
         this.mqttClient.connect(connectionDetails, inboxSubscribeTopic, 1);
     }
 

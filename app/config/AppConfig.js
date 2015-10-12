@@ -1,2 +1,2 @@
-export const PUBLISH_TOPIC          =  'stitchchat/outbox';
-export const INBOX_TOPIC_PREFIX     =  'stitchchat/inbox/';
+export const PRIVATE_PUBSUB_TOPIC  =  'stitchchat/private/inbox/';
+export const GROUP_PUBSUB_TOPIC    =  'stitchchat/group/inbox/';

@@ -15,6 +15,14 @@ class MessageTextInput extends Component {
         if (this.state.text.length > 0) {
             let currentThread = this.props.currentThread;
             let newMessage = new Message(this.state.text, currentThread.id);
+            if(currentThread.isGroupThread){
+                newMessage.receiverId=currentThread.groupInfo.id;
+                newMessage.isGroupThread = true;
+            }
+            else{
+                newMessage.receiverId=currentThread.recipientContactInfo.phoneNumber;
+            }
+
             this.props.addMessage(newMessage);
         }
         this.setState({text: ''});

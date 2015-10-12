@@ -15,7 +15,12 @@ class MessageService{
     }
 
     sendMessage(message:Message){
-        this.sendMessageToTopic(AppConfig.PUBLISH_TOPIC, message);
+        let encodedReceiverId = encodeURIComponent(message.receiverId);
+        let publishTopic = AppConfig.PRIVATE_PUBSUB_TOPIC + encodedReceiverId;
+        if(message.isGroupThread){
+            publishTopic = AppConfig.GROUP_PUBSUB_TOPIC + encodedReceiverId;
+        }
+        this.sendMessageToTopic(publishTopic, message);
         MessageDao.putMessage(message.threadId, message);
     }
 
@@ -24,8 +29,6 @@ class MessageService{
             let transportMessage = message.getMessageForTransport();
             let transportMessageWrapper = {};
             transportMessageWrapper.header = {};
-            transportMessageWrapper.header.username = "+13392247442";
-            transportMessageWrapper.header.password = "+13392247442";
             transportMessageWrapper.message = transportMessage;
             MQTTClient.publish(topic, transportMessageWrapper);
         }catch(err){
