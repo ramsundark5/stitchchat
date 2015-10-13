@@ -63,6 +63,13 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails
    * will is set to let the broker indicate to other subscribers if the connection is lost
    */
   if (!self.manager) {
+      /*BOOL enablePersistence = TRUE;
+      NSUInteger maxWindowSize = 60;
+      NSUInteger maxMessages = 500;
+      NSUInteger maxSize = 5000;
+    
+      self.manager = [[MQTTSessionManager alloc] initWithPersistence:enablePersistence maxWindowSize:maxWindowSize maxMessages:maxMessages maxSize:maxSize];*/
+    
       self.manager = [[MQTTSessionManager alloc] init];
       self.manager.delegate = self;
       self.manager.subscriptions = [[NSMutableDictionary alloc] init];

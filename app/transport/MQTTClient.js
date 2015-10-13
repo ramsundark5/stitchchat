@@ -30,6 +30,7 @@ class MQTTClient{
             host: 'localhost',
             port: 1883,
             tls : false,
+            cleanSession: false,
             clientId: phoneNumber,
             username: phoneNumber,
             password: token,
@@ -44,7 +45,7 @@ class MQTTClient{
         this.mqttClient.connect(connectionDetails, inboxSubscribeTopic, 1);
     }
 
-    publish(topicName, message, qosLevel = 0, retain = false){
+    publish(topicName, message, qosLevel = 1, retain = false){
         if(!topicName){
             throw("topic name is required to publish message");
         }
