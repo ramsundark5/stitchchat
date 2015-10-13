@@ -1,0 +1,41 @@
+PODS:
+  - Crashlytics (3.3.4)
+  - Digits (1.11.4)
+  - Fabric (1.5.5):
+    - Fabric/Base (= 1.5.5)
+  - Fabric/Base (1.5.5)
+  - React/Core (0.11.4)
+  - React/RCTImage (0.11.4):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTNetwork (0.11.4):
+    - React/Core
+  - React/RCTText (0.11.4):
+    - React/Core
+  - React/RCTWebSocket (0.11.4):
+    - React/Core
+  - TwitterCore (1.11.4)
+
+DEPENDENCIES:
+  - Crashlytics
+  - Digits
+  - Fabric
+  - React/Core (from `node_modules/react-native`)
+  - React/RCTImage (from `node_modules/react-native`)
+  - React/RCTNetwork (from `node_modules/react-native`)
+  - React/RCTText (from `node_modules/react-native`)
+  - React/RCTWebSocket (from `node_modules/react-native`)
+  - TwitterCore
+
+EXTERNAL SOURCES:
+  React:
+    :path: node_modules/react-native
+
+SPEC CHECKSUMS:
+  Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
+  Digits: 1a372fab25b58d1459adc6b8d95e2e155ae5b212
+  Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
+  React: 1e14593af6fa3b55adaa37551cd4696ef4c40f87
+  TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36
+
+COCOAPODS: 0.39.0
