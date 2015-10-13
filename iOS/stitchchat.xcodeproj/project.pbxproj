@@ -17,13 +17,6 @@
 		A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */; };
 		A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A29AC1E31B98B46D00B29901 /* ionicons.ttf */; };
 		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; settings = {ASSET_TAGS = (); }; };
-		A2F214D81BA8DCE300EDAC0F /* MQTTDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */; };
-		A2F214D91BA8DCE300EDAC0F /* MQTTEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */; };
-		A2F214DA1BA8DCE300EDAC0F /* MQTTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */; };
-		A2F214DB1BA8DCE300EDAC0F /* MQTTPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D01BA8DCE300EDAC0F /* MQTTPersistence.m */; };
-		A2F214DC1BA8DCE300EDAC0F /* MQTTSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D21BA8DCE300EDAC0F /* MQTTSession.m */; };
-		A2F214DD1BA8DCE300EDAC0F /* MQTTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D41BA8DCE300EDAC0F /* MQTTSessionManager.m */; };
-		A2F214DE1BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214D61BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m */; };
 		A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */; };
 		A2F2340E1BA09E2B000A5A9E /* libRNClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */; };
 		A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */; };
@@ -71,23 +64,6 @@
 		A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
 		A29AC1E31B98B46D00B29901 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
-		A2F214C71BA8DCE300EDAC0F /* MQTTClient-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MQTTClient-Prefix.pch"; sourceTree = "<group>"; };
-		A2F214C81BA8DCE300EDAC0F /* MQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTClient.h; sourceTree = "<group>"; };
-		A2F214C91BA8DCE300EDAC0F /* MQTTDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTDecoder.h; sourceTree = "<group>"; };
-		A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTDecoder.m; sourceTree = "<group>"; };
-		A2F214CB1BA8DCE300EDAC0F /* MQTTEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTEncoder.h; sourceTree = "<group>"; };
-		A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTEncoder.m; sourceTree = "<group>"; };
-		A2F214CD1BA8DCE300EDAC0F /* MQTTMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTMessage.h; sourceTree = "<group>"; };
-		A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTMessage.m; sourceTree = "<group>"; };
-		A2F214CF1BA8DCE300EDAC0F /* MQTTPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPersistence.h; sourceTree = "<group>"; };
-		A2F214D01BA8DCE300EDAC0F /* MQTTPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTPersistence.m; sourceTree = "<group>"; };
-		A2F214D11BA8DCE300EDAC0F /* MQTTSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSession.h; sourceTree = "<group>"; };
-		A2F214D21BA8DCE300EDAC0F /* MQTTSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTSession.m; sourceTree = "<group>"; };
-		A2F214D31BA8DCE300EDAC0F /* MQTTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSessionManager.h; sourceTree = "<group>"; };
-		A2F214D41BA8DCE300EDAC0F /* MQTTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTSessionManager.m; sourceTree = "<group>"; };
-		A2F214D51BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSSLSecurityPolicy.h; sourceTree = "<group>"; };
-		A2F214D61BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTTSSLSecurityPolicy.m; sourceTree = "<group>"; };
-		A2F214DF1BA8DDAB00EDAC0F /* RNMQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMQTTClient.h; sourceTree = "<group>"; };
 		A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMQTTClient.m; sourceTree = "<group>"; };
 		A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNClipboard.xcodeproj; path = "../node_modules/react-native-clipboard/RNClipboard.xcodeproj"; sourceTree = "<group>"; };
 		A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-file-upload/FileUpload.m"; sourceTree = "<group>"; };
@@ -208,23 +184,6 @@
 		A2F214C51BA8DCE300EDAC0F /* MQTTClient */ = {
 			isa = PBXGroup;
 			children = (
-				A2F214C71BA8DCE300EDAC0F /* MQTTClient-Prefix.pch */,
-				A2F214C81BA8DCE300EDAC0F /* MQTTClient.h */,
-				A2F214C91BA8DCE300EDAC0F /* MQTTDecoder.h */,
-				A2F214CA1BA8DCE300EDAC0F /* MQTTDecoder.m */,
-				A2F214CB1BA8DCE300EDAC0F /* MQTTEncoder.h */,
-				A2F214CC1BA8DCE300EDAC0F /* MQTTEncoder.m */,
-				A2F214CD1BA8DCE300EDAC0F /* MQTTMessage.h */,
-				A2F214CE1BA8DCE300EDAC0F /* MQTTMessage.m */,
-				A2F214CF1BA8DCE300EDAC0F /* MQTTPersistence.h */,
-				A2F214D01BA8DCE300EDAC0F /* MQTTPersistence.m */,
-				A2F214D11BA8DCE300EDAC0F /* MQTTSession.h */,
-				A2F214D21BA8DCE300EDAC0F /* MQTTSession.m */,
-				A2F214D31BA8DCE300EDAC0F /* MQTTSessionManager.h */,
-				A2F214D41BA8DCE300EDAC0F /* MQTTSessionManager.m */,
-				A2F214D51BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.h */,
-				A2F214D61BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m */,
-				A2F214DF1BA8DDAB00EDAC0F /* RNMQTTClient.h */,
 				A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */,
 			);
 			path = MQTTClient;
@@ -455,18 +414,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */,
-				A2F214DB1BA8DCE300EDAC0F /* MQTTPersistence.m in Sources */,
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
 				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
-				A2F214D81BA8DCE300EDAC0F /* MQTTDecoder.m in Sources */,
-				A2F214DD1BA8DCE300EDAC0F /* MQTTSessionManager.m in Sources */,
-				A2F214DA1BA8DCE300EDAC0F /* MQTTMessage.m in Sources */,
-				A2F214DE1BA8DCE300EDAC0F /* MQTTSSLSecurityPolicy.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				A2F214DC1BA8DCE300EDAC0F /* MQTTSession.m in Sources */,
-				A2F214D91BA8DCE300EDAC0F /* MQTTEncoder.m in Sources */,
 				A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

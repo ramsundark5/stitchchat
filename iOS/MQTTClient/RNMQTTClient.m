@@ -2,19 +2,25 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RNMQTTClient.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
+#import "RCTBridgeModule.h"
+#import "MQTTSessionManager.h"
 #import "RCTConvert.h"
+
+@interface RNMQTTClient : NSObject<MQTTSessionManagerDelegate, RCTBridgeModule>
+/*
+ * MQTTClient: keep a strong reference to your MQTTSessionManager here
+ */
+@property (strong, nonatomic) MQTTSessionManager *manager;
+@property (strong, nonatomic) NSDictionary *mqttSettings;
+@property (nonatomic, strong) id statusObserver;
+@end
 
 @implementation RNMQTTClient
 @synthesize bridge = _bridge;
 RCT_EXPORT_MODULE();
 
-- (id)init{
-  self = [super init];
-  return self;
-}
 
 RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails
                           topicName:(NSString*) topicName
@@ -84,8 +90,8 @@ RCT_EXPORT_METHOD(connect:(NSDictionary *)connectionDetails
   
   [self.manager addObserver:self
                  forKeyPath:@"state"
-                    options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                    context:nil];
+                    options:0
+                    context:NULL];
   
   [self subscribeTo:topicName qosLevel:qosLevel];
 }
@@ -112,23 +118,27 @@ RCT_EXPORT_METHOD(publish:(NSString*)topicName
 RCT_EXPORT_METHOD(subscribeTo:(NSString*) topicName
                             qosLevel:(NSInteger) qosLevel) {
   
-  [self.manager.subscriptions setObject:[NSNumber numberWithInt:qosLevel]
+  NSMutableDictionary *newSubscriptions = [self.manager.subscriptions mutableCopy];
+  [newSubscriptions setObject:[NSNumber numberWithInt:qosLevel]
                                  forKey: topicName];
-
+  [self.manager setSubscriptions: newSubscriptions];
 }
 
 /*
  * MQTTSessionManagerDelegate
  */
 - (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained {
-  /*
-   * MQTTClient: process received message
-   */
-  
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"onMessageReceived"
                                                body:@{@"data": dataString}];
   
+}
+
+-(void) messageDelivered:(UInt16)msgID{
+  NSNumber *msgIDPtr = [NSNumber numberWithInteger: msgID];
+  [self.bridge.eventDispatcher sendDeviceEventWithName:@"onPublishedAck"
+                                                  body:msgIDPtr];
+
 }
 
 RCT_EXPORT_METHOD(initWithPersistence:(BOOL)persistent
@@ -152,32 +162,26 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
   
     switch (self.manager.state) {
         case MQTTSessionManagerStateClosed:
-        //[self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTDisconnected"
-          //                                              body:@"Disonnected succesfully"];
+          [self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTDisconnected"
+                                                        body:@"Disonnected succesfully"];
           NSLog(@"MQTTSession is closed");
           break;
         case MQTTSessionManagerStateClosing:
-          //NSLog(@"MQTTSession is closing");
           break;
         case MQTTSessionManagerStateConnected:
-         //[self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTConnected"
-           //                                             body:@"Connected succesfully"];
+          [self.bridge.eventDispatcher sendDeviceEventWithName:@"onMQTTConnected"
+                                                        body:@"Connected succesfully"];
           NSLog(@"MQTTSession connected");
           break;
         case MQTTSessionManagerStateConnecting:
-          //NSLog(@"MQTTSession still connecting");
           break;
         case MQTTSessionManagerStateError:
           NSLog(@"MQTTSession errored out");
           break;
         case MQTTSessionManagerStateStarting:
         default:
-          //NSLog(@"MQTTSession is starting");
           break;
     }
-  
-    NSNumber* newStatusVal = [NSNumber numberWithInt:self.manager.state];
-    //[self onStatusChanged: newStatusVal];
 }
 
 -(void) onStatusChanged:(NSNumber *) newStatus{
@@ -194,7 +198,9 @@ RCT_EXPORT_METHOD(disconnect:(id)sender) {
 }
 
 - (void)dealloc {
-  [self.manager removeObserver:self forKeyPath:@"state"];
+  
+  self.manager.delegate = nil;
+  [self.manager removeObserver:self forKeyPath:@"state" context:nil];
 }
 
 @end

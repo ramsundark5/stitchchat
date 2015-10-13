@@ -25,8 +25,6 @@ RCT_EXPORT_METHOD(startLoginProcess) {
   //digitsAppearance.logoImage = [UIImage imageNamed:yourImageFilename];
   
   Digits *digits = [Digits sharedInstance];
-  DGTOAuthSigning *oauthSigning = [[DGTOAuthSigning alloc] initWithAuthConfig:digits.authConfig authSession:digits.session];
-  NSDictionary *authHeaders = [oauthSigning OAuthEchoHeadersToVerifyCredentials];
   [self showLoginPage: digits digitsAppearance:digitsAppearance];
   
 }

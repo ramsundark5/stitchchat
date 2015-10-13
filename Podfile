@@ -6,6 +6,7 @@ pod 'Fabric'
 pod 'Crashlytics'
 pod 'Digits'
 pod 'TwitterCore'
+pod 'MQTTClient'
 
 post_install do |installer|
   target = installer.pods_project.targets.select{|t| 'React' == t.name}.first
