@@ -4,6 +4,11 @@ PODS:
   - Fabric (1.5.5):
     - Fabric/Base (= 1.5.5)
   - Fabric/Base (1.5.5)
+  - FMDB/common (2.5)
+  - FMDB/FTS (2.5):
+    - FMDB/standard
+  - FMDB/standard (2.5):
+    - FMDB/common
   - MQTTClient (0.3.3)
   - React/Core (0.11.4)
   - React/RCTImage (0.11.4):
@@ -21,6 +26,7 @@ DEPENDENCIES:
   - Crashlytics
   - Digits
   - Fabric
+  - FMDB/FTS
   - MQTTClient
   - React/Core (from `node_modules/react-native`)
   - React/RCTImage (from `node_modules/react-native`)
@@ -37,6 +43,7 @@ SPEC CHECKSUMS:
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
   Digits: 1a372fab25b58d1459adc6b8d95e2e155ae5b212
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   MQTTClient: 8b40f3bd20c8ea35f66d82bce5039487873b9a5c
   React: 1e14593af6fa3b55adaa37551cd4696ef4c40f87
   TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36

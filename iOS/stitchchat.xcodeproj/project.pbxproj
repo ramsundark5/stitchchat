@@ -22,6 +22,8 @@
 		A2C12EC81BCE2C8700B19CFD /* RCTAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */; settings = {ASSET_TAGS = (); }; };
 		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */; settings = {ASSET_TAGS = (); }; };
+		A2C12ED41BCEEC9000B19CFD /* RNSqlite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ED31BCEEC9000B19CFD /* RNSqlite.swift */; settings = {ASSET_TAGS = (); }; };
+		A2C12ED81BCEF32D00B19CFD /* RNSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */; settings = {ASSET_TAGS = (); }; };
 		A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */; };
 		A2F2340E1BA09E2B000A5A9E /* libRNClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */; };
 		A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */; };
@@ -75,6 +77,8 @@
 		A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTAddressBook.m; sourceTree = "<group>"; };
 		A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNContactsManager.swift; sourceTree = "<group>"; };
 		A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNContactsManager.m; sourceTree = "<group>"; };
+		A2C12ED31BCEEC9000B19CFD /* RNSqlite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNSqlite.swift; sourceTree = "<group>"; };
+		A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSqlite.m; sourceTree = "<group>"; };
 		A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMQTTClient.m; sourceTree = "<group>"; };
 		A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNClipboard.xcodeproj; path = "../node_modules/react-native-clipboard/RNClipboard.xcodeproj"; sourceTree = "<group>"; };
 		A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-file-upload/FileUpload.m"; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 			children = (
 				A2C1292C1BCDBF4B00693415 /* AIBSQLite.h */,
 				A2C1292D1BCDBF4B00693415 /* AIBSQLite.m */,
+				A2C12ED31BCEEC9000B19CFD /* RNSqlite.swift */,
+				A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */,
 			);
 			name = RNSqlite;
 			sourceTree = "<group>";
@@ -447,9 +453,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2C12ED81BCEF32D00B19CFD /* RNSqlite.m in Sources */,
 				A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */,
 				A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */,
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
+				A2C12ED41BCEEC9000B19CFD /* RNSqlite.swift in Sources */,
 				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				A2C1292E1BCDBF4B00693415 /* AIBSQLite.m in Sources */,

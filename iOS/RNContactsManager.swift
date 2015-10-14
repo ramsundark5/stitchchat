@@ -79,6 +79,9 @@ class RNContactsManager: NSObject{
   }
   
   func didFetchContacts(contacts: [CNContact]) {
+    let rnSqlite = RNSqlite()
+    let dbPath = rnSqlite.getDBPath("contacts.db")
+    rnSqlite.executeUpdate(dbPath, sqlStmt: "create table bulktest1 (id integer primary key autoincrement, x text)")
     for contact in contacts {
       self.contacts.append(contact)
     }

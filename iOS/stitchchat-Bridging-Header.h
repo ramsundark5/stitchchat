@@ -5,3 +5,8 @@
 #import "RCTBridge.h"
 #import "RCTBridgeModule.h"
 #import "RCTEventDispatcher.h"
+#import "FMDatabase.h"
+#import "FMDatabaseAdditions.h"
+#import "FMDatabasePool.h"
+#import "FMDatabaseQueue.h"
+#import "FMResultSet.h"
