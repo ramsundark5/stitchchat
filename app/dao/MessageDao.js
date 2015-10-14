@@ -1,4 +1,5 @@
 import React, { AsyncStorage } from 'react-native';
+import DBHelper from './DBHelper';
 
 class MessageDao{
 
@@ -11,11 +12,22 @@ class MessageDao{
         threadMessages.push(newMessage);
         let stringMsg = JSON.stringify(threadMessages);
         AsyncStorage.setItem(threadId, stringMsg);
+        this.addMessage();
     }
 
     async getMessages(threadId){
         let threadMessages = await AsyncStorage.getItem(threadId);
         return threadMessages;
+    }
+
+    addMessage(){
+        try{
+            DBHelper.open();
+            DBHelper.executeSQL();
+        }catch(err){
+            console.log("error with db operation"+ err);
+        }
+
     }
 }
 
