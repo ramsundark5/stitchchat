@@ -8,14 +8,14 @@ export default class Message{
         this.senderId               = '';
         this.receiverId             = '';
         this.isGroupThread          = false;
-        this.text                   = text;
+        this.message                = text;
         this.thumbImageUrl          = '';
         this.mediaUrl               = '';
         this.mediaMimeType          = '';
         this.mediaDesc              = '';
         this.latitude               = '';
         this.longitude              = '';
-        this.type                   = '';
+        this.type                   = 0;
         this.ttl                    = 0;
         this.extras                 = '';
 
@@ -23,7 +23,7 @@ export default class Message{
         this.sequenceId             = _.uniqueId('message'); //used for sorting
         this.selected               = false;
         this.status                 = Status.STATUS_PENDING;
-        this.owner                  = true;
+        this.isOwner                = true;
         this.timestamp              = 0;
         this.direction              = 0; //sent or received
         this.needsPush              = true; //indicates pending/draft message

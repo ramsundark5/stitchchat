@@ -1,45 +1,29 @@
-var sqlite = require('../sqlite/sqlite3.ios');
+import {NativeModules} from 'react-native';
 
 class DBHelper{
 
     constructor(){
-        this.db = null;
+        this.db = NativeModules.RNSqlite;
     }
 
-    open(){
-        let that = this;
-        sqlite.open("messages.db", function (error, database) {
-            if (error) {
-                console.log("Failed to open database:", error);
-                return;
-            }
-            that.db = database;
-        });
+    open(dbName){
+        let openPromise = this.db.open(dbName);
+        return openPromise;
     }
 
-    executeSQL(){
-        var sql = "SELECT a, b FROM table WHERE field=? AND otherfield=?";
-        var params = ["somestring", 99];
-        this.db.executeSQL(sql, params, this.rowCallback, this.completeCallback);
+    executeUpdate(dbName, sqlStmt, params){
+        let updatePromise = this.db.executeUpdate(dbName, sqlStmt, params);
+        return updatePromise;
     }
 
-    rowCallback(rowData) {
-        console.log("Got row data:", rowData);
+    executeQuery(dbName, sqlStmt, params){
+       let queryPromise = this.db.executeQuery(dbName, sqlStmt, params);
+       return queryPromise;
     }
 
-    completeCallback(error) {
-        if (error) {
-            console.log("Failed to execute query:", error);
-            return
-        }
-        console.log("Query complete!");
-        database.close(function (error) {
-            if (error) {
-                console.log("Failed to close database:", error);
-                return
-            }
-        });
-    }
+   close(dbName){
+       this.db.close(dbName);
+   }
 
 }
 

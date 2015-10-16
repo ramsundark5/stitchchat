@@ -2,27 +2,111 @@
 #import <Foundation/Foundation.h>
 
 #import "RCTBridgeModule.h"
+#import "FMDB.h"
 
-@interface RCT_EXTERN_MODULE(RNSqlite, NSObject)
+@interface RNSqlite : NSObject <RCTBridgeModule>
 
+@end
 
-RCT_EXTERN_METHOD(initDB:(NSString *)dbName
+@implementation RNSqlite
+
+RCT_EXPORT_MODULE();
+
+RCT_EXPORT_METHOD(initDB:(NSString *)dbName
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
+{
 
-RCT_EXTERN_METHOD(executeUpdate:(NSString *)dbName
+  @try {
+    NSString* dbPath = [self getDBPath:dbName];
+    FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+    [queue inDatabase:^(FMDatabase *db) {
+      BOOL status = [db open];
+      NSString * statusString = (status) ? @"True" : @"False";
+      resolve(statusString);
+    }];
+  }
+  @catch (NSError *error) {
+    NSLog(@"%@", error.localizedDescription);
+    reject(error);
+  }
+}
+
+RCT_EXPORT_METHOD(executeUpdate:(NSString *)dbName
                   sqlStmt:(NSString *)sqlStmt
-                  paramsDict:(NSDictionary *) paramsDict
+                  params:(NSDictionary *) params
                   resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+                  rejecter:(RCTPromiseRejectBlock)reject){
+  @try {
+    BOOL status = [self executeUpdateInternal:dbName sqlStmt:sqlStmt params:params];
+    NSString * statusString = (status) ? @"True" : @"False";
+    resolve(statusString);
+  }
+  @catch (NSError *error) {
+    NSLog(@"%@", error.localizedDescription);
+    reject(error);
+  }
+}
 
-RCT_EXTERN_METHOD(executeQuery:(NSString *)dbName
+RCT_EXPORT_METHOD(executeQuery:(NSString *)dbName
                   sqlStmt:(NSString *)sqlStmt
-                  paramsDict:(NSDictionary *) paramsDict
+                  params:(NSDictionary *) params
                   resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+                  rejecter:(RCTPromiseRejectBlock)reject){
+  @try {
+    NSMutableArray *results = [NSMutableArray array];
+    FMResultSet* rs = [self executeQueryInternal:dbName sqlStmt:sqlStmt params:params];
+    while ([rs next]) {
+      [results addObject:[rs resultDictionary]];
+    }
+    resolve(results);
+  }
+  @catch (NSError *error) {
+    NSLog(@"%@", error.localizedDescription);
+    reject(error);
+  }
+}
 
-RCT_EXTERN_METHOD(close:(NSString *)dbName
+RCT_EXPORT_METHOD(close:(NSString *)dbName
                   resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+                  rejecter:(RCTPromiseRejectBlock)reject){
+  
+}
+
+-(BOOL) executeUpdateInternal:(NSString *)dbName
+                      sqlStmt:(NSString *)sqlStmt
+                       params:(NSDictionary *) params{
+  NSString* dbPath = [self getDBPath:dbName];
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  __block BOOL status = FALSE;
+  
+  [queue inDatabase:^(FMDatabase *db) {
+    status = [db executeUpdate:sqlStmt withParameterDictionary:params];
+  }];
+  
+  return status;
+}
+
+-(FMResultSet*) executeQueryInternal:(NSString *)dbName
+                      sqlStmt:(NSString *)sqlStmt
+                       params:(NSDictionary *) params{
+  NSString* dbPath = [self getDBPath:dbName];
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  __block FMResultSet *rs = nil;
+  
+  [queue inDatabase:^(FMDatabase *db) {
+    rs = [db executeQuery:sqlStmt withParameterDictionary:params];
+  }];
+  
+  return rs;
+}
+
+- (NSString *)getDBPath:(NSString *)dbName
+{
+    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDir = [docPaths objectAtIndex:0];
+    NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
+
+    return dbPath;
+}
 @end

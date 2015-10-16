@@ -6,8 +6,11 @@ export default class Thread{
     constructor(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo){
         this.id                     = _.uniqueId('thread');
         this.recipientContactInfo   = recipientContactInfo;
+        this.recipientPhoneNumber   = '';
+        this.displayName            = '';
         this.isGroupThread          = isGroupThread;
         this.groupInfo              = groupInfo;
+        this.groupUid               = '';
         this.direction              = 0; //sent or received
         this.count                  = 0;
         this.unreadCount            = 0;
