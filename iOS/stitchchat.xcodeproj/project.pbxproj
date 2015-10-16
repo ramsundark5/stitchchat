@@ -18,12 +18,10 @@
 		A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */; };
 		A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A29AC1E31B98B46D00B29901 /* ionicons.ttf */; };
 		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; settings = {ASSET_TAGS = (); }; };
-		A2C1292E1BCDBF4B00693415 /* AIBSQLite.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C1292D1BCDBF4B00693415 /* AIBSQLite.m */; settings = {ASSET_TAGS = (); }; };
 		A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C129321BCDC5B800693415 /* libsqlite3.tbd */; };
 		A2C12EC81BCE2C8700B19CFD /* RCTAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */; settings = {ASSET_TAGS = (); }; };
 		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */; settings = {ASSET_TAGS = (); }; };
-		A2C12ED41BCEEC9000B19CFD /* RNSqlite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ED31BCEEC9000B19CFD /* RNSqlite.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C12ED81BCEF32D00B19CFD /* RNSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */; settings = {ASSET_TAGS = (); }; };
 		A2C12F0A1BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C12F0C1BD054CB00B19CFD /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */; settings = {ASSET_TAGS = (); }; };
@@ -76,13 +74,10 @@
 		A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
 		A29AC1E31B98B46D00B29901 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
-		A2C1292C1BCDBF4B00693415 /* AIBSQLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIBSQLite.h; path = "../../../Downloads/react-native-sqlite-master/AIBSQLite.h"; sourceTree = "<group>"; };
-		A2C1292D1BCDBF4B00693415 /* AIBSQLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AIBSQLite.m; path = "../../../Downloads/react-native-sqlite-master/AIBSQLite.m"; sourceTree = "<group>"; };
 		A2C129321BCDC5B800693415 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTAddressBook.m; sourceTree = "<group>"; };
 		A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNContactsManager.swift; sourceTree = "<group>"; };
 		A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNContactsManager.m; sourceTree = "<group>"; };
-		A2C12ED31BCEEC9000B19CFD /* RNSqlite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNSqlite.swift; sourceTree = "<group>"; };
 		A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSqlite.m; sourceTree = "<group>"; };
 		A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
@@ -209,14 +204,9 @@
 		A2C1292B1BCDBF1A00693415 /* RNSqlite */ = {
 			isa = PBXGroup;
 			children = (
-				A2C1292C1BCDBF4B00693415 /* AIBSQLite.h */,
-				A2C1292D1BCDBF4B00693415 /* AIBSQLite.m */,
-				A2C12ED31BCEEC9000B19CFD /* RNSqlite.swift */,
 				A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */,
 				A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */,
 				A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */,
-				A211C7861BD061EE00653014 /* ContactsDao.m */,
-				A211C78A1BD06E3B00653014 /* ContactsDao.h */,
 			);
 			name = RNSqlite;
 			sourceTree = "<group>";
@@ -227,6 +217,8 @@
 				A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */,
 				A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */,
 				A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */,
+				A211C78A1BD06E3B00653014 /* ContactsDao.h */,
+				A211C7861BD061EE00653014 /* ContactsDao.m */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -469,10 +461,8 @@
 				A2C12F0C1BD054CB00B19CFD /* FMDatabaseVariadic.swift in Sources */,
 				A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */,
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
-				A2C12ED41BCEEC9000B19CFD /* RNSqlite.swift in Sources */,
 				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				A2C1292E1BCDBF4B00693415 /* AIBSQLite.m in Sources */,
 				A2C12F0A1BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,
 				A211C7871BD061EE00653014 /* ContactsDao.m in Sources */,

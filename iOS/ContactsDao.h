@@ -6,6 +6,6 @@
 
 @interface ContactsDao : NSObject
 
--(BOOL) saveContactsToDB:(NSArray *)contacts;
+-(BOOL) saveContactsToDB:(NSString*) countryCode contacts:(NSArray *)contacts;
 
 @end

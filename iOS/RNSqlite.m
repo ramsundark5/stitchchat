@@ -32,6 +32,24 @@ RCT_EXPORT_METHOD(initDB:(NSString *)dbName
   }
 }
 
+/*RCT_EXPORT_METHOD(executeBatchUpdate:(NSString *)dbName
+                  sqlStmts:(NSArray *)sqlStmts
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject){
+  @try {
+    BOOL executedStatus;
+    for(NSString* sqlStmt in sqlStmts){
+      executedStatus = [self executeUpdateInternal:dbName sqlStmt:sqlStmt params:nil];
+    }
+     NSString * statusString = (executedStatus) ? @"True" : @"False";
+     resolve(statusString);
+  }
+  @catch (NSError *error) {
+    NSLog(@"%@", error.localizedDescription);
+    reject(error);
+  }
+}*/
+
 RCT_EXPORT_METHOD(executeUpdate:(NSString *)dbName
                   sqlStmt:(NSString *)sqlStmt
                   params:(NSDictionary *) params
@@ -106,7 +124,7 @@ RCT_EXPORT_METHOD(close:(NSString *)dbName
     NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDir = [docPaths objectAtIndex:0];
     NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
-
+    //NSLog(@"DB path is%@", dbPath);
     return dbPath;
 }
 @end

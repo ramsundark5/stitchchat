@@ -3,9 +3,9 @@ var RNContactsManager = require('react-native').NativeModules.RNContactsManager;
 
 class ContactsManger{
 
-    init(){
+    init(countryCode){
 
-        let fetchContactsPromise = RNContactsManager.getAllContactsWithPhoneNumber();
+        let fetchContactsPromise = RNContactsManager.initializeContacts(countryCode);
         fetchContactsPromise.then(function(res){
             console.log("contacts initialized");
         });

@@ -7,9 +7,13 @@ class RNContactsManager: NSObject{
   var contactStore = CNContactStore()
   var contacts = [CNContact]()
   
-  @objc func getAllContactsWithPhoneNumber(resolve: RCTPromiseResolveBlock,
-                                           rejecter reject : RCTPromiseRejectBlock) -> Void {
-                                          
+  @objc func initializeContacts(countryCode: String,
+                                resolver resolve: RCTPromiseResolveBlock,
+                                rejecter reject : RCTPromiseRejectBlock) -> Void {
+       
+      if(countryCode.isEmpty){
+        return;
+      }
       self.requestForAccess({ (accessGranted) -> Void in
           if accessGranted {
             
@@ -38,7 +42,7 @@ class RNContactsManager: NSObject{
             }
             else {
               dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.didFetchContacts(contacts)
+                self.didFetchContacts(countryCode, contacts: contacts)
               })
             }
             
@@ -78,26 +82,9 @@ class RNContactsManager: NSObject{
     //tell React native to show alert modal about contacts issue denied
   }
   
-  func didFetchContacts(contacts: [CNContact]) {
-    for contact in contacts {
-      self.contacts.append(contact)
-      
-      if (contact.isKeyAvailable(CNContactPhoneNumbersKey)) {
-        for phoneNumber:CNLabeledValue in contact.phoneNumbers {
-          let phoneNumber = phoneNumber.value as! CNPhoneNumber
-          //print("\(phoneNumber.stringValue)")
-        }
-      }
-    }
-    
+  func didFetchContacts(countryCode: String, contacts: [CNContact]) {
     let contactsDao: ContactsDao = ContactsDao()
-    contactsDao.saveContactsToDB(contacts);
-    
+    contactsDao.saveContactsToDB(countryCode, contacts: contacts);
   }
-  
-  func saveContactToDB(contact: CNContact)->Void{
-   
-  }
-  
   
 }

@@ -3,10 +3,12 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import React, { AsyncStorage } from 'react-native';
 import CacheService from './CacheService';
 import MQTTClient from '../transport/MQTTClient';
+import ContactsManager from './ContactsManger';
+import PhoneFormat from 'phoneformat.js';
 
 class LoginService{
     constructor(){
-        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess);
+        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
         RCTDeviceEventEmitter.addListener('registrationCancelled', this.onRegistrationCancelled);
     }
 
@@ -24,6 +26,8 @@ class LoginService{
         console.log(data.phoneNumber +"/"+ data.authToken);
         let serverVerifiedPhoneNumber = data.phoneNumber;
         CacheService.setAndPersist("phoneNumber", data.phoneNumber);
+        this.initializeContactsDB(data.phoneNumber);
+
         var options = {
             method: 'GET',
             headers: {
@@ -50,6 +54,11 @@ class LoginService{
         console.log(reason);
     }
 
+    initializeContactsDB(phoneNumber){
+        let countryCode = PhoneFormat.countryForE164Number(phoneNumber);
+        console.log("country code is "+countryCode);
+        ContactsManager.init(countryCode);
+    }
 }
 
 module.exports = new LoginService();

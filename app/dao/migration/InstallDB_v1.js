@@ -6,7 +6,7 @@ class InstallDB_v1{
 
     apply(){
         let createContactsTable = 'CREATE TABLE if not exists Contact '+
-                                        '(id                    integer     primary key autoincrement, ' +
+                                        '(phoneNumber           text     primary key, ' +
                                         'firstName              text,'+
                                         'lastName               text,'+
                                         'email                  text,'+
@@ -14,7 +14,6 @@ class InstallDB_v1{
                                         'remoteName             text,'+
                                         'phoneType              text,'+
                                         'phoneLabel             text,'+
-                                        'phoneNumber            text,'+
                                         'localContactIdLink     text,'+
                                         'abRecordIdLink         text,'+
                                         'isRegisteredUser       integer,'+
@@ -30,7 +29,7 @@ class InstallDB_v1{
                                             'recipientPhoneNumber   text,'+
                                             'displayName            text,'+
                                             'isGroupThread          integer,'+
-                                            'groupUid               text,'+
+                                            'groupUid               text    unique,'+
                                             'direction              integer,'+
                                             'count                  integer,'+
                                             'unreadCount            integer,'+
@@ -43,7 +42,7 @@ class InstallDB_v1{
 
         let messageTable       =  'CREATE TABLE if not exists Message'+
                                             '(id                    integer primary key autoincrement,'+
-                                            'uid                    text,'+
+                                            'uid                    text    unique,'+
                                             'threadId               integer,'+
                                             'senderId               text,'+
                                             'receiverId             text,'+
@@ -63,6 +62,10 @@ class InstallDB_v1{
                                             'timestamp              integer,'+
                                             'needsPush              integer'+
                                             'extras                 text)';
+
+        let preferenceTable     = 'CREATE TABLE if not exists Preferences'+
+                                            '(key         text  unique,'+
+                                            'value        text       )';
         /*let groupInfoTable     =  'CREATE TABLE GroupInfo id integer primary key autoincrement, uid text,' +
          'name text, threadId integer, photoUrl text,'+
          'ownerId text, lastMessageOwner text, state text,'+
@@ -73,10 +76,11 @@ class InstallDB_v1{
          'remoteName text, status text, photoUrl text, lastSeenTime integer,'+
          'extras text, lastModifiedTime integer';*/
 
-        let promise1 = DBHelper.executeUpdate(CONTACTS_DB, createContactsTable, ['test']);
-        let promise2 = DBHelper.executeUpdate(MESSAGES_DB, threadTable, ['test']);
-        let promise3 = DBHelper.executeUpdate(MESSAGES_DB, messageTable, ['test']);
-        return Promise.all([promise1, promise2, promise3]);
+        let promise1 = DBHelper.executeUpdate(CONTACTS_DB, createContactsTable);
+        let promise2 = DBHelper.executeUpdate(MESSAGES_DB, threadTable);
+        let promise3 = DBHelper.executeUpdate(MESSAGES_DB, messageTable);
+        let promise4 = DBHelper.executeUpdate(MESSAGES_DB, preferenceTable);
+        return Promise.all([promise1, promise2, promise3, promise4]);
     }
 }
 module.exports = new InstallDB_v1();

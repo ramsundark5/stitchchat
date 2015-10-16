@@ -8,6 +8,7 @@ pod 'Digits'
 pod 'TwitterCore'
 pod 'MQTTClient'
 pod 'FMDB/FTS'
+pod 'libPhoneNumber-iOS'
 
 post_install do |installer|
   target = installer.pods_project.targets.select{|t| 'React' == t.name}.first

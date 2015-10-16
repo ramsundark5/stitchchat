@@ -6,11 +6,11 @@ export default class AppInitService{
 
     constructor(){
         //MessageService.init();
-        ContactsManager.init();
-        /*let migrationPromise = MigrationManager.init();
+        //ContactsManager.init();
+        let migrationPromise = MigrationManager.init();
         migrationPromise.then(function onComplete(res){
             //ContactsManager.init();
-        });*/
+        });
 
     }
 

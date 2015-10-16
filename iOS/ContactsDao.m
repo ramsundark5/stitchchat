@@ -3,15 +3,16 @@
 
 #import "FMDB.h"
 #import "ContactsDao.h"
+#import "NBPhoneNumberUtil.h"
 
 @implementation ContactsDao
 
--(BOOL) saveContactsToDB:(NSArray *)contacts
+-(BOOL) saveContactsToDB:(NSString*) countryCode contacts:(NSArray *)contacts
 {
-   NSString* sqlStmt = @"INSERT into Contact (firstName, lastName, displayName, "
-                      "phoneLabel, phoneNumber, localContactIdLink, lastModifiedTime) values "
-                      "(:firstName,:lastName,:displayName,:phoneLabel, "
-                      ":phoneNumber,:localContactIdLink,:lastModifiedTime)";
+   NSString* sqlStmt = @"INSERT into Contact (phoneNumber, firstName, lastName, displayName, "
+                      "phoneLabel, localContactIdLink, lastModifiedTime) values "
+                      "(:phoneNumber,:firstName,:lastName,:displayName,:phoneLabel, "
+                      ":localContactIdLink,:lastModifiedTime)";
   
 
   NSString* dbPath = [self getDBPath:@"contacts.db"];
@@ -21,7 +22,7 @@
     [db beginTransaction];
     
     @try {
-      [self saveContactToDBINternal:contacts sqlStmt:sqlStmt db:db];
+      [self saveContactToDBINternal:countryCode contacts:contacts sqlStmt:sqlStmt db:db];
     } @catch (NSError *error) {
       NSLog(@"Error initializing contacts%@", error.localizedDescription);
     }
@@ -32,35 +33,51 @@
   return TRUE;
 }
 
--(BOOL) saveContactToDBINternal:(NSArray *)contacts
+-(BOOL) saveContactToDBINternal:(NSString*)countryCode
+                       contacts:(NSArray *)contacts
                         sqlStmt:(NSString*)sqlStmt
                              db:(FMDatabase*)db
 {
   for (CNContact *contact in contacts)
   {
-    NSArray <CNLabeledValue<CNPhoneNumber *> *> *phoneNumbers = contact.phoneNumbers;
+      BOOL isPhoneNumberAvailable = [contact isKeyAvailable:CNContactPhoneNumbersKey];
+      if(!isPhoneNumberAvailable){
+        //we are interested only in contacts with phone numbers
+        continue;
+      }
     
+      NSArray <CNLabeledValue<CNPhoneNumber *> *> *phoneNumbers = contact.phoneNumbers;
+      NSNumber *currentTime = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
       for (CNLabeledValue* phoneNumberDict in phoneNumbers)
       {
         @try {
           CNPhoneNumber* cnPhoneNumber = phoneNumberDict.value;
           NSString* phoneLabel  = phoneNumberDict.label;
           NSString* phoneNumber = cnPhoneNumber.stringValue;
-          NSLog(@"phone number is  %@",phoneNumber);
-          NSLog(@"phone label is %@",phoneLabel);
+          NSString* e164Number  = [ContactsDao toE164:phoneNumber countryCode:countryCode];
+            
+          if(!e164Number){
+            continue;
+          }
+            
           NSString* displayName = contact.givenName;
+          
           if(contact.familyName){
             displayName = [displayName stringByAppendingString:contact.familyName];
           }
-          NSNumber *currentTime = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];;
-          //double currentTime = [[NSDate date] timeIntervalSince1970] * 1000;
+          NSString *cleanedUpPhoneLabel = @"";
+          
+          if(phoneLabel){
+            NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+            cleanedUpPhoneLabel = [[phoneLabel componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+          }
           
           NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  e164Number, @"phoneNumber",
                                   contact.givenName, @"firstName",
                                   contact.familyName, @"lastName",
                                   displayName, @"displayName",
-                                  phoneLabel, @"phoneLabel",
-                                  phoneNumber, @"phoneNumber",
+                                  cleanedUpPhoneLabel, @"phoneLabel",
                                   contact.identifier, @"localContactIdLink",
                                   currentTime, @"lastModifiedTime",
                                   nil];
@@ -89,7 +106,36 @@
   NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
   NSString *documentsDir = [docPaths objectAtIndex:0];
   NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
-  
+  NSLog(@"DB path is%@", dbPath);
   return dbPath;
+}
+
++ (NSString*) toE164:(NSString*) phoneNumberStr
+         countryCode:(NSString*) countryCode{
+    NSString* e164Number = nil;
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NSError *numberParseError = nil;
+    @try{
+        NBPhoneNumber *number = [phoneUtil parse:phoneNumberStr
+                                   defaultRegion:countryCode error:&numberParseError];
+        
+        if (numberParseError == nil) {
+            
+            NSError* toE164Error;
+            e164Number = [phoneUtil format:number
+                              numberFormat:NBEPhoneNumberFormatE164
+                                     error:&toE164Error];
+            if(toE164Error != nil){
+                NSLog(@"Error formatting phone number %@ to e164: %@", phoneNumberStr, [toE164Error localizedDescription]);
+            }
+            
+        } else {
+            NSLog(@"Error parsing phone number: %@ - %@", phoneNumberStr, [numberParseError localizedDescription]);
+        }
+
+    }@catch(NSError *error){
+        NSLog(@"Unexpected phone parse error: %@ - %@", phoneNumberStr, [error localizedDescription]);
+    }
+    return e164Number;
 }
 @end

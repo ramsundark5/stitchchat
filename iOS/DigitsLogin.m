@@ -6,6 +6,7 @@
 #import <DigitsKit/DigitsKit.h>
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
+#import "NBPhoneNumberUtil.h"
 
 @interface DigitsLogin : NSObject <RCTBridgeModule>
 @end
@@ -49,6 +50,14 @@ RCT_EXPORT_METHOD(startLoginProcess) {
     }
     
   }];
+}
+
+-(void) saveCountryCode:(NSString*)phoneNumber{
+  NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+  NSNumber *countryCode = [phoneUtil extractCountryCode:phoneNumber nationalNumber:nil];
+  if(countryCode){
+    
+  }
 }
 
 RCT_EXPORT_METHOD(logout) {
