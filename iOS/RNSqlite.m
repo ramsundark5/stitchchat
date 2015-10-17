@@ -6,6 +6,8 @@
 
 @interface RNSqlite : NSObject <RCTBridgeModule>
 
+@property (strong, nonatomic) NSString *documentDirectory;
+
 @end
 
 @implementation RNSqlite
@@ -72,11 +74,7 @@ RCT_EXPORT_METHOD(executeQuery:(NSString *)dbName
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject){
   @try {
-    NSMutableArray *results = [NSMutableArray array];
-    FMResultSet* rs = [self executeQueryInternal:dbName sqlStmt:sqlStmt params:params];
-    while ([rs next]) {
-      [results addObject:[rs resultDictionary]];
-    }
+    NSArray *results = [self executeQueryInternal:dbName sqlStmt:sqlStmt params:params];
     resolve(results);
   }
   @catch (NSError *error) {
@@ -105,25 +103,32 @@ RCT_EXPORT_METHOD(close:(NSString *)dbName
   return status;
 }
 
--(FMResultSet*) executeQueryInternal:(NSString *)dbName
+-(NSArray*) executeQueryInternal:(NSString *)dbName
                       sqlStmt:(NSString *)sqlStmt
                        params:(NSDictionary *) params{
   NSString* dbPath = [self getDBPath:dbName];
+  NSMutableArray *results = [NSMutableArray array];
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
-  __block FMResultSet *rs = nil;
   
   [queue inDatabase:^(FMDatabase *db) {
-    rs = [db executeQuery:sqlStmt withParameterDictionary:params];
+    FMResultSet *rs = [db executeQuery:sqlStmt withParameterDictionary:params];
+    while ([rs next]) {
+      [results addObject:[rs resultDictionary]];
+    }
+    [rs close];
   }];
   
-  return rs;
+  return results;
 }
 
 - (NSString *)getDBPath:(NSString *)dbName
 {
-    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDir = [docPaths objectAtIndex:0];
-    NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
+    if(!self.documentDirectory){
+       NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+       NSString *documentsDir = [docPaths objectAtIndex:0];
+       self.documentDirectory = documentsDir;
+    }
+    NSString *dbPath = [self.documentDirectory  stringByAppendingPathComponent:dbName];
     //NSLog(@"DB path is%@", dbPath);
     return dbPath;
 }

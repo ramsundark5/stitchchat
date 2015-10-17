@@ -77,9 +77,10 @@ class InstallDB_v1{
          'extras text, lastModifiedTime integer';*/
 
         let promise1 = DBHelper.executeUpdate(CONTACTS_DB, createContactsTable);
-        let promise2 = DBHelper.executeUpdate(MESSAGES_DB, threadTable);
-        let promise3 = DBHelper.executeUpdate(MESSAGES_DB, messageTable);
-        let promise4 = DBHelper.executeUpdate(MESSAGES_DB, preferenceTable);
+        let promise2 = DBHelper.executeUpdate(CONTACTS_DB, preferenceTable);
+        let promise3 = DBHelper.executeUpdate(MESSAGES_DB, threadTable);
+        let promise4 = DBHelper.executeUpdate(MESSAGES_DB, messageTable);
+
         return Promise.all([promise1, promise2, promise3, promise4]);
     }
 }

@@ -14,7 +14,7 @@
                       "(:phoneNumber,:firstName,:lastName,:displayName,:phoneLabel, "
                       ":localContactIdLink,:lastModifiedTime)";
   
-
+  __block BOOL saveSuccess = FALSE;
   NSString* dbPath = [self getDBPath:@"contacts.db"];
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
   
@@ -22,7 +22,7 @@
     [db beginTransaction];
     
     @try {
-      [self saveContactToDBINternal:countryCode contacts:contacts sqlStmt:sqlStmt db:db];
+      saveSuccess = [self saveContactToDBInternal:countryCode contacts:contacts sqlStmt:sqlStmt db:db];
     } @catch (NSError *error) {
       NSLog(@"Error initializing contacts%@", error.localizedDescription);
     }
@@ -30,14 +30,15 @@
     [db commit];
   }];
 
-  return TRUE;
+  return saveSuccess;
 }
 
--(BOOL) saveContactToDBINternal:(NSString*)countryCode
+-(BOOL) saveContactToDBInternal:(NSString*)countryCode
                        contacts:(NSArray *)contacts
                         sqlStmt:(NSString*)sqlStmt
                              db:(FMDatabase*)db
 {
+  BOOL saveSuccess = FALSE;
   for (CNContact *contact in contacts)
   {
       BOOL isPhoneNumberAvailable = [contact isKeyAvailable:CNContactPhoneNumbersKey];
@@ -96,9 +97,11 @@
 
         
       }
+    
+    saveSuccess = TRUE;
   }
 
-  return TRUE;
+  return saveSuccess;
 }
 
 - (NSString *)getDBPath:(NSString *)dbName

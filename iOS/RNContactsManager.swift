@@ -82,9 +82,10 @@ class RNContactsManager: NSObject{
     //tell React native to show alert modal about contacts issue denied
   }
   
-  func didFetchContacts(countryCode: String, contacts: [CNContact]) {
+  func didFetchContacts(countryCode: String, contacts: [CNContact]) -> Bool{
     let contactsDao: ContactsDao = ContactsDao()
-    contactsDao.saveContactsToDB(countryCode, contacts: contacts);
+    let completed = contactsDao.saveContactsToDB(countryCode, contacts: contacts)
+    return completed;
   }
   
 }

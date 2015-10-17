@@ -5,6 +5,7 @@ import CacheService from './CacheService';
 import MQTTClient from '../transport/MQTTClient';
 import ContactsManager from './ContactsManger';
 import PhoneFormat from 'phoneformat.js';
+import * as AppConstants from '../constants/AppConstants';
 
 class LoginService{
     constructor(){
@@ -25,7 +26,6 @@ class LoginService{
     onRegistrationSuccess(data){
         console.log(data.phoneNumber +"/"+ data.authToken);
         let serverVerifiedPhoneNumber = data.phoneNumber;
-        CacheService.setAndPersist("phoneNumber", data.phoneNumber);
         this.initializeContactsDB(data.phoneNumber);
 
         var options = {
@@ -57,7 +57,11 @@ class LoginService{
     initializeContactsDB(phoneNumber){
         let countryCode = PhoneFormat.countryForE164Number(phoneNumber);
         console.log("country code is "+countryCode);
-        ContactsManager.init(countryCode);
+        CacheService.setAndPersist(AppConstants.PHONE_NUMBER_PREF, phoneNumber);
+        CacheService.setAndPersist(AppConstants.COUNTRY_CODE_PREF, countryCode);
+        if(countryCode){
+            ContactsManager.init(countryCode);
+        }
     }
 }
 
