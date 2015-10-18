@@ -13,6 +13,13 @@ export const defaultStyle = {
 };
 
 export const commons = StyleSheet.create({
+
+    container: {
+        flex: 1,
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+    },
     listContainer: {
         flex: 1,
     },
@@ -66,6 +73,16 @@ export const commons = StyleSheet.create({
         flexDirection : 'column',
         flexWrap      : 'wrap',
         alignItems: 'flex-start'
+    },
+    searchInput: {
+        height: 36,
+        padding: 4,
+        margin: 1,
+        fontSize: 18,
+        borderWidth: 2,
+        borderColor: '#dddddd',
+        borderRadius: 8,
+        color: '#48BBEC'
     }
 });
 

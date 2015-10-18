@@ -1,4 +1,4 @@
-import React, { Component, View, StyleSheet, ScrollView, Text } from 'react-native';
+import React, { Component, View, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import ThreadList from '../components/threads/ThreadList';
@@ -18,7 +18,7 @@ class InboxPage extends Component {
         const { threads, threadActions, messageActions, isEditing, router } = this.props;
 
         return (
-            <View style={styles.container}>
+            <View style={commons.container}>
                 <View style={{flex: 1}}>
                     <ThreadList threads={threads}
                                 loadMoreThreads={threadActions.loadMoreThreads}
@@ -53,13 +53,4 @@ function mapDispatchToProps(dispatch) {
         messageActions: bindActionCreators(MessageActions, dispatch)
     };
 }
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
-    }
-});
 export default connect(mapStateToProps, mapDispatchToProps)(InboxPage);
