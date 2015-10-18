@@ -2,14 +2,16 @@ import React, { Component, PropTypes, View, TouchableHighlight } from 'react-nat
 import ThreadOptionsBox from './ThreadOptionsBox';
 import { Icon } from 'react-native-icons';
 import {commons, defaultStyle} from '../../styles/CommonStyles';
-import {threadStyle} from '../../styles/ThreadStyles';
+import {threadStyle} from './ThreadStyles';
 
 class ThreadComposer extends Component {
 
     _addNewThread(recipientContactInfo){
-        recipientContactInfo = {};
-        recipientContactInfo.phoneNumber = '4444444444';
-        this.props.addNewThread(recipientContactInfo);
+        //recipientContactInfo = {};
+        //recipientContactInfo.phoneNumber = '4444444444';
+        //this.props.addNewThread(recipientContactInfo);
+        let emptyProps = {};
+        this.props.router.toContactsView(emptyProps);
     }
 
     _addNewGroupThread(recipientContactInfo){

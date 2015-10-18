@@ -32,7 +32,8 @@ class InboxPage extends Component {
                     <ThreadComposer addNewThread={threadActions.addNewThread}
                                     addNewGroupThread={threadActions.addNewGroupThread}
                                     searchThreads={threadActions.searchThreads}
-                                    isEditing={isEditing}/>
+                                    isEditing={isEditing}
+                                    router={router}/>
                 </View>
             </View>
         );

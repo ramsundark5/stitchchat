@@ -1,5 +1,4 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
-import {messageStyle} from '../../styles/MessageStyles';
 import {commons, smallIconSize} from '../../styles/CommonStyles';
 import moment from 'moment';
 import ThreadItem from './ThreadItem';

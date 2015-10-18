@@ -1,6 +1,6 @@
 import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
 import {commons, defaultStyle} from '../../styles/CommonStyles';
-import {messageStyle} from '../../styles/MessageStyles';
+import {messageStyle} from './MessageStyles';
 import { Icon } from 'react-native-icons';
 import * as Status from '../../constants/MessageConstants';
 import MessageService from '../../services/MessageService';

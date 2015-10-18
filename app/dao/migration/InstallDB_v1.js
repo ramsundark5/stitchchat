@@ -1,6 +1,5 @@
 import DBHelper from '../DBHelper';
-const  CONTACTS_DB = "contacts.db";
-const  MESSAGES_DB = "messages.db";
+import * as AppConstants from '../../constants/AppConstants';
 
 class InstallDB_v1{
 
@@ -76,10 +75,10 @@ class InstallDB_v1{
          'remoteName text, status text, photoUrl text, lastSeenTime integer,'+
          'extras text, lastModifiedTime integer';*/
 
-        let promise1 = DBHelper.executeUpdate(CONTACTS_DB, createContactsTable);
-        let promise2 = DBHelper.executeUpdate(CONTACTS_DB, preferenceTable);
-        let promise3 = DBHelper.executeUpdate(MESSAGES_DB, threadTable);
-        let promise4 = DBHelper.executeUpdate(MESSAGES_DB, messageTable);
+        let promise1 = DBHelper.executeUpdate(AppConstants.CONTACTS_DB, createContactsTable);
+        let promise2 = DBHelper.executeUpdate(AppConstants.CONTACTS_DB, preferenceTable);
+        let promise3 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, threadTable);
+        let promise4 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, messageTable);
 
         return Promise.all([promise1, promise2, promise3, promise4]);
     }

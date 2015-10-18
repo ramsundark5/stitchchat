@@ -2,6 +2,7 @@ import React, { Navigator } from 'react-native';
 import InboxPage from './InboxPage';
 import LoginPage from './LoginPage';
 import MessagePage from './MessagePage';
+import ContactsPage from './ContactsPage';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from 'react-native-navbar';
 import {navStyle} from '../styles/NavBarStyles';
@@ -26,12 +27,12 @@ class Router {
     toLoginView(props) {
         this.push(props, {
             component: LoginPage,
-            name: 'loginview',
+            name: 'loginView',
             sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
-                    title='Inbox'
+                    title='Login'
                     hidePrev = {true}
                     style= {navStyle.navBarContainer}/>
             )
@@ -41,7 +42,7 @@ class Router {
     toInboxView(props) {
         this.push(props, {
             component: InboxPage,
-            name: 'inboxview',
+            name: 'inboxView',
             sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
@@ -56,7 +57,7 @@ class Router {
     toMessageView(props) {
         this.push(props, {
             component: MessagePage,
-            name: 'messageview',
+            name: 'messageView',
             sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
@@ -71,12 +72,26 @@ class Router {
     toPhotoGalleryView(props) {
         this.push(props, {
             component: PhotoGallery,
-            name: 'galleryview',
+            name: 'galleryView',
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
                     title='Gallery'
                     prevTitle = 'Done'
+                    style= {navStyle.navBarContainer}/>
+            )
+        })
+    }
+
+    toContactsView(props) {
+        this.push(props, {
+            component: ContactsPage,
+            name: 'contactsView',
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            navigationBar: (
+                <NavigationBar
+                    title='Contacts'
+                    prevTitle = 'cancel'
                     style= {navStyle.navBarContainer}/>
             )
         })

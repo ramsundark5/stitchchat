@@ -3,11 +3,13 @@ import ContactsManager from '../services/ContactsManger';
 import MigrationManager from '../dao/migration/MigrationManager';
 import CacheService from './CacheService';
 import * as AppConstants from '../constants/AppConstants';
+import PahoClient from '../transport/PahoClient';
 
 export default class AppInitService{
 
     constructor(){
         //MessageService.init();
+        PahoClient.init();
         let migrationPromise = MigrationManager.init();
         migrationPromise.then(this.loadPreferences)
                         .then(this.initContactDBIfRequired);

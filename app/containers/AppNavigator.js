@@ -11,7 +11,7 @@ class AppNavigator extends Component {
     constructor(props, context) {
         super(props, context);
         this.initialRoute = {
-            name: 'inboxview',
+            name: 'inboxView',
             index: 0,
             component: InboxPage,
             navigationBar: (
