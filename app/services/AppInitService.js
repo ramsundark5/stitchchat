@@ -9,7 +9,6 @@ export default class AppInitService{
 
     constructor(){
         //MessageService.init();
-        PahoClient.init();
         let migrationPromise = MigrationManager.init();
         migrationPromise.then(this.loadPreferences)
                         .then(this.initContactDBIfRequired);
