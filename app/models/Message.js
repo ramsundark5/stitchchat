@@ -1,9 +1,11 @@
 import * as Status from '../constants/MessageConstants.js';
 import * as _ from 'lodash';
+import uuid from 'node-uuid';
 
 export default class Message{
     constructor(text, threadId) {
-        this.id                     = null;
+        this.id                     = undefined;
+        this.uid                    = uuid.v4();
         this.threadId               = threadId;
         this.senderId               = '';
         this.receiverId             = '';
@@ -45,8 +47,9 @@ export default class Message{
     }
 
     getMessageForDBSave(){
-        let messageForDB    = _.clone(this);
-        messageForDB.selected      = undefined;
+        let messageForDB         = _.clone(this);
+        messageForDB.selected    = undefined;
+        messageForDB.uid         = undefined;
         return messageForDB;
     }
 }

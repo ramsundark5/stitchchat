@@ -4,8 +4,6 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as MessageActions from '../actions/MessageActions';
 import * as AppConfig from '../config/AppConfig';
 import Message from '../models/Message';
-import MessageDao from '../dao/MessageDao';
-import uuid from 'node-uuid';
 
 class MessageService{
 
@@ -22,7 +20,6 @@ class MessageService{
             publishTopic = AppConfig.GROUP_PUBSUB_TOPIC + encodedReceiverId;
         }
         this.sendMessageToTopic(publishTopic, message);
-        MessageDao.addMessage(message.threadId, message);
     }
 
     sendMessageToTopic(topic:String, message:Message){

@@ -12,7 +12,7 @@ class DBHelper{
     }
 
     executeInsert(dbName, sqlStmt, params){
-        let insertPromise = this.db.executeUpdate(dbName, sqlStmt, params);
+        let insertPromise = this.db.executeInsert(dbName, sqlStmt, params);
         return insertPromise;
     }
 

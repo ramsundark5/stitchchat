@@ -2,6 +2,7 @@ import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from
 import {commons, defaultStyle} from '../../styles/CommonStyles';
 import { Icon } from 'react-native-icons';
 import Message from '../../models/Message';
+import MessageDao from '../../dao/MessageDao';
 
 class MessageTextInput extends Component {
     constructor(props, context) {
@@ -16,14 +17,20 @@ class MessageTextInput extends Component {
             let currentThread = this.props.currentThread;
             let newMessage = new Message(this.state.text, currentThread.id);
             if(currentThread.isGroupThread){
-                newMessage.receiverId=currentThread.groupInfo.id;
+                newMessage.receiverId=currentThread.groupUid;
                 newMessage.isGroupThread = true;
             }
             else{
                 newMessage.receiverId=currentThread.recipientPhoneNumber;
             }
 
-            this.props.addMessage(newMessage);
+            let addMessagePromise = MessageDao.addMessage(newMessage.threadId, newMessage);
+            let that = this;
+            addMessagePromise.then(function(messageId){
+                newMessage.id = messageId;
+                that.props.addMessage(newMessage);
+            });
+
         }
         this.setState({text: ''});
     }
