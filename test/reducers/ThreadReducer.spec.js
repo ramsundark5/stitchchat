@@ -20,53 +20,45 @@ describe('Thread reducer tests', () => {
     });
 
     it('ADD_THREAD should add Thread instance to existing collection', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
 
-        let secondContact = new Contact();
-        secondContact.phoneNumber = '2222222222';
         let secondNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: secondContact,
+            recipientPhoneNumber: '2222222222',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
         let stateAfterSecondAdd = threadState(stateAfterFirstAdd, secondNewThreadAction);
-        expect(stateAfterSecondAdd.threads[1].recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterSecondAdd.threads[1].recipientPhoneNumber).toEqual('2222222222');
     });
 
     it('DELETE_THREAD should delete from existing collection', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
 
-        let secondContact = new Contact();
-        secondContact.phoneNumber = '2222222222';
         let secondNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: secondContact,
+            recipientPhoneNumber: '2222222222',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
         let stateAfterSecondAdd = threadState(stateAfterFirstAdd, secondNewThreadAction);
-        expect(stateAfterSecondAdd.threads[1].recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterSecondAdd.threads[1].recipientPhoneNumber).toEqual('2222222222');
 
         let secondThreadId = stateAfterSecondAdd.threads[1].id;
         let deleteAction = {
@@ -75,22 +67,20 @@ describe('Thread reducer tests', () => {
         };
 
         let stateAfterThreadDelete = threadState(stateAfterSecondAdd, deleteAction);
-        expect(stateAfterThreadDelete.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterThreadDelete.threads[0].recipientPhoneNumber).toEqual('1111111111');
         expect(stateAfterThreadDelete.threads.length).toBe(1);
     });
 
     it('SELECT_THREAD should select or unselect the given Thread', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
         expect(stateAfterFirstAdd.threads[0].selected).toBe(false);
 
         let firstThreadId = stateAfterFirstAdd.threads[0].id;
@@ -114,17 +104,15 @@ describe('Thread reducer tests', () => {
     });
 
     it('UPDATE_THREAD should update status of the given Thread', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
         expect(stateAfterFirstAdd.threads[0].selected).toBe(false);
         expect(stateAfterFirstAdd.threads[0].count).toBe(0);
 
@@ -141,28 +129,24 @@ describe('Thread reducer tests', () => {
     });
 
     it('DELETE_SELECTED should delete the selected Thread', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
 
-        let secondContact = new Contact();
-        secondContact.phoneNumber = '2222222222';
         let secondNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: secondContact,
+            recipientPhoneNumber: '2222222222',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
         let stateAfterSecondAdd = threadState(stateAfterFirstAdd, secondNewThreadAction);
-        expect(stateAfterSecondAdd.threads[1].recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterSecondAdd.threads[1].recipientPhoneNumber).toEqual('2222222222');
 
         let firstThreadId = stateAfterFirstAdd.threads[0].id;
         let selectAction = {
@@ -180,35 +164,31 @@ describe('Thread reducer tests', () => {
         };
 
         let stateAfterDeleteSelected = threadState(stateAfterThreadSelect, deleteSelectedAction);
-        expect(stateAfterDeleteSelected.threads[0].recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterDeleteSelected.threads[0].recipientPhoneNumber).toEqual('2222222222');
         expect(stateAfterDeleteSelected.threads[0].selected).toBe(false);
         expect(stateAfterDeleteSelected.threads.length).toBe(1);
         expect(stateAfterDeleteSelected.isEditing).toBe(false);
     });
 
     it('CLEAR_SELECTED should clear the selected Thread', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
 
-        let secondContact = new Contact();
-        secondContact.phoneNumber = '2222222222';
         let secondNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: secondContact,
+            recipientPhoneNumber: '2222222222',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
         let stateAfterSecondAdd = threadState(stateAfterFirstAdd, secondNewThreadAction);
-        expect(stateAfterSecondAdd.threads[1].recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterSecondAdd.threads[1].recipientPhoneNumber).toEqual('2222222222');
 
         let firstThreadId = stateAfterFirstAdd.threads[0].id;
         let selectAction = {
@@ -231,28 +211,25 @@ describe('Thread reducer tests', () => {
     });
 
     it('SET_CURRENT_THREAD should set the selected Thread', () => {
-        let firstContact = new Contact();
-        firstContact.phoneNumber = '1111111111';
         let firstNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: firstContact,
+            recipientPhoneNumber: '1111111111',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
 
         let stateAfterFirstAdd = threadState(state, firstNewThreadAction);
-        expect(stateAfterFirstAdd.threads[0].recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterFirstAdd.threads[0].recipientPhoneNumber).toEqual('1111111111');
 
-        let secondContact = new Contact();
-        secondContact.phoneNumber = '2222222222';
         let secondNewThreadAction = {
             type: types.ADD_THREAD,
-            recipientContactInfo: secondContact,
+            recipientPhoneNumber: '2222222222',
             isGroupThread: false,
-            groupInfo: null
+            groupUid: null
         };
         let stateAfterSecondAdd = threadState(stateAfterFirstAdd, secondNewThreadAction);
-        expect(stateAfterSecondAdd.threads[1].recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterSecondAdd.threads[1].recipientPhoneNumber).toEqual('2222222222');
+        expect(stateAfterSecondAdd.threads[1].recipientPhoneNumber).toEqual('2222222222');
         expect(stateAfterSecondAdd.currentThread).toBe(null);
 
         let firstThread = stateAfterFirstAdd.threads[0];
@@ -262,7 +239,7 @@ describe('Thread reducer tests', () => {
         };
 
         let stateAfterCurrentThreadSet = threadState(stateAfterSecondAdd, setCurrentThreadAction);
-        expect(stateAfterCurrentThreadSet.currentThread.recipientContactInfo.phoneNumber).toEqual('1111111111');
+        expect(stateAfterCurrentThreadSet.currentThread.recipientPhoneNumber).toEqual('1111111111');
 
         let secondThread = stateAfterSecondAdd.threads[1];
         let setCurrentThreadAction2 = {
@@ -271,6 +248,6 @@ describe('Thread reducer tests', () => {
         };
 
         let stateAfterCurrentThreadSet2 = threadState(stateAfterCurrentThreadSet, setCurrentThreadAction2);
-        expect(stateAfterCurrentThreadSet2.currentThread.recipientContactInfo.phoneNumber).toEqual('2222222222');
+        expect(stateAfterCurrentThreadSet2.currentThread.recipientPhoneNumber).toEqual('2222222222');
     });
 });

@@ -52,6 +52,22 @@ RCT_EXPORT_METHOD(initDB:(NSString *)dbName
   }
 }*/
 
+RCT_EXPORT_METHOD(executeInsert:(NSString *)dbName
+                  sqlStmt:(NSString *)sqlStmt
+                  params:(NSDictionary *) params
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject){
+  @try {
+    NSInteger lastInsertRowid  = [self executeInsertInternal:dbName sqlStmt:sqlStmt params:params];
+    NSNumber *lastRowIdResponse = [NSNumber numberWithInteger: lastInsertRowid];
+    resolve(lastRowIdResponse);
+  }
+  @catch (NSError *error) {
+    NSLog(@"%@", error.localizedDescription);
+    reject(error);
+  }
+}
+
 RCT_EXPORT_METHOD(executeUpdate:(NSString *)dbName
                   sqlStmt:(NSString *)sqlStmt
                   params:(NSDictionary *) params
@@ -87,6 +103,23 @@ RCT_EXPORT_METHOD(close:(NSString *)dbName
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject){
   
+}
+
+-(NSInteger) executeInsertInternal:(NSString *)dbName
+                      sqlStmt:(NSString *)sqlStmt
+                       params:(NSDictionary *) params{
+  NSString* dbPath = [self getDBPath:dbName];
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  __block NSInteger lastId = 0;
+  
+  [queue inDatabase:^(FMDatabase *db) {
+    BOOL status = [db executeUpdate:sqlStmt withParameterDictionary:params];
+    if(status){
+      lastId = [db lastInsertRowId];
+    }
+  }];
+  
+  return lastId;
 }
 
 -(BOOL) executeUpdateInternal:(NSString *)dbName

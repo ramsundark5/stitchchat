@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 
 export default class Message{
     constructor(text, threadId) {
-        this.id                     = _.uniqueId('message');
+        this.id                     = null;
         this.threadId               = threadId;
         this.senderId               = '';
         this.receiverId             = '';
@@ -20,7 +20,6 @@ export default class Message{
         this.extras                 = '';
 
         //internal use fields
-        this.sequenceId             = _.uniqueId('message'); //used for sorting
         this.selected               = false;
         this.status                 = Status.STATUS_PENDING;
         this.isOwner                = true;
@@ -43,6 +42,12 @@ export default class Message{
         transportMessage.direction     = undefined;
         transportMessage.needsPush     = undefined;
         return transportMessage;
+    }
+
+    getMessageForDBSave(){
+        let messageForDB    = _.clone(this);
+        messageForDB.selected      = undefined;
+        return messageForDB;
     }
 }
 

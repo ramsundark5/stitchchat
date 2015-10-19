@@ -24,7 +24,7 @@ describe('Message reducer tests', () => {
             message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].message).toEqual('first message');
 
         let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
@@ -32,7 +32,7 @@ describe('Message reducer tests', () => {
             message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
-        expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
+        expect(stateAfterSecondAdd.messages[1].message).toEqual('second message');
     });
 
     it('DELETE_MESSAGE should delete from existing collection', () => {
@@ -42,7 +42,7 @@ describe('Message reducer tests', () => {
             message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].message).toEqual('first message');
 
         let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
@@ -50,7 +50,7 @@ describe('Message reducer tests', () => {
             message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
-        expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
+        expect(stateAfterSecondAdd.messages[1].message).toEqual('second message');
 
         let secondMessageId = stateAfterSecondAdd.messages[1].id;
         let deleteAction = {
@@ -59,7 +59,7 @@ describe('Message reducer tests', () => {
         };
 
         let stateAfterMessageDelete = messageState(stateAfterSecondAdd, deleteAction);
-        expect(stateAfterMessageDelete.messages[0].text).toEqual('first message');
+        expect(stateAfterMessageDelete.messages[0].message).toEqual('first message');
         expect(stateAfterMessageDelete.messages.length).toBe(1);
     });
 
@@ -70,7 +70,7 @@ describe('Message reducer tests', () => {
             message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].message).toEqual('first message');
         expect(stateAfterFirstAdd.messages[0].selected).toBe(false);
 
         let firstMessageId = stateAfterFirstAdd.messages[0].id;
@@ -100,7 +100,7 @@ describe('Message reducer tests', () => {
             message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].message).toEqual('first message');
         expect(stateAfterFirstAdd.messages[0].status).toEqual(Status.STATUS_PENDING);
 
         let firstMessageId = stateAfterFirstAdd.messages[0].id;
@@ -130,7 +130,7 @@ describe('Message reducer tests', () => {
             message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].message).toEqual('first message');
 
         let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
@@ -138,7 +138,7 @@ describe('Message reducer tests', () => {
             message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
-        expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
+        expect(stateAfterSecondAdd.messages[1].message).toEqual('second message');
 
         let firstMessageId = stateAfterFirstAdd.messages[0].id;
         let selectAction = {
@@ -156,7 +156,7 @@ describe('Message reducer tests', () => {
         };
 
         let stateAfterDeleteSelected = messageState(stateAfterMessageSelect, deleteSelectedAction);
-        expect(stateAfterDeleteSelected.messages[0].text).toEqual('second message');
+        expect(stateAfterDeleteSelected.messages[0].message).toEqual('second message');
         expect(stateAfterDeleteSelected.messages[0].selected).toBe(false);
         expect(stateAfterDeleteSelected.messages.length).toBe(1);
         expect(stateAfterDeleteSelected.isEditing).toBe(false);
@@ -169,7 +169,7 @@ describe('Message reducer tests', () => {
             message: firstNewMessage
         };
         let stateAfterFirstAdd = messageState(state, firstNewMessageAction);
-        expect(stateAfterFirstAdd.messages[0].text).toEqual('first message');
+        expect(stateAfterFirstAdd.messages[0].message).toEqual('first message');
 
         let secondNewMessage = new Message('second message');
         let secondNewMessageAction = {
@@ -177,7 +177,7 @@ describe('Message reducer tests', () => {
             message: secondNewMessage
         };
         let stateAfterSecondAdd = messageState(stateAfterFirstAdd, secondNewMessageAction);
-        expect(stateAfterSecondAdd.messages[1].text).toEqual('second message');
+        expect(stateAfterSecondAdd.messages[1].message).toEqual('second message');
 
         let firstMessageId = stateAfterFirstAdd.messages[0].id;
         let selectAction = {

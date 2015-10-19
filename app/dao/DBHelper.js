@@ -11,6 +11,11 @@ class DBHelper{
         return openPromise;
     }
 
+    executeInsert(dbName, sqlStmt, params){
+        let insertPromise = this.db.executeUpdate(dbName, sqlStmt, params);
+        return insertPromise;
+    }
+
     executeUpdate(dbName, sqlStmt, params){
         let updatePromise = this.db.executeUpdate(dbName, sqlStmt, params);
         return updatePromise;

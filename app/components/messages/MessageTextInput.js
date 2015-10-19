@@ -20,7 +20,7 @@ class MessageTextInput extends Component {
                 newMessage.isGroupThread = true;
             }
             else{
-                newMessage.receiverId=currentThread.recipientContactInfo.phoneNumber;
+                newMessage.receiverId=currentThread.recipientPhoneNumber;
             }
 
             this.props.addMessage(newMessage);

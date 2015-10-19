@@ -4,19 +4,13 @@ import Contact from '../models/Contact';
 import GroupInfo from '../models/GroupInfo';
 import * as _ from 'lodash';
 
-let firstContact = new Contact();
-firstContact.phoneNumber = '+13392247873';
-let firstThread = new Thread(firstContact, false, null);
+let firstThread = new Thread('+13392247873', false, null);
 firstThread.lastMessageText = 'test first message';
 
-let secondContact = new Contact();
-secondContact.phoneNumber = '+919443096961';
-let secondThread = new Thread(secondContact, false, null);
+let secondThread = new Thread('+919443096961', false, null);
 secondThread.lastMessageText = 'test second message';
 
-let thirdContact = new Contact();
-thirdContact.phoneNumber = '3333333333';
-let thirdThread = new Thread(thirdContact, false, null);
+let thirdThread = new Thread('3333333333', false, null);
 thirdThread.lastMessageText = 'test third message';
 
 let threadList = [firstThread, secondThread, thirdThread];
@@ -27,7 +21,7 @@ export function threadState(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_THREAD:
-            let newThread = new Thread(action.recipientContactInfo, action.isGroupThread, action.groupInfo);
+            let newThread = new Thread(action.recipientPhoneNumber, action.isGroupThread, action.groupUid);
             let threadsAfterAdd = state.threads.concat(newThread);
             let newStateAfterAdd =  _.assign({}, state, { 'threads' : threadsAfterAdd });
             return newStateAfterAdd;

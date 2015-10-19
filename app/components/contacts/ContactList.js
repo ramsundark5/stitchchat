@@ -3,6 +3,7 @@ import {commons, defaultStyle} from '../../styles/CommonStyles';
 import {contactStyle} from './styles/ContactStyles';
 import ContactItem from './ContactItem';
 import ContactsDao from '../../dao/ContactsDao';
+import ThreadDao from '../../dao/ThreadDao';
 
 class ContactList extends Component {
     constructor(props, context) {
@@ -37,7 +38,10 @@ class ContactList extends Component {
             contact.displayName? contact.displayName.toLowerCase().includes(searchText) : false
         );
         this.setState({filteredContacts: filteredContacts});
+    }
 
+    gotoThreadViewForSelectedThread(){
+        //ThreadDao.
     }
 
     render() {

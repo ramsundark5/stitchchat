@@ -27,7 +27,7 @@ class ThreadItem extends Component {
             <TouchableHighlight onPress={() => this.openMessagesPage(thread)}>
                 <View>
                     <View style = {threadStyle.threadItemContainer}>
-                        <Text style={[threadStyle.title]}>{thread.recipientContactInfo.phoneNumber}</Text>
+                        <Text style={[threadStyle.title]}>{thread.recipientPhoneNumber}</Text>
                         <Text style={[threadStyle.timestamp]}>{thread.lastMessageTime}</Text>
                     </View>
                     {this._renderTimeStamp(thread)}

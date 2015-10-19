@@ -43,7 +43,7 @@ class MessageItem extends Component {
                                 onLongPress={() => this.selectMessage(message)}>
                 <View style={[messageStyle.msgItem, msgItemStyle]}>
                     <Text style={msgTextStyle}>
-                        {message.text}
+                        {message.message}
                     </Text>
                     {this._renderStatusIcon(message)}
                 </View>

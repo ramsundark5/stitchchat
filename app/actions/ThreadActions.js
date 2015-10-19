@@ -3,21 +3,21 @@ import * as _ from 'lodash';
 import Contact from '../models/Contact';
 import GroupInfo from '../models/GroupInfo';
 
-export function addNewThread(recipientContactInfo: Contact) {
+export function addNewThread(recipientPhoneNumber) {
     return {
         type: Actions.ADD_THREAD,
-        recipientContactInfo,
+        recipientPhoneNumber,
         false,
         null
     };
 }
 
-export function addNewGroupThread(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo) {
+export function addNewGroupThread( groupUid) {
     return {
         type: Actions.ADD_THREAD,
-        recipientContactInfo,
-        isGroupThread,
-        groupInfo
+        null,
+        true,
+        groupUid
     };
 }
 

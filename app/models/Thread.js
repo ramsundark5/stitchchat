@@ -3,14 +3,12 @@ import GroupInfo from './GroupInfo';
 import * as _ from 'lodash';
 
 export default class Thread{
-    constructor(recipientContactInfo: Contact, isGroupThread: boolean, groupInfo: GroupInfo){
-        this.id                     = _.uniqueId('thread');
-        this.recipientContactInfo   = recipientContactInfo;
-        this.recipientPhoneNumber   = '';
+    constructor(recipientPhoneNumber: String, isGroupThread: boolean, groupUid: String){
+        this.id                     = null;
+        this.recipientPhoneNumber   = recipientPhoneNumber;
         this.displayName            = '';
         this.isGroupThread          = isGroupThread;
-        this.groupInfo              = groupInfo;
-        this.groupUid               = '';
+        this.groupUid               = groupUid;
         this.direction              = 0; //sent or received
         this.count                  = 0;
         this.unreadCount            = 0;
@@ -20,5 +18,8 @@ export default class Thread{
         this.extras                 = '';
         this.isMuted                = false;
         this.selected               = false;
+        this.extras                 = '';
+        this.lastModifiedTime       = 0;
     }
 }
+

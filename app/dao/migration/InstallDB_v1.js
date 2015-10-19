@@ -41,7 +41,6 @@ class InstallDB_v1{
 
         let messageTable       =  'CREATE TABLE if not exists Message'+
                                             '(id                    integer primary key autoincrement,'+
-                                            'uid                    text    unique,'+
                                             'threadId               integer,'+
                                             'senderId               text,'+
                                             'receiverId             text,'+
@@ -59,10 +58,14 @@ class InstallDB_v1{
                                             'ttl                    integer,'+
                                             'isOwner                integer,'+
                                             'timestamp              integer,'+
-                                            'needsPush              integer'+
+                                            'needsPush              integer,'+
                                             'extras                 text)';
 
-        let preferenceTable     = 'CREATE TABLE if not exists Preferences'+
+        let messageRemoteIdTable = 'CREATE TABLE if not exists MessageRemoteID' +
+                                            '(uid                   text primary key,' +
+                                            'messageId              integer unique)';
+
+        let preferenceTable      = 'CREATE TABLE if not exists Preferences'+
                                             '(key         text  unique,'+
                                             'value        text       )';
         /*let groupInfoTable     =  'CREATE TABLE GroupInfo id integer primary key autoincrement, uid text,' +
@@ -79,8 +82,9 @@ class InstallDB_v1{
         let promise2 = DBHelper.executeUpdate(AppConstants.CONTACTS_DB, preferenceTable);
         let promise3 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, threadTable);
         let promise4 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, messageTable);
+        let promise5 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, messageRemoteIdTable);
 
-        return Promise.all([promise1, promise2, promise3, promise4]);
+        return Promise.all([promise1, promise2, promise3, promise4, promise5]);
     }
 }
 module.exports = new InstallDB_v1();
