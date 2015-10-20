@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {defaultStyle, commons} from '../../styles/CommonStyles'
+import {defaultStyle, commons} from '../styles/CommonStyles'
 const senderMessageBgColor     = '#257DF7';
 const receiverMessageBgColor   = '#D1D1D1';
 const senderMessageTextColor   = '#FFFFFF';

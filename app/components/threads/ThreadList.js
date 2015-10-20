@@ -1,5 +1,5 @@
 import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
-import {commons, smallIconSize} from '../../styles/CommonStyles';
+import {commons, smallIconSize} from '../styles/CommonStyles';
 import moment from 'moment';
 import ThreadItem from './ThreadItem';
 import LoginService from '../../services/LoginService';

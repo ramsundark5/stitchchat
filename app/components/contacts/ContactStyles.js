@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {defaultStyle, commons} from './../../../styles/CommonStyles'
+import {defaultStyle, commons} from '../styles/CommonStyles'
 const threadNormalBgColor     = '#257DF7';
 
 export const contactStyle = StyleSheet.create({

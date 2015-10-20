@@ -1,4 +1,3 @@
-import React, { AsyncStorage } from 'react-native';
 import DBHelper from './DBHelper';
 import * as AppConstants from '../constants/AppConstants';
 

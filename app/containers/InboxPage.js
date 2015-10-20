@@ -5,7 +5,7 @@ import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
 import * as ThreadActions from '../actions/ThreadActions';
 import * as MessageActions from '../actions/MessageActions';
-import {commons} from '../styles/CommonStyles';
+import {commons} from '../components/styles/CommonStyles';
 import LoginService from '../services/LoginService';
 
 class InboxPage extends Component {

@@ -1,5 +1,5 @@
 import MQTTClient from '../transport/MQTTClient';
-import store from '../store/ConfigureStore';
+import store from '../config/ConfigureStore';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as MessageActions from '../actions/MessageActions';
 import * as AppConfig from '../config/AppConfig';

@@ -3,7 +3,7 @@ import MessagePage from '../containers/MessagePage';
 import InboxPage from '../containers/InboxPage';
 import Router from './Router';
 import NavigationBar from 'react-native-navbar';
-import {navStyle} from '../styles/NavBarStyles';
+import {navStyle} from '../components/styles/NavBarStyles';
 import AppInitService from '../services/AppInitService';
 
 class AppNavigator extends Component {

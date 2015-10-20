@@ -1,6 +1,6 @@
 import React, { Component, View, Text, PropTypes, TouchableHighlight } from 'react-native';
-import {commons, defaultStyle} from '../../styles/CommonStyles';
-import {contactStyle} from './styles/ContactStyles';
+import {commons, defaultStyle} from '../styles/CommonStyles';
+import {contactStyle} from './ContactStyles';
 
 export default class ContactItem extends Component{
 

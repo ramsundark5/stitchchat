@@ -10,6 +10,7 @@ export function loadMessagesForThread(messages){
         messages
     };
 }
+
 export function addMessage(message: Message) {
     let MessageService = require('../services/MessageService');
     MessageService.sendMessage(message);

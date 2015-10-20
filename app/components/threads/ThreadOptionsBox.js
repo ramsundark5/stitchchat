@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-icons';
-import {commons, defaultStyle} from '../../styles/CommonStyles';
+import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from '../messages/MessageStyles';
 
 class ThreadOptionsBox extends Component {

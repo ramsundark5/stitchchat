@@ -1,5 +1,5 @@
 import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
-import {commons, defaultStyle} from '../../styles/CommonStyles';
+import {commons, defaultStyle} from '../styles/CommonStyles';
 import { Icon } from 'react-native-icons';
 import Message from '../../models/Message';
 import MessageDao from '../../dao/MessageDao';

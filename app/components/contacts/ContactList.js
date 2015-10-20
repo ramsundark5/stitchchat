@@ -1,6 +1,6 @@
 import React, { Component, View, Text, TextInput, ListView, TouchableHighlight, PropTypes } from 'react-native';
-import {commons, defaultStyle} from '../../styles/CommonStyles';
-import {contactStyle} from './styles/ContactStyles';
+import {commons, defaultStyle} from '../styles/CommonStyles';
+import {contactStyle} from './ContactStyles';
 import ContactItem from './ContactItem';
 import ContactsDao from '../../dao/ContactsDao';
 import ThreadDao from '../../dao/ThreadDao';

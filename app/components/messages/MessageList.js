@@ -2,12 +2,25 @@ import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes }
 import RefreshableListView from 'react-native-refreshable-listview';
 import MessageItem from './MessageItem';
 import {messageStyle} from './MessageStyles';
-import {commons, smallIconSize} from '../../styles/CommonStyles';
+import {commons, smallIconSize} from '../styles/CommonStyles';
 import moment from 'moment';
 
 class MessageList extends Component {
     constructor(props, context) {
         super(props, context);
+        this.loadInitialMessages();
+    }
+
+    componentWillMount(){
+        //this.loadInitialMessages();
+    }
+
+    async loadInitialMessages(){
+        let thread = this.props.currentThread;
+        console.log("current thread is "+thread.id);
+        let messagesStr = await MessageDao.getMessages(thread.id);
+        let messages = JSON.parse(messagesStr);
+        this.props.loadMessagesForThread(messages);
     }
 
     renderSectionHeader(sectionDatma, sectionID){
@@ -32,8 +45,9 @@ class MessageList extends Component {
     loadOlderMessages(){
         this.props.loadOlderMessages();
     }
+
     render() {
-        const { messages, loadOlderMessages, deleteSelected} = this.props;
+        const { messages, loadOlderMessages, deleteSelected, currentThread} = this.props;
         let groupedMessages = this.groupMessagesByDate(messages);
         let messagesDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
@@ -65,6 +79,7 @@ class MessageList extends Component {
 
 MessageList.propTypes = {
     messages: PropTypes.array.isRequired,
+    currentThread: PropTypes.object.isRequired,
     selectMessage: PropTypes.func.isRequired,
     loadOlderMessages: PropTypes.func.isRequired
 };

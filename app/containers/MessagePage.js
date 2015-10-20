@@ -4,7 +4,7 @@ import { connect } from 'react-redux/native';
 import MessageComposer from '../components/messages/MessageComposer';
 import MessageList from '../components/messages/MessageList';
 import * as MessageActions from '../actions/MessageActions';
-import {commons} from '../styles/CommonStyles';
+import {commons} from '../components/styles/CommonStyles';
 import MediaOptions from '../components/media/MediaOptions';
 
 class MessagePage extends Component {
@@ -27,6 +27,7 @@ class MessagePage extends Component {
                 <View style={{flex: 1}}>
                     <MessageList messages={messages}
                                  isEditing={isEditing}
+                                 currentThread={currentThread}
                                  selectMessage={messageActions.selectMessage}
                                  loadOlderMessages={messageActions.loadOlderMessages}
                                  router={router}/>

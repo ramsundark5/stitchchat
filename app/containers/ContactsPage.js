@@ -2,15 +2,17 @@ import React, { Component, View, StyleSheet, ScrollView, Text } from 'react-nati
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import ContactList from '../components/contacts/ContactList';
+import * as ThreadActions from '../actions/ThreadActions';
 
 class ContactsPage extends Component{
 
     render() {
-        const { router } = this.props;
+        const { threadActions, router } = this.props;
 
         return (
             <View style={styles.container}>
-                <ContactList router={router}/>
+                <ContactList router={router}
+                             />
             </View>
         );
     }
@@ -23,6 +25,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        threadActions: bindActionCreators(ThreadActions, dispatch)
     };
 }
 

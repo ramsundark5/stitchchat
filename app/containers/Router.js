@@ -5,7 +5,7 @@ import MessagePage from './MessagePage';
 import ContactsPage from './ContactsPage';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from 'react-native-navbar';
-import {navStyle} from '../styles/NavBarStyles';
+import {navStyle} from '../components/styles/NavBarStyles';
 
 class Router {
     constructor(navigator) {
@@ -13,11 +13,11 @@ class Router {
     }
 
     push(props, route) {
-        let routesList = this.navigator.getCurrentRoutes()
-        let nextIndex = routesList[routesList.length - 1].index + 1
-        route.props = props
-        route.index = nextIndex
-        this.navigator.push(route)
+        let routesList = this.navigator.getCurrentRoutes();
+        let nextIndex = routesList[routesList.length - 1].index + 1;
+        route.props = props;
+        route.index = nextIndex;
+        this.navigator.push(route);
     }
 
     pop() {
