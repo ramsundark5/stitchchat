@@ -3,10 +3,10 @@ import * as AppConstants from '../constants/AppConstants';
 
 class ContactsDao{
 
-    getAllContacts(){
+    async getAllContacts(){
         let sqlStmt = 'SELECT * from Contact';
-        let getAllContactsPromise = DBHelper.executeQuery(AppConstants.CONTACTS_DB, sqlStmt);
-        return getAllContactsPromise;
+        let contacts = await DBHelper.executeQuery(AppConstants.CONTACTS_DB, sqlStmt);
+        return contacts;
     }
 }
 

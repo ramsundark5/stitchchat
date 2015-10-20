@@ -14,14 +14,13 @@ class ContactList extends Component {
             filteredContacts: []
         };
         this.contacts = [];
+        this.loadAllContacts();
     }
 
-    componentDidMount(){
-        let getAllContactsPromise = ContactsDao.getAllContacts();
-        let that = this;
-        getAllContactsPromise.then(function(contacts){
-            that.contacts = contacts;
-            that.setState({filteredContacts: contacts});
+    async loadAllContacts(){
+        let contacts = await ContactsDao.getAllContacts();
+        this.setState({
+            filteredContacts: contacts
         });
     }
 

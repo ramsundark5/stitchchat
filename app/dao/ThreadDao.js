@@ -39,7 +39,7 @@ class ThreadDao{
 
         if(matchingThreads && matchingThreads.length > 0){
             threadForPhoneNumber = matchingThreads[0];
-            this.debugAsyncObject(threadForPhoneNumber);
+            debugAsyncObject(threadForPhoneNumber);
             console.log("thread for phone number is "+ threadForPhoneNumber);
         }
         return threadForPhoneNumber;
@@ -50,11 +50,6 @@ class ThreadDao{
         let recentThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt);
         return recentThreads;
     }
-
-    debugAsyncObject(obj){
-        console.log("async obj is"+ obj);
-    }
-
 }
 
 module.exports = new ThreadDao();

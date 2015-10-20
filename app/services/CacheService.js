@@ -28,12 +28,6 @@ class CacheService{
         return this.cache.get(key);
     }
 
-    getFromDBIfNotExist(key){
-        let sqlStmt = 'SELECT from Preferences where key = :key';
-        let params  = {key: key};
-        return DBHelper.executeUpdate(AppConstants.CONTACTS_DB, sqlStmt, params );
-    }
-
     setAndPersist(key, value){
         this.set(key, value);
         let sqlStmt = 'INSERT OR REPLACE into Preferences (key, value) values (:key, :value)';

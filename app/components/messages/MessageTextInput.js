@@ -12,7 +12,7 @@ class MessageTextInput extends Component {
         };
     }
 
-    handleSubmit() {
+    async handleSubmit() {
         if (this.state.text.length > 0) {
             let currentThread = this.props.currentThread;
             let newMessage = new Message(this.state.text, currentThread.id);
@@ -24,13 +24,9 @@ class MessageTextInput extends Component {
                 newMessage.receiverId=currentThread.recipientPhoneNumber;
             }
 
-            let addMessagePromise = MessageDao.addMessage(newMessage.threadId, newMessage);
-            let that = this;
-            addMessagePromise.then(function(messageId){
-                newMessage.id = messageId;
-                that.props.addMessage(newMessage);
-            });
-
+            let messageId = await MessageDao.addMessage(newMessage.threadId, newMessage);
+            newMessage.id = messageId;
+            this.props.addMessage(newMessage);
         }
         this.setState({text: ''});
     }

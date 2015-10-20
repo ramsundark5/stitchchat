@@ -6,8 +6,26 @@ import MessageList from '../components/messages/MessageList';
 import * as MessageActions from '../actions/MessageActions';
 import {commons} from '../components/styles/CommonStyles';
 import MediaOptions from '../components/media/MediaOptions';
+import MessageDao from '../dao/MessageDao';
 
 class MessagePage extends Component {
+
+    constructor(props, context) {
+        super(props, context);
+        this.loadInitialMessages();
+    }
+
+    async loadInitialMessages(){
+        let thread = this.props.currentThread;
+        console.log("current thread is "+thread.id);
+        let threadMessages = [];
+        try{
+            threadMessages = await MessageDao.getMessages(thread.id);
+            this.props.messageActions.loadMessagesForThread(threadMessages);
+        }catch(err){
+            console.log("error loading messages" + err);
+        }
+    }
 
     _renderMediaOptions(isEditing, router){
         //don't show media options in editing state

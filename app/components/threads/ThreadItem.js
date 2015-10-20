@@ -12,14 +12,7 @@ class ThreadItem extends Component {
     openMessagesPage(thread){
         this.props.setCurrentThread(thread);
         this.props.router.toMessageView(thread);
-        //this.loadMessagesForThread(thread);
     }
-
-    /*async loadMessagesForThread(thread){
-        let messagesStr = await MessageDao.getMessages(thread.id);
-        let messages = JSON.parse(messagesStr);
-        this.props.loadMessagesForThread(messages);
-    }*/
 
     render() {
         const {thread} = this.props;

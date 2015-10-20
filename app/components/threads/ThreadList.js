@@ -11,7 +11,7 @@ class ThreadList extends Component {
     }
 
     loadMoreThreads(){
-        this.props.loadMoreThreads();
+        //this.props.loadMoreThreads();
     }
 
     showLoginPage(){
@@ -50,7 +50,6 @@ class ThreadList extends Component {
                          router={this.props.router}
                          selectThread={this.props.selectThread}
                          setCurrentThread={this.props.setCurrentThread}
-                         loadMessagesForThread={this.props.loadMessagesForThread}
                          isEditing={this.props.isEditing}/>
         );
     }
@@ -61,7 +60,6 @@ ThreadList.propTypes = {
     loadMoreThreads: PropTypes.func.isRequired,
     selectThread: PropTypes.func.isRequired,
     setCurrentThread: PropTypes.func.isRequired,
-    loadMessagesForThread: PropTypes.func.isRequired,
     isEditing: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired
 };

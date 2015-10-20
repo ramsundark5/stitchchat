@@ -18,12 +18,8 @@ class InboxPage extends Component {
 
     async loadRecentThreads(){
         let recentThreads = await ThreadDao.loadRecentThreads();
-        this.debugAsyncObject(recentThreads);
+        debugAsyncObject(recentThreads);
         this.props.threadActions.loadRecentThreads(recentThreads);
-    }
-
-    debugAsyncObject(obj){
-        console.log("async obj is"+ obj);
     }
 
     componentWillMount(){

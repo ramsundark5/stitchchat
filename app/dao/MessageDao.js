@@ -3,7 +3,7 @@ import * as AppConstants from '../constants/AppConstants';
 
 class MessageDao{
 
-     addMessage(threadId, newMessage){
+     async addMessage(threadId, newMessage){
 
         let messageForDB = newMessage.getMessageForDBSave();
         let sqlStmt = 'INSERT into Message (threadId, senderId, receiverId, status, isGroupThread, message,' +
@@ -13,18 +13,21 @@ class MessageDao{
             ':direction, :thumbImageUrl, :mediaUrl, :mediaMimeType, :mediaDesc, :latitude, :longitude, :type, :ttl, :isOwner,' +
             ':timestamp, :needsPush, :extras)';
 
-        let addMessagePromise = DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, messageForDB);
-        let that = this;
-        addMessagePromise.then(function(messageId){
-            that.addMessageRemoteId(messageId, newMessage.uid);
-        });
-        return addMessagePromise;
+        let messageId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, messageForDB);
+        this.addMessageRemoteId(messageId, newMessage.uid);
+        return messageId;
     }
 
     async getMessages(threadId){
+        let threadMessages = [];
         let sqlStmt = 'SELECT * from Message where threadId = :threadId';
         let paramMap = {threadId: threadId};
-        let threadMessages = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+        try{
+            threadMessages = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+            debugAsyncObject(threadMessages);
+        }catch(err){
+            console.log("Get message query threw error "+err);
+        }
         return threadMessages;
     }
 

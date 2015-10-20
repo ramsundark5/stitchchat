@@ -8,19 +8,6 @@ import moment from 'moment';
 class MessageList extends Component {
     constructor(props, context) {
         super(props, context);
-        this.loadInitialMessages();
-    }
-
-    componentWillMount(){
-        //this.loadInitialMessages();
-    }
-
-    async loadInitialMessages(){
-        let thread = this.props.currentThread;
-        console.log("current thread is "+thread.id);
-        let messagesStr = await MessageDao.getMessages(thread.id);
-        let messages = JSON.parse(messagesStr);
-        this.props.loadMessagesForThread(messages);
     }
 
     renderSectionHeader(sectionDatma, sectionID){
