@@ -6,6 +6,7 @@ import ContactsDao from '../../dao/ContactsDao';
 import ThreadDao from '../../dao/ThreadDao';
 
 class ContactList extends Component {
+
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -40,10 +41,6 @@ class ContactList extends Component {
         this.setState({filteredContacts: filteredContacts});
     }
 
-    gotoThreadViewForSelectedThread(){
-        //ThreadDao.
-    }
-
     render() {
         let contactsDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -68,7 +65,8 @@ class ContactList extends Component {
         return (
             <ContactItem  key={rowData.id}
                          contact={rowData}
-                         router={this.props.router}/>
+                         router={this.props.router}
+                         setCurrentThread={this.props.setCurrentThread}/>
         );
     }
 }

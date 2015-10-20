@@ -12,7 +12,7 @@ class ContactsPage extends Component{
         return (
             <View style={styles.container}>
                 <ContactList router={router}
-                             />
+                             setCurrentThread={threadActions.setCurrentThread} />
             </View>
         );
     }
