@@ -7,8 +7,24 @@ import * as ThreadActions from '../actions/ThreadActions';
 import * as MessageActions from '../actions/MessageActions';
 import {commons} from '../components/styles/CommonStyles';
 import LoginService from '../services/LoginService';
+import ThreadDao from '../dao/ThreadDao';
 
 class InboxPage extends Component {
+
+    constructor(props, context) {
+        super(props, context);
+        this.loadRecentThreads();
+    }
+
+    async loadRecentThreads(){
+        let recentThreads = await ThreadDao.loadRecentThreads();
+        this.debugAsyncObject(recentThreads);
+        this.props.threadActions.loadRecentThreads(recentThreads);
+    }
+
+    debugAsyncObject(obj){
+        console.log("async obj is"+ obj);
+    }
 
     componentWillMount(){
         LoginService.showLoginPage();

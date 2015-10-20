@@ -3,6 +3,7 @@ import {commons, smallIconSize} from '../styles/CommonStyles';
 import moment from 'moment';
 import ThreadItem from './ThreadItem';
 import LoginService from '../../services/LoginService';
+import ThreadDao from '../../dao/ThreadDao';
 
 class ThreadList extends Component {
     constructor(props, context) {

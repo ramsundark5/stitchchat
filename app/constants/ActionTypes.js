@@ -12,6 +12,7 @@ export const LOAD_OLDER_MESSAGES            = 'LOAD_OLDER_MESSAGES';
 export const COPY_SELECTED_MESSAGE          = 'COPY_SELECTED_MESSAGE';
 export const FORWARD_SELECTED_MESSAGE       = 'FORWARD_SELECTED_MESSAGE';
 
+export const LOAD_RECENT_THREADS            = 'LOAD_RECENT_THREADS';
 export const ADD_THREAD                     = 'ADD_THREAD';
 export const DELETE_THREAD                  = 'DELETE_THREAD';
 export const SELECT_THREAD                  = 'SELECT_THREAD';

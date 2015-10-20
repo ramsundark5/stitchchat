@@ -21,10 +21,10 @@ class ThreadDao{
     }
 
     async createThreadForContact(contact){
-        let createThreadSqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread)" +
+        let sqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread)" +
             "values (:recipientPhoneNumber, :displayName, :isGroupThread)";
-        let createThreadParamMap = {recipientPhoneNumber: contact.phoneNumber, displayName: contact.displayName, isGroupThread: false};
-        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, createThreadSqlStmt, createThreadParamMap);
+        let paramMap = {recipientPhoneNumber: contact.phoneNumber, displayName: contact.displayName, isGroupThread: false};
+        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, createThreadSqlStmt, paramMap);
         console.log("threadId created as "+ threadId);
         let threadForPhoneNumber = await this.getThreadById(threadId);
         return threadForPhoneNumber;
@@ -32,10 +32,10 @@ class ThreadDao{
 
     async getThreadById(threadId){
         let threadForPhoneNumber;
-        let getThreadSqlStmt  = "SELECT * from Thread where id = :id";
-        let getThreadParamMap = {id: threadId};
+        let sqlStmt  = "SELECT * from Thread where id = :id";
+        let paramMap = {id: threadId};
 
-        let matchingThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, getThreadSqlStmt, getThreadParamMap);
+        let matchingThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
 
         if(matchingThreads && matchingThreads.length > 0){
             threadForPhoneNumber = matchingThreads[0];
@@ -43,6 +43,12 @@ class ThreadDao{
             console.log("thread for phone number is "+ threadForPhoneNumber);
         }
         return threadForPhoneNumber;
+    }
+
+    async loadRecentThreads(){
+        let sqlStmt  = "SELECT * from Thread order by lastMessageTime";
+        let recentThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt);
+        return recentThreads;
     }
 
     debugAsyncObject(obj){

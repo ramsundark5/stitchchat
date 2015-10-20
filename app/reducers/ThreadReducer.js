@@ -14,15 +14,20 @@ let thirdThread = new Thread('3333333333', false, null);
 thirdThread.lastMessageText = 'test third message';
 
 let threadList = [firstThread, secondThread, thirdThread];
-//const initialState = { threads : [], isEditing: false, currentThread: null};
-const initialState = { threads : threadList, isEditing: false, currentThread: null};
+const initialState = { threads : [], isEditing: false, currentThread: null};
+//const initialState = { threads : threadList, isEditing: false, currentThread: null};
 
 export function threadState(state = initialState, action = {}) {
     switch (action.type) {
 
+        case Action.LOAD_RECENT_THREADS:
+            let recentThreads     = action.threads;
+            let newStateAfterInit =  _.assign({}, state, { 'threads' : recentThreads });
+            return newStateAfterInit;
+
         case Action.ADD_THREAD:
-            let newThread = new Thread(action.recipientPhoneNumber, action.isGroupThread, action.groupUid);
-            let threadsAfterAdd = state.threads.concat(newThread);
+            let newThread        = new Thread(action.recipientPhoneNumber, action.isGroupThread, action.groupUid);
+            let threadsAfterAdd  = state.threads.concat(newThread);
             let newStateAfterAdd =  _.assign({}, state, { 'threads' : threadsAfterAdd });
             return newStateAfterAdd;
 

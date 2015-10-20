@@ -3,6 +3,13 @@ import * as _ from 'lodash';
 import Contact from '../models/Contact';
 import GroupInfo from '../models/GroupInfo';
 
+export function loadRecentThreads(threads){
+    return{
+        type: Actions.LOAD_RECENT_THREADS,
+        threads
+    }
+}
+
 export function addNewThread(recipientPhoneNumber) {
     return {
         type: Actions.ADD_THREAD,
