@@ -56,7 +56,6 @@ class MessageItem extends Component {
         <View style={[commons.horizontalNoWrap, commons.pullRight]}>
             <Text style={commons.smallText}>sent</Text>
             <Icon name={statusIcon}
-                  size={defaultStyle.smallIconSize}
                   style={commons.smallIcon}/>
         </View>
     }

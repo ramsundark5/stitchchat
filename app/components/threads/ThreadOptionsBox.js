@@ -12,8 +12,6 @@ class ThreadOptionsBox extends Component {
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={deleteSelected}>
                     <Icon name='ios-trash'
-                          size={defaultStyle.iconSize}
-                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
             </View>

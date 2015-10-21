@@ -3,6 +3,7 @@ import {commons, defaultStyle} from '../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Message from '../../models/Message';
 import MessageDao from '../../dao/MessageDao';
+import MessageService from '../../services/MessageService';
 
 class MessageTextInput extends Component {
     constructor(props, context) {
@@ -13,19 +14,10 @@ class MessageTextInput extends Component {
     }
 
     async handleSubmit() {
-        if (this.state.text.length > 0) {
+        let messageText = this.state.text;
+        if (messageText.length > 0) {
             let currentThread = this.props.currentThread;
-            let newMessage = new Message(this.state.text, currentThread.id);
-            if(currentThread.isGroupThread){
-                newMessage.receiverId=currentThread.groupUid;
-                newMessage.isGroupThread = true;
-            }
-            else{
-                newMessage.receiverId=currentThread.recipientPhoneNumber;
-            }
-
-            let messageId = await MessageDao.addMessage(newMessage.threadId, newMessage);
-            newMessage.id = messageId;
+            let newMessage = await MessageService.addMessage(currentThread, messageText);
             this.props.addMessage(newMessage);
         }
         this.setState({text: ''});
@@ -48,7 +40,6 @@ class MessageTextInput extends Component {
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={this.handleSubmit.bind(this)}>
                     <Icon name='android-send'
-                        size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                         style={commons.defaultIcon}/>
                 </TouchableHighlight>
             </View>

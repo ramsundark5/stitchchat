@@ -12,22 +12,16 @@ class MessageOptionsBox extends Component {
                 <TouchableHighlight style={[commons.defaultIconContainer]}
                                     onPress={copySelectedMessages}>
                     <Icon name='ios-copy'
-                          size={defaultStyle.iconSize}
-                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={forwardSelected}>
                     <Icon name='forward'
-                          size={defaultStyle.iconSize}
-                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={deleteSelected}>
                     <Icon name='ios-trash'
-                          size={defaultStyle.iconSize}
-                          color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
             </View>

@@ -36,13 +36,11 @@ class ThreadComposer extends Component {
                     <TouchableHighlight style={commons.defaultIconContainer}
                                         onPress = {() => this._searchThreads(null)}>
                         <Icon name='ios-search'
-                              size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                               style={commons.defaultIcon}/>
                     </TouchableHighlight>
                     <TouchableHighlight style={[commons.defaultIconContainer]}
                                         onPress={() => this._addNewThread()}>
                         <Icon name='ios-compose-outline'
-                              size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                               style={commons.defaultIcon}/>
                     </TouchableHighlight>
                     <TouchableHighlight style={commons.defaultIconContainer}

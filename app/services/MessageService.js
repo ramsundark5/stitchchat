@@ -4,6 +4,7 @@ import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as MessageActions from '../actions/MessageActions';
 import * as AppConfig from '../config/AppConfig';
 import Message from '../models/Message';
+import MessageDao from '../dao/MessageDao';
 
 class MessageService{
 
@@ -11,6 +12,22 @@ class MessageService{
         MQTTClient.init();
         RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnected.bind(this));
         RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
+    }
+
+    async addMessage(thread, text){
+        let newMessage = new Message(text, thread.id);
+        if(thread.isGroupThread){
+            newMessage.receiverId=thread.groupUid;
+            newMessage.isGroupThread = true;
+        }
+        else{
+            newMessage.receiverId=thread.recipientPhoneNumber;
+        }
+
+        let messageId = await MessageDao.addMessage(newMessage.threadId, newMessage);
+        newMessage.id = messageId;
+        this.sendMessage(newMessage);
+        return newMessage;
     }
 
     sendMessage(message:Message){

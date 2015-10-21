@@ -12,8 +12,6 @@ export function loadMessagesForThread(messages){
 }
 
 export function addMessage(message: Message) {
-    let MessageService = require('../services/MessageService');
-    MessageService.sendMessage(message);
     return {
         type: Actions.ADD_MESSAGE,
         message
