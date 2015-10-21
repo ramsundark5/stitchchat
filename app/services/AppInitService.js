@@ -30,6 +30,4 @@ export default class AppInitService{
     debugAsyncObject(obj){
         console.log("async obj is"+ obj);
     }
-
-
 }

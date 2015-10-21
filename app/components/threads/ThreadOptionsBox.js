@@ -1,5 +1,5 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
-import { Icon } from 'react-native-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from '../messages/MessageStyles';
 
@@ -11,7 +11,7 @@ class ThreadOptionsBox extends Component {
             <View style={[messageStyle.msgOptions]}>
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={deleteSelected}>
-                    <Icon name='ion|ios-trash'
+                    <Icon name='ios-trash'
                           size={defaultStyle.iconSize}
                           color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>

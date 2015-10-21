@@ -1,7 +1,6 @@
 import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {threadStyle} from './ThreadStyles';
-import { Icon } from 'react-native-icons';
 import MessageDao from '../../dao/MessageDao';
 
 class ThreadItem extends Component {

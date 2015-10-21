@@ -1,24 +1,21 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
 import ThreadOptionsBox from './ThreadOptionsBox';
-import { Icon } from 'react-native-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {threadStyle} from './ThreadStyles';
 
 class ThreadComposer extends Component {
 
-    _addNewThread(recipientContactInfo){
-        //recipientContactInfo = {};
-        //recipientContactInfo.phoneNumber = '4444444444';
-        //this.props.addNewThread(recipientContactInfo);
+    _addNewThread(){
         let emptyProps = {};
         this.props.router.toContactsView(emptyProps);
     }
 
-    _addNewGroupThread(recipientContactInfo){
-        recipientContactInfo = {};
+    _addNewGroupThread(){
+        /*recipientContactInfo = {};
         recipientContactInfo.phoneNumber = '5555555555';
         //this.props.addNewGroupThread();
-        this.props.addNewThread(recipientContactInfo);
+        this.props.addNewThread(recipientContactInfo);*/
     }
 
     _searchThreads(searchText){
@@ -38,20 +35,19 @@ class ThreadComposer extends Component {
                 <View style={[threadStyle.threadOptions]}>
                     <TouchableHighlight style={commons.defaultIconContainer}
                                         onPress = {() => this._searchThreads(null)}>
-                        <Icon name='ion|ios-search'
+                        <Icon name='ios-search'
                               size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                               style={commons.defaultIcon}/>
                     </TouchableHighlight>
                     <TouchableHighlight style={[commons.defaultIconContainer]}
-                                        onPress={() => this._addNewThread(null)}>
-                        <Icon name='ion|ios-compose-outline'
+                                        onPress={() => this._addNewThread()}>
+                        <Icon name='ios-compose-outline'
                               size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                               style={commons.defaultIcon}/>
                     </TouchableHighlight>
                     <TouchableHighlight style={commons.defaultIconContainer}
-                                        onPress={() => this._addNewGroupThread(null)}>
-                        <Icon name='ion|ios-people-outline'
-                              size={defaultStyle.iconSize} color={defaultStyle.iconColor}
+                                        onPress={() => this._addNewGroupThread()}>
+                        <Icon name='ios-people-outline'
                               style={commons.defaultIcon}/>
                     </TouchableHighlight>
                 </View>

@@ -11,15 +11,15 @@ PODS:
     - FMDB/common
   - libPhoneNumber-iOS (0.8.8)
   - MQTTClient (0.3.3)
-  - React/Core (0.11.4)
-  - React/RCTImage (0.11.4):
+  - React/Core (0.13.0-rc)
+  - React/RCTImage (0.13.0-rc):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.11.4):
+  - React/RCTNetwork (0.13.0-rc):
     - React/Core
-  - React/RCTText (0.11.4):
+  - React/RCTText (0.13.0-rc):
     - React/Core
-  - React/RCTWebSocket (0.11.4):
+  - React/RCTWebSocket (0.13.0-rc):
     - React/Core
   - TwitterCore (1.11.4)
 
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
   MQTTClient: 8b40f3bd20c8ea35f66d82bce5039487873b9a5c
-  React: 1e14593af6fa3b55adaa37551cd4696ef4c40f87
+  React: f89fc8cb43f6cf89ba4e8ce4f27371a65236bf25
   TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36
 
 COCOAPODS: 0.39.0

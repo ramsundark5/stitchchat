@@ -1,6 +1,5 @@
 import {NativeModules} from 'react-native';
 import React, { AsyncStorage } from 'react-native';
-var {Platform} = React;
 import * as AppConfig from '../config/AppConfig';
 
 class MQTTClient{
@@ -40,7 +39,7 @@ class MQTTClient{
         if(!this.mqttClient){
             return;
         }
-        console.log('platform is '+Platform.OS);
+        //console.log('platform is '+Platform.OS);
         let inboxSubscribeTopic = AppConfig.PRIVATE_PUBSUB_TOPIC + encodedPhoneNumber;
         this.mqttClient.connect(connectionDetails, inboxSubscribeTopic, 1);
     }

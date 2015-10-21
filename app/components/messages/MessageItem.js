@@ -1,7 +1,7 @@
 import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from './MessageStyles';
-import { Icon } from 'react-native-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as Status from '../../constants/MessageConstants';
 import MessageService from '../../services/MessageService';
 
@@ -22,12 +22,12 @@ class MessageItem extends Component {
     }
 
     getStatusIcon(msgStatus){
-        let statusIconName = 'ion|load-c';
+        let statusIconName = 'load-c';
         if(msgStatus === Status.STATUS_SENT){
-            statusIconName = 'ion|android-done';
+            statusIconName = 'android-done';
         }
         else if(msgStatus === Status.STATUS_RECEIVED){
-            statusIconName = 'ion|android-done-all';
+            statusIconName = 'android-done-all';
         }
         return statusIconName;
     }

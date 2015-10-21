@@ -1,6 +1,6 @@
 import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
-import { Icon } from 'react-native-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class MediaOptions extends Component {
     constructor(props, context) {
@@ -16,7 +16,7 @@ class MediaOptions extends Component {
             <View>
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={this.openMediaGallery.bind(this)}>
-                    <Icon name='ion|android-send'
+                    <Icon name='android-send'
                           size={defaultStyle.iconSize} color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>

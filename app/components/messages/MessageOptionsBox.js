@@ -1,5 +1,5 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
-import { Icon } from 'react-native-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from './MessageStyles';
 
@@ -11,21 +11,21 @@ class MessageOptionsBox extends Component {
             <View style={[messageStyle.msgOptions]}>
                 <TouchableHighlight style={[commons.defaultIconContainer]}
                                     onPress={copySelectedMessages}>
-                    <Icon name='ion|ios-copy'
+                    <Icon name='ios-copy'
                           size={defaultStyle.iconSize}
                           color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={forwardSelected}>
-                    <Icon name='ion|forward'
+                    <Icon name='forward'
                           size={defaultStyle.iconSize}
                           color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>
                 </TouchableHighlight>
                 <TouchableHighlight style={commons.defaultIconContainer}
                                     onPress={deleteSelected}>
-                    <Icon name='ion|ios-trash'
+                    <Icon name='ios-trash'
                           size={defaultStyle.iconSize}
                           color={defaultStyle.iconColor}
                           style={commons.defaultIcon}/>

@@ -15,8 +15,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		8A2C77A4916836B649A45E15 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B144685E24B8C6F980574BA /* libPods.a */; };
 		A211C7871BD061EE00653014 /* ContactsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A211C7861BD061EE00653014 /* ContactsDao.m */; settings = {ASSET_TAGS = (); }; };
-		A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */; };
-		A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A29AC1E31B98B46D00B29901 /* ionicons.ttf */; };
 		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; settings = {ASSET_TAGS = (); }; };
 		A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C129321BCDC5B800693415 /* libsqlite3.tbd */; };
 		A2C12EC81BCE2C8700B19CFD /* RCTAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */; settings = {ASSET_TAGS = (); }; };
@@ -25,8 +23,9 @@
 		A2C12ED81BCEF32D00B19CFD /* RNSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */; settings = {ASSET_TAGS = (); }; };
 		A2C12F0A1BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C12F0C1BD054CB00B19CFD /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */; settings = {ASSET_TAGS = (); }; };
+		A2C6C4BA1BD710F80015AFA2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */; settings = {ASSET_TAGS = (); }; };
+		A2C6C4BB1BD710F80015AFA2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */; settings = {ASSET_TAGS = (); }; };
 		A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */; };
-		A2F2340E1BA09E2B000A5A9E /* libRNClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */; };
 		A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */; };
 		A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F234121BA35ED9000A5A9E /* HelloManager.swift */; };
 		A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F234141BA35FB1000A5A9E /* HelloManager.m */; };
@@ -39,20 +38,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = stitchchat;
-		};
-		A29AC1E01B98B20000B29901 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
-			remoteInfo = ReactNativeIcons;
-		};
-		A2F2340C1BA0036A000A5A9E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 93D925B51B577A3A0021F250;
-			remoteInfo = RNClipboard;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -71,8 +56,6 @@
 		4B144685E24B8C6F980574BA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A211C7861BD061EE00653014 /* ContactsDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDao.m; sourceTree = "<group>"; };
 		A211C78A1BD06E3B00653014 /* ContactsDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDao.h; sourceTree = "<group>"; };
-		A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeIcons.xcodeproj; path = "../node_modules/react-native-icons/ios/ReactNativeIcons.xcodeproj"; sourceTree = "<group>"; };
-		A29AC1E31B98B46D00B29901 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
 		A2C129321BCDC5B800693415 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A2C12EC71BCE2C8700B19CFD /* RCTAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTAddressBook.m; sourceTree = "<group>"; };
@@ -81,8 +64,9 @@
 		A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSqlite.m; sourceTree = "<group>"; };
 		A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
+		A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMQTTClient.m; sourceTree = "<group>"; };
-		A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNClipboard.xcodeproj; path = "../node_modules/react-native-clipboard/RNClipboard.xcodeproj"; sourceTree = "<group>"; };
 		A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-file-upload/FileUpload.m"; sourceTree = "<group>"; };
 		A2F234111BA35ED8000A5A9E /* stitchchat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stitchchat-Bridging-Header.h"; sourceTree = "<group>"; };
 		A2F234121BA35ED9000A5A9E /* HelloManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelloManager.swift; path = stitchchat/HelloManager.swift; sourceTree = "<group>"; };
@@ -104,8 +88,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */,
-				A2F2340E1BA09E2B000A5A9E /* libRNClipboard.a in Frameworks */,
-				A29AC1E21B98B39400B29901 /* libReactNativeIcons.a in Frameworks */,
 				8A2C77A4916836B649A45E15 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +136,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A2C6C4AD1BD710F80015AFA2 /* Fonts */,
 				A2C129341BCE214400693415 /* Contacts */,
 				A2C1292B1BCDBF1A00693415 /* RNSqlite */,
 				A243865D1BBC560D0056262F /* RNDigits */,
@@ -161,9 +144,6 @@
 				A2F234141BA35FB1000A5A9E /* HelloManager.m */,
 				A2F234121BA35ED9000A5A9E /* HelloManager.swift */,
 				A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */,
-				A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */,
-				A29AC1E31B98B46D00B29901 /* ionicons.ttf */,
-				A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* stitchchat */,
 				00E356EF1AD99517003FC87E /* stitchchatTests */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -193,14 +173,6 @@
 			name = RNDigits;
 			sourceTree = "<group>";
 		};
-		A29AC1D31B98B20000B29901 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		A2C1292B1BCDBF1A00693415 /* RNSqlite */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,20 +195,22 @@
 			name = Contacts;
 			sourceTree = "<group>";
 		};
+		A2C6C4AD1BD710F80015AFA2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */,
+				A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */,
+			);
+			name = Fonts;
+			path = "../node_modules/react-native-vector-icons/Fonts";
+			sourceTree = "<group>";
+		};
 		A2F214C51BA8DCE300EDAC0F /* MQTTClient */ = {
 			isa = PBXGroup;
 			children = (
 				A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */,
 			);
 			path = MQTTClient;
-			sourceTree = "<group>";
-		};
-		A2F233FE1BA00369000A5A9E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		C8A1101945C56B053CF0191A /* Frameworks */ = {
@@ -326,16 +300,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A29AC1D31B98B20000B29901 /* Products */;
-					ProjectRef = A29AC1D21B98B20000B29901 /* ReactNativeIcons.xcodeproj */;
-				},
-				{
-					ProductGroup = A2F233FE1BA00369000A5A9E /* Products */;
-					ProjectRef = A2F233FD1BA00369000A5A9E /* RNClipboard.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* stitchchat */,
@@ -343,23 +307,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		A29AC1E11B98B20000B29901 /* libReactNativeIcons.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeIcons.a;
-			remoteRef = A29AC1E01B98B20000B29901 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A2F2340D1BA0036A000A5A9E /* libRNClipboard.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNClipboard.a;
-			remoteRef = A2F2340C1BA0036A000A5A9E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -373,7 +320,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A29AC1E41B98B46D00B29901 /* ionicons.ttf in Resources */,
+				A2C6C4BB1BD710F80015AFA2 /* MaterialIcons.ttf in Resources */,
+				A2C6C4BA1BD710F80015AFA2 /* Ionicons.ttf in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
