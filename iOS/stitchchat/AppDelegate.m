@@ -12,6 +12,7 @@
 #import "RCTRootView.h"
 #import <Fabric/Fabric.h>
 #import <DigitsKit/DigitsKit.h>
+#import "RCTPushNotificationManager.h"
 
 @implementation AppDelegate
 
@@ -60,6 +61,22 @@
   [Fabric with:@[[Digits class]]];
 
   return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+  [RCTPushNotificationManager application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+
+// Required for the notification event.
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+{
+  [RCTPushNotificationManager application:application didReceiveRemoteNotification:notification];
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+  [RCTPushNotificationManager application:application didRegisterUserNotificationSettings:notificationSettings];
 }
 
 @end

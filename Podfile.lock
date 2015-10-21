@@ -17,6 +17,8 @@ PODS:
     - React/RCTNetwork
   - React/RCTNetwork (0.13.0-rc):
     - React/Core
+  - React/RCTPushNotification (0.13.0-rc):
+    - React/Core
   - React/RCTText (0.13.0-rc):
     - React/Core
   - React/RCTWebSocket (0.13.0-rc):
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - React/Core (from `node_modules/react-native`)
   - React/RCTImage (from `node_modules/react-native`)
   - React/RCTNetwork (from `node_modules/react-native`)
+  - React/RCTPushNotification (from `node_modules/react-native`)
   - React/RCTText (from `node_modules/react-native`)
   - React/RCTWebSocket (from `node_modules/react-native`)
   - TwitterCore

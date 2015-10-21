@@ -1,6 +1,7 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -47,5 +48,6 @@ dependencies {
         transitive = true;
     }
     compile project(':react-native-vector-icons')
+    compile "com.google.android.gms:play-services:8.1.0"
 }
 

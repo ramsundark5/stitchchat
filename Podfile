@@ -1,7 +1,7 @@
 xcodeproj './iOS/stitchchat.xcodeproj'
 
 source 'https://github.com/CocoaPods/Specs.git'
-pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket'], :path => 'node_modules/react-native'
+pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', 'RCTPushNotification'], :path => 'node_modules/react-native'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Digits'
