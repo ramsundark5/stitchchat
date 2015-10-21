@@ -7,7 +7,7 @@ import * as AppConstants from '../constants/AppConstants';
 export default class AppInitService{
 
     constructor(){
-        //MessageService.init();
+        MessageService.init();
         let migrationPromise = MigrationManager.init();
         migrationPromise.then(this.loadPreferences)
                         .then(this.initContactDBIfRequired);

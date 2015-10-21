@@ -46,5 +46,6 @@ dependencies {
     compile('com.digits.sdk.android:digits:1.8.0@aar') {
         transitive = true;
     }
+    compile project(':react-native-vector-icons')
 }
 
