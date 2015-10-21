@@ -1,7 +1,5 @@
 import * as Actions from '../constants/ActionTypes';
 import * as _ from 'lodash';
-import Contact from '../models/Contact';
-import GroupInfo from '../models/GroupInfo';
 
 export function loadRecentThreads(threads){
     return{

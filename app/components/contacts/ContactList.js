@@ -50,6 +50,7 @@ class ContactList extends Component {
                 <TextInput
                     value={this.state.searchText}
                     style={commons.searchInput}
+                    placeholder="search here"
                     onChange={(event) => this.handleSearch(event.nativeEvent.text)}/>
                 <View style={commons.listContainer}>
                     <ListView

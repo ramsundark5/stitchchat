@@ -26,5 +26,15 @@ export const LOAD_MORE_THREADS              = 'LOAD_MORE_THREADS';
 export const SET_CURRENT_THREAD             = 'SET_CURRENT_THREAD';
 export const SEARCH_THREADS                 = 'SEARCH_THREADS';
 
+
+export const LOAD_CONTACTS                  = 'LOAD_CONTACTS';
+export const ADD_CONTACT                    = 'ADD_CONTACT';
+export const DELETE_CONTACT                 = 'DELETE_CONTACT';
+export const SELECT_CONTACT                 = 'SELECT_CONTACT';
+export const CLEAR_SELECTED_CONTACT         = 'CLEAR_SELECTED_CONTACT';
+export const DELETE_SELECTED_CONTACT        = 'DELETE_SELECTED_CONTACT';
+export const UPDATE_CONTACT                 = 'UPDATE_CONTACT';
+export const SEARCH_CONTACTS                = 'SEARCH_CONTACTS';
+
 export const BLOCK_CONTACT                  = 'BLOCK_CONTACT';
 export const UNBLOCK_CONTACT                = 'UNBLOCK_CONTACT';

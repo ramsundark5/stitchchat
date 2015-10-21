@@ -3,22 +3,7 @@ import Message from '../models/Message';
 import * as _ from 'lodash';
 import {copyMessagesToClipBoard} from '../services/CopyService';
 
-let testSenderMessage1   = new Message('asdas \ndadasdas \nawewae');
-testSenderMessage1.owner = true;
-testSenderMessage1.timestamp  = new Date(1998, 11, 17);
-let testReceiverMessage1 = new Message('asdas \ndadasdas \noiwqeuqwej');
-testReceiverMessage1.owner= false;
-testReceiverMessage1.timestamp  = new Date(1995, 10, 23);
-let testSenderMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
-testSenderMessage2.owner = true;
-testSenderMessage2.timestamp  = new Date(1995, 10, 23);
-let testReceiverMessage2   = new Message('gahsjdgagsdasjdhjagsdjagdhhsagdjagsahsgydgasydiasgdasdgaisgiy vahsdgjagdsjasjdgvjagsdas');
-testReceiverMessage2.owner = false;
-testReceiverMessage2.timestamp  = new Date(2015, 2, 1);
-
-//let samplemessages = [testSenderMessage1, testReceiverMessage1, testSenderMessage2, testReceiverMessage2];
 const initialState = { messages : [], isEditing: false, currentThread: null};
-//const initialState = { messages : samplemessages, isEditing: false, currentThread: null};
 
 export function messageState(state = initialState, action = {}) {
     switch (action.type) {

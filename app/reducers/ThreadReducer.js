@@ -1,21 +1,8 @@
 import * as Action from '../constants/ActionTypes';
 import Thread from '../models/Thread';
-import Contact from '../models/Contact';
-import GroupInfo from '../models/GroupInfo';
 import * as _ from 'lodash';
 
-let firstThread = new Thread('+13392247873', false, null);
-firstThread.lastMessageText = 'test first message';
-
-let secondThread = new Thread('+919443096961', false, null);
-secondThread.lastMessageText = 'test second message';
-
-let thirdThread = new Thread('3333333333', false, null);
-thirdThread.lastMessageText = 'test third message';
-
-let threadList = [firstThread, secondThread, thirdThread];
 const initialState = { threads : [], isEditing: false, currentThread: null};
-//const initialState = { threads : threadList, isEditing: false, currentThread: null};
 
 export function threadState(state = initialState, action = {}) {
     switch (action.type) {
