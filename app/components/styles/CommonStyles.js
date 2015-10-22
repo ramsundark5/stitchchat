@@ -82,6 +82,11 @@ export const commons = StyleSheet.create({
         borderColor: '#dddddd',
         borderRadius: 8,
         color: '#48BBEC'
+    },
+    thumbNail: {
+        borderRadius: 5,
+        width: 20,
+        height: 20
     }
 });
 

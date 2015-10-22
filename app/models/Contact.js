@@ -7,7 +7,7 @@ export default class Contact{
         this.phoneNumber        = '';
         this.localContactIdLink = 0;
         this.isRegisteredUser   = false;
-        this.status             = '';
+        this.status             = ''; //
         this.photo              = '';
         this.lastSeenTime       = 0;
         this.extras             = '';

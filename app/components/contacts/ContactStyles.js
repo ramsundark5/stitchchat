@@ -4,7 +4,6 @@ const threadNormalBgColor     = '#257DF7';
 
 export const contactStyle = StyleSheet.create({
     contactItemContainer: {
-        flexDirection: 'row',
         padding: 10
     },
     avatar: {
@@ -13,6 +12,7 @@ export const contactStyle = StyleSheet.create({
         marginRight: 10
     },
     textContainer: {
+        marginLeft: 10,
         flex: 1
     },
     lastMessageText: {
@@ -24,5 +24,10 @@ export const contactStyle = StyleSheet.create({
         color: '#656565',
         fontWeight: 'bold',
         flex: 1
+    },
+    contactDivider:{
+        margin: 10,
+        height: 1,
+        backgroundColor: '#dddddd'
     },
 });

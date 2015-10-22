@@ -10,12 +10,6 @@ class MessageList extends Component {
         super(props, context);
     }
 
-    renderSectionHeader(sectionDatma, sectionID){
-        return(
-          <View style={messageStyle.msgDivider}><Text style={commons.defaultText}>{sectionID}</Text></View>
-        );
-    }
-
     groupMessagesByDate(messages){
         let groupedMessage = {};
         for(let i=0; i < messages.length; i++){
@@ -62,6 +56,11 @@ class MessageList extends Component {
         );
     }
 
+    renderSectionHeader(sectionData, sectionID){
+        return(
+            <View style={messageStyle.msgDivider}><Text style={commons.defaultText}>{sectionID}</Text></View>
+        );
+    }
 }
 
 MessageList.propTypes = {

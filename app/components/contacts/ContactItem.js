@@ -1,4 +1,4 @@
-import React, { Component, View, Text, PropTypes, TouchableHighlight } from 'react-native';
+import React, { Component, View, Image, Text, PropTypes, TouchableHighlight } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
 import ThreadDao from '../../dao/ThreadDao';
@@ -17,14 +17,19 @@ export default class ContactItem extends Component{
 
     render() {
         const {contact} = this.props;
+        let contactStatusMsg = contact.status && contact.status.length > 0 ? contact.status : "Hey there! I'm using stitchchat";
         return (
             <TouchableHighlight onPress={() => this.openThreadForContact(contact)}>
-                <View>
-                    <View style = {contactStyle.contactItemContainer}>
-                        <Text style={[contactStyle.title]}>{contact.displayName}</Text>
-                        <Text style={[contactStyle.title]}>{contact.phoneNumber}</Text>
+                <View style={contactStyle.contactItemContainer}>
+                    <View style={commons.horizontalNoWrap}>
+                        <Image
+                            style={commons.thumbNail}
+                            source={{uri: 'something.jpg'}}
+                            />
+                            <Text style={[contactStyle.title]}>{contact.displayName}</Text>
                     </View>
-                    <View style={commons.separator}/>
+                    <Text style={[commons.defaultText, {marginLeft: 20}]}>{contactStatusMsg}</Text>
+                    <View style={contactStyle.contactDivider}/>
                 </View>
             </TouchableHighlight>
         );
