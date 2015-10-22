@@ -9,15 +9,8 @@ export function contactState(state = initialState, action = {}) {
 
         case Action.LOAD_CONTACTS:
             let contacts     = action.contacts;
-            let newStateAfterInit =  _.assign({}, state, { 'contacts' : contacts });
+            let newStateAfterInit =  _.assign({}, state, { 'contacts' : contacts, 'filteredContacts': contacts });
             return newStateAfterInit;
-
-        case Action.DELETE_CONTACT:
-            let contactsAfterDelete = state.contacts.filter(contact =>
-                contact.id !== action.id
-            );
-            let newStateAfterDelete =  _.assign({}, state, { 'contacts' : contactsAfterDelete });
-            return newStateAfterDelete;
 
         case Action.UPDATE_CONTACT:
             let contactsAfterUpdate =  state.contacts.map(contact =>
@@ -30,28 +23,37 @@ export function contactState(state = initialState, action = {}) {
             return newStateAfterUpdate;
 
         case Action.SELECT_CONTACT:
-            let contactsAfterSelect =  state.contacts.map(contact =>
+            let contactsAfterSelect =  state.filteredContacts.map(contact =>
                     contact.id === action.id ?
                         _.assign({}, contact, {selected: !contact.selected}) :
                         contact
             );
             let atleastOneSelected = contactsAfterSelect.some(contact => contact.selected);
-            let newStateAfterSelect =  _.assign({}, state, { 'contacts' : contactsAfterSelect, 'isEditing': atleastOneSelected });
+            let newStateAfterSelect =  _.assign({}, state, { 'filteredContacts' : contactsAfterSelect, 'isEditing': atleastOneSelected });
             return newStateAfterSelect;
 
         case Action.CLEAR_SELECTED_CONTACT:
-            let contactsAfterClearSelected = state.contacts.map(contact => _.assign({}, contact, {
+            let contactsAfterClearSelected = state.filteredContacts.map(contact => _.assign({}, contact, {
                 selected: false
             }));
-            let newStateAfterClearSelected =  _.assign({}, state, { 'contacts' : contactsAfterClearSelected, 'isEditing': false });
+            let newStateAfterClearSelected =  _.assign({}, state, { 'filteredContacts' : contactsAfterClearSelected, 'isEditing': false });
             return newStateAfterClearSelected ;
 
-        case Action.DELETE_SELECTED_CONTACT:
-            let contactsAfterDeleteSelected = state.contacts.filter(contact =>
-                contact.selected === false
+        case Action.SEARCH_CONTACTS:
+            let searchText = action.searchText;
+            if(searchText){
+                searchText = searchText.toLowerCase();
+            }
+            let filteredContacts = state.contacts.filter(contact =>
+                    contact.displayName? contact.displayName.toLowerCase().includes(searchText) : false
             );
-            let newStateAfterDeleteSelected =  _.assign({}, state, { 'contacts' : contactsAfterDeleteSelected, 'isEditing': false });
-            return newStateAfterDeleteSelected;
+
+            let newStateAfterSearch =  _.assign({}, state, { 'filteredContacts' : filteredContacts});
+            return newStateAfterSearch;
+
+       /* case Action.CLEAR_SEARCH:
+            let newStateAfterClearSearch = _.assign({}, state, {'searchText': ''});
+            return newStateAfterClearSearch;*/
 
         default:
             return state;

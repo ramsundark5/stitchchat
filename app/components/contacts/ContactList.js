@@ -2,55 +2,32 @@ import React, { Component, View, Text, TextInput, ListView, TouchableHighlight, 
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
 import ContactItem from './ContactItem';
-import ContactsDao from '../../dao/ContactsDao';
-import ThreadDao from '../../dao/ThreadDao';
 
 class ContactList extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            searchText: '',
-            filteredContacts: []
+            searchText: ''
         };
-        this.contacts = [];
-        this.loadAllContacts();
-    }
-
-    async loadAllContacts(){
-        let contacts = await ContactsDao.getAllContacts();
-        this.setState({
-            filteredContacts: contacts
-        });
     }
 
     handleSearch(changedSearchText) {
         this.setState({searchText: changedSearchText});
-        this.filterContactsList(changedSearchText);
-    }
-
-    filterContactsList(searchText){
-        if(searchText){
-            searchText = searchText.toLowerCase();
-        }
-        let currentDisplayedContacts = this.contacts;
-        let filteredContacts = currentDisplayedContacts.filter(contact =>
-            contact.displayName? contact.displayName.toLowerCase().includes(searchText) : false
-        );
-        this.setState({filteredContacts: filteredContacts});
+        this.props.searchContacts(changedSearchText);
     }
 
     render() {
+        const { filteredContacts } = this.props;
         let contactsDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2 });
-        let allContacts = this.state.filteredContacts;
-        contactsDS = contactsDS.cloneWithRows(allContacts);
+        contactsDS = contactsDS.cloneWithRows(filteredContacts);
         return (
             <View style={commons.container}>
                 <TextInput
                     value={this.state.searchText}
                     style={commons.searchInput}
-                    placeholder="search here"
+                    placeholder="  search here"
                     onChange={(event) => this.handleSearch(event.nativeEvent.text)}/>
                 <View style={commons.listContainer}>
                     <ListView
@@ -72,7 +49,8 @@ class ContactList extends Component {
 }
 
 ContactList.propTypes = {
-    contacts: PropTypes.array.isRequired,
+    filteredContacts: PropTypes.array.isRequired,
+    searchContacts: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired
 };
 

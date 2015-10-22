@@ -9,19 +9,10 @@ export function loadContacts(contacts){
     }
 }
 
-/*export function addNewContact(phoneNumber, displayName) {
+export function updateContact(contact){
     return {
-        type: Actions.ADD_CONTACT,
-        phoneNumber,
-        displayName,
-        null
-    };
-}*/
-
-export function deleteContact(id) {
-    return {
-        type: Actions.DELETE_CONTACT,
-        id
+        type: Actions.UPDATE_CONTACT,
+        contact
     };
 }
 
@@ -38,15 +29,15 @@ export function clearSelectedContact() {
     };
 }
 
-export function deleteSelectedContact() {
-    return {
-        type: Actions.DELETE_SELECTED_CONTACT
-    };
-}
-
 export function searchContacts(searchText) {
     return {
         type: Actions.SEARCH_CONTACTS,
         searchText
+    };
+}
+
+export function clearSearch() {
+    return {
+        type: Actions.CLEAR_SEARCH
     };
 }
