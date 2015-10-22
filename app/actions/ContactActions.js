@@ -16,10 +16,10 @@ export function updateContact(contact){
     };
 }
 
-export function selectContact(id) {
+export function selectContact(selectedContact) {
     return {
         type: Actions.SELECT_CONTACT,
-        id
+        selectedContact
     };
 }
 

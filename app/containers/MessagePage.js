@@ -27,16 +27,6 @@ class MessagePage extends Component {
         }
     }
 
-    _renderMediaOptions(isEditing, router){
-        //don't show media options in editing state
-        if(isEditing){
-            return;
-        }
-        return(
-            <MediaOptions router={router}/>
-        );
-    }
-
     render() {
         const { messages, messageActions, isEditing, currentThread, router } = this.props;
 
@@ -59,6 +49,16 @@ class MessagePage extends Component {
                     </View>
                 </View>
             </View>
+        );
+    }
+
+    _renderMediaOptions(isEditing, router){
+        //don't show media options in editing state
+        if(isEditing){
+            return;
+        }
+        return(
+            <MediaOptions router={router}/>
         );
     }
 }

@@ -2,7 +2,7 @@ import * as Action from '../constants/ActionTypes';
 import Contact from '../models/Contact';
 import * as _ from 'lodash';
 
-const initialState = { contacts : [], filteredContacts: [], isEditing: false};
+const initialState = { contacts : [], filteredContacts: [], selectedContacts: [], isEditing: false};
 
 export function contactState(state = initialState, action = {}) {
     switch (action.type) {
@@ -23,20 +23,24 @@ export function contactState(state = initialState, action = {}) {
             return newStateAfterUpdate;
 
         case Action.SELECT_CONTACT:
-            let contactsAfterSelect =  state.filteredContacts.map(contact =>
+            let selectedContact = action.selectedContact;//new Message(action.text);
+            let selectedContactsAfterAdd = state.selectedContacts.concat(selectedContact)
+            let contactsAfterSelect =  state.contacts.map(contact =>
                     contact.id === action.id ?
                         _.assign({}, contact, {selected: !contact.selected}) :
                         contact
             );
-            let atleastOneSelected = contactsAfterSelect.some(contact => contact.selected);
-            let newStateAfterSelect =  _.assign({}, state, { 'filteredContacts' : contactsAfterSelect, 'isEditing': atleastOneSelected });
+            let newStateAfterSelect =  _.assign({}, state, { 'contacts' : contactsAfterSelect, 'selectedContacts': selectedContactsAfterAdd });
             return newStateAfterSelect;
 
         case Action.CLEAR_SELECTED_CONTACT:
-            let contactsAfterClearSelected = state.filteredContacts.map(contact => _.assign({}, contact, {
+            let contactsAfterClearSelected = state.contacts.map(contact => _.assign({}, contact, {
                 selected: false
             }));
-            let newStateAfterClearSelected =  _.assign({}, state, { 'filteredContacts' : contactsAfterClearSelected, 'isEditing': false });
+            let selectedContactsAfterClear = state.messages.filter(message =>
+                message.id !== action.id
+            );
+            let newStateAfterClearSelected =  _.assign({}, state, { 'contacts' : contactsAfterClearSelected, 'selectedContacts': selectedContactsAfterClear });
             return newStateAfterClearSelected ;
 
         case Action.SEARCH_CONTACTS:

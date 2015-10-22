@@ -9,7 +9,7 @@ export function messageState(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_MESSAGE:
-            let newMessage = action.message;//new Message(action.text);
+            let newMessage = action.message;
             let messagesAfterAdd = state.messages.concat(newMessage)
             let newStateAfterAdd =  _.assign({}, state, { 'messages' : messagesAfterAdd });
             return newStateAfterAdd;

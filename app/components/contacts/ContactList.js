@@ -24,21 +24,26 @@ class ContactList extends Component {
         contactsDS = contactsDS.cloneWithRows(filteredContacts);
         return (
             <View style={commons.container}>
-                <TextInput
-                    value={this.state.searchText}
-                    style={commons.searchInput}
-                    placeholder="  search here"
-                    onChange={(event) => this.handleSearch(event.nativeEvent.text)}/>
+                <View style={contactStyle.searchInputContainer}>
+                    <TextInput
+                        ref='textInput'
+                        style={contactStyle.searchInput}
+                        onChange={(event) => this.handleSearch(event.nativeEvent.text)}
+                        value={this.state.searchText}
+                        placeholder="  search contacts"
+                        clearButtonMode='while-editing'/>
+
+                </View>
                 <View style={commons.listContainer}>
                     <ListView
                         dataSource={contactsDS}
-                        renderRow={this.renderContactItem.bind(this)}/>
+                        renderRow={this._renderContactItem.bind(this)}/>
                 </View>
              </View>
         );
     }
 
-    renderContactItem(rowData, sectionID, rowID) {
+    _renderContactItem(rowData, sectionID, rowID) {
         return (
             <ContactItem  key={rowData.id}
                          contact={rowData}
