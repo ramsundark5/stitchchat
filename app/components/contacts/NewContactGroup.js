@@ -1,9 +1,10 @@
 import React, { Component, View, Text, TextInput, Image, ListView, TouchableHighlight, PropTypes } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
+import Icon from 'react-native-vector-icons/Ionicons';
 import ContactItem from './ContactItem';
 
-class CreateGroup extends Component{
+class NewContactGroup extends Component{
 
     constructor(props, context) {
         super(props, context);
@@ -28,6 +29,10 @@ class CreateGroup extends Component{
 
     selectContact(contact){
         this.props.selectContact(contact);
+        this.state = {
+            searchText: '',
+            isSearching: false
+        };
     }
 
     render(){
@@ -57,24 +62,21 @@ class CreateGroup extends Component{
         selectedContactsDS = selectedContactsDS.cloneWithRows(selectedContacts);
 
         return(
-            <View style={commons.listContainer}>
-                <ListView
-                    dataSource={selectedContactsDS}
-                    renderRow={this._renderSelectedContactItem.bind(this)}/>
-            </View>
+            <ListView
+                dataSource={selectedContactsDS}
+                renderRow={this._renderSelectedContactItem.bind(this)}/>
         );
     }
 
     _renderSelectedContactItem(matchingContact, sectionID, rowID){
         return(
-            <View style={contactStyle.contactItemContainer}>
-                <View style={commons.horizontalNoWrap}>
-                    <Image
-                        style={commons.thumbNail}
-                        source={{uri: 'something.jpg'}}
-                        />
-                    <Text style={[contactStyle.title]}>{matchingContact.displayName}</Text>
+            <View>
+                <View style={[contactStyle.selectedContactsContainer]}>
+                    <Text style={[commons.defaultText]}>{matchingContact.displayName}</Text>
+                    <Icon name='android-close'
+                          style={[contactStyle.contactDeleteIcon]}/>
                  </View>
+                <View style={contactStyle.contactDivider}/>
             </View>
         );
     }
@@ -114,12 +116,12 @@ class CreateGroup extends Component{
     }
 }
 
-CreateGroup.propTypes = {
+NewContactGroup.propTypes = {
     filteredContacts: PropTypes.array.isRequired,
     searchContacts: PropTypes.func.isRequired,
     selectContact: PropTypes.func.isRequired,
-    selectedContacts: PropTypes.func.isRequired,
+    selectedContacts: PropTypes.array.isRequired,
     router: PropTypes.object.isRequired
 };
 
-export default CreateGroup;
+export default NewContactGroup;

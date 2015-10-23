@@ -41,3 +41,9 @@ export function clearSearch() {
         type: Actions.CLEAR_SEARCH
     };
 }
+
+export function resetContactState() {
+    return {
+        type: Actions.RESET_CONTACTS_STATE
+    };
+}

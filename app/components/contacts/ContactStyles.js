@@ -51,4 +51,17 @@ export const contactStyle = StyleSheet.create({
         height: 1,
         backgroundColor: '#dddddd'
     },
+    contactDeleteIcon:{
+        fontSize: 20,
+        marginRight: 15
+    },
+    selectedContactsContainer:{
+        flex: 1,
+        flexDirection : 'row',
+        flexWrap      : 'nowrap',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15
+    }
 });

@@ -2,7 +2,10 @@ import * as Action from '../constants/ActionTypes';
 import Contact from '../models/Contact';
 import * as _ from 'lodash';
 
-const initialState = { contacts : [], filteredContacts: [], selectedContacts: [], isEditing: false};
+let sampleContact = new Contact();
+sampleContact.phoneNumber = '+13392247442';
+sampleContact.displayName='Daniel Higging';
+const initialState = { contacts : [], filteredContacts: [], selectedContacts: [sampleContact], isEditing: false};
 
 export function contactState(state = initialState, action = {}) {
     switch (action.type) {
@@ -14,7 +17,7 @@ export function contactState(state = initialState, action = {}) {
 
         case Action.UPDATE_CONTACT:
             let contactsAfterUpdate =  state.contacts.map(contact =>
-                    contact.id === action.contact.id ?
+                    contact.phoneNumber === action.contact.phoneNumber ?
                         Object.assign({}, contact, action.contact) :
                         contact
             );
@@ -26,7 +29,7 @@ export function contactState(state = initialState, action = {}) {
             let selectedContact = action.selectedContact;//new Message(action.text);
             let selectedContactsAfterAdd = state.selectedContacts.concat(selectedContact)
             let contactsAfterSelect =  state.contacts.map(contact =>
-                    contact.id === action.id ?
+                    contact.phoneNumber === action.phoneNumber ?
                         _.assign({}, contact, {selected: !contact.selected}) :
                         contact
             );
@@ -38,7 +41,7 @@ export function contactState(state = initialState, action = {}) {
                 selected: false
             }));
             let selectedContactsAfterClear = state.messages.filter(message =>
-                message.id !== action.id
+                message.phoneNumber !== action.phoneNumber
             );
             let newStateAfterClearSelected =  _.assign({}, state, { 'contacts' : contactsAfterClearSelected, 'selectedContacts': selectedContactsAfterClear });
             return newStateAfterClearSelected ;
@@ -58,6 +61,10 @@ export function contactState(state = initialState, action = {}) {
        /* case Action.CLEAR_SEARCH:
             let newStateAfterClearSearch = _.assign({}, state, {'searchText': ''});
             return newStateAfterClearSearch;*/
+
+        case Action.RESET_CONTACTS_STATE:
+            let newStateAfterReset = _.assign({}, state, initialState);
+            return newStateAfterReset;
 
         default:
             return state;

@@ -7,13 +7,11 @@ import {threadStyle} from './ThreadStyles';
 class ThreadComposer extends Component {
 
     _addNewThread(){
-        let newThreadProps = {threadCreationType: "addNewThread"};
-        this.props.router.toContactsView(newThreadProps);
+        this.props.router.toContactsView();
     }
 
     _addNewGroupThread(){
-        let newGroupThreadProps = {threadCreationType: "addNewGroupThread"};
-        this.props.router.toContactsView(newGroupThreadProps);
+        this.props.router.toCreateGroupsView();
     }
 
     _searchThreads(searchText){

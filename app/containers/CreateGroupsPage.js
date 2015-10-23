@@ -8,7 +8,7 @@ import * as ThreadActions from '../actions/ThreadActions';
 import * as ContactActions from '../actions/ContactActions';
 import ContactsDao from '../dao/ContactsDao';
 
-class ContactsPage extends Component{
+class CreateGroupsPage extends Component{
 
     constructor(props, context) {
         super(props, context);
@@ -29,8 +29,9 @@ class ContactsPage extends Component{
 
         return (
             <View style={commons.container}>
-                <ContactList router={router}
+                <CreateGroup router={router}
                              filteredContacts={filteredContacts}
+                             selectedContacts={selectedContacts}
                              selectContact={contactActions.selectContact}
                              searchContacts={contactActions.searchContacts}
                              setCurrentThread={threadActions.setCurrentThread} />
@@ -54,4 +55,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupsPage);

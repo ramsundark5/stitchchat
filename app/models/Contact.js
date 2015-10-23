@@ -1,10 +1,9 @@
 export default class Contact{
     constructor(){
-        this.id                 = '';
+        this.phoneNumber        = '';
         this.displayName        = '';
         this.phoneType          = ''; //ios, android, web, etc
         this.phoneLabel         = '';
-        this.phoneNumber        = '';
         this.localContactIdLink = 0;
         this.isRegisteredUser   = false;
         this.status             = ''; //

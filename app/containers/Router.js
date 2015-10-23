@@ -3,9 +3,11 @@ import InboxPage from './InboxPage';
 import LoginPage from './LoginPage';
 import MessagePage from './MessagePage';
 import ContactsPage from './ContactsPage';
+import CreateGroupsPage from './CreateGroupsPage';
+import CreateGroupButton from '../components/navbar/NavigationBar';
 import PhotoGallery from '../components/media/PhotoGallery';
-import NavigationBar from 'react-native-navbar';
-import {navStyle} from '../components/styles/NavBarStyles';
+import NavigationBar from '../components/navbar/NavigationBar';
+import {navbarStyle} from '../components/navbar/NavBarStyles';
 
 class Router {
     constructor(navigator) {
@@ -28,13 +30,12 @@ class Router {
         this.push(props, {
             component: LoginPage,
             name: 'loginView',
-            sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
                     title='Login'
                     hidePrev = {true}
-                    style= {navStyle.navBarContainer}/>
+                    style= {navbarStyle.navBarContainer}/>
             )
         })
     }
@@ -43,13 +44,12 @@ class Router {
         this.push(props, {
             component: InboxPage,
             name: 'inboxView',
-            sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
                     title='Inbox'
                     hidePrev = {true}
-                    style= {navStyle.navBarContainer}/>
+                    style= {navbarStyle.navBarContainer}/>
             )
         })
     }
@@ -58,13 +58,12 @@ class Router {
         this.push(props, {
             component: MessagePage,
             name: 'messageView',
-            sceneStyle: navStyle.opaqueSceneStyle,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
                     title='Gallery'
                     prevTitle = 'Back'
-                    style= {navStyle.navBarContainer}/>
+                    style= {navbarStyle.navBarContainer}/>
             )
         })
     }
@@ -78,7 +77,7 @@ class Router {
                 <NavigationBar
                     title='Gallery'
                     prevTitle = 'Done'
-                    style= {navStyle.navBarContainer}/>
+                    style= {navbarStyle.navBarContainer}/>
             )
         })
     }
@@ -92,7 +91,22 @@ class Router {
                 <NavigationBar
                     title='Contacts'
                     prevTitle = 'cancel'
-                    style= {navStyle.navBarContainer}/>
+                    style= {navbarStyle.navBarContainer}/>
+            )
+        })
+    }
+
+    toCreateGroupsView(props) {
+        this.push(props, {
+            component: CreateGroupsPage,
+            name: 'createGroupsView',
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            navigationBar: (
+                <NavigationBar
+                    title='New Group'
+                    prevTitle='Cancel'
+                    customNext={<CreateGroupButton/>}
+                    style= {navbarStyle.navBarContainer}/>
             )
         })
     }

@@ -36,6 +36,6 @@ export const DELETE_SELECTED_CONTACT        = 'DELETE_SELECTED_CONTACT';
 export const UPDATE_CONTACT                 = 'UPDATE_CONTACT';
 export const SEARCH_CONTACTS                = 'SEARCH_CONTACTS';
 export const CLEAR_SEARCH                   = 'CLEAR_SEARCH';
-
+export const RESET_CONTACTS_STATE           = 'RESET_CONTACTS_STATE';
 export const BLOCK_CONTACT                  = 'BLOCK_CONTACT';
 export const UNBLOCK_CONTACT                = 'UNBLOCK_CONTACT';
