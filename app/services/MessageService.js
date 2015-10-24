@@ -60,7 +60,8 @@ class MessageService{
         if(message && message.data){
             let messageWrapperObj = JSON.parse(message.data);
             let messageObj = messageWrapperObj.message;
-            //store.dispatch(MessageActions.addMessage(message));
+            store.dispatch(MessageActions.addMessage(message));
+            //MessageDao.addMessage();
             console.log("received message in UI "+ messageObj.text);
         }else{
             console.log("got empty messages. something is wrong.");

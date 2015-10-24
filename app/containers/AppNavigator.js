@@ -2,8 +2,8 @@ import React, { Component, View, Navigator, PropTypes } from 'react-native';
 import MessagePage from '../containers/MessagePage';
 import InboxPage from '../containers/InboxPage';
 import Router from './Router';
-import NavigationBar from 'react-native-navbar';
-import {navbarStyle} from '../components/navbar/NavBarStyles';
+import NavigationBar from '../components/navbar/NavigationBar';
+import {navBarStyle} from '../components/navbar/NavBarStyles';
 import AppInitService from '../services/AppInitService';
 
 class AppNavigator extends Component {
@@ -16,10 +16,9 @@ class AppNavigator extends Component {
             component: InboxPage,
             navigationBar: (
                 <NavigationBar
-                    title = 'Inbox'
-                    hidePrev = {true}
-                    style = {navbarStyle.navBarContainer}
-                    />
+                    title={{ title: 'Inbox'}}
+                    statusBar={{hidden: false, tintColor: '#ff0000'}}
+                    style = {navBarStyle.stitchNavBar} />
             )
         }
         new AppInitService();

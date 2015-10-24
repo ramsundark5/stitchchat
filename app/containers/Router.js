@@ -7,7 +7,7 @@ import CreateGroupsPage from './CreateGroupsPage';
 import CreateGroupButton from '../components/navbar/NavigationBar';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from '../components/navbar/NavigationBar';
-import {navbarStyle} from '../components/navbar/NavBarStyles';
+import {navBarStyle} from '../components/navbar/NavBarStyles';
 
 class Router {
     constructor(navigator) {
@@ -33,9 +33,7 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
-                    title='Login'
-                    hidePrev = {true}
-                    style= {navbarStyle.navBarContainer}/>
+                    title={{ title: 'Login', }}/>
             )
         })
     }
@@ -47,9 +45,7 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
-                    title='Inbox'
-                    hidePrev = {true}
-                    style= {navbarStyle.navBarContainer}/>
+                    title={{ title: 'Inbox'}}/>
             )
         })
     }
@@ -61,9 +57,8 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
-                    title='Gallery'
-                    prevTitle = 'Back'
-                    style= {navbarStyle.navBarContainer}/>
+                    title={{ title: props.displayName }}
+                    leftButton={{ title: 'Back', handler: () => this.pop()}}/>
             )
         })
     }
@@ -75,9 +70,8 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
-                    title='Gallery'
-                    prevTitle = 'Done'
-                    style= {navbarStyle.navBarContainer}/>
+                    title={{ title: 'Gallery', }}
+                    leftButton={{ title: 'Done', handler: () => this.pop()}}/>
             )
         })
     }
@@ -89,9 +83,8 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
-                    title='Contacts'
-                    prevTitle = 'cancel'
-                    style= {navbarStyle.navBarContainer}/>
+                    title={{ title: 'Contacts', }}
+                    leftButton={{ title: 'Cancel', handler: () => this.pop()}}/>
             )
         })
     }
@@ -103,10 +96,9 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
-                    title='New Group'
-                    prevTitle='Cancel'
-                    customNext={<CreateGroupButton/>}
-                    style= {navbarStyle.navBarContainer}/>
+                    title={{ title: 'New Group', }}
+                    leftButton={{ title: 'Cancel', handler: () => this.pop()}}
+                    rightButton={<CreateGroupButton/>} />
             )
         })
     }

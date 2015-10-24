@@ -24,10 +24,19 @@ class ThreadDao{
         let sqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread)" +
             "values (:recipientPhoneNumber, :displayName, :isGroupThread)";
         let paramMap = {recipientPhoneNumber: contact.phoneNumber, displayName: contact.displayName, isGroupThread: false};
-        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, createThreadSqlStmt, paramMap);
+        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         console.log("threadId created as "+ threadId);
         let threadForPhoneNumber = await this.getThreadById(threadId);
         return threadForPhoneNumber;
+    }
+
+    async createGroupThread(groupUid, displayName){
+        let sqlStmt  = "INSERT into Thread (groupUid, displayName, isGroupThread)" +
+            "values (:groupUid, :displayName, :isGroupThread)";
+        let paramMap = {groupUid: groupUid, displayName: displayName, isGroupThread: true};
+        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+        console.log("groupthreadId created as "+ threadId);
+        return threadId;
     }
 
     async getThreadById(threadId){

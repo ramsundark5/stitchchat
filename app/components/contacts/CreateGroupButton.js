@@ -1,8 +1,8 @@
 import React, { Component, View, Text, TextInput, Image, ListView, TouchableHighlight, PropTypes } from 'react-native';
 import {navbarStyle} from '../navbar/NavBarStyles';
 import {commons, defaultStyle} from '../styles/CommonStyles';
-import Icon from 'react-native-vector-icons/Ionicons';
-import ContactItem from './ContactItem';
+import * as ThreadActions from '../../actions/ThreadActions';
+import * as ContactActions from '../../actions/ContactActions';
 
 class CreateGroupButton extends Component{
 
@@ -10,9 +10,13 @@ class CreateGroupButton extends Component{
         super(props, context);
     }
 
+    createGroup(){
+
+    }
+
     render(){
         return (
-            <TouchableOpacity onPress={() => alert('next') }>
+            <TouchableOpacity onPress={() => this.createGroup() }>
                 <Text style={navbarStyle.navBarRightButton}>Next</Text>
             </TouchableOpacity>
         );
@@ -23,4 +27,16 @@ CreateGroupButton.propTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default CreateGroupButton;
+function mapStateToProps(state) {
+    return {
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        threadActions: bindActionCreators(ThreadActions, dispatch),
+        contactActions: bindActionCreators(ContactActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupButton);
