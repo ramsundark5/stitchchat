@@ -2,24 +2,25 @@ import React from 'react-native';
 const {
     Text,
     TouchableOpacity,
-    Component,
     View,
     PropTypes,
     } = React;
+import Component from '../PureComponent';
 import styles from './styles';
 
 export default class NavbarButton extends Component {
-  render() {
-    const { style, tintColor, margin, title, handler } = this.props;
 
-    return (
-        <TouchableOpacity onPress={handler}>
-          <View style={style}>
-            <Text style={[styles.navBarButton, { color: tintColor, }, ]}>{title}</Text>
-          </View>
-        </TouchableOpacity>
-    );
-  }
+    render() {
+        const { style, tintColor, margin, title, handler } = this.props;
+
+        return (
+            <TouchableOpacity onPress={handler}>
+              <View style={style}>
+                <Text style={[styles.navBarButton, { color: tintColor, }, ]}>{title}</Text>
+              </View>
+            </TouchableOpacity>
+        );
+    }
 
   static propTypes = {
     style: PropTypes.oneOfType([

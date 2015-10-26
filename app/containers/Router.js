@@ -4,9 +4,9 @@ import LoginPage from './LoginPage';
 import MessagePage from './MessagePage';
 import ContactsPage from './ContactsPage';
 import CreateGroupsPage from './CreateGroupsPage';
-import CreateGroupButton from '../components/navbar/NavigationBar';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from '../components/navbar/NavigationBar';
+import CreateGroupNavBar from '../components/contacts/CreateGroupNavBar';
 import {navBarStyle} from '../components/navbar/NavBarStyles';
 
 class Router {
@@ -95,10 +95,7 @@ class Router {
             name: 'createGroupsView',
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
-                <NavigationBar
-                    title={{ title: 'New Group', }}
-                    leftButton={{ title: 'Cancel', handler: () => this.pop()}}
-                    rightButton={<CreateGroupButton/>} />
+               <CreateGroupNavBar navigator={this.navigator}/>
             )
         })
     }
@@ -109,4 +106,4 @@ class Router {
 
 }
 
-module.exports = Router
+module.exports = Router;
