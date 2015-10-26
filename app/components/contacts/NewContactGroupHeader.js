@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
-import {navBarStyle} from '../navbar/NavBarStyles';
 import * as ThreadActions from '../../actions/ThreadActions';
 import * as ContactActions from '../../actions/ContactActions';
 import ThreadService from '../../services/ThreadService';
@@ -66,7 +65,7 @@ class NewContactGroupHeader extends Component{
     render(){
         return (
             <View>
-                <View style={[styles.navBarContainer, navBarStyle.stitchNavBar]}>
+                <View style={[styles.navBarContainer]}>
                     <View style={[styles.navBar, this.props.style, ]}>
                         {this.getTitleElement('New Group')}
                         {this.getLeftButtonElement('Cancel', { marginLeft: 8, })}

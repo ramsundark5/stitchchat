@@ -7,7 +7,6 @@ import CreateGroupsPage from './CreateGroupsPage';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from '../components/navbar/NavigationBar';
 import CreateGroupNavBar from '../components/contacts/NewContactGroupHeader';
-import {navBarStyle} from '../components/navbar/NavBarStyles';
 
 class Router {
     constructor(navigator) {

@@ -3,7 +3,6 @@ import MessagePage from '../containers/MessagePage';
 import InboxPage from '../containers/InboxPage';
 import Router from './Router';
 import NavigationBar from '../components/navbar/NavigationBar';
-import {navBarStyle} from '../components/navbar/NavBarStyles';
 import AppInitService from '../services/AppInitService';
 
 class AppNavigator extends Component {
@@ -17,8 +16,7 @@ class AppNavigator extends Component {
             navigationBar: (
                 <NavigationBar
                     title={{ title: 'Inbox'}}
-                    statusBar={{hidden: false, tintColor: '#ff0000'}}
-                    style = {navBarStyle.stitchNavBar} />
+                    statusBar={{hidden: false, tintColor: '#ff0000'}}/>
             )
         }
         new AppInitService();
