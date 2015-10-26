@@ -36,7 +36,8 @@ class ThreadDao{
         let paramMap = {groupUid: groupUid, displayName: displayName, isGroupThread: true};
         let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         console.log("groupthreadId created as "+ threadId);
-        return threadId;
+        let threadForGroup = await this.getThreadById(threadId);
+        return threadForGroup;
     }
 
     async getThreadById(threadId){

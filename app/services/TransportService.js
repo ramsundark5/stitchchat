@@ -2,42 +2,12 @@ import MQTTClient from '../transport/MQTTClient';
 import store from '../config/ConfigureStore';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as MessageActions from '../actions/MessageActions';
-import * as AppConfig from '../config/AppConfig';
-import Message from '../models/Message';
-import MessageDao from '../dao/MessageDao';
 
-class MessageService{
-
+class TransportService{
     init(){
         MQTTClient.init();
         RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnected.bind(this));
         RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
-    }
-
-    async addMessage(thread, text){
-        let newMessage = new Message(text, thread.id);
-        if(thread.isGroupThread){
-            newMessage.receiverId=thread.groupUid;
-            newMessage.isGroupThread = true;
-        }
-        else{
-            newMessage.receiverId=thread.recipientPhoneNumber;
-        }
-
-        let messageId = await MessageDao.addMessage(newMessage.threadId, newMessage);
-        newMessage.id = messageId;
-        this.sendMessage(newMessage);
-        return newMessage;
-    }
-
-    sendMessage(message:Message){
-        let encodedReceiverId = encodeURIComponent(message.receiverId);
-        let publishTopic = AppConfig.PRIVATE_PUBSUB_TOPIC + encodedReceiverId;
-        if(message.isGroupThread){
-            publishTopic = AppConfig.GROUP_PUBSUB_TOPIC + encodedReceiverId;
-        }
-        let transportMessage = message.getMessageForTransport();
-        this.sendMessageToTopic(publishTopic, transportMessage);
     }
 
     sendMessageToTopic(topic:String, content){
@@ -69,5 +39,4 @@ class MessageService{
 
     }
 }
-
-module.exports = new MessageService();
+module.exports = new TransportService();

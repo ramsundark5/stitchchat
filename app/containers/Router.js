@@ -95,7 +95,7 @@ class Router {
             name: 'createGroupsView',
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
-               <CreateGroupNavBar navigator={this.navigator}/>
+               <CreateGroupNavBar router={this}/>
             )
         })
     }

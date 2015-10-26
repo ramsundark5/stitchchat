@@ -10,9 +10,6 @@ export default class ContactItem extends Component{
     }
 
     async openThreadForContact(contact){
-        if(!this.props.isGroupThread){
-            return;
-        }
         let threadForContact = await ThreadDao.getThreadForContact(contact);
         this.props.setCurrentThread(threadForContact);
         this.props.router.toMessageView(threadForContact);

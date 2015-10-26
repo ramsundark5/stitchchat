@@ -1,5 +1,5 @@
 import React from 'react-native';
-import Component from '../PureComponent';
+import Component from '../PureComponent.js';
 const {
     PixelRatio,
     StatusBarIOS,
