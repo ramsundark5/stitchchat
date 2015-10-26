@@ -8,21 +8,10 @@ export function loadRecentThreads(threads){
     }
 }
 
-export function addNewThread(recipientPhoneNumber) {
+export function addNewThread(thread) {
     return {
         type: Actions.ADD_THREAD,
-        recipientPhoneNumber,
-        false,
-        null
-    };
-}
-
-export function addNewGroupThread( groupUid) {
-    return {
-        type: Actions.ADD_THREAD,
-        null,
-        true,
-        groupUid
+        thread
     };
 }
 

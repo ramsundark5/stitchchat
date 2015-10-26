@@ -9,7 +9,7 @@
 
 -(BOOL) saveContactsToDB:(NSString*) countryCode contacts:(NSArray *)contacts
 {
-   NSString* sqlStmt = @"INSERT into Contact (phoneNumber, firstName, lastName, displayName, "
+   NSString* sqlStmt = @"INSERT OR REPLACE into Contact (phoneNumber, firstName, lastName, displayName, "
                       "phoneLabel, localContactIdLink, lastModifiedTime) values "
                       "(:phoneNumber,:firstName,:lastName,:displayName,:phoneLabel, "
                       ":localContactIdLink,:lastModifiedTime)";
@@ -64,7 +64,8 @@
           NSString* displayName = contact.givenName;
           
           if(contact.familyName){
-            displayName = [displayName stringByAppendingString:contact.familyName];
+            displayName = [NSString stringWithFormat:@"%@%@%@", displayName, @" ", contact.familyName];
+            //displayName = [displayName stringByAppendingString:contact.familyName];
           }
           NSString *cleanedUpPhoneLabel = @"";
           

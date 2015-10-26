@@ -1,7 +1,7 @@
 import React, { Component, View, Image, Text, PropTypes, TouchableHighlight } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
-import ThreadDao from '../../dao/ThreadDao';
+import ThreadService from '../../services/ThreadService';
 
 export default class ContactItem extends Component{
 
@@ -10,7 +10,7 @@ export default class ContactItem extends Component{
     }
 
     async openThreadForContact(contact){
-        let threadForContact = await ThreadDao.getThreadForContact(contact);
+        let threadForContact = await ThreadService.getThreadForContact(contact);
         this.props.setCurrentThread(threadForContact);
         this.props.router.toMessageView(threadForContact);
     }

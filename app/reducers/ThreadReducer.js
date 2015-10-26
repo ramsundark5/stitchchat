@@ -13,7 +13,7 @@ export function threadState(state = initialState, action = {}) {
             return newStateAfterInit;
 
         case Action.ADD_THREAD:
-            let newThread        = new Thread(action.recipientPhoneNumber, action.isGroupThread, action.groupUid);
+            let newThread        = action.thread;
             let threadsAfterAdd  = state.threads.concat(newThread);
             let newStateAfterAdd =  _.assign({}, state, { 'threads' : threadsAfterAdd });
             return newStateAfterAdd;

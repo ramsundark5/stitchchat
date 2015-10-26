@@ -3,23 +3,6 @@ import * as AppConstants from '../constants/AppConstants';
 
 class ThreadDao{
 
-    async getThreadForContact(contact){
-        let threadForPhoneNumber;
-        let sqlStmt  = "SELECT * from Thread where recipientPhoneNumber = :recipientPhoneNumber";
-        let paramMap = {recipientPhoneNumber: contact.phoneNumber};
-        let existingThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
-
-        if(!existingThreads || existingThreads.length == 0){
-            console.log("no existing thread found for phoneNumber"+contact.phoneNumber);
-            threadForPhoneNumber = await this.createThreadForContact(contact);
-        }
-        else{
-            console.log("found existing thread found for phoneNumber"+contact.phoneNumber);
-            threadForPhoneNumber = existingThreads[0];
-        }
-        return threadForPhoneNumber;
-    }
-
     async createThreadForContact(contact){
         let sqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread)" +
             "values (:recipientPhoneNumber, :displayName, :isGroupThread)";
@@ -38,6 +21,18 @@ class ThreadDao{
         console.log("groupthreadId created as "+ threadId);
         let threadForGroup = await this.getThreadById(threadId);
         return threadForGroup;
+    }
+
+    async getThreadByPhoneNumber(phoneNumber){
+        let threadForPhoneNumber;
+        let sqlStmt  = "SELECT * from Thread where recipientPhoneNumber = :recipientPhoneNumber";
+        let paramMap = {recipientPhoneNumber: phoneNumber};
+        let existingThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+        if(existingThreads && existingThreads.length > 0){
+            threadForPhoneNumber = existingThreads[0];
+            console.log("found existing thread found for phoneNumber"+phoneNumber);
+        }
+        return threadForPhoneNumber;
     }
 
     async getThreadById(threadId){
