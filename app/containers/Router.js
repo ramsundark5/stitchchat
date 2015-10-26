@@ -93,10 +93,7 @@ class Router {
         this.push(props, {
             component: CreateGroupsPage,
             name: 'createGroupsView',
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            navigationBar: (
-               <CreateGroupNavBar router={this}/>
-            )
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom
         })
     }
 

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import {commons} from '../components/styles/CommonStyles';
 import ContactList from '../components/contacts/ContactList';
-import CreateGroup from '../components/contacts/NewContactGroup';
+import NewContactGroup from '../components/contacts/NewContactGroup';
 import * as ThreadActions from '../actions/ThreadActions';
 import * as ContactActions from '../actions/ContactActions';
 import ContactsDao from '../dao/ContactsDao';
@@ -29,7 +29,7 @@ class CreateGroupsPage extends Component{
 
         return (
             <View style={commons.container}>
-                <CreateGroup router={router}
+                <NewContactGroup router={router}
                              filteredContacts={filteredContacts}
                              selectedContacts={selectedContacts}
                              selectContact={contactActions.selectContact}

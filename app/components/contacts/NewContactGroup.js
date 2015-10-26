@@ -3,6 +3,7 @@ import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ContactItem from './ContactItem';
+import CreateGroupNavBar from './CreateGroupNavBar';
 
 class NewContactGroup extends Component{
 
@@ -36,11 +37,16 @@ class NewContactGroup extends Component{
     }
 
     render(){
+        const { selectedContacts, router, setCurrentThread } = this.props;
         return (
             <View style={commons.container}>
+                <CreateGroupNavBar
+                    selectedContacts={selectedContacts}
+                    setCurrentThread={this.props.setCurrentThread}
+                    router={router}/>
+
                 <Text style={commons.defaultText}>Add Group Participants</Text>
                 <TextInput
-                    ref='textInput'
                     style={contactStyle.searchInput}
                     onChange={(event) => this.handleSearch(event.nativeEvent.text)}
                     value={this.state.searchText}
@@ -121,6 +127,7 @@ NewContactGroup.propTypes = {
     searchContacts: PropTypes.func.isRequired,
     selectContact: PropTypes.func.isRequired,
     selectedContacts: PropTypes.array.isRequired,
+    setCurrentThread: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired
 };
 
