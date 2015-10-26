@@ -3,7 +3,7 @@ import {commons, defaultStyle} from '../styles/CommonStyles';
 import {contactStyle} from './ContactStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ContactItem from './ContactItem';
-import CreateGroupNavBar from './CreateGroupNavBar';
+import NewContactGroupHeader from './NewContactGroupHeader';
 
 class NewContactGroup extends Component{
 
@@ -40,7 +40,7 @@ class NewContactGroup extends Component{
         const { selectedContacts, router, setCurrentThread } = this.props;
         return (
             <View style={commons.container}>
-                <CreateGroupNavBar
+                <NewContactGroupHeader
                     selectedContacts={selectedContacts}
                     setCurrentThread={this.props.setCurrentThread}
                     router={router}/>

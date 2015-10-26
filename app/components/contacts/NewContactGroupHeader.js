@@ -9,7 +9,7 @@ import * as ThreadActions from '../../actions/ThreadActions';
 import * as ContactActions from '../../actions/ContactActions';
 import ThreadService from '../../services/ThreadService';
 
-class CreateGroupNavBar extends Component{
+class NewContactGroupHeader extends Component{
 
     constructor(props, context) {
         super(props, context);
@@ -84,10 +84,10 @@ class CreateGroupNavBar extends Component{
     }
 }
 
-CreateGroupNavBar.propTypes = {
+NewContactGroupHeader.propTypes = {
     router: PropTypes.object.isRequired,
     selectedContacts: PropTypes.array.isRequired,
     setCurrentThread: PropTypes.func.isRequired
 };
 
-export default CreateGroupNavBar;
+export default NewContactGroupHeader;

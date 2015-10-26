@@ -15,11 +15,12 @@ class ThreadItem extends Component {
 
     render() {
         const {thread} = this.props;
+        let displayName = thread.displayName && thread.displayName.length > 0 ? thread.displayName : thread.recipientPhoneNumber;
         return (
             <TouchableHighlight onPress={() => this.openMessagesPage(thread)}>
                 <View>
                     <View style = {threadStyle.threadItemContainer}>
-                        <Text style={[threadStyle.title]}>{thread.recipientPhoneNumber}</Text>
+                        <Text style={[threadStyle.title]}>{displayName}</Text>
                         <Text style={[threadStyle.timestamp]}>{thread.lastMessageTime}</Text>
                     </View>
                     {this._renderTimeStamp(thread)}

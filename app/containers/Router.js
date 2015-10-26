@@ -6,7 +6,7 @@ import ContactsPage from './ContactsPage';
 import CreateGroupsPage from './CreateGroupsPage';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from '../components/navbar/NavigationBar';
-import CreateGroupNavBar from '../components/contacts/CreateGroupNavBar';
+import CreateGroupNavBar from '../components/contacts/NewContactGroupHeader';
 import {navBarStyle} from '../components/navbar/NavBarStyles';
 
 class Router {
@@ -58,7 +58,7 @@ class Router {
             navigationBar: (
                 <NavigationBar
                     title={{ title: props.displayName }}
-                    leftButton={{ title: 'Back', handler: () => this.pop()}}/>
+                    leftButton={{ title: 'Back', handler: () => this.replaceWithHome()}}/>
             )
         })
     }
