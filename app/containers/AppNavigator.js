@@ -13,11 +13,10 @@ class AppNavigator extends Component {
             name: 'inboxView',
             index: 0,
             component: InboxPage,
-           /* navigationBar: (
+            navigationBar: (
                 <NavigationBar
-                    title={{ title: 'Inbox'}}
-                    statusBar={{hidden: false, tintColor: '#ff0000'}}/>
-            )*/
+                    title={{ title: 'Inbox'}}/>
+            )
         }
         new AppInitService();
     }

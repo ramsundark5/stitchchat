@@ -41,11 +41,11 @@ class Router {
         this.push(props, {
             component: InboxPage,
             name: 'inboxView',
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            /*navigationBar: (
+            sceneConfig: Navigator.SceneConfigs.FloatFromLeft,
+            navigationBar: (
                 <NavigationBar
                     title={{ title: 'Inbox'}}/>
-            )*/
+            )
         })
     }
 
