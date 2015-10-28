@@ -37,6 +37,18 @@ class ThreadService{
         }
         return newGroupThread;
     }
+
+    updateThreadWithNewMessage(newMessage){
+        ThreadDao.updateLastMessageText(newMessage);
+        let currentThreadState = store.getState().threadState;
+        let currentThread = currentThreadState.currentThread;
+        if(currentThread){
+            console.log("current thread is "+currentThread.id);
+            if(currentThread.id != newMessage.threadId){
+                ThreadDao.updateUnreadCount(newMessage.threadId);
+            }
+        }
+    }
 }
 
 module.exports = new ThreadService();

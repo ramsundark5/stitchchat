@@ -8,6 +8,7 @@ import * as MessageActions from '../actions/MessageActions';
 import {commons} from '../components/styles/CommonStyles';
 import LoginService from '../services/LoginService';
 import ThreadDao from '../dao/ThreadDao';
+import NavigationBar from '../components/navbar/NavigationBar';
 
 class InboxPage extends Component {
 
@@ -31,6 +32,8 @@ class InboxPage extends Component {
 
         return (
             <View style={commons.container}>
+                <NavigationBar
+                    title={{ title: 'Inbox'}}/>
                 <View style={{flex: 1}}>
                     <ThreadList threads={threads}
                                 loadMoreThreads={threadActions.loadMoreThreads}

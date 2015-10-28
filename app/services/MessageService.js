@@ -1,18 +1,10 @@
 import MQTTClient from '../transport/MQTTClient';
-import store from '../config/ConfigureStore';
-import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-import * as MessageActions from '../actions/MessageActions';
 import * as AppConfig from '../config/AppConfig';
 import Message from '../models/Message';
 import MessageDao from '../dao/MessageDao';
+import ThreadService from './ThreadService';
 
 class MessageService{
-
-    init(){
-        MQTTClient.init();
-        RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnected.bind(this));
-        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
-    }
 
     async addMessage(thread, text){
         let newMessage = new Message(text, thread.id);
@@ -27,6 +19,7 @@ class MessageService{
         let messageId = await MessageDao.addMessage(newMessage.threadId, newMessage);
         newMessage.id = messageId;
         this.sendMessage(newMessage);
+        ThreadService.updateThreadWithNewMessage(newMessage);
         return newMessage;
     }
 
@@ -51,23 +44,6 @@ class MessageService{
         }
     }
 
-    onConnected(){
-        console.log("connection initialized invoked");
-        //resend all pending messages
-    }
-
-    onMessageReceived(message){
-        if(message && message.data){
-            let messageWrapperObj = JSON.parse(message.data);
-            let messageObj = messageWrapperObj.message;
-            store.dispatch(MessageActions.addMessage(message));
-            //MessageDao.addMessage();
-            console.log("received message in UI "+ messageObj.text);
-        }else{
-            console.log("got empty messages. something is wrong.");
-        }
-
-    }
 }
 
 module.exports = new MessageService();

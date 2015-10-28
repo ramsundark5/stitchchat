@@ -1,5 +1,6 @@
-import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
+import React, { View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
 import {commons, smallIconSize} from '../styles/CommonStyles';
+import Component from '../PureComponent';
 import moment from 'moment';
 import ThreadItem from './ThreadItem';
 import LoginService from '../../services/LoginService';
@@ -8,6 +9,8 @@ import ThreadDao from '../../dao/ThreadDao';
 class ThreadList extends Component {
     constructor(props, context) {
         super(props, context);
+        let nv = this.props.navigator;
+        console.log("nv is "+nv);
     }
 
     loadMoreThreads(){

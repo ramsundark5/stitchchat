@@ -1,24 +1,14 @@
 import MQTTClient from '../transport/MQTTClient';
+import * as MessageActions from '../actions/MessageActions';
 import store from '../config/ConfigureStore';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-import * as MessageActions from '../actions/MessageActions';
 
-class TransportService{
+class BackgroundService{
+
     init(){
         MQTTClient.init();
         RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnected.bind(this));
         RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
-    }
-
-    sendMessageToTopic(topic:String, content){
-        try{
-            let transportMessageWrapper = {};
-            transportMessageWrapper.header = {};
-            transportMessageWrapper.message = content;
-            MQTTClient.publish(topic, transportMessageWrapper);
-        }catch(err){
-            console.log("error publishing message" +err);
-        }
     }
 
     onConnected(){
@@ -30,13 +20,14 @@ class TransportService{
         if(message && message.data){
             let messageWrapperObj = JSON.parse(message.data);
             let messageObj = messageWrapperObj.message;
+
+            //check if message belongs to current thread before dispatching
             store.dispatch(MessageActions.addMessage(message));
             //MessageDao.addMessage();
             console.log("received message in UI "+ messageObj.text);
         }else{
             console.log("got empty messages. something is wrong.");
         }
-
     }
 }
-module.exports = new TransportService();
+module.exports = new BackgroundService();

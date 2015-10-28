@@ -51,8 +51,6 @@ class ThreadComposer extends Component {
 }
 
 ThreadComposer.propTypes = {
-    addNewThread: PropTypes.func.isRequired,
-    addNewGroupThread: PropTypes.func.isRequired,
     searchThreads: PropTypes.func.isRequired
 };
 

@@ -1,4 +1,4 @@
-import MessageService from '../services/MessageService';
+import BackgroundService from '../services/BackgroundService';
 import ContactsManager from '../services/ContactsManger';
 import MigrationManager from '../dao/migration/MigrationManager';
 import CacheService from './CacheService';
@@ -7,7 +7,7 @@ import * as AppConstants from '../constants/AppConstants';
 export default class AppInitService{
 
     constructor(){
-        MessageService.init();
+        BackgroundService.init();
         let migrationPromise = MigrationManager.init();
         migrationPromise.then(this.loadPreferences)
                         .then(this.initContactDBIfRequired);

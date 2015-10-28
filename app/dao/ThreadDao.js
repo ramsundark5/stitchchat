@@ -4,9 +4,11 @@ import * as AppConstants from '../constants/AppConstants';
 class ThreadDao{
 
     async createThreadForContact(contact){
-        let sqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread)" +
-            "values (:recipientPhoneNumber, :displayName, :isGroupThread)";
-        let paramMap = {recipientPhoneNumber: contact.phoneNumber, displayName: contact.displayName, isGroupThread: false};
+        let currentTime = new Date().getTime();
+        let sqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread, lastMessageTime)" +
+            "values (:recipientPhoneNumber, :displayName, :isGroupThread, :lastMessageTime)";
+        let paramMap = {recipientPhoneNumber: contact.phoneNumber, displayName: contact.displayName,
+                        isGroupThread: false, lastMessageTime: currentTime};
         let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         console.log("threadId created as "+ threadId);
         let threadForPhoneNumber = await this.getThreadById(threadId);
@@ -14,9 +16,10 @@ class ThreadDao{
     }
 
     async createGroupThread(groupUid, displayName){
-        let sqlStmt  = "INSERT into Thread (groupUid, displayName, isGroupThread)" +
-            "values (:groupUid, :displayName, :isGroupThread)";
-        let paramMap = {groupUid: groupUid, displayName: displayName, isGroupThread: true};
+        let currentTime = new Date().getTime();
+        let sqlStmt  = "INSERT into Thread (groupUid, displayName, isGroupThread, lastMessageTime)" +
+            "values (:groupUid, :displayName, :isGroupThread, :lastMessageTime)";
+        let paramMap = {groupUid: groupUid, displayName: displayName, isGroupThread: true, lastMessageTime: currentTime};
         let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         console.log("groupthreadId created as "+ threadId);
         let threadForGroup = await this.getThreadById(threadId);
@@ -54,6 +57,21 @@ class ThreadDao{
         let sqlStmt  = "SELECT * from Thread order by lastMessageTime";
         let recentThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt);
         return recentThreads;
+    }
+
+    updateLastMessageText(newMessage){
+        let currentTime = new Date().getTime();
+        let sqlStmt  = "UPDATE Thread set lastMessageText  = :lastMessageText, " +
+                                         "lastMessageTime = :lastMessageTime  " +
+                                         "where id = :id";
+        let paramMap = {id: newMessage.threadId, lastMessageText: newMessage.message, lastMessageTime: currentTime};
+        DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+    }
+
+    updateUnreadCount(threadId, count){
+        let sqlStmt  = "UPDATE Thread set unreadCount  = unreadCount + :count where id = :id";
+        let paramMap = {id: threadId, count: count};
+        DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
     }
 }
 

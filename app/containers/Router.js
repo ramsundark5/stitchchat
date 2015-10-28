@@ -42,10 +42,10 @@ class Router {
             component: InboxPage,
             name: 'inboxView',
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            navigationBar: (
+            /*navigationBar: (
                 <NavigationBar
                     title={{ title: 'Inbox'}}/>
-            )
+            )*/
         })
     }
 
