@@ -22,7 +22,7 @@ class Router {
     }
 
     pop() {
-        this.navigator.pop()
+        this.navigator.pop();
     }
 
     toLoginView(props) {
