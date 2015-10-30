@@ -1,13 +1,20 @@
 import LoginService from '../services/LoginService';
-import React, { Component, View, StyleSheet, ScrollView, Text } from 'react-native';
+import {commons, defaultStyle} from '../components/styles/CommonStyles';
+import React, { Component, View, TouchableHighlight, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class LoginPage extends Component{
 
-    componentDidMount(){
+    showLoginPage(){
         LoginService.showLoginPage();
     }
 
     render() {
-        return (<View></View>);
+        return (
+            <TouchableHighlight style={commons.center} onPress={() => this.showLoginPage()}>
+                <Icon name='ios-people-outline'
+                      style={commons.defaultIcon}/>
+            </TouchableHighlight>
+        );
     }
 }

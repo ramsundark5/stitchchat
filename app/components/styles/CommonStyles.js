@@ -59,6 +59,11 @@ export const commons = StyleSheet.create({
     stretch:{
         alignItems: 'stretch',
     },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     messageComposer:{
         backgroundColor: defaultStyle.bgColor,
     },

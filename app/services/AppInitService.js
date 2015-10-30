@@ -3,6 +3,7 @@ import ContactsManager from '../services/ContactsManger';
 import MigrationManager from '../dao/migration/MigrationManager';
 import CacheService from './CacheService';
 import * as AppConstants from '../constants/AppConstants';
+import LoginService from './LoginService';
 
 export default class AppInitService{
 
@@ -10,6 +11,7 @@ export default class AppInitService{
         BackgroundService.init();
         let migrationPromise = MigrationManager.init();
         migrationPromise.then(this.loadPreferences)
+                        .then(this.showLoginPageIfRequired)
                         .then(this.initContactDBIfRequired);
         global.debugAsyncObject = this.debugAsyncObject;
     }
@@ -24,6 +26,14 @@ export default class AppInitService{
         if(isContactInitialized && isContactInitialized == 1){
             let countryCode = CacheService.get(AppConstants.COUNTRY_CODE_PREF);
             ContactsManager.init(countryCode);
+        }
+    }
+
+    showLoginPageIfRequired(){
+        let phoneNumber = CacheService.get("phoneNumber");
+        let token = CacheService.get("token");
+        if(!(phoneNumber && token)){
+            LoginService.showLoginPage();
         }
     }
 

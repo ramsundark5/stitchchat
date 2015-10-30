@@ -1,9 +1,10 @@
 import {NativeModules} from 'react-native';
-
+var sqlite3 = require('react-native-sqlite3');
 class DBHelper{
 
     constructor(){
-        this.db = NativeModules.RNSqlite;
+        //this.db = NativeModules.RNSqlite;
+        this.db = sqlite3;
     }
 
     open(dbName){

@@ -11,6 +11,11 @@ PODS:
     - FMDB/common
   - libPhoneNumber-iOS (0.8.8)
   - MQTTClient (0.3.3)
+  - React (0.13.2):
+    - React/Core (= 0.13.2)
+  - react-native-sqlite3 (0.1.1):
+    - FMDB/FTS
+    - React
   - React/Core (0.13.2)
   - React/RCTImage (0.13.2):
     - React/Core
@@ -29,9 +34,9 @@ DEPENDENCIES:
   - Crashlytics
   - Digits
   - Fabric
-  - FMDB/FTS
   - libPhoneNumber-iOS
   - MQTTClient
+  - react-native-sqlite3 (from `node_modules/react-native-sqlite3`)
   - React/Core (from `node_modules/react-native`)
   - React/RCTImage (from `node_modules/react-native`)
   - React/RCTNetwork (from `node_modules/react-native`)
@@ -43,6 +48,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   React:
     :path: node_modules/react-native
+  react-native-sqlite3:
+    :path: node_modules/react-native-sqlite3
 
 SPEC CHECKSUMS:
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
@@ -52,6 +59,7 @@ SPEC CHECKSUMS:
   libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
   MQTTClient: 8b40f3bd20c8ea35f66d82bce5039487873b9a5c
   React: 25a94f46f38c444fe20ad66ac630dc4251506887
+  react-native-sqlite3: 978c732bf10575eae3d3acaede76062fbfba8880
   TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36
 
 COCOAPODS: 0.39.0
