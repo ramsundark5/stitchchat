@@ -82,6 +82,10 @@ export const commons = StyleSheet.create({
         borderRadius: 5,
         width: 20,
         height: 20
+    },
+    remindRegisterButton:{
+        borderColor: '#8e44ad',
+        backgroundColor: '#9b59b6'
     }
 });
 

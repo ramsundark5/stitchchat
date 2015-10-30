@@ -7,6 +7,7 @@
     "test": "mocha --recursive --compilers js:babel/register"
   },
   "dependencies": {
+    "apsl-react-native-button": "^2.0.0",
     "crypto-browserify": "^3.10.0",
     "lodash": "^3.10.1",
     "phoneformat.js": "^1.0.2",
