@@ -16,6 +16,9 @@ class InboxPage extends Component {
 
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            isRegistered: true
+        };
         this.loadRecentThreads();
         RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
     }
@@ -57,10 +60,9 @@ class InboxPage extends Component {
     }
 
     renderRemindRegistration(){
-        let phoneNumber = CacheService.get('phoneNumber');
-        let isPhoneNumberFound = phoneNumber && phoneNumber.length > 1;
+        let isRegistered = this.state.isRegistered;
         let currentOS = Platform.OS;
-        if(currentOS == 'ios' && !isPhoneNumberFound) {
+        if(currentOS == 'ios' && !isRegistered) {
             return(
                 <Button
                     style={commons.remindRegisterButton} textStyle={commons.defaultText}
@@ -74,16 +76,18 @@ class InboxPage extends Component {
         }
     }
 
-    showLoginPageIfRequired(){
-        let phoneNumber = CacheService.get("phoneNumber");
-        let token = CacheService.get("token");
-        if(!(phoneNumber && token)){
+    async showLoginPageIfRequired(){
+        let isRegistered = await CacheService.isAppRegistered();
+        if(!isRegistered){
             LoginService.showLoginPage();
         }
+        this.setState({isRegistered: isRegistered});
     }
 
     onRegistrationSuccess(){
         let currentOS = Platform.OS;
+        this.setState({isRegistered: true});
+        console.log("registration success in invoked and status updated");
         if(currentOS == 'ios') {
             this.forceUpdate();
         }

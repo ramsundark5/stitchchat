@@ -28,6 +28,23 @@ class CacheService{
         return this.cache.get(key);
     }
 
+    async isAppRegistered(){
+        let isRegistered = false;
+        let sqlStmt = "SELECT value from Preferences where key = 'token'";
+        try{
+            let results = await DBHelper.executeQuery(AppConstants.CONTACTS_DB, sqlStmt);
+            if(results && results.length > 0){
+                console.log("app is registered"+results);
+                isRegistered = true;
+            }
+        }catch(err){
+            //this is required if tables are not created yet.
+            console.log("unable to get registration status "+ err);
+        }
+
+        return isRegistered;
+    }
+
     setAndPersist(key, value){
         this.set(key, value);
         let sqlStmt = 'INSERT OR REPLACE into Preferences (key, value) values (:key, :value)';

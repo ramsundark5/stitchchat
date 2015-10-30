@@ -7,13 +7,10 @@ import CreateGroupsPage from './CreateGroupsPage';
 import PhotoGallery from '../components/media/PhotoGallery';
 import NavigationBar from '../components/navbar/NavigationBar';
 import CreateGroupNavBar from '../components/contacts/NewContactGroupHeader';
-import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 class Router {
     constructor(navigator) {
         this.navigator = navigator;
-        RCTDeviceEventEmitter.addListener('registrationCancelled', this.onRegistrationCancelled.bind(this));
-        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
     }
 
     push(props, route) {
@@ -103,15 +100,6 @@ class Router {
         this.navigator.popToTop()
     }
 
-    onRegistrationCancelled(){
-        let emptyProps = {};
-        this.toLoginView(emptyProps);
-    }
-
-    onRegistrationSuccess(){
-        let emptyProps = {};
-        this.toInboxView(emptyProps);
-    }
 }
 
 module.exports = Router;

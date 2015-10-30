@@ -19,9 +19,6 @@
 		A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C129321BCDC5B800693415 /* libsqlite3.tbd */; };
 		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */; settings = {ASSET_TAGS = (); }; };
-		A2C12ED81BCEF32D00B19CFD /* RNSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */; settings = {ASSET_TAGS = (); }; };
-		A2C12F0A1BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */; settings = {ASSET_TAGS = (); }; };
-		A2C12F0C1BD054CB00B19CFD /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */; settings = {ASSET_TAGS = (); }; };
 		A2C6C4BA1BD710F80015AFA2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */; settings = {ASSET_TAGS = (); }; };
 		A2C6C4BB1BD710F80015AFA2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */; settings = {ASSET_TAGS = (); }; };
 		A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */; };
@@ -59,9 +56,6 @@
 		A2C129321BCDC5B800693415 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNContactsManager.swift; sourceTree = "<group>"; };
 		A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNContactsManager.m; sourceTree = "<group>"; };
-		A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSqlite.m; sourceTree = "<group>"; };
-		A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
-		A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMQTTClient.m; sourceTree = "<group>"; };
@@ -136,7 +130,6 @@
 			children = (
 				A2C6C4AD1BD710F80015AFA2 /* Fonts */,
 				A2C129341BCE214400693415 /* Contacts */,
-				A2C1292B1BCDBF1A00693415 /* RNSqlite */,
 				A243865D1BBC560D0056262F /* RNDigits */,
 				A2F214C51BA8DCE300EDAC0F /* MQTTClient */,
 				A2F234141BA35FB1000A5A9E /* HelloManager.m */,
@@ -169,16 +162,6 @@
 				A2B411B11BBC74A900918E9E /* DigitsLogin.m */,
 			);
 			name = RNDigits;
-			sourceTree = "<group>";
-		};
-		A2C1292B1BCDBF1A00693415 /* RNSqlite */ = {
-			isa = PBXGroup;
-			children = (
-				A2C12ED71BCEF32D00B19CFD /* RNSqlite.m */,
-				A2C12F091BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift */,
-				A2C12F0B1BD054CB00B19CFD /* FMDatabaseVariadic.swift */,
-			);
-			name = RNSqlite;
 			sourceTree = "<group>";
 		};
 		A2C129341BCE214400693415 /* Contacts */ = {
@@ -401,14 +384,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2C12ED81BCEF32D00B19CFD /* RNSqlite.m in Sources */,
 				A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */,
-				A2C12F0C1BD054CB00B19CFD /* FMDatabaseVariadic.swift in Sources */,
 				A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */,
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
 				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				A2C12F0A1BD054A100B19CFD /* FMDatabaseAdditionsVariadic.swift in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,
 				A211C7871BD061EE00653014 /* ContactsDao.m in Sources */,
 				A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */,
