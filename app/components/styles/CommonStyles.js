@@ -10,15 +10,17 @@ export const defaultStyle = {
     iconSize           : 30,
     smallIconSize      : 16,
     textInputHeight    : 26,
+    bgColor            : '#43B2A1',
+    headerColor        : 'white'
 };
 
-if(Platform.OS != 'ios'){
+/*if(Platform.OS != 'ios'){
     defaultStyle.bgColor = 'white',
     defaultStyle.headerColor = '#43B2A1'
 }else{
     defaultStyle.bgColor = '#43B2A1',
     defaultStyle.headerColor = 'white'
-}
+}*/
 
 
 export const commons = StyleSheet.create({
@@ -93,8 +95,12 @@ export const commons = StyleSheet.create({
         height: 20
     },
     remindRegisterButton:{
-        borderColor: '#8e44ad',
+        borderColor: defaultStyle.bgColor,
         backgroundColor: defaultStyle.bgColor
+    },
+    remindRegisterButtonText:{
+        color: defaultStyle.headerColor,
+        fontSize: defaultStyle.fontSize
     }
 });
 

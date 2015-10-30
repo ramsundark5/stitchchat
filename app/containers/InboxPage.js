@@ -5,7 +5,7 @@ import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
 import * as ThreadActions from '../actions/ThreadActions';
 import * as MessageActions from '../actions/MessageActions';
-import {commons} from '../components/styles/CommonStyles';
+import {commons, defaultStyle} from '../components/styles/CommonStyles';
 import LoginService from '../services/LoginService';
 import ThreadDao from '../dao/ThreadDao';
 import CacheService from '../services/CacheService';
@@ -65,7 +65,7 @@ class InboxPage extends Component {
         if(currentOS == 'ios' && !isRegistered) {
             return(
                 <Button
-                    style={commons.remindRegisterButton} textStyle={commons.defaultText}
+                    style={commons.remindRegisterButton} textStyle={commons.remindRegisterButtonText}
                     onPress={() => {LoginService.showLoginPage();} }>
                     Click here to Register!
                 </Button>

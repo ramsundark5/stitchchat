@@ -57,7 +57,7 @@ class Router {
             navigationBar: (
                 <NavigationBar
                     title={{ title: props.displayName }}
-                    leftButton={{ title: 'Back', handler: () => this.replaceWithHome()}}/>
+                    leftButton={{ title: 'Back', handler: () => this.toInboxView()}}/>
             )
         })
     }
