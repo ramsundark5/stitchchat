@@ -15,17 +15,17 @@ export function addNewThread(thread) {
     };
 }
 
-export function deleteThread(id) {
+export function deleteThread(thread) {
     return {
         type: Actions.DELETE_THREAD,
-        id
+        thread
     };
 }
 
-export function selectThread(id) {
+export function selectThread(thread) {
     return {
         type: Actions.SELECT_THREAD,
-        id
+        thread
     };
 }
 

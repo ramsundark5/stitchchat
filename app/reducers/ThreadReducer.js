@@ -20,7 +20,7 @@ export function threadState(state = initialState, action = {}) {
 
         case Action.DELETE_THREAD:
             let threadsAfterDelete = state.threads.filter(thread =>
-                thread.id !== action.id
+                thread.id !== action.thread.id
             );
             let newStateAfterDelete =  _.assign({}, state, { 'threads' : threadsAfterDelete });
             return newStateAfterDelete;
@@ -37,7 +37,7 @@ export function threadState(state = initialState, action = {}) {
 
         case Action.SELECT_THREAD:
             let threadsAfterSelect =  state.threads.map(thread =>
-                    thread.id === action.id ?
+                    thread.id === action.thread.id ?
                         _.assign({}, thread, {selected: !thread.selected}) :
                         thread
             );

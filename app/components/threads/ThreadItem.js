@@ -9,15 +9,26 @@ class ThreadItem extends Component {
     }
 
     openMessagesPage(thread){
-        this.props.setCurrentThread(thread);
-        this.props.router.toMessageView(thread);
+        if(this.props.isEditing){
+            this.selectThread(thread);
+        }else{
+            this.props.setCurrentThread(thread);
+            this.props.router.toMessageView(thread);
+        }
+    }
+
+    selectThread(thread){
+        this.props.selectThread(thread);
     }
 
     render() {
         const {thread} = this.props;
+        let threadBgColor = thread.selected ? threadStyle.threadSelected : threadStyle.threadUnselected;
         let displayName = thread.displayName && thread.displayName.length > 0 ? thread.displayName : thread.recipientPhoneNumber;
         return (
-            <TouchableHighlight onPress={() => this.openMessagesPage(thread)}>
+            <TouchableHighlight onPress={() => this.openMessagesPage(thread)}
+                                onLongPress={() => this.selectThread(thread)}
+                                style={threadBgColor}>
                 <View>
                     <View style = {threadStyle.threadItemContainer}>
                         <Text style={[threadStyle.title]}>{displayName}</Text>
@@ -51,6 +62,7 @@ class ThreadItem extends Component {
 ThreadItem.propTypes = {
     thread: PropTypes.object.isRequired,
     selectThread: PropTypes.func.isRequired,
+    isEditing: PropTypes.bool.isRequired,
     setCurrentThread: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired
 };

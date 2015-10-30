@@ -4,7 +4,6 @@ const senderMessageBgColor     = '#257DF7';
 const receiverMessageBgColor   = '#D1D1D1';
 const senderMessageTextColor   = '#FFFFFF';
 const receiverMessageTextColor = '#000000';
-const selectedColor            = '#ff0000';
 
 export const messageStyle = StyleSheet.create({
     msgItemContainer: {  // F. hack. Can't align multiple items to right, I need to nest them inside a parent.
@@ -54,7 +53,7 @@ export const messageStyle = StyleSheet.create({
         right: 3,
     },
     msgSelected: {
-        backgroundColor: selectedColor,
+        backgroundColor: defaultStyle.selectedColor,
     },
     msgUnselected: {
         backgroundColor: 'transparent',

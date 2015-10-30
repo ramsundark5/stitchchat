@@ -43,6 +43,12 @@ export const threadStyle = StyleSheet.create({
     },
     badgeText: {
         fontSize: defaultStyle.smallFontSize
-    }
+    },
+    threadSelected: {
+        backgroundColor: defaultStyle.selectedColor,
+    },
+    threadUnselected: {
+        backgroundColor: 'transparent',
+    },
 
 });

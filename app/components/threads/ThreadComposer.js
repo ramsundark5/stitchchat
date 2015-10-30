@@ -19,7 +19,7 @@ class ThreadComposer extends Component {
     }
 
     render() {
-        const { isEditing } = this.props;
+        const { isEditing, actions } = this.props;
         if(isEditing){
             return(
                 <ThreadOptionsBox isEditing={isEditing} actions={actions}/>

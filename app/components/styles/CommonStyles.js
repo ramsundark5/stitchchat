@@ -11,7 +11,8 @@ export const defaultStyle = {
     smallIconSize      : 16,
     textInputHeight    : 26,
     bgColor            : '#43B2A1',
-    headerColor        : 'white'
+    headerColor        : 'white',
+    selectedColor      : '#ff0000',
 };
 
 /*if(Platform.OS != 'ios'){
