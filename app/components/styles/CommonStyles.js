@@ -1,16 +1,25 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 
 export const defaultStyle = {
     fontSize           : 14,
     smallFontSize      : 12,
-    bgColor            :'#ff0000',
+    //bgColor            : '#744EAA',//'#744EAA',
     headerColor        :'',
     iconColor          : '#333333',
     iconSize           : 30,
     smallIconSize      : 16,
-    textInputHeight    : 26
+    textInputHeight    : 26,
 };
+
+if(Platform.OS != 'ios'){
+    defaultStyle.bgColor = 'white',
+    defaultStyle.headerColor = '#43B2A1'
+}else{
+    defaultStyle.bgColor = '#43B2A1',
+    defaultStyle.headerColor = 'white'
+}
+
 
 export const commons = StyleSheet.create({
 
@@ -85,7 +94,7 @@ export const commons = StyleSheet.create({
     },
     remindRegisterButton:{
         borderColor: '#8e44ad',
-        backgroundColor: '#9b59b6'
+        backgroundColor: defaultStyle.bgColor
     }
 });
 

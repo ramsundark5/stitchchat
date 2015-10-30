@@ -17,8 +17,10 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(startLoginProcess) {
   DGTAppearance *digitsAppearance = [[DGTAppearance alloc] init];
-  //digitsAppearance.backgroundColor = [UIColor blackColor];
-  //digitsAppearance.accentColor = [UIColor greenColor];
+  //UIColor *bgColor = [self getUIColorObjectFromHexString:@"43B2A1" alpha:.9];
+  //digitsAppearance.backgroundColor = bgColor;
+  UIColor *accentColor = [self getUIColorObjectFromHexString:@"43B2A1" alpha:.9];
+  digitsAppearance.accentColor = accentColor;
   
   digitsAppearance.headerFont = [UIFont systemFontOfSize:18];
   digitsAppearance.labelFont = [UIFont systemFontOfSize:16];

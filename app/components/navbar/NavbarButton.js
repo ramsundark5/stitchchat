@@ -7,6 +7,7 @@ const {
     } = React;
 import Component from '../PureComponent';
 import styles from './styles';
+import {defaultStyle, commons} from '../styles/CommonStyles';
 
 export default class NavbarButton extends Component {
 
@@ -16,7 +17,7 @@ export default class NavbarButton extends Component {
         return (
             <TouchableOpacity onPress={handler}>
               <View style={style}>
-                <Text style={[styles.navBarButtonText, { color: tintColor, }, ]}>{title}</Text>
+                <Text style={[styles.navBarButtonText, { color: defaultStyle.headerColor }, ]}>{title}</Text>
               </View>
             </TouchableOpacity>
         );
@@ -32,10 +33,4 @@ export default class NavbarButton extends Component {
     handler: PropTypes.func,
   }
 
-  static defaultProps = {
-    style: {},
-    title: '',
-    tintColor: '#0076FF',
-    onPress: () => ({}),
-  }
 }
