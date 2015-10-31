@@ -6,7 +6,7 @@ class FileUploadService{
         this.fileManager = NativeModules.RNNetworkingManager;
     }
 
-    uploadFile(fileList){
+    uploadFile(filePath){
         let options = {
             uploadUrl: 'http://127.0.0.1:3000',
             method: 'POST', // default 'POST',support 'POST' and 'PUT'
@@ -28,6 +28,12 @@ class FileUploadService{
         /*FileUpload.upload(options, function(err, result) {
             console.log('upload:', err, result);
         });*/
+        this.fileManager.requestFile(url, {
+            'method': 'POST',
+            'data' : filePath
+        }, function(results) {
+            console.log(results);
+        });
     }
 
 }
