@@ -6,13 +6,13 @@ export const defaultStyle = {
     smallFontSize      : 12,
     //bgColor            : '#744EAA',//'#744EAA',
     headerColor        :'',
-    iconColor          : '#333333',
+    iconColor          : '#000000',
     iconSize           : 30,
     smallIconSize      : 16,
     textInputHeight    : 26,
     bgColor            : '#43B2A1',
     headerColor        : 'white',
-    selectedColor      : '#ff0000',
+    selectedColor      : '#DDF6FF',
 };
 
 /*if(Platform.OS != 'ios'){
@@ -53,6 +53,7 @@ export const commons = StyleSheet.create({
     defaultIcon: {
        // padding: 4,
         fontSize : defaultStyle.iconSize,
+        color: defaultStyle.iconColor
     },
     smallIcon: {
         width : defaultStyle.smallIconSize,

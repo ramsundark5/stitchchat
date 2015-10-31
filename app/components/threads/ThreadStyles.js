@@ -30,6 +30,8 @@ export const threadStyle = StyleSheet.create({
         flexDirection : 'row',
         flexWrap      : 'nowrap',
         justifyContent: 'space-around',
+        backgroundColor: '#C9C9CE',
+        paddingTop: 7
     },
     timestamp: {
         flex: 0,
