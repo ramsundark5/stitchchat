@@ -19,10 +19,10 @@ class ThreadComposer extends Component {
     }
 
     render() {
-        const { isEditing, actions } = this.props;
+        const { isEditing, deleteSelected } = this.props;
         if(isEditing){
             return(
-                <ThreadOptionsBox isEditing={isEditing} actions={actions}/>
+                <ThreadOptionsBox isEditing={isEditing} deleteSelected={deleteSelected}/>
             );
         }
 
@@ -51,7 +51,8 @@ class ThreadComposer extends Component {
 }
 
 ThreadComposer.propTypes = {
-    searchThreads: PropTypes.func.isRequired
+    searchThreads: PropTypes.func.isRequired,
+    deleteSelected: PropTypes.func.isRequired
 };
 
 export default ThreadComposer;

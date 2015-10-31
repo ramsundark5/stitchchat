@@ -1,6 +1,10 @@
-import {FileUpload} from 'NativeModules';
+import {NativeModules} from 'react-native';
 
 class FileUploadService{
+
+    constructor(){
+        this.fileManager = NativeModules.RNNetworkingManager;
+    }
 
     uploadFile(fileList){
         let options = {
@@ -21,9 +25,9 @@ class FileUploadService{
             ]
         };
 
-        FileUpload.upload(options, function(err, result) {
+        /*FileUpload.upload(options, function(err, result) {
             console.log('upload:', err, result);
-        });
+        });*/
     }
 
 }

@@ -1,4 +1,25 @@
 PODS:
+  - AFNetworking (2.6.1):
+    - AFNetworking/NSURLConnection (= 2.6.1)
+    - AFNetworking/NSURLSession (= 2.6.1)
+    - AFNetworking/Reachability (= 2.6.1)
+    - AFNetworking/Security (= 2.6.1)
+    - AFNetworking/Serialization (= 2.6.1)
+    - AFNetworking/UIKit (= 2.6.1)
+  - AFNetworking/NSURLConnection (2.6.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.1)
+  - AFNetworking/Security (2.6.1)
+  - AFNetworking/Serialization (2.6.1)
+  - AFNetworking/UIKit (2.6.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - Crashlytics (3.3.4)
   - Digits (1.11.4)
   - Fabric (1.5.5):
@@ -31,6 +52,7 @@ PODS:
   - TwitterCore (1.11.4)
 
 DEPENDENCIES:
+  - AFNetworking (~> 2.5)
   - Crashlytics
   - Digits
   - Fabric
@@ -52,6 +74,7 @@ EXTERNAL SOURCES:
     :path: node_modules/react-native-sqlite3
 
 SPEC CHECKSUMS:
+  AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
   Digits: 1a372fab25b58d1459adc6b8d95e2e155ae5b212
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1

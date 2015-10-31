@@ -1,6 +1,7 @@
-import React, { Component, StyleSheet, View, ScrollView, Image, CameraRoll, TouchableHighlight, NativeModules, PropTypes } from 'react-native';
-import FileUploadService from '../../services/FileUploadService';
+import React, { Component, View, ScrollView, Image, CameraRoll, TouchableHighlight, NativeModules, PropTypes } from 'react-native';
+import FileUploadService from '../../transport/FileUploadService';
 import {HelloManager} from 'NativeModules';
+import mediaStyle from './MediaStyles';
 
 class PhotoGallery extends Component {
 
@@ -47,12 +48,12 @@ class PhotoGallery extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <View style={styles.imageGrid}>
+            <ScrollView style={mediaStyle.container}>
+                <View style={mediaStyle.imageGrid}>
                     { this.state.images.map((image) => {
                         return (
                             <TouchableHighlight key={image.uri} onPress={this.selectImage.bind(null, image.uri)}>
-                                <Image style={styles.image} source={{ uri: image.uri }} />
+                                <Image style={mediaStyle.image} source={{ uri: image.uri }} />
                             </TouchableHighlight>
                         );
                     })
@@ -62,23 +63,5 @@ class PhotoGallery extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-    },
-    imageGrid: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center'
-    },
-    image: {
-        width: 100,
-        height: 100,
-        margin: 10,
-    }
-});
 
 export default PhotoGallery;
