@@ -1,7 +1,7 @@
 import React, { Component, View, ScrollView, Image, CameraRoll, TouchableHighlight, NativeModules, PropTypes } from 'react-native';
-import FileUploadService from '../../transport/FileUploadService';
+import FileUploadService from '../../services/FileUploadService';
 import {HelloManager} from 'NativeModules';
-import mediaStyle from './MediaStyles';
+import {mediaStyle} from './MediaStyles';
 
 class PhotoGallery extends Component {
 
@@ -17,17 +17,10 @@ class PhotoGallery extends Component {
         const fetchParams = {
             first: 25,
         };
-        CameraRoll.getPhotos(fetchParams, this.storeImages.bind(this), this.logImageError.bind(this));
+        CameraRoll.getPhotos(fetchParams, this.displayImages.bind(this), this.logImageError.bind(this));
     }
 
-    async storeImages(data) {
-        try{
-            let result =  await HelloManager.sayHello("hello buddy");
-            console.log('swift output is '+ result);
-        }catch(error){
-            console.log('error '+ error);
-        }
-
+     displayImages(data) {
         const assets = data.edges;
         const images = assets.map((asset) => asset.node.image);
         this.setState({images: images});
@@ -38,12 +31,14 @@ class PhotoGallery extends Component {
     }
 
     selectImage(uri) {
-        NativeModules.ReadImageData.readImage(uri, (image) => {
+        console.log('selected uri is :'+uri);
+        FileUploadService.getSignedUrl(uri);
+        /*NativeModules.ReadImageData.readImage(uri, (image) => {
             this.setState({
                 selected: image,
             });
             console.log(image);
-        });
+        });*/
     }
 
     render() {

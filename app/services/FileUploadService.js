@@ -28,14 +28,32 @@ class FileUploadService{
         /*FileUpload.upload(options, function(err, result) {
             console.log('upload:', err, result);
         });*/
-        this.fileManager.requestFile(url, {
+        let getSignedUrl = '';
+        fetch
+       /* this.fileManager.requestFile(url, {
             'method': 'POST',
             'data' : filePath
         }, function(results) {
             console.log(results);
-        });
+        });*/
+    }
+
+    getSignedUrl(){
+        var options = {
+            method: 'GET'
+        };
+
+        fetch('http://localhost:3000/attachment', options)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                let signedUrl = jsonData.url;
+                return signedUrl;
+            }).catch((error) => {
+                console.log('auth failed'+ error);
+                return null;
+            })
     }
 
 }
 
-export default FileUploadService;
+module.exports = new FileUploadService();

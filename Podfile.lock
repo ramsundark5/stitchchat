@@ -38,12 +38,18 @@ PODS:
     - FMDB/FTS
     - React
   - React/Core (0.13.2)
+  - React/RCTCameraRoll (0.13.2):
+    - React/Core
   - React/RCTImage (0.13.2):
     - React/Core
     - React/RCTNetwork
+  - React/RCTLinkingIOS (0.13.2):
+    - React/Core
   - React/RCTNetwork (0.13.2):
     - React/Core
   - React/RCTPushNotification (0.13.2):
+    - React/Core
+  - React/RCTSettings (0.13.2):
     - React/Core
   - React/RCTText (0.13.2):
     - React/Core
@@ -60,9 +66,12 @@ DEPENDENCIES:
   - MQTTClient
   - react-native-sqlite3 (from `node_modules/react-native-sqlite3`)
   - React/Core (from `node_modules/react-native`)
+  - React/RCTCameraRoll (from `node_modules/react-native`)
   - React/RCTImage (from `node_modules/react-native`)
+  - React/RCTLinkingIOS (from `node_modules/react-native`)
   - React/RCTNetwork (from `node_modules/react-native`)
   - React/RCTPushNotification (from `node_modules/react-native`)
+  - React/RCTSettings (from `node_modules/react-native`)
   - React/RCTText (from `node_modules/react-native`)
   - React/RCTWebSocket (from `node_modules/react-native`)
   - TwitterCore
@@ -81,7 +90,7 @@ SPEC CHECKSUMS:
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
   MQTTClient: 8b40f3bd20c8ea35f66d82bce5039487873b9a5c
-  React: 25a94f46f38c444fe20ad66ac630dc4251506887
+  React: 8dfd43a978809ce752067bf941ada1ae4efcb25b
   react-native-sqlite3: 978c732bf10575eae3d3acaede76062fbfba8880
   TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36
 

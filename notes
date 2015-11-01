@@ -1,0 +1,8 @@
+  add these lines to react native podspec
+
+
+  s.subspec 'RCTCameraRoll' do |ss|
+    ss.dependency         'React/Core'
+    ss.source_files     = "Libraries/CameraRoll/*.{h,m}"
+    ss.preserve_paths   = "Libraries/CameraRoll/*.js"
+  end
