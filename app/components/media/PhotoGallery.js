@@ -32,7 +32,7 @@ class PhotoGallery extends Component {
 
     selectImage(uri) {
         console.log('selected uri is :'+uri);
-        FileUploadService.getSignedUrl(uri);
+        FileUploadService.uploadFile(uri);
         /*NativeModules.ReadImageData.readImage(uri, (image) => {
             this.setState({
                 selected: image,

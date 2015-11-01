@@ -6,7 +6,7 @@ class FileUploadService{
         this.fileManager = NativeModules.RNNetworkingManager;
     }
 
-    uploadFile(filePath){
+    async uploadFile(filePath){
         let options = {
             uploadUrl: 'http://127.0.0.1:3000',
             method: 'POST', // default 'POST',support 'POST' and 'PUT'
@@ -25,17 +25,21 @@ class FileUploadService{
             ]
         };
 
-        /*FileUpload.upload(options, function(err, result) {
-            console.log('upload:', err, result);
-        });*/
-        let getSignedUrl = '';
-        fetch
-       /* this.fileManager.requestFile(url, {
+        let signedUrl = await this.getSignedUrl();
+        console.log("signed url is: "+ signedUrl);
+        if(signedUrl){
+            this.uploadFileInternal(signedUrl, filePath);
+        }
+
+    }
+
+    uploadFileInternal(signedUrl, filePath){
+        this.fileManager.requestFile(signedUrl, {
             'method': 'POST',
             'data' : filePath
         }, function(results) {
             console.log(results);
-        });*/
+        });
     }
 
     getSignedUrl(){
@@ -43,15 +47,15 @@ class FileUploadService{
             method: 'GET'
         };
 
-        fetch('http://localhost:3000/attachment', options)
+        return fetch('http://localhost:3000/attachments', options)
             .then((response) => response.json())
             .then((jsonData) => {
                 let signedUrl = jsonData.url;
                 return signedUrl;
             }).catch((error) => {
-                console.log('auth failed'+ error);
+                console.log('Error getting signed url: '+ error);
                 return null;
-            })
+            });
     }
 
 }
