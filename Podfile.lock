@@ -20,6 +20,9 @@ PODS:
   - AFNetworking/UIKit (2.6.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AWSCore (2.2.7)
+  - AWSS3 (2.2.7):
+    - AWSCore (= 2.2.7)
   - Crashlytics (3.3.4)
   - Digits (1.11.4)
   - Fabric (1.5.5):
@@ -59,6 +62,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - AWSS3
   - Crashlytics
   - Digits
   - Fabric
@@ -84,6 +88,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
+  AWSCore: d81e1e534040780deb0f3877aaa207d297e54b4c
+  AWSS3: d39bae2ebbcdc450aef30635c85e556317b92a33
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
   Digits: 1a372fab25b58d1459adc6b8d95e2e155ae5b212
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1

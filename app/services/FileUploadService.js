@@ -3,43 +3,27 @@ import {NativeModules} from 'react-native';
 class FileUploadService{
 
     constructor(){
-        this.fileManager = NativeModules.RNNetworkingManager;
+        this.fileManager = NativeModules.RNFileManager;
     }
 
     async uploadFile(filePath){
-        let options = {
-            uploadUrl: 'http://127.0.0.1:3000',
-            method: 'POST', // default 'POST',support 'POST' and 'PUT'
-            headers: {
-                'Accept': 'application/json',
-            },
-            fields: {
-                'hello': 'world',
-            },
-            files: [
-                {
-                    filename: 'one.w4a', // require, file name
-                    filepath: '/xxx/one.w4a', // require, file absoluete path
-                    filetype: 'audio/x-m4a', // options, if none, will get mimetype from `filepath` extension
-                },
-            ]
-        };
-
         let signedUrl = await this.getSignedUrl();
+        let fileName  = '5F25E22E-B09E-4474-9F9C-54E7CCCED603';
         console.log("signed url is: "+ signedUrl);
         if(signedUrl){
-            this.uploadFileInternal(signedUrl, filePath);
+            this.uploadFileInternal(signedUrl, filePath, fileName);
         }
 
     }
 
-    uploadFileInternal(signedUrl, filePath){
-        this.fileManager.requestFile(signedUrl, {
-            'method': 'POST',
-            'data' : filePath
-        }, function(results) {
-            console.log(results);
-        });
+    async uploadFileInternal(signedUrl, filePath, fileName){
+        try{
+            let response = await this.fileManager.uploadFile(filePath, fileName, signedUrl);
+            console.log("upload response is "+ response);
+            debugAsyncObject(response);
+        }catch(err){
+            console.log("upload errored out "+ err);
+        }
     }
 
     getSignedUrl(){

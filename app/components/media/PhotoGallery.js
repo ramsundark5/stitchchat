@@ -30,9 +30,9 @@ class PhotoGallery extends Component {
         console.log(err);
     }
 
-    selectImage(uri) {
-        console.log('selected uri is :'+uri);
-        FileUploadService.uploadFile(uri);
+    selectImage(image) {
+        console.log('selected uri is :'+image.uri);
+        FileUploadService.uploadFile(image.uri);
         /*NativeModules.ReadImageData.readImage(uri, (image) => {
             this.setState({
                 selected: image,
@@ -47,7 +47,7 @@ class PhotoGallery extends Component {
                 <View style={mediaStyle.imageGrid}>
                     { this.state.images.map((image) => {
                         return (
-                            <TouchableHighlight key={image.uri} onPress={this.selectImage.bind(null, image.uri)}>
+                            <TouchableHighlight key={image.uri} onPress={() => this.selectImage(image)}>
                                 <Image style={mediaStyle.image} source={{ uri: image.uri }} />
                             </TouchableHighlight>
                         );

@@ -10,6 +10,7 @@ pod 'TwitterCore'
 pod 'MQTTClient'
 pod 'libPhoneNumber-iOS'
 pod 'AFNetworking', '~> 2.5'
+pod 'AWSS3'
 
 post_install do |installer|
   target = installer.pods_project.targets.select{|t| 'React' == t.name}.first
