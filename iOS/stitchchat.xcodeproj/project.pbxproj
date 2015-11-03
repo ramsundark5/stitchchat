@@ -55,7 +55,6 @@
 		A211C7861BD061EE00653014 /* ContactsDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDao.m; sourceTree = "<group>"; };
 		A211C78A1BD06E3B00653014 /* ContactsDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDao.h; sourceTree = "<group>"; };
 		A26873411BE5339F00487054 /* RNFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFileManager.m; sourceTree = "<group>"; };
-		A26873441BE5340200487054 /* RNFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNFileManager.h; sourceTree = "<group>"; };
 		A26873481BE73AA500487054 /* RCTFileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTFileTransfer.m; sourceTree = "<group>"; };
 		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
 		A2C129321BCDC5B800693415 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -174,7 +173,6 @@
 			isa = PBXGroup;
 			children = (
 				A26873411BE5339F00487054 /* RNFileManager.m */,
-				A26873441BE5340200487054 /* RNFileManager.h */,
 				A26873481BE73AA500487054 /* RCTFileTransfer.m */,
 			);
 			name = RNFileManager;

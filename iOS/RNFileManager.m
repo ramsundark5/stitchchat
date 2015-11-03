@@ -1,10 +1,16 @@
 
-#import "RNFileManager.h"
 #import "AFHTTPSessionManager.h"
 #import "AFURLSessionManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AWSS3/AWSS3.h>
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import "RCTBridgeModule.h"
+
+@interface RNFileManager : NSObject <RCTBridgeModule>
+
+@property (strong, nonatomic) AFHTTPSessionManager *manager;
+
+@end
 
 @implementation RNFileManager
 
@@ -27,6 +33,11 @@ RCT_EXPORT_METHOD(uploadFile:(NSString*) filePath
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject){
   
+  if(!self.manager){
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+  }
+  
   dispatch_async(attachmentsQueue(), ^{
     
        NSURL *assetUrl = [[NSURL alloc] initWithString:filePath];
@@ -35,23 +46,17 @@ RCT_EXPORT_METHOD(uploadFile:(NSString*) filePath
        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
        [library assetForURL:assetUrl resultBlock:^(ALAsset *asset) {
-            ALAssetRepresentation *rep = [asset defaultRepresentation];
-            
-            CGImageRef fullScreenImageRef = [rep fullScreenImage];
-            UIImage *image = [UIImage imageWithCGImage:fullScreenImageRef];
-            NSData *fileData = UIImagePNGRepresentation(image);
-            //[self uploadAFN:fileData location:signedUrl];
-            //[self uploadDataWithProgress:fileData location:signedUrl];
-         
-         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+          ALAssetRepresentation *rep = [asset defaultRepresentation];
+          
+          CGImageRef fullScreenImageRef = [rep fullScreenImage];
+          UIImage *image = [UIImage imageWithCGImage:fullScreenImageRef];
+          NSData *fileData = UIImagePNGRepresentation(image);
          
          NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:signedUrl]];
          request.HTTPMethod = @"PUT";
-         //request.HTTPBody   = fileData;
          [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
          
-         NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithRequest:request
+         NSURLSessionUploadTask *uploadTask = [self.manager uploadTaskWithRequest:request
               fromData:fileData progress:nil
               completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
            if (error) {
