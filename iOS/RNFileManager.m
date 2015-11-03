@@ -45,33 +45,54 @@ RCT_EXPORT_METHOD(uploadFile:(NSString*) filePath
        #pragma clang diagnostic push
        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+       __block BOOL isFinished = NO;
+       __block NSData * tempData = nil;
+    
        [library assetForURL:assetUrl resultBlock:^(ALAsset *asset) {
           ALAssetRepresentation *rep = [asset defaultRepresentation];
           
           CGImageRef fullScreenImageRef = [rep fullScreenImage];
           UIImage *image = [UIImage imageWithCGImage:fullScreenImageRef];
-          NSData *fileData = UIImagePNGRepresentation(image);
+          tempData = UIImageJPEGRepresentation(image, 0.7);
          
-         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:signedUrl]];
-         request.HTTPMethod = @"PUT";
-         [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-         
-         NSURLSessionUploadTask *uploadTask = [self.manager uploadTaskWithRequest:request
-              fromData:fileData progress:nil
-              completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-           if (error) {
-             NSLog(@"Error: %@", error);
-             reject(error);
-           } else {
-             NSLog(@"Success: %@ %@", response, responseObject);
-           }
-         }];
-         [uploadTask resume];
+          //tempData = UIImagePNGRepresentation(image);
+          isFinished = YES;
+        
        } failureBlock:^(NSError *error) {
-            reject(error);
+          NSLog(@"ALAssetsLibrary assetForURL error:%@", error);
+          isFinished = YES;
+          reject(error);
        }];
        #pragma clang diagnostic pop
+    
+        while (!isFinished) {
+          [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01f]];
+        }
+        [self uploadFileInternal:tempData signedUrl:signedUrl resolver:resolve rejecter:reject];
     });
 }
 
+- (void)uploadFileInternal:(NSData*)fileData
+                  signedUrl:(NSString*)signedUrl
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject{
+  
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:signedUrl]];
+  request.HTTPMethod = @"PUT";
+  [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+  
+  NSURLSessionUploadTask *uploadTask = [self.manager uploadTaskWithRequest:request
+      fromData:fileData progress:nil
+      completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+         if (error) {
+           NSLog(@"Error: %@", error);
+           reject(error);
+         } else {
+           NSLog(@"Success: %@ %@", response, responseObject);
+           resolve(@"File upload success");
+         }
+   }];
+  [uploadTask resume];
+}
 @end
