@@ -1,8 +1,6 @@
 import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Message from '../../models/Message';
-import MessageDao from '../../dao/MessageDao';
 import MessageService from '../../services/MessageService';
 
 class MessageTextInput extends Component {
@@ -16,9 +14,7 @@ class MessageTextInput extends Component {
     async handleSubmit() {
         let messageText = this.state.text;
         if (messageText.length > 0) {
-            let currentThread = this.props.currentThread;
-            let newMessage = await MessageService.addMessage(currentThread, messageText);
-            this.props.addMessage(newMessage);
+            MessageService.addMessage(messageText);
         }
         this.setState({text: ''});
     }

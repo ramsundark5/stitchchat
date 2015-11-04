@@ -3,23 +3,38 @@ import * as AppConfig from '../config/AppConfig';
 import Message from '../models/Message';
 import MessageDao from '../dao/MessageDao';
 import ThreadService from './ThreadService';
+import * as MessageActions from '../actions/MessageActions';
+import store from '../config/ConfigureStore';
+import FileUploadService from './FileUploadService';
 
 class MessageService{
 
-    async addMessage(thread, text){
-        let newMessage = new Message(text, thread.id);
-        if(thread.isGroupThread){
-            newMessage.receiverId=thread.groupUid;
+    async handleOutgoingTextMessage(text){
+        let newMessage      = new Message(text);
+        let messageToBeSent = await this.addMessage(newMessage);
+        this.sendMessage(messageToBeSent);
+    }
+
+    async addMessage(newMessage){
+        let messageToBeSent = this.buildNewMessage(newMessage);
+        let messageId = await MessageDao.addMessage(messageToBeSent.threadId, messageToBeSent);
+        messageToBeSent.id = messageId;
+        ThreadService.updateThreadWithNewMessage(messageToBeSent);
+        MessageActions.addMessage(messageToBeSent);
+        return messageToBeSent;
+    }
+
+    buildNewMessage(newMessage){
+        let currentThreadState = store.getState().threadState;
+        let currentThread = currentThreadState.currentThread;
+
+        if(currentThread.isGroupThread){
+            newMessage.receiverId=currentThread.groupUid;
             newMessage.isGroupThread = true;
         }
         else{
-            newMessage.receiverId=thread.recipientPhoneNumber;
+            newMessage.receiverId=currentThread.recipientPhoneNumber;
         }
-
-        let messageId = await MessageDao.addMessage(newMessage.threadId, newMessage);
-        newMessage.id = messageId;
-        this.sendMessage(newMessage);
-        ThreadService.updateThreadWithNewMessage(newMessage);
         return newMessage;
     }
 

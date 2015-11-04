@@ -38,6 +38,20 @@ class MessageDao{
         return addRemoteMessagePromise;
     }
 
+    updateUploadStatus(message, status){
+        let sqlStmt = 'UPDATE Message set mediaStatus = :mediaStatus where id = :messageId';
+        let paramMap = {messageId: message.id, mediaStatus: status};
+        let updateMediaStatusPromise = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+        return updateMediaStatusPromise;
+    }
+
+    updateMessageStatus(message, status){
+        let sqlStmt = 'UPDATE Message set status = :status where id = :messageId';
+        let paramMap = {messageId: message.id, status: status};
+        let updateMessageStatusPromise = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+        return updateMessageStatusPromise;
+    }
+
 }
 
 module.exports = new MessageDao();

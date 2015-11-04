@@ -7,11 +7,15 @@ class FileUploadService{
     }
 
     async uploadFile(filePath){
-        let signedUrl = await this.getSignedUrl();
-        let fileName  = '5F25E22E-B09E-4474-9F9C-54E7CCCED603';
-        console.log("signed url is: "+ signedUrl);
-        if(signedUrl){
-            this.uploadFileInternal(signedUrl, filePath, fileName);
+        try{
+            let signedUrl = await this.getSignedUrl();
+            let fileName  = 'file1.jpg';
+            console.log("signed url is: "+ signedUrl);
+            if(signedUrl){
+                this.uploadFileInternal(signedUrl, filePath, fileName);
+            }
+        }catch(err){
+            console.error("Error uploading media "+ err);
         }
     }
 

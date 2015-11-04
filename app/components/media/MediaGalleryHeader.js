@@ -11,19 +11,13 @@ class MediaGalleryHeader extends Component{
         super(props, context);
     }
 
-    async onFinishMediaSelection(){
-        this.props.router.pop();
-    }
-
     goBackToPrevPage(){
         this.props.router.pop();
     }
 
     onFinishMediaSelection(){
         let selectedMedias = this.props.selectedMedias;
-        for(let i = 0; i<selectedMedias.length; i++ ){
-            FileUploadService.uploadFile(selectedMedias[i].uri);
-        }
+        this.props.router.pop();
     }
 
     getTitleElement(title) {

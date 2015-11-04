@@ -52,7 +52,6 @@ class MediaGallery extends Component {
 
     selectImage(image) {
         console.log('selected uri is :'+image.uri);
-        //FileUploadService.uploadFile(image.uri);
         image.selected = !image.selected;
         this.forceUpdate();
     }

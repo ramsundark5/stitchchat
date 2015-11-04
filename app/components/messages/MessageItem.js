@@ -3,7 +3,6 @@ import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from './MessageStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Status from '../../constants/MessageConstants';
-import MessageService from '../../services/MessageService';
 
 class MessageItem extends Component {
     constructor(props, context) {
@@ -15,7 +14,6 @@ class MessageItem extends Component {
     }
 
     selectMessageOnlyInEditingMode(message){
-        MessageService.sendMessage('1111', message);
         if(this.props.isEditing){
             this.selectMessage(message);
         }

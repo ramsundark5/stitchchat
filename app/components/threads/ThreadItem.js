@@ -8,7 +8,7 @@ class ThreadItem extends Component {
         super(props, context);
     }
 
-    openMessagesPage(thread){
+    onThreadClick(thread){
         if(this.props.isEditing){
             this.selectThread(thread);
         }else{
@@ -26,7 +26,7 @@ class ThreadItem extends Component {
         let threadBgColor = thread.selected ? threadStyle.threadSelected : threadStyle.threadUnselected;
         let displayName = thread.displayName && thread.displayName.length > 0 ? thread.displayName : thread.recipientPhoneNumber;
         return (
-            <TouchableHighlight onPress={() => this.openMessagesPage(thread)}
+            <TouchableHighlight onPress={() => this.onThreadClick(thread)}
                                 onLongPress={() => this.selectThread(thread)}
                                 style={threadBgColor}>
                 <View>

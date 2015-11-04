@@ -12,7 +12,7 @@ export default class Message{
         this.isGroupThread          = false;
         this.message                = text;
         this.thumbImageUrl          = '';
-        this.mediaUrl               = '';
+        this.mediaUrl               = '';  //this is the local url of stored media
         this.mediaMimeType          = '';
         this.mediaDesc              = '';
         this.latitude               = '';
@@ -24,6 +24,7 @@ export default class Message{
         //internal use fields
         this.selected               = false;
         this.status                 = Status.STATUS_PENDING;
+        this.mediaStatus            = null;
         this.isOwner                = true;
         this.timestamp              = 0;
         this.direction              = 0; //sent or received
