@@ -1,9 +1,11 @@
 import React, { Component, View, ScrollView, ListView, Image, CameraRoll, TouchableHighlight, PropTypes } from 'react-native';
-import FileUploadService from '../../services/FileUploadService';
-import {HelloManager} from 'NativeModules';
+import MediaGalleryHeader from './MediaGalleryHeader';
 import {mediaStyle} from './MediaStyles';
+import {commons, defaultStyle} from '../styles/CommonStyles';
 
-class PhotoGallery extends Component {
+const MEDIA_FETCH_LIMIT = 25;
+
+class MediaGallery extends Component {
 
     constructor(props, context) {
         super(props, context);
@@ -11,13 +13,14 @@ class PhotoGallery extends Component {
             images: [],
             selected: '',
             endCursor: 0,
-            hasNextPage: false
+            hasNextPage: false,
+            isSelecting: false
         };
     }
 
     componentDidMount() {
         const fetchParams = {
-            first: 2,
+            first: MEDIA_FETCH_LIMIT,
         };
         CameraRoll.getPhotos(fetchParams, this.displayImages.bind(this), this.logImageError.bind(this));
     }
@@ -49,18 +52,21 @@ class PhotoGallery extends Component {
 
     selectImage(image) {
         console.log('selected uri is :'+image.uri);
-        FileUploadService.uploadFile(image.uri);
+        //FileUploadService.uploadFile(image.uri);
+        image.selected = !image.selected;
+        this.forceUpdate();
     }
 
     loadMoreImages(){
         let hasNextPage = this.state.hasNextPage;
-        let endCurosr   = this.state.endCursor;
+        let endCursor   = this.state.endCursor;
         if(hasNextPage){
-            this.fetchPhotos(endCurosr, 2);
+            this.fetchPhotos(endCursor, MEDIA_FETCH_LIMIT);
         }
     }
 
     render() {
+        const {router} = this.props;
         let imagesDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -75,27 +81,43 @@ class PhotoGallery extends Component {
                     lotOfImages[i] = this.state.images[1];
                 }
             }
-        }*/
+        }
+         imagesDS = imagesDS.cloneWithRows(lotOfImages);*/
 
         imagesDS = imagesDS.cloneWithRows(this.state.images);
+        const selectedMedias = this.state.images.filter(image =>
+            image.selected === true
+        );
 
         return (
-            <ListView contentContainerStyle={mediaStyle.imageGrid}
-                    dataSource={imagesDS}
-                    renderRow={this.renderImage.bind(this)}
-                    onEndReached={this.loadMoreImages.bind(this)}
-                    onEndReachedThreshold ={25}
-            />
+            <View style={commons.container}>
+                <MediaGalleryHeader
+                    selectedMedias={selectedMedias}
+                    router={router}/>
+                <ListView contentContainerStyle={mediaStyle.imageGrid}
+                        dataSource={imagesDS}
+                        renderRow={this.renderImage.bind(this)}
+                        onEndReached={this.loadMoreImages.bind(this)}
+                        onEndReachedThreshold ={25}
+                />
+            </View>
         );
     }
 
     renderImage(image) {
+        let imageContainerStyle = mediaStyle.unselectedImage;
+        if(image.selected){
+            imageContainerStyle = mediaStyle.selectedImage;
+        }
+
         return (
-            <TouchableHighlight key={image.uri} onPress={() => this.selectImage(image)}>
+            <TouchableHighlight key={image.uri}
+                                onPress={() => this.selectImage(image)}
+                                style={imageContainerStyle}>
                 <Image style={mediaStyle.image} source={{ uri: image.uri }} />
             </TouchableHighlight>
         );
     }
 }
 
-export default PhotoGallery;
+export default MediaGallery;

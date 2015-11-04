@@ -13,7 +13,6 @@ class FileUploadService{
         if(signedUrl){
             this.uploadFileInternal(signedUrl, filePath, fileName);
         }
-
     }
 
     async uploadFileInternal(signedUrl, filePath, fileName){

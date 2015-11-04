@@ -4,7 +4,7 @@ import LoginPage from './LoginPage';
 import MessagePage from './MessagePage';
 import ContactsPage from './ContactsPage';
 import CreateGroupsPage from './CreateGroupsPage';
-import PhotoGallery from '../components/media/PhotoGallery';
+import MediaGallery from '../components/media/MediaGallery';
 import NavigationBar from '../components/navbar/NavigationBar';
 import CreateGroupNavBar from '../components/contacts/NewContactGroupHeader';
 
@@ -62,16 +62,11 @@ class Router {
         })
     }
 
-    toPhotoGalleryView(props) {
+    toMediaGalleryView(props) {
         this.push(props, {
-            component: PhotoGallery,
+            component: MediaGallery,
             name: 'galleryView',
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            navigationBar: (
-                <NavigationBar
-                    title={{ title: 'Gallery', }}
-                    leftButton={{ title: 'Done', handler: () => this.pop()}}/>
-            )
         })
     }
 

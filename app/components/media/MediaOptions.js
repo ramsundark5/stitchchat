@@ -8,7 +8,7 @@ class MediaOptions extends Component {
     }
 
     openMediaGallery(){
-        this.props.router.toPhotoGalleryView();
+        this.props.router.toMediaGalleryView();
     }
 
     render() {
