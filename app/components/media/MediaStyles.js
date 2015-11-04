@@ -7,10 +7,9 @@ export const mediaStyle = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     imageGrid: {
-        flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'center'
+        //justifyContent: 'center'
     },
     image: {
         width: 100,
