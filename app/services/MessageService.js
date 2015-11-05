@@ -20,8 +20,8 @@ class MessageService{
         let messageId = await MessageDao.addMessage(messageToBeSent.threadId, messageToBeSent);
         messageToBeSent.id = messageId;
         ThreadService.updateThreadWithNewMessage(messageToBeSent);
-        if(isMessageForCurrentThread(messageToBeSent)){
-            MessageActions.addMessage(messageToBeSent);
+        if(this.isMessageForCurrentThread(messageToBeSent)){
+            store.dispatch(MessageActions.addMessage(messageToBeSent));
         }
         return messageToBeSent;
     }
