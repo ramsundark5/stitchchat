@@ -3,7 +3,7 @@ import styles from '../navbar/styles';
 import { connect } from 'react-redux/native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {mediaStyle} from './MediaStyles';
-import FileUploadService from '../../services/FileUploadService';
+import MediaService from '../../services/MediaService';
 
 class MediaGalleryHeader extends Component{
 
@@ -16,8 +16,9 @@ class MediaGalleryHeader extends Component{
     }
 
     onFinishMediaSelection(){
-        let selectedMedias = this.props.selectedMedias;
         this.props.router.pop();
+        let selectedMedias = this.props.selectedMedias;
+        MediaService.addSelectedMedias(selectedMedias);
     }
 
     getTitleElement(title) {

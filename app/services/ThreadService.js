@@ -39,15 +39,20 @@ class ThreadService{
     }
 
     updateThreadWithNewMessage(newMessage){
-        ThreadDao.updateLastMessageText(newMessage);
-        let currentThreadState = store.getState().threadState;
-        let currentThread = currentThreadState.currentThread;
-        if(currentThread){
-            console.log("current thread is "+currentThread.id);
-            if(currentThread.id != newMessage.threadId){
-                ThreadDao.updateUnreadCount(newMessage.threadId);
+        try{
+            ThreadDao.updateLastMessageText(newMessage);
+            let currentThreadState = store.getState().threadState;
+            let currentThread = currentThreadState.currentThread;
+            if(currentThread){
+                console.log("current thread is "+currentThread.id);
+                if(currentThread.id != newMessage.threadId){
+                    ThreadDao.updateUnreadCount(newMessage.threadId);
+                }
             }
+        }catch(err){
+            console.log("Error updating thread snippet "+err);
         }
+
     }
 }
 

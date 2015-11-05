@@ -4,7 +4,7 @@ import * as AppConstants from '../constants/AppConstants';
 class MessageDao{
 
      async addMessage(threadId, newMessage){
-
+        let messageId;
         let messageForDB = newMessage.getMessageForDBSave();
         let sqlStmt = 'INSERT into Message (threadId, senderId, receiverId, status, isGroupThread, message,' +
             'direction, thumbImageUrl, mediaUrl, mediaMimeType, mediaDesc, latitude, longitude, type, ttl, isOwner,' +
@@ -12,8 +12,11 @@ class MessageDao{
             '(:threadId, :senderId, :receiverId, :status, :isGroupThread, :message,' +
             ':direction, :thumbImageUrl, :mediaUrl, :mediaMimeType, :mediaDesc, :latitude, :longitude, :type, :ttl, :isOwner,' +
             ':timestamp, :needsPush, :extras)';
-
-        let messageId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, messageForDB);
+        try{
+            messageId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, messageForDB);
+        }catch(err){
+            console.log("Error saving message to DB "+ err);
+        }
         this.addMessageRemoteId(messageId, newMessage.uid);
         return messageId;
     }

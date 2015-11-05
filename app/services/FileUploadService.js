@@ -15,7 +15,7 @@ class FileUploadService{
                 this.uploadFileInternal(signedUrl, filePath, fileName);
             }
         }catch(err){
-            console.error("Error uploading media "+ err);
+            console.log("Error uploading media "+ err);
         }
     }
 

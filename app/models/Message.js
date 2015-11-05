@@ -51,6 +51,7 @@ export default class Message{
         let messageForDB         = _.clone(this);
         messageForDB.selected    = undefined;
         messageForDB.uid         = undefined;
+        messageForDB.mediaStatus = undefined;
         return messageForDB;
     }
 }

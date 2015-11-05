@@ -14,7 +14,7 @@ class MessageTextInput extends Component {
     async handleSubmit() {
         let messageText = this.state.text;
         if (messageText.length > 0) {
-            MessageService.addMessage(messageText);
+            MessageService.handleOutgoingTextMessage(messageText);
         }
         this.setState({text: ''});
     }

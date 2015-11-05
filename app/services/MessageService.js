@@ -20,14 +20,16 @@ class MessageService{
         let messageId = await MessageDao.addMessage(messageToBeSent.threadId, messageToBeSent);
         messageToBeSent.id = messageId;
         ThreadService.updateThreadWithNewMessage(messageToBeSent);
-        MessageActions.addMessage(messageToBeSent);
+        if(isMessageForCurrentThread(messageToBeSent)){
+            MessageActions.addMessage(messageToBeSent);
+        }
         return messageToBeSent;
     }
 
     buildNewMessage(newMessage){
         let currentThreadState = store.getState().threadState;
-        let currentThread = currentThreadState.currentThread;
-
+        let currentThread      = currentThreadState.currentThread;
+        newMessage.threadId    = currentThread.id;
         if(currentThread.isGroupThread){
             newMessage.receiverId=currentThread.groupUid;
             newMessage.isGroupThread = true;
@@ -36,6 +38,15 @@ class MessageService{
             newMessage.receiverId=currentThread.recipientPhoneNumber;
         }
         return newMessage;
+    }
+
+    isMessageForCurrentThread(newMessage){
+        let currentThreadState = store.getState().threadState;
+        let currentThread = currentThreadState.currentThread;
+        if(newMessage.threadId == currentThread.id){
+            return true;
+        }
+        return false;
     }
 
     sendMessage(message:Message){
