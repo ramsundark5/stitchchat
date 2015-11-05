@@ -45,6 +45,7 @@ class InstallDB_v1{
                                             'senderId               text,'+
                                             'receiverId             text,'+
                                             'status                 integer,'+
+                                            'mediaStatus            integer,'+
                                             'isGroupThread          integer,'+
                                             'message                text,'+
                                             'direction              integer,'+

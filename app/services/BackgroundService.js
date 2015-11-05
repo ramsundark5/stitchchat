@@ -1,6 +1,5 @@
 import MQTTClient from '../transport/MQTTClient';
-import * as MessageActions from '../actions/MessageActions';
-import store from '../config/ConfigureStore';
+import MessageService from './MessageService';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 class BackgroundService{
@@ -21,9 +20,7 @@ class BackgroundService{
             let messageWrapperObj = JSON.parse(message.data);
             let messageObj = messageWrapperObj.message;
 
-            //check if message belongs to current thread before dispatching
-            store.dispatch(MessageActions.addMessage(message));
-            //MessageDao.addMessage();
+            MessageService.handleIncomingTextMessage(messageObj);
             console.log("received message in UI "+ messageObj.text);
         }else{
             console.log("got empty messages. something is wrong.");

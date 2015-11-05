@@ -1,15 +1,17 @@
 /**
  * Created by ramsundar on 8/18/15.
  */
-export const STATUS_PENDING               = 'PENDING';
-export const STATUS_SENT                  = 'SENT';
-export const STATUS_RECEIVED              = 'RECEIVED';
-export const STATUS_READ_CONFIRM          = 'SENT_RECEIPT_RECEIVED';
-export const IMAGE_MEDIA                  = 'IMAGE_MEDIA';
-export const VIDEO_MEDIA                  = 'VIDEO_MEDIA';
-export const PENDING_UPLOAD               = 'PENDING_UPLOAD';
-export const PENDING_DOWNLOAD             = 'PENDING_DOWNLOAD';
-export const UPLOAD_COMPLETED             = 'UPLOAD_COMPLETED';
-export const DOWNLOAD_COMPLETED           = 'DOWNLOAD_COMPLETED';
-export const UPLOAD_FAILED                = 'UPLOAD_FAILED';
-export const DOWNLOAD_FAILED              = 'DOWNLOAD_FAILED ';
+export const STATUS_PENDING               = 0;
+export const STATUS_SENT                  = 1;
+export const STATUS_RECEIVED              = 2;
+export const STATUS_READ_CONFIRM          = 3
+    ;
+export const IMAGE_MEDIA                  = 0;
+export const VIDEO_MEDIA                  = 1;
+
+export const PENDING_UPLOAD               = 0;
+export const PENDING_DOWNLOAD             = 1;
+export const UPLOAD_COMPLETED             = 2;
+export const DOWNLOAD_COMPLETED           = 3;
+export const UPLOAD_FAILED                = 4;
+export const DOWNLOAD_FAILED              = 5;

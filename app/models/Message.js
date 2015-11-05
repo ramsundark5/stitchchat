@@ -13,7 +13,7 @@ export default class Message{
         this.message                = text;
         this.thumbImageUrl          = '';
         this.mediaUrl               = '';  //this is the local url of stored media
-        this.mediaMimeType          = '';
+        this.mediaMimeType          = 'image/jpeg';
         this.mediaDesc              = '';
         this.latitude               = '';
         this.longitude              = '';
@@ -24,7 +24,7 @@ export default class Message{
         //internal use fields
         this.selected               = false;
         this.status                 = Status.STATUS_PENDING;
-        this.mediaStatus            = null;
+        this.mediaStatus            = Status.PENDING_UPLOAD;
         this.isOwner                = true;
         this.timestamp              = 0;
         this.direction              = 0; //sent or received
@@ -51,7 +51,6 @@ export default class Message{
         let messageForDB         = _.clone(this);
         messageForDB.selected    = undefined;
         messageForDB.uid         = undefined;
-        messageForDB.mediaStatus = undefined;
         return messageForDB;
     }
 }

@@ -15,6 +15,10 @@ class MessageService{
         this.sendMessage(messageToBeSent);
     }
 
+    handleIncomingTextMessage(newMessage){
+        this.addMessage(newMessage);
+    }
+
     async addMessage(newMessage){
         let messageToBeSent = this.buildNewMessage(newMessage);
         let messageId = await MessageDao.addMessage(messageToBeSent.threadId, messageToBeSent);
