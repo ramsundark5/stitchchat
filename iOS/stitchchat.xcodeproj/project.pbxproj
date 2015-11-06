@@ -14,16 +14,15 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		8A2C77A4916836B649A45E15 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B144685E24B8C6F980574BA /* libPods.a */; };
-		A211C7871BD061EE00653014 /* ContactsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A211C7861BD061EE00653014 /* ContactsDao.m */; settings = {ASSET_TAGS = (); }; };
-		A26873421BE5339F00487054 /* RNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A26873411BE5339F00487054 /* RNFileManager.m */; settings = {ASSET_TAGS = (); }; };
-		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; settings = {ASSET_TAGS = (); }; };
+		A211C7871BD061EE00653014 /* ContactsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A211C7861BD061EE00653014 /* ContactsDao.m */; };
+		A26873421BE5339F00487054 /* RNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A26873411BE5339F00487054 /* RNFileManager.m */; };
+		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; };
 		A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C129321BCDC5B800693415 /* libsqlite3.tbd */; };
-		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; settings = {ASSET_TAGS = (); }; };
-		A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */; settings = {ASSET_TAGS = (); }; };
-		A2C6C4BA1BD710F80015AFA2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */; settings = {ASSET_TAGS = (); }; };
-		A2C6C4BB1BD710F80015AFA2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */; settings = {ASSET_TAGS = (); }; };
+		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; };
+		A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */; };
+		A2C6C4BA1BD710F80015AFA2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */; };
+		A2C6C4BB1BD710F80015AFA2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */; };
 		A2F214E11BA8DE9900EDAC0F /* RNMQTTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */; };
-		A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */; };
 		A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F234121BA35ED9000A5A9E /* HelloManager.swift */; };
 		A2F234151BA35FB1000A5A9E /* HelloManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F234141BA35FB1000A5A9E /* HelloManager.m */; };
 /* End PBXBuildFile section */
@@ -61,7 +60,6 @@
 		A2C6C4B21BD710F80015AFA2 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		A2C6C4B31BD710F80015AFA2 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		A2F214E01BA8DE9900EDAC0F /* RNMQTTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMQTTClient.m; sourceTree = "<group>"; };
-		A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-file-upload/FileUpload.m"; sourceTree = "<group>"; };
 		A2F234111BA35ED8000A5A9E /* stitchchat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stitchchat-Bridging-Header.h"; sourceTree = "<group>"; };
 		A2F234121BA35ED9000A5A9E /* HelloManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelloManager.swift; path = stitchchat/HelloManager.swift; sourceTree = "<group>"; };
 		A2F234141BA35FB1000A5A9E /* HelloManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloManager.m; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 				A2F214C51BA8DCE300EDAC0F /* MQTTClient */,
 				A2F234141BA35FB1000A5A9E /* HelloManager.m */,
 				A2F234121BA35ED9000A5A9E /* HelloManager.swift */,
-				A2F2340F1BA2A4D3000A5A9E /* FileUpload.m */,
 				13B07FAE1A68108700A75B9A /* stitchchat */,
 				00E356EF1AD99517003FC87E /* stitchchatTests */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -399,7 +396,6 @@
 				A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */,
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
 				A26873421BE5339F00487054 /* RNFileManager.m in Sources */,
-				A2F234101BA2A4D3000A5A9E /* FileUpload.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,
 				A211C7871BD061EE00653014 /* ContactsDao.m in Sources */,

@@ -72,12 +72,14 @@ class NewContactGroupHeader extends Component{
                         {this.getRightButtonElement('Next', { marginRight: 8, })}
                     </View>
                 </View>
-                <TextInput
-                    style={contactStyle.searchInput}
-                    onChange={(event) => this.onGroupNameChange(event.nativeEvent.text)}
-                    value={this.state.groupNameText}
-                    placeholder=" Type group name"
-                    clearButtonMode='while-editing'/>
+                <View style={[contactStyle.underline, contactStyle.groupContactNameContainer]}>
+                    <TextInput
+                        style={[contactStyle.searchInput]}
+                        onChange={(event) => this.onGroupNameChange(event.nativeEvent.text)}
+                        value={this.state.groupNameText}
+                        placeholder=" Type group name"
+                        clearButtonMode='while-editing'/>
+                </View>
             </View>
         );
     }

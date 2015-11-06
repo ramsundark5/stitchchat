@@ -1,6 +1,6 @@
 import * as MessageConstants from '../constants/MessageConstants.js';
 import * as _ from 'lodash';
-import uuid from 'node-uuid';
+import uuid from '../utils/uuid';
 
 export default class Message{
     constructor(text, threadId) {

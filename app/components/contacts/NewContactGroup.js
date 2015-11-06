@@ -45,13 +45,18 @@ class NewContactGroup extends Component{
                     setCurrentThread={this.props.setCurrentThread}
                     router={router}/>
 
-                <Text style={commons.defaultText}>Add Group Participants</Text>
-                <TextInput
-                    style={contactStyle.searchInput}
-                    onChange={(event) => this.handleSearch(event.nativeEvent.text)}
-                    value={this.state.searchText}
-                    placeholder=" Type contact name"
-                    clearButtonMode='while-editing'/>
+                <View style={commons.horizontalNoWrap}>
+
+                    <View style={[contactStyle.underline, contactStyle.groupContactSearchContainer]}>
+                        <TextInput
+                            style={contactStyle.searchInput}
+                            onChange={(event) => this.handleSearch(event.nativeEvent.text)}
+                            value={this.state.searchText}
+                            placeholder=" Type contact name"
+                            clearButtonMode='while-editing'/>
+                    </View>
+                </View>
+
                 {this._renderSelectedContactList()}
                 {this._renderMatchingContactList()}
              </View>

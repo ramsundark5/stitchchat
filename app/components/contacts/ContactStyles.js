@@ -63,5 +63,21 @@ export const contactStyle = StyleSheet.create({
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15
+    },
+    groupImage:{
+        height: 100,
+        width:100,
+        borderRadius: 20,
+    },
+    groupContactNameContainer:{
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    groupContactSearchContainer:{
+        margin: 20,
+    },
+    underline:{
+        borderBottomWidth: 1.5,
+        borderColor: '#333',
     }
 });

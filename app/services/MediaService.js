@@ -1,4 +1,4 @@
-import uuid from 'node-uuid';
+import uuid from '../utils/uuid';
 import ThreadDao from '../dao/ThreadDao';
 import * as ThreadActions from '../actions/ThreadActions';
 import MessageService from './MessageService';

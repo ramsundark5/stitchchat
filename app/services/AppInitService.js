@@ -3,6 +3,7 @@ import ContactsManager from '../services/ContactsManger';
 import MigrationManager from '../dao/migration/MigrationManager';
 import CacheService from './CacheService';
 import * as AppConstants from '../constants/AppConstants';
+import Polyfills from './Polyfills';
 
 export default class AppInitService{
 
@@ -11,7 +12,6 @@ export default class AppInitService{
         let migrationPromise = MigrationManager.init();
         migrationPromise.then(this.loadPreferences)
                         .then(this.initContactDBIfRequired);
-        global.debugAsyncObject = this.debugAsyncObject;
     }
 
     loadPreferences(){
@@ -25,9 +25,5 @@ export default class AppInitService{
             let countryCode = CacheService.get(AppConstants.COUNTRY_CODE_PREF);
             ContactsManager.init(countryCode);
         }
-    }
-
-    debugAsyncObject(obj){
-        console.log("async obj is"+ obj);
     }
 }
