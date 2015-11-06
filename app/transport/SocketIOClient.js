@@ -36,5 +36,5 @@ class SocketIOClient{
     }
 }
 
-module.exports = new SocketIOClient();
+export default new SocketIOClient();
 

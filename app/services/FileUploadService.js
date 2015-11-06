@@ -47,4 +47,5 @@ class FileUploadService{
 
 }
 
-module.exports = new FileUploadService();
+export default new FileUploadService();
+//export default new FileUploadService();

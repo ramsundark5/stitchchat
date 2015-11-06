@@ -47,4 +47,4 @@ class MediaService{
     }
 }
 
-module.exports = new MediaService();
+export default new MediaService();

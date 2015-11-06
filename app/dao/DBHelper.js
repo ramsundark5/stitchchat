@@ -33,4 +33,4 @@ class DBHelper{
 
 }
 
-module.exports = new DBHelper();
+export default new DBHelper();

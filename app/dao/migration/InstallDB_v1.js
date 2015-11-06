@@ -88,4 +88,4 @@ class InstallDB_v1{
         return Promise.all([promise1, promise2, promise3, promise4, promise5]);
     }
 }
-module.exports = new InstallDB_v1();
+export default new InstallDB_v1();

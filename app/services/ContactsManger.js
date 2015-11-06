@@ -12,4 +12,4 @@ class ContactsManger{
         });
     }
 }
-module.exports = new ContactsManger();
+export default new ContactsManger();

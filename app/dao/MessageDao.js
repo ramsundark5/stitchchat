@@ -57,4 +57,4 @@ class MessageDao{
 
 }
 
-module.exports = new MessageDao();
+export default new MessageDao();

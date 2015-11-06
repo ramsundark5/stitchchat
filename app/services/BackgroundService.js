@@ -27,4 +27,4 @@ class BackgroundService{
         }
     }
 }
-module.exports = new BackgroundService();
+export default new BackgroundService();

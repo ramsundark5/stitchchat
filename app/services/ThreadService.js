@@ -56,4 +56,4 @@ class ThreadService{
     }
 }
 
-module.exports = new ThreadService();
+export default new ThreadService();

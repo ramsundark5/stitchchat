@@ -10,4 +10,4 @@ class ContactsDao{
     }
 }
 
-module.exports = new ContactsDao();
+export default new ContactsDao();

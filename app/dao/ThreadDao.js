@@ -75,4 +75,4 @@ class ThreadDao{
     }
 }
 
-module.exports = new ThreadDao();
+export default new ThreadDao();

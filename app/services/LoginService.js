@@ -65,4 +65,4 @@ class LoginService{
     }
 }
 
-module.exports = new LoginService();
+export default new LoginService();

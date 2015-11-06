@@ -7,4 +7,4 @@ class MigrationManager{
      }
 }
 
-module.exports = new MigrationManager();
+export default new MigrationManager();

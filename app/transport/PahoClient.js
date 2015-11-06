@@ -53,4 +53,4 @@ class PahoClient{
         return buf;
     }
 }
-module.exports = new PahoClient();
+export default new PahoClient();
