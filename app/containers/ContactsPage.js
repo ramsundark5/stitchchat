@@ -25,12 +25,13 @@ class ContactsPage extends Component{
     }
 
     render() {
-        const { threadActions, contactActions, filteredContacts, selectedContacts, router } = this.props;
+        const { threadActions, contactActions, filteredContacts, contacts, isSearching, router } = this.props;
 
         return (
             <View style={commons.container}>
                 <ContactList router={router}
                              filteredContacts={filteredContacts}
+                             contacts={contacts}
                              selectContact={contactActions.selectContact}
                              searchContacts={contactActions.searchContacts}
                              setCurrentThread={threadActions.setCurrentThread} />
@@ -43,7 +44,7 @@ class ContactsPage extends Component{
 function mapStateToProps(state) {
     return {
         filteredContacts: state.contactState.filteredContacts,
-        selectedContacts: state.contactState.selectedContacts
+        contacts: state.contactState.contacts
     };
 }
 

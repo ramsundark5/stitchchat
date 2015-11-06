@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 let sampleContact = new Contact();
 sampleContact.phoneNumber = '+13392247442';
 sampleContact.displayName='Daniel Higging';
-const initialState = { contacts : [], filteredContacts: [], selectedContacts: [sampleContact], isEditing: false};
+const initialState = { contacts : [], filteredContacts: [], isSearching: false};
 
 export function contactState(state = initialState, action = {}) {
     switch (action.type) {
@@ -27,24 +27,15 @@ export function contactState(state = initialState, action = {}) {
 
         case Action.SELECT_CONTACT:
             let selectedContact = action.selectedContact;//new Message(action.text);
-            let selectedContactsAfterAdd = state.selectedContacts.concat(selectedContact)
             let contactsAfterSelect =  state.contacts.map(contact =>
-                    contact.phoneNumber === action.phoneNumber ?
+                    contact.phoneNumber === selectedContact.phoneNumber ?
                         _.assign({}, contact, {selected: !contact.selected}) :
                         contact
             );
-            let newStateAfterSelect =  _.assign({}, state, { 'contacts' : contactsAfterSelect, 'selectedContacts': selectedContactsAfterAdd });
+
+            let newStateAfterSelect =  _.assign({}, state, { 'contacts' : contactsAfterSelect, 'isSearching': false });
             return newStateAfterSelect;
 
-        case Action.CLEAR_SELECTED_CONTACT:
-            let contactsAfterClearSelected = state.contacts.map(contact => _.assign({}, contact, {
-                selected: false
-            }));
-            let selectedContactsAfterClear = state.messages.filter(message =>
-                message.phoneNumber !== action.phoneNumber
-            );
-            let newStateAfterClearSelected =  _.assign({}, state, { 'contacts' : contactsAfterClearSelected, 'selectedContacts': selectedContactsAfterClear });
-            return newStateAfterClearSelected ;
 
         case Action.SEARCH_CONTACTS:
             let searchText = action.searchText;
@@ -52,10 +43,10 @@ export function contactState(state = initialState, action = {}) {
                 searchText = searchText.toLowerCase();
             }
             let filteredContacts = state.contacts.filter(contact =>
-                    contact.displayName? contact.displayName.toLowerCase().includes(searchText) : false
+                    contact.displayName && !contact.selected? contact.displayName.toLowerCase().includes(searchText) : false
             );
 
-            let newStateAfterSearch =  _.assign({}, state, { 'filteredContacts' : filteredContacts});
+            let newStateAfterSearch =  _.assign({}, state, { 'filteredContacts' : filteredContacts, 'isSearching': true});
             return newStateAfterSearch;
 
        /* case Action.CLEAR_SEARCH:

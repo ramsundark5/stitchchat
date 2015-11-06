@@ -10,34 +10,38 @@ class NewContactGroup extends Component{
     constructor(props, context) {
         super(props, context);
         this.state = {
-            searchText: '',
-            isSearching: false
+            searchText: ''
         };
     }
 
     handleSearch(changedSearchText) {
-        let isSearching = true;
         if(!changedSearchText || changedSearchText.length <= 0){
-            isSearching = false;
+            changedSearchText = '';
         }
         this.setState({
-            searchText: changedSearchText,
-            isSearching: isSearching
+            searchText: changedSearchText
         });
 
         this.props.searchContacts(changedSearchText);
     }
 
     selectContact(contact){
-        this.props.selectContact(contact);
         this.state = {
-            searchText: '',
-            isSearching: false
+            searchText: ''
         };
+        this.props.selectContact(contact);
+    }
+
+    removeSelectedContact(contact){
+        this.props.selectContact(contact);
     }
 
     render(){
-        const { selectedContacts, router, setCurrentThread } = this.props;
+        const { contacts, isSearching, router } = this.props;
+        const selectedContacts = contacts.filter(contact =>
+            contact.selected === true
+        );
+
         return (
             <View style={commons.container}>
                 <NewContactGroupHeader
@@ -57,17 +61,16 @@ class NewContactGroup extends Component{
                     </View>
                 </View>
 
-                {this._renderSelectedContactList()}
-                {this._renderMatchingContactList()}
+                {this._renderSelectedContactList(selectedContacts, isSearching)}
+                {this._renderMatchingContactList(isSearching)}
              </View>
         );
     }
 
-    _renderSelectedContactList(){
-        if(this.state.isSearching) {
+    _renderSelectedContactList(selectedContacts, isSearching){
+        if(isSearching) {
             return;
         }
-        const { selectedContacts } = this.props;
         let selectedContactsDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2 });
         selectedContactsDS = selectedContactsDS.cloneWithRows(selectedContacts);
@@ -85,15 +88,16 @@ class NewContactGroup extends Component{
                 <View style={[contactStyle.selectedContactsContainer]}>
                     <Text style={[commons.defaultText]}>{matchingContact.displayName}</Text>
                     <Icon name='android-close'
-                          style={[contactStyle.contactDeleteIcon]}/>
+                          style={[contactStyle.contactDeleteIcon]}
+                          onPress={()=>this.removeSelectedContact(matchingContact)}/>
                  </View>
                 <View style={contactStyle.contactDivider}/>
             </View>
         );
     }
 
-    _renderMatchingContactList(){
-        if(!this.state.isSearching){
+    _renderMatchingContactList(isSearching){
+        if(!isSearching){
             return;
         }
         const { filteredContacts } = this.props;
@@ -131,8 +135,9 @@ NewContactGroup.propTypes = {
     filteredContacts: PropTypes.array.isRequired,
     searchContacts: PropTypes.func.isRequired,
     selectContact: PropTypes.func.isRequired,
-    selectedContacts: PropTypes.array.isRequired,
+    contacts: PropTypes.array.isRequired,
     setCurrentThread: PropTypes.func.isRequired,
+    isSearching: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired
 };
 

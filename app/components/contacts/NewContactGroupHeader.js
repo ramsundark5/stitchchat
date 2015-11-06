@@ -1,4 +1,4 @@
-import React, { Component, View, Text, TextInput, TouchableOpacity, PropTypes } from 'react-native';
+import React, { Component, View, Text, TextInput, Image, TouchableOpacity, PropTypes } from 'react-native';
 import styles from '../navbar/styles';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
@@ -72,13 +72,17 @@ class NewContactGroupHeader extends Component{
                         {this.getRightButtonElement('Next', { marginRight: 8, })}
                     </View>
                 </View>
-                <View style={[contactStyle.underline, contactStyle.groupContactNameContainer]}>
-                    <TextInput
-                        style={[contactStyle.searchInput]}
-                        onChange={(event) => this.onGroupNameChange(event.nativeEvent.text)}
-                        value={this.state.groupNameText}
-                        placeholder=" Type group name"
-                        clearButtonMode='while-editing'/>
+                <View style={[commons.horizontalNoWrap, contactStyle.groupContactNameContainer]}>
+                    <Image source={require('../../../assets/images/ic_person_outline_white_48pt.png')}
+                           style={contactStyle.groupImage}/>
+                    <View style={[contactStyle.underline]}>
+                        <TextInput
+                            style={[commons.defaultTextInput]}
+                            onChange={(event) => this.onGroupNameChange(event.nativeEvent.text)}
+                            value={this.state.groupNameText}
+                            placeholder=" Type group name"
+                            clearButtonMode='while-editing'/>
+                    </View>
                 </View>
             </View>
         );

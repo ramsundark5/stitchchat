@@ -25,13 +25,14 @@ class CreateGroupsPage extends Component{
     }
 
     render() {
-        const { threadActions, contactActions, filteredContacts, selectedContacts, router } = this.props;
+        const { threadActions, contactActions, filteredContacts, isSearching, contacts, router } = this.props;
 
         return (
             <View style={commons.container}>
                 <NewContactGroup router={router}
                              filteredContacts={filteredContacts}
-                             selectedContacts={selectedContacts}
+                             contacts={contacts}
+                             isSearching={isSearching}
                              selectContact={contactActions.selectContact}
                              searchContacts={contactActions.searchContacts}
                              setCurrentThread={threadActions.setCurrentThread} />
@@ -44,7 +45,8 @@ class CreateGroupsPage extends Component{
 function mapStateToProps(state) {
     return {
         filteredContacts: state.contactState.filteredContacts,
-        selectedContacts: state.contactState.selectedContacts
+        contacts: state.contactState.contacts,
+        isSearching: state.contactState.isSearching
     };
 }
 

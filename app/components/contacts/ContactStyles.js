@@ -7,9 +7,11 @@ export const contactStyle = StyleSheet.create({
         padding: 10
     },
     avatar: {
-        width: 80,
-        height: 80,
-        marginRight: 10
+        width: 48,
+        height: 48,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 20,
     },
     textContainer: {
         marginLeft: 10,
@@ -65,13 +67,13 @@ export const contactStyle = StyleSheet.create({
         marginRight: 15
     },
     groupImage:{
-        height: 100,
-        width:100,
+        width: 48,
+        height: 48,
         borderRadius: 20,
+        backgroundColor: '#dddddd'
     },
     groupContactNameContainer:{
-        marginLeft: 20,
-        marginRight: 20,
+        margin: 20,
     },
     groupContactSearchContainer:{
         margin: 20,
@@ -79,5 +81,7 @@ export const contactStyle = StyleSheet.create({
     underline:{
         borderBottomWidth: 1.5,
         borderColor: '#333',
+        margin: 10,
+        flex: 1,
     }
 });
