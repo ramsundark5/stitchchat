@@ -6,10 +6,10 @@ class MessageDao{
      async addMessage(threadId, newMessage){
         let messageId;
         let messageForDB = newMessage.getMessageForDBSave();
-        let sqlStmt = 'INSERT into Message (threadId, senderId, receiverId, status, isGroupThread, message,' +
+        let sqlStmt = 'INSERT into Message (threadId, senderId, receiverId, status, mediaStatus, isGroupThread, message,' +
             'direction, thumbImageUrl, mediaUrl, mediaMimeType, mediaDesc, latitude, longitude, type, ttl, isOwner,' +
             'timestamp, needsPush, extras) values' +
-            '(:threadId, :senderId, :receiverId, :status, :isGroupThread, :message,' +
+            '(:threadId, :senderId, :receiverId, :status, :mediaStatus, :isGroupThread, :message,' +
             ':direction, :thumbImageUrl, :mediaUrl, :mediaMimeType, :mediaDesc, :latitude, :longitude, :type, :ttl, :isOwner,' +
             ':timestamp, :needsPush, :extras)';
         try{

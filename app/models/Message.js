@@ -1,4 +1,4 @@
-import * as Status from '../constants/MessageConstants.js';
+import * as MessageConstants from '../constants/MessageConstants.js';
 import * as _ from 'lodash';
 import uuid from 'node-uuid';
 
@@ -17,14 +17,14 @@ export default class Message{
         this.mediaDesc              = '';
         this.latitude               = '';
         this.longitude              = '';
-        this.type                   = 0;
+        this.type                   = MessageConstants.PLAIN_TEXT;
         this.ttl                    = 0;
         this.extras                 = '';
 
         //internal use fields
         this.selected               = false;
-        this.status                 = Status.STATUS_PENDING;
-        this.mediaStatus            = Status.PENDING_UPLOAD;
+        this.status                 = MessageConstants.STATUS_PENDING;
+        this.mediaStatus            = MessageConstants.PENDING_UPLOAD;
         this.isOwner                = true;
         this.timestamp              = 0;
         this.direction              = 0; //sent or received

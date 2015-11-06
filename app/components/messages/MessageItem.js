@@ -1,4 +1,5 @@
-import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight } from 'react-native';
+import React, { Component, View, Text, PropTypes, Image, TouchableHighlight, Modal } from 'react-native';
+import * as MessageConstants from '../../constants/MessageConstants.js';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from './MessageStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,6 +20,10 @@ class MessageItem extends Component {
         }
     }
 
+    openImageViewer(message){
+        //this.props.router.toImageViewer(message);
+    }
+
     getStatusIcon(msgStatus){
         let statusIconName = 'load-c';
         if(msgStatus === Status.STATUS_SENT){
@@ -30,19 +35,47 @@ class MessageItem extends Component {
         return statusIconName;
     }
     render() {
-        const {message} = this.props;
-        let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
-        let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
+        const {message, router} = this.props;
         let msgAlign     = message.owner? commons.pullRight : commons.pullLeft;
         let messageBgColor = message.selected ? messageStyle.msgSelected : messageStyle.msgUnselected;
         return (
             <TouchableHighlight style={[messageStyle.msgItemContainer, msgAlign, messageBgColor]}
                                 onPress = {() => this.selectMessageOnlyInEditingMode(message)}
                                 onLongPress={() => this.selectMessage(message)}>
-                <View style={[messageStyle.msgItem, msgItemStyle]}>
-                    <Text style={msgTextStyle}>
-                        {message.message}
-                    </Text>
+                <View>
+                    {this._renderTextMessage(message)}
+                    {this._renderMediaMessage(message, router)}
+                </View>
+            </TouchableHighlight>
+        );
+    }
+
+    _renderTextMessage(message){
+        if(message.type !=  MessageConstants.PLAIN_TEXT){
+            return;
+        }
+        let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
+        let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
+        return(
+            <View style={[messageStyle.msgItem, msgItemStyle]}>
+                <Text style={msgTextStyle}>
+                    {message.message}
+                </Text>
+                {this._renderStatusIcon(message)}
+            </View>
+        );
+    }
+
+    _renderMediaMessage(message){
+        if(message.type !=  MessageConstants.IMAGE_MEDIA){
+            return;
+        }
+        return(
+            <TouchableHighlight onPress={() => this.openImageViewer(message)}>
+                <View style={[messageStyle.msgItem, messageStyle.imageContainer]}>
+                    <Image
+                        style={messageStyle.image}
+                        source={{ uri: message.mediaUrl }}/>
                     {this._renderStatusIcon(message)}
                 </View>
             </TouchableHighlight>
@@ -51,18 +84,22 @@ class MessageItem extends Component {
 
     _renderStatusIcon(message){
         let statusIcon   = this.getStatusIcon(message.state);
-        <View style={[commons.horizontalNoWrap, commons.pullRight]}>
-            <Text style={commons.smallText}>sent</Text>
-            <Icon name={statusIcon}
-                  style={commons.smallIcon}/>
-        </View>
+        return(
+            <View style={[commons.horizontalNoWrap, commons.pullRight]}>
+                <Text style={commons.smallText}>sent</Text>
+                <Icon name={statusIcon}
+                      style={commons.smallIcon}/>
+            </View>
+        );
     }
+
 }
 
 MessageItem.propTypes = {
     message: PropTypes.object.isRequired,
     selectMessage: PropTypes.func.isRequired,
-    isEditing: PropTypes.bool.isRequired
+    isEditing: PropTypes.bool.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 export default MessageItem;

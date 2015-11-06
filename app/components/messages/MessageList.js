@@ -28,7 +28,7 @@ class MessageList extends Component {
     }
 
     render() {
-        const { messages, loadOlderMessages, deleteSelected, currentThread} = this.props;
+        const { messages, loadOlderMessages, deleteSelected, router} = this.props;
         let groupedMessages = this.groupMessagesByDate(messages);
         let messagesDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
@@ -52,7 +52,9 @@ class MessageList extends Component {
     renderMessageItem(rowData, sectionID, rowID) {
         return (
             <MessageItem key={rowData.id} message={rowData}
-                         isEditing={this.props.isEditing} selectMessage={this.props.selectMessage}/>
+                         isEditing={this.props.isEditing}
+                         selectMessage={this.props.selectMessage}
+                         router={this.props.router}/>
         );
     }
 
@@ -67,7 +69,8 @@ MessageList.propTypes = {
     messages: PropTypes.array.isRequired,
     currentThread: PropTypes.object.isRequired,
     selectMessage: PropTypes.func.isRequired,
-    loadOlderMessages: PropTypes.func.isRequired
+    loadOlderMessages: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 export default MessageList;

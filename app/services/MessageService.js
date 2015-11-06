@@ -11,7 +11,9 @@ class MessageService{
 
     async handleOutgoingTextMessage(text){
         let newMessage      = new Message(text);
-        let messageToBeSent = await this.addMessage(newMessage);
+        let currentThreadState = store.getState().threadState;
+        let currentThread      = currentThreadState.currentThread;
+        let messageToBeSent = await this.addMessage(currentThread, newMessage);
         this.sendMessage(messageToBeSent);
     }
 
@@ -19,27 +21,28 @@ class MessageService{
         this.addMessage(newMessage);
     }
 
-    async addMessage(newMessage){
-        let messageToBeSent = this.buildNewMessage(newMessage);
+    async addMessage(thread, newMessage){
+        let messageToBeSent = this.buildMessageDetails(thread, newMessage);
         let messageId = await MessageDao.addMessage(messageToBeSent.threadId, messageToBeSent);
         messageToBeSent.id = messageId;
+        console.log('message saved to db and generated id is '+ messageId);
         ThreadService.updateThreadWithNewMessage(messageToBeSent);
         if(this.isMessageForCurrentThread(messageToBeSent)){
             store.dispatch(MessageActions.addMessage(messageToBeSent));
+        } else{
+            //send local notification
         }
         return messageToBeSent;
     }
 
-    buildNewMessage(newMessage){
-        let currentThreadState = store.getState().threadState;
-        let currentThread      = currentThreadState.currentThread;
-        newMessage.threadId    = currentThread.id;
-        if(currentThread.isGroupThread){
-            newMessage.receiverId=currentThread.groupUid;
+    buildMessageDetails(thread, newMessage){
+        newMessage.threadId    = thread.id;
+        if(thread.isGroupThread){
+            newMessage.receiverId=thread.groupUid;
             newMessage.isGroupThread = true;
         }
         else{
-            newMessage.receiverId=currentThread.recipientPhoneNumber;
+            newMessage.receiverId=thread.recipientPhoneNumber;
         }
         return newMessage;
     }
@@ -48,8 +51,10 @@ class MessageService{
         let currentThreadState = store.getState().threadState;
         let currentThread = currentThreadState.currentThread;
         if(newMessage.threadId == currentThread.id){
+            console.log('message is for current thread');
             return true;
         }
+        console.log('message is not for current thread');
         return false;
     }
 

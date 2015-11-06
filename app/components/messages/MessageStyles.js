@@ -67,5 +67,17 @@ export const messageStyle = StyleSheet.create({
         flexDirection : 'row',
         flexWrap      : 'nowrap',
         justifyContent: 'space-around',
+    },
+    imageContainer:{
+
+    },
+    image: {
+        width: 200,
+        height: 200,
+        margin: 10,
+    },
+    fullSizeImage:{
+        height: 500,
+        width: 500,
     }
 });

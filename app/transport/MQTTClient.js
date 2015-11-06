@@ -53,6 +53,7 @@ class MQTTClient{
         }
         let messageJson = JSON.stringify(message);
         this.mqttClient.publish(topicName, messageJson, qosLevel, retain);
+        console.log('message published to topic');
     }
 
     subscribeTo(topicName, qosLevel){
