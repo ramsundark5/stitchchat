@@ -25,4 +25,4 @@ function ConfigureStore(initialState) {
     return store;
 }
 
-module.exports = ConfigureStore();
+export default new ConfigureStore();

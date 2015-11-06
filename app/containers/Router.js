@@ -97,4 +97,4 @@ class Router {
 
 }
 
-module.exports = Router;
+export default Router;
