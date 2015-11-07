@@ -11,6 +11,7 @@ export const END_MESSAGE_EDITING_STATE      = 'END_MESSAGE_EDITING_STATE';
 export const LOAD_OLDER_MESSAGES            = 'LOAD_OLDER_MESSAGES';
 export const COPY_SELECTED_MESSAGE          = 'COPY_SELECTED_MESSAGE';
 export const FORWARD_SELECTED_MESSAGE       = 'FORWARD_SELECTED_MESSAGE';
+export const RESET_MESSAGES_STATE           = 'RESET_MESSAGES_STATE';
 
 export const LOAD_RECENT_THREADS            = 'LOAD_RECENT_THREADS';
 export const ADD_THREAD                     = 'ADD_THREAD';

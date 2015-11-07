@@ -81,6 +81,10 @@ export function messageState(state = initialState, action = {}) {
         case Action.LOAD_OLDER_MESSAGES:
             return state;
 
+        case Action.RESET_MESSAGES_STATE:
+            let newStateAfterReset = _.assign({}, state, initialState);
+            return newStateAfterReset;
+
         default:
             return state;
     }

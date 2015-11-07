@@ -2,6 +2,7 @@ import React, { Component, View, Text, PropTypes, SwitchIOS, TouchableHighlight 
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {threadStyle} from './ThreadStyles';
 import MessageDao from '../../dao/MessageDao';
+import TimeAgo from 'react-native-timeago';
 
 class ThreadItem extends Component {
     constructor(props, context) {
@@ -32,9 +33,9 @@ class ThreadItem extends Component {
                 <View>
                     <View style = {threadStyle.threadItemContainer}>
                         <Text style={[threadStyle.title]}>{displayName}</Text>
-                        <Text style={[threadStyle.timestamp]}>{thread.lastMessageTime}</Text>
+                        <TimeAgo time={thread.lastMessageTime} />
                     </View>
-                    {this._renderTimeStamp(thread)}
+                    {this._renderLastReceivedMessage(thread)}
                     <View style={commons.separator}/>
                 </View>
             </TouchableHighlight>
@@ -49,14 +50,13 @@ class ThreadItem extends Component {
         );
     }
 
-    _renderTimeStamp(thread){
+    _renderLastReceivedMessage(thread){
         return (
             <Text style={threadStyle.lastMessageText} numberOfLines={1}>
                 {thread.lastMessageText}
             </Text>
         );
     }
-
 }
 
 ThreadItem.propTypes = {

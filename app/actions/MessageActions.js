@@ -87,3 +87,8 @@ export function forwardSelected(){
         type: Actions.FORWARD_SELECTED_MESSAGE,
     };
 }
+export function resetMessageState() {
+    return {
+        type: Actions.RESET_MESSAGES_STATE,
+    };
+}
