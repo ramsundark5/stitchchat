@@ -1,8 +1,9 @@
-import React, { Component, View, Text, Platform } from 'react-native';
+import React, { Component, View, Text, TouchableHighlight, Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
+import ThreadOptionsBox from '../components/threads/ThreadOptionsBox';
 import * as ThreadActions from '../actions/ThreadActions';
 import * as MessageActions from '../actions/MessageActions';
 import {commons, defaultStyle} from '../components/styles/CommonStyles';
@@ -12,7 +13,6 @@ import CacheService from '../services/CacheService';
 import Button from 'apsl-react-native-button'
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import ActionButton from 'react-native-action-button';
-import ThreadOptionsBox from '../components/threads/ThreadOptionsBox';
 
 class InboxPage extends Component {
 
@@ -40,7 +40,7 @@ class InboxPage extends Component {
 
         return (
             <View style={commons.container}>
-                <View style={commons.container}>
+                <View style={commons.listContainer}>
                     <ThreadList threads={threads}
                                 loadMoreThreads={threadActions.loadMoreThreads}
                                 selectThread={threadActions.selectThread}
@@ -48,10 +48,11 @@ class InboxPage extends Component {
                                 loadMessagesForThread={messageActions.loadMessagesForThread}
                                 isEditing={isEditing}
                                 router={router}/>
-                    {this.renderRemindRegistration()}
                     {this.renderThreadComposer(isEditing, threadActions, router)}
+                    {this.renderTempLoginUtil()}
                 </View>
                 <View style={{flex: 0}}>
+                    {this.renderRemindRegistration()}
                     {this.renderThreadOptionsBox(isEditing, threadActions.deleteSelected)}
                 </View>
             </View>
@@ -117,6 +118,26 @@ class InboxPage extends Component {
         }
     }
 
+    renderTempLoginUtil(){
+        return(
+            <View>
+                <TouchableHighlight onPress={this.showLoginPage.bind(this)}>
+                    <Text>Login</Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={this.logout.bind(this)}>
+                    <Text>Logout</Text>
+                </TouchableHighlight>
+            </View>
+        );
+    }
+
+    showLoginPage(){
+        LoginService.showLoginPage();
+    }
+
+    logout(){
+        LoginService.logout();
+    }
 }
 
 function mapStateToProps(state) {

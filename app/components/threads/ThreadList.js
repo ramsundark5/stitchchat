@@ -17,32 +17,16 @@ class ThreadList extends Component {
         //this.props.loadMoreThreads();
     }
 
-    showLoginPage(){
-        LoginService.showLoginPage();
-    }
-
-    logout(){
-        LoginService.logout();
-    }
-
     render() {
         const { threads } = this.props;
         let threadsDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2 });
         threadsDS = threadsDS.cloneWithRows(threads);
         return (
-            <View>
-                <ListView
-                    dataSource={threadsDS}
-                    loadData={this.loadMoreThreads()}
-                    renderRow={this.renderThreadItem.bind(this)}/>
-                <TouchableHighlight onPress={this.showLoginPage.bind(this)}>
-                    <Text>Login</Text>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={this.logout.bind(this)}>
-                    <Text>Logout</Text>
-                </TouchableHighlight>
-            </View>
+            <ListView
+                dataSource={threadsDS}
+                loadData={this.loadMoreThreads()}
+                renderRow={this.renderThreadItem.bind(this)}/>
         );
     }
 
