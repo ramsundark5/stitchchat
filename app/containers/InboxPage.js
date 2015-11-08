@@ -11,6 +11,8 @@ import ThreadDao from '../dao/ThreadDao';
 import CacheService from '../services/CacheService';
 import Button from 'apsl-react-native-button'
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import ActionButton from 'react-native-action-button';
+import ThreadOptionsBox from '../components/threads/ThreadOptionsBox';
 
 class InboxPage extends Component {
 
@@ -38,7 +40,7 @@ class InboxPage extends Component {
 
         return (
             <View style={commons.container}>
-                <View style={{flex: 1}}>
+                <View style={commons.container}>
                     <ThreadList threads={threads}
                                 loadMoreThreads={threadActions.loadMoreThreads}
                                 selectThread={threadActions.selectThread}
@@ -46,18 +48,39 @@ class InboxPage extends Component {
                                 loadMessagesForThread={messageActions.loadMessagesForThread}
                                 isEditing={isEditing}
                                 router={router}/>
+                    {this.renderRemindRegistration()}
+                    {this.renderThreadComposer(isEditing, threadActions, router)}
                 </View>
-                {this.renderRemindRegistration()}
-                <View style={[{flex: 0}, commons.horizontalNoWrap]}>
-                    <ThreadComposer addNewThread={threadActions.addNewThread}
-                                    addNewGroupThread={threadActions.addNewGroupThread}
-                                    searchThreads={threadActions.searchThreads}
-                                    deleteSelected={threadActions.deleteSelected}
-                                    isEditing={isEditing}
-                                    router={router}/>
+                <View style={{flex: 0}}>
+                    {this.renderThreadOptionsBox(isEditing, threadActions.deleteSelected)}
                 </View>
             </View>
         );
+    }
+
+    renderThreadComposer(isEditing, threadActions, router){
+        if(isEditing){
+            return;
+        }else{
+            return(
+                <ThreadComposer addNewThread={threadActions.addNewThread}
+                                addNewGroupThread={threadActions.addNewGroupThread}
+                                searchThreads={threadActions.searchThreads}
+                                deleteSelected={threadActions.deleteSelected}
+                                isEditing={isEditing}
+                                router={router}/>
+            );
+        }
+    }
+
+    renderThreadOptionsBox(isEditing, deleteSelected){
+        if(!isEditing){
+            return;
+        }else{
+            return(
+                <ThreadOptionsBox isEditing={isEditing} deleteSelected={deleteSelected}/>
+            );
+        }
     }
 
     renderRemindRegistration(){

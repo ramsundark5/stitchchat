@@ -31,7 +31,7 @@ class ThreadList extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2 });
         threadsDS = threadsDS.cloneWithRows(threads);
         return (
-            <View style={commons.listContainer}>
+            <View>
                 <ListView
                     dataSource={threadsDS}
                     loadData={this.loadMoreThreads()}

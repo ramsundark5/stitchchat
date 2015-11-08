@@ -1,8 +1,8 @@
 import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
-import ThreadOptionsBox from './ThreadOptionsBox';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {threadStyle} from './ThreadStyles';
+import ActionButton from 'react-native-action-button';
 
 class ThreadComposer extends Component {
 
@@ -19,40 +19,21 @@ class ThreadComposer extends Component {
     }
 
     render() {
-        const { isEditing, deleteSelected } = this.props;
-        if(isEditing){
-            return(
-                <ThreadOptionsBox isEditing={isEditing} deleteSelected={deleteSelected}/>
-            );
-        }
-
-        else{
-            return (
-                <View style={[threadStyle.threadOptions]}>
-                    <TouchableHighlight style={commons.defaultIconContainer}
-                                        onPress = {() => this._searchThreads(null)}>
-                        <Icon name='ios-search'
-                              style={commons.defaultIcon}/>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={[commons.defaultIconContainer]}
-                                        onPress={() => this._addNewThread()}>
-                        <Icon name='ios-compose-outline'
-                              style={commons.defaultIcon}/>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={commons.defaultIconContainer}
-                                        onPress={() => this._addNewGroupThread()}>
-                        <Icon name='ios-people-outline'
-                              style={commons.defaultIcon}/>
-                    </TouchableHighlight>
-                </View>
-            );
-        }
+        return (
+            <ActionButton buttonColor="rgba(231,76,60,1)">
+                <ActionButton.Item buttonColor='#1abc9c' onPress={() => this._addNewGroupThread()}>
+                    <Icon name="ios-people-outline" style={commons.defaultIcon} />
+                </ActionButton.Item>
+                <ActionButton.Item buttonColor='#3498db' onPress={() => this._addNewThread()}>
+                    <Icon name='ios-compose-outline' style={commons.defaultIcon}/>
+                </ActionButton.Item>
+            </ActionButton>
+        );
     }
 }
 
 ThreadComposer.propTypes = {
-    searchThreads: PropTypes.func.isRequired,
-    deleteSelected: PropTypes.func.isRequired
+    searchThreads: PropTypes.func.isRequired
 };
 
 export default ThreadComposer;
