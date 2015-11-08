@@ -4,6 +4,7 @@ import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from './MessageStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Status from '../../constants/MessageConstants';
+import moment from 'moment';
 
 class MessageItem extends Component {
     constructor(props, context) {
@@ -84,9 +85,10 @@ class MessageItem extends Component {
 
     _renderStatusIcon(message){
         let statusIcon   = this.getStatusIcon(message.state);
+        let statusTime   = moment(message.timestamp).format("hh:mm a");
         return(
             <View style={[commons.horizontalNoWrap, commons.pullRight]}>
-                <Text style={commons.smallText}>sent</Text>
+                <Text style={commons.smallText}>{statusTime}</Text>
                 <Icon name={statusIcon}
                       style={commons.smallIcon}/>
             </View>

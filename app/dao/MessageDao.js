@@ -5,7 +5,9 @@ class MessageDao{
 
      async addMessage(threadId, newMessage){
         let messageId;
+        let currentTime = new Date().getTime();
         let messageForDB = newMessage.getMessageForDBSave();
+        messageForDB.timestamp = currentTime;
         let sqlStmt = 'INSERT into Message (threadId, senderId, receiverId, status, mediaStatus, isGroupThread, message,' +
             'direction, thumbImageUrl, mediaUrl, mediaMimeType, mediaDesc, latitude, longitude, type, ttl, isOwner,' +
             'timestamp, needsPush, extras) values' +
@@ -42,15 +44,17 @@ class MessageDao{
     }
 
     updateUploadStatus(message, status){
-        let sqlStmt = 'UPDATE Message set mediaStatus = :mediaStatus where id = :messageId';
-        let paramMap = {messageId: message.id, mediaStatus: status};
+        let currentTime = new Date().getTime();
+        let sqlStmt = 'UPDATE Message set mediaStatus = :mediaStatus, timestamp = :timestamp where id = :messageId';
+        let paramMap = {messageId: message.id, mediaStatus: status, timestamp: currentTime};
         let updateMediaStatusPromise = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         return updateMediaStatusPromise;
     }
 
     updateMessageStatus(message, status){
-        let sqlStmt = 'UPDATE Message set status = :status where id = :messageId';
-        let paramMap = {messageId: message.id, status: status};
+        let currentTime = new Date().getTime();
+        let sqlStmt = 'UPDATE Message set status = :status, timestamp = :timestamp where id = :messageId';
+        let paramMap = {messageId: message.id, status: status, timestamp: currentTime};
         let updateMessageStatusPromise = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         return updateMessageStatusPromise;
     }

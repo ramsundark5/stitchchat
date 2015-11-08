@@ -26,6 +26,8 @@ class MessageService{
         let messageId = await MessageDao.addMessage(messageToBeSent.threadId, messageToBeSent);
         messageToBeSent.id = messageId;
         console.log('message saved to db and generated id is '+ messageId);
+        let currentTime = new Date().getTime();
+        messageToBeSent.timestamp = currentTime;
         ThreadService.updateThreadWithNewMessage(messageToBeSent);
         if(this.isMessageForCurrentThread(messageToBeSent)){
             store.dispatch(MessageActions.addMessage(messageToBeSent));

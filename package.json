@@ -9,6 +9,7 @@
   "dependencies": {
     "apsl-react-native-button": "^2.0.0",
     "lodash": "^3.10.1",
+    "moment": "^2.10.6",
     "phoneformat.js": "^1.0.2",
     "react-native": "^0.14.0",
     "react-native-clipboard": "0.0.1",
