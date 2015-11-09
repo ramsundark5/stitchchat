@@ -1,7 +1,9 @@
 import React, { Component, View, ScrollView, ListView, Image, CameraRoll, TouchableHighlight, PropTypes } from 'react-native';
+import Video from 'react-native-video';
 import MediaGalleryHeader from './MediaGalleryHeader';
 import {mediaStyle} from './MediaStyles';
 import {commons, defaultStyle} from '../styles/CommonStyles';
+import * as _ from 'lodash';
 
 const MEDIA_FETCH_LIMIT = 25;
 
@@ -21,6 +23,7 @@ class MediaGallery extends Component {
     componentDidMount() {
         const fetchParams = {
             first: MEDIA_FETCH_LIMIT,
+            assetType: 'All'
         };
         CameraRoll.getPhotos(fetchParams, this.displayImages.bind(this), this.logImageError.bind(this));
     }
@@ -28,6 +31,7 @@ class MediaGallery extends Component {
     fetchPhotos(endCursor, numberOfPhotos){
         const fetchParams = {
             first: numberOfPhotos,
+            assetType: 'All',
             after: endCursor
         };
         CameraRoll.getPhotos(fetchParams, this.displayImages.bind(this), this.logImageError.bind(this));
@@ -95,12 +99,24 @@ class MediaGallery extends Component {
                     router={router}/>
                 <ListView contentContainerStyle={mediaStyle.imageGrid}
                         dataSource={imagesDS}
-                        renderRow={this.renderImage.bind(this)}
+                        renderRow={this.renderMedia.bind(this)}
                         onEndReached={this.loadMoreImages.bind(this)}
                         onEndReachedThreshold ={25}
                 />
             </View>
         );
+    }
+
+    renderMedia(media){
+        let videoExtensions = ['mov', 'MOV', 'mp4', 'mkv'];
+        let ext = this.getQueryParamByName(media.uri, 'ext');
+        console.log("media mimetype is "+ext);
+        if(_.includes(videoExtensions,ext)){
+            return this.renderVideo(media);
+        }else{
+            return this.renderImage(media);
+        }
+
     }
 
     renderImage(image) {
@@ -117,6 +133,28 @@ class MediaGallery extends Component {
             </TouchableHighlight>
         );
     }
+
+    renderVideo(video) {
+        let videoContainerStyle = mediaStyle.unselectedImage;
+        if(video.selected){
+            videoContainerStyle = mediaStyle.selectedImage;
+        }
+
+        return (
+            <TouchableHighlight key={video.uri}
+                                onPress={() => this.selectImage(image)}
+                                style={videoContainerStyle}>
+                <Video source={{uri: video.uri}} />
+            </TouchableHighlight>
+        );
+    }
+
+     getQueryParamByName(uri, name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(uri);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+     }
 }
 
 export default MediaGallery;

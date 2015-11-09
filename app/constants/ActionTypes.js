@@ -26,7 +26,7 @@ export const ADD_GROUP_THREAD               = 'ADD_GROUP_THREAD';
 export const LOAD_MORE_THREADS              = 'LOAD_MORE_THREADS';
 export const SET_CURRENT_THREAD             = 'SET_CURRENT_THREAD';
 export const SEARCH_THREADS                 = 'SEARCH_THREADS';
-
+export const BLOCK_THREAD                   = 'BLOCK_THREAD';
 
 export const LOAD_CONTACTS                  = 'LOAD_CONTACTS';
 export const ADD_CONTACT                    = 'ADD_CONTACT';

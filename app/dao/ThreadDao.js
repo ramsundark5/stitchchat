@@ -54,7 +54,7 @@ class ThreadDao{
     }
 
     async loadRecentThreads(){
-        let sqlStmt  = "SELECT * from Thread order by lastMessageTime";
+        let sqlStmt  = "SELECT * from Thread order by lastMessageTime desc";
         let recentThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt);
         return recentThreads;
     }

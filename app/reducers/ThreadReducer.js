@@ -64,6 +64,15 @@ export function threadState(state = initialState, action = {}) {
             let newStateAfterSettingCurrentThread =  _.assign({}, state, { 'currentThread': currentThread });
             return newStateAfterSettingCurrentThread;
 
+        case Action.BLOCK_THREAD:
+            let threadsAfterBlock =  state.threads.map(thread =>
+                thread.id === action.thread.id ?
+                    _.assign({}, thread, {blocked: !thread.blocked}) :
+                    thread
+            );
+            let newStateAfterBlock =  _.assign({}, state, { 'threads' : threadsAfterBlock });
+            return newStateAfterBlock;
+
         case Action.LOAD_MORE_THREADS:
             return state;
 

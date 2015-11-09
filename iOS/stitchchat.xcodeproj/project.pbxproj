@@ -16,6 +16,7 @@
 		8A2C77A4916836B649A45E15 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B144685E24B8C6F980574BA /* libPods.a */; };
 		A211C7871BD061EE00653014 /* ContactsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A211C7861BD061EE00653014 /* ContactsDao.m */; };
 		A26873421BE5339F00487054 /* RNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A26873411BE5339F00487054 /* RNFileManager.m */; };
+		A281BBF71BF15074006B3FCB /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A281BBF61BF1504B006B3FCB /* libRCTVideo.a */; };
 		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; };
 		A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C129321BCDC5B800693415 /* libsqlite3.tbd */; };
 		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; };
@@ -35,6 +36,13 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = stitchchat;
 		};
+		A281BBF51BF1504B006B3FCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A281BBF11BF1504A006B3FCB /* RCTVideo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTVideo;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +61,7 @@
 		A211C7861BD061EE00653014 /* ContactsDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDao.m; sourceTree = "<group>"; };
 		A211C78A1BD06E3B00653014 /* ContactsDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDao.h; sourceTree = "<group>"; };
 		A26873411BE5339F00487054 /* RNFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFileManager.m; sourceTree = "<group>"; };
+		A281BBF11BF1504A006B3FCB /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
 		A2C129321BCDC5B800693415 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNContactsManager.swift; sourceTree = "<group>"; };
@@ -79,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A281BBF71BF15074006B3FCB /* libRCTVideo.a in Frameworks */,
 				A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */,
 				8A2C77A4916836B649A45E15 /* libPods.a in Frameworks */,
 			);
@@ -128,6 +138,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A281BBF11BF1504A006B3FCB /* RCTVideo.xcodeproj */,
 				A26873431BE533AC00487054 /* RNFileManager */,
 				A2C6C4AD1BD710F80015AFA2 /* Fonts */,
 				A2C129341BCE214400693415 /* Contacts */,
@@ -170,6 +181,14 @@
 				A26873411BE5339F00487054 /* RNFileManager.m */,
 			);
 			name = RNFileManager;
+			sourceTree = "<group>";
+		};
+		A281BBF21BF1504A006B3FCB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A281BBF61BF1504B006B3FCB /* libRCTVideo.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		A2C129341BCE214400693415 /* Contacts */ = {
@@ -288,6 +307,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A281BBF21BF1504A006B3FCB /* Products */;
+					ProjectRef = A281BBF11BF1504A006B3FCB /* RCTVideo.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* stitchchat */,
@@ -295,6 +320,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A281BBF61BF1504B006B3FCB /* libRCTVideo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTVideo.a;
+			remoteRef = A281BBF51BF1504B006B3FCB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
