@@ -42,24 +42,28 @@ class ThreadItem extends Component {
         );
     }
 
-    _renderBadge(){
-        return(
-            <View style={threadStyle.badgeContainer}>
-                <Text style={threadStyle.badgeText}>10</Text>
-            </View>
-        );
-    }
-
     _renderLastReceivedMessage(thread){
         return (
-            <View style={commons.horizontalNoWrap}>
+            <View style={[commons.horizontalNoWrap, {flex:1}]}>
                 <Text style={threadStyle.lastMessageText} numberOfLines={1}>
                     {thread.lastMessageText}
                 </Text>
-                {this._renderBadge()}
+                {this._renderBadge(thread)}
             </View>
 
         );
+    }
+
+    _renderBadge(thread){
+        if(thread.unreadCount && thread.unreadCount > 0){
+            return(
+                <View style={[threadStyle.badgeContainer]}>
+                    <Text style={threadStyle.badgeText}>{thread.unreadCount}</Text>
+                </View>
+            );
+        }else{
+            return;
+        }
     }
 }
 

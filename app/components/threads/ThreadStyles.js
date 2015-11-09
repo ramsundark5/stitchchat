@@ -17,7 +17,8 @@ export const threadStyle = StyleSheet.create({
     },
     lastMessageText: {
         fontSize: defaultStyle.fontSize,
-        padding: 10
+        padding: 10,
+        flex:1
     },
     title: {
         fontSize: defaultStyle.fontSize,
@@ -40,11 +41,12 @@ export const threadStyle = StyleSheet.create({
     badgeContainer: {
         height: 20,
         width: 20,
+        marginTop: 10,
+        marginRight: 12,
         borderRadius: 10,
         backgroundColor: defaultStyle.bgColor,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'row',
     },
     badgeText: {
         fontSize: 10,
