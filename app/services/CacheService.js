@@ -30,7 +30,7 @@ class CacheService{
 
     async isAppRegistered(){
         let isRegistered = false;
-        let sqlStmt = "SELECT value from Preferences where key = 'token'";
+        let sqlStmt = "SELECT value from Preferences where key = 'phoneNumber'";
         try{
             let results = await DBHelper.executeQuery(AppConstants.CONTACTS_DB, sqlStmt);
             if(results && results.length > 0){

@@ -2,7 +2,7 @@ import React, { Component, PropTypes, View, TouchableHighlight } from 'react-nat
 import Icon from 'react-native-vector-icons/Ionicons';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {threadStyle} from './ThreadStyles';
-import ActionButton from 'react-native-action-button';
+import ActionButton from '../../utils/ActionButton';
 
 class ThreadComposer extends Component {
 

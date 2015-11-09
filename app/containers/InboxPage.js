@@ -1,18 +1,17 @@
-import React, { Component, View, Text, TouchableHighlight, Platform } from 'react-native';
+import React, { View, Text, TouchableHighlight, Platform } from 'react-native';
+import Component from '../components/PureComponent';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
 import ThreadOptionsBox from '../components/threads/ThreadOptionsBox';
 import * as ThreadActions from '../actions/ThreadActions';
-import * as MessageActions from '../actions/MessageActions';
 import {commons, defaultStyle} from '../components/styles/CommonStyles';
 import LoginService from '../services/LoginService';
 import ThreadDao from '../dao/ThreadDao';
 import CacheService from '../services/CacheService';
 import Button from 'apsl-react-native-button'
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-import ActionButton from 'react-native-action-button';
 
 class InboxPage extends Component {
 
@@ -22,11 +21,15 @@ class InboxPage extends Component {
             isRegistered: true
         };
         this.loadRecentThreads();
-        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
     }
 
-    componentWillMount(){
+    componentDidMount(){
+        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
         this.showLoginPageIfRequired();
+    }
+
+    componentWillUnmount() {
+        RCTDeviceEventEmitter.removeListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
     }
 
     async loadRecentThreads(){
@@ -36,7 +39,7 @@ class InboxPage extends Component {
     }
 
     render() {
-        const { threads, threadActions, messageActions, isEditing, router } = this.props;
+        const { threads, threadActions, isEditing, router } = this.props;
 
         return (
             <View style={commons.container}>
@@ -45,7 +48,6 @@ class InboxPage extends Component {
                                 loadMoreThreads={threadActions.loadMoreThreads}
                                 selectThread={threadActions.selectThread}
                                 setCurrentThread={threadActions.setCurrentThread}
-                                loadMessagesForThread={messageActions.loadMessagesForThread}
                                 isEditing={isEditing}
                                 router={router}/>
                     {this.renderThreadComposer(isEditing, threadActions, router)}
@@ -150,7 +152,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         threadActions: bindActionCreators(ThreadActions, dispatch),
-        messageActions: bindActionCreators(MessageActions, dispatch)
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(InboxPage);
