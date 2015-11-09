@@ -45,16 +45,20 @@ class ThreadItem extends Component {
     _renderBadge(){
         return(
             <View style={threadStyle.badgeContainer}>
-                <Text style={defaultStyle.badgeText}>10</Text>
+                <Text style={threadStyle.badgeText}>10</Text>
             </View>
         );
     }
 
     _renderLastReceivedMessage(thread){
         return (
-            <Text style={threadStyle.lastMessageText} numberOfLines={1}>
-                {thread.lastMessageText}
-            </Text>
+            <View style={commons.horizontalNoWrap}>
+                <Text style={threadStyle.lastMessageText} numberOfLines={1}>
+                    {thread.lastMessageText}
+                </Text>
+                {this._renderBadge()}
+            </View>
+
         );
     }
 }

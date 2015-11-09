@@ -38,13 +38,18 @@ export const threadStyle = StyleSheet.create({
         fontSize: defaultStyle.smallFontSize
     },
     badgeContainer: {
-        borderRadius: 100,
-        fontWeight: 'bold',
+        height: 20,
         width: 20,
-        flex: 0
+        borderRadius: 10,
+        backgroundColor: defaultStyle.bgColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     badgeText: {
-        fontSize: defaultStyle.smallFontSize
+        fontSize: 10,
+        color: 'white',
+        fontWeight: 'bold',
     },
     threadSelected: {
         backgroundColor: defaultStyle.selectedColor,
