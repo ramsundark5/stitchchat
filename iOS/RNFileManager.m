@@ -60,7 +60,7 @@ RCT_EXPORT_METHOD(uploadFile:(NSString*) filePath
           isFinished = YES;
         
        } failureBlock:^(NSError *error) {
-          NSLog(@"ALAssetsLibrary assetForURL error:%@", error);
+          NSLog(@"ALAssetsLibrary assetForURL error:%@", error.localizedDescription);
           isFinished = YES;
           reject(error);
        }];

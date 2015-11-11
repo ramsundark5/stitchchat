@@ -17,6 +17,8 @@
 		A211C7871BD061EE00653014 /* ContactsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A211C7861BD061EE00653014 /* ContactsDao.m */; };
 		A26873421BE5339F00487054 /* RNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A26873411BE5339F00487054 /* RNFileManager.m */; };
 		A281BBF71BF15074006B3FCB /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A281BBF61BF1504B006B3FCB /* libRCTVideo.a */; };
+		A281BBF91BF18880006B3FCB /* ContactsSyncer.m in Sources */ = {isa = PBXBuildFile; fileRef = A281BBF81BF18880006B3FCB /* ContactsSyncer.m */; };
+		A281BBFC1BF2AA5B006B3FCB /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = A281BBFB1BF2AA5B006B3FCB /* Contact.m */; };
 		A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B411B11BBC74A900918E9E /* DigitsLogin.m */; };
 		A2C129331BCDC5B800693415 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A2C129321BCDC5B800693415 /* libsqlite3.tbd */; };
 		A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */; };
@@ -62,6 +64,9 @@
 		A211C78A1BD06E3B00653014 /* ContactsDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDao.h; sourceTree = "<group>"; };
 		A26873411BE5339F00487054 /* RNFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFileManager.m; sourceTree = "<group>"; };
 		A281BBF11BF1504A006B3FCB /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		A281BBF81BF18880006B3FCB /* ContactsSyncer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsSyncer.m; sourceTree = "<group>"; };
+		A281BBFA1BF2A943006B3FCB /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		A281BBFB1BF2AA5B006B3FCB /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		A2B411B11BBC74A900918E9E /* DigitsLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitsLogin.m; sourceTree = "<group>"; };
 		A2C129321BCDC5B800693415 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A2C12ECB1BCEB78800B19CFD /* RNContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNContactsManager.swift; sourceTree = "<group>"; };
@@ -198,6 +203,9 @@
 				A2C12ECF1BCEC44D00B19CFD /* RNContactsManager.m */,
 				A211C78A1BD06E3B00653014 /* ContactsDao.h */,
 				A211C7861BD061EE00653014 /* ContactsDao.m */,
+				A281BBF81BF18880006B3FCB /* ContactsSyncer.m */,
+				A281BBFA1BF2A943006B3FCB /* Contact.h */,
+				A281BBFB1BF2AA5B006B3FCB /* Contact.m */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -431,7 +439,9 @@
 				A2C12ED01BCEC44D00B19CFD /* RNContactsManager.m in Sources */,
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
 				A26873421BE5339F00487054 /* RNFileManager.m in Sources */,
+				A281BBFC1BF2AA5B006B3FCB /* Contact.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				A281BBF91BF18880006B3FCB /* ContactsSyncer.m in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,
 				A211C7871BD061EE00653014 /* ContactsDao.m in Sources */,
 				A2C12ECC1BCEB78800B19CFD /* RNContactsManager.swift in Sources */,
