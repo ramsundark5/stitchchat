@@ -9,7 +9,7 @@
 
 -(BOOL) saveContactsToDB:(NSString*) countryCode contacts:(NSArray *)contacts
 {
-   NSString* sqlStmt = @"INSERT OR REPLACE into Contact (phoneNumber, firstName, lastName, displayName, "
+   NSString* sqlStmt = @"INSERT OR IGNORE into Contact (phoneNumber, firstName, lastName, displayName, "
                       "phoneLabel, localContactIdLink, lastModifiedTime) values "
                       "(:phoneNumber,:firstName,:lastName,:displayName,:phoneLabel, "
                       ":localContactIdLink,:lastModifiedTime)";
@@ -23,8 +23,8 @@
     
     @try {
       saveSuccess = [self saveContactToDBInternal:countryCode contacts:contacts sqlStmt:sqlStmt db:db];
-    } @catch (NSError *error) {
-      NSLog(@"Error initializing contacts%@", error.localizedDescription);
+    } @catch (NSException *ex) {
+      NSLog(@"Error initializing contacts%@", ex.reason);
     }
     
     [db commit];
@@ -92,8 +92,8 @@
           
           [db executeUpdate:sqlStmt withParameterDictionary:params];
         }
-        @catch (NSError *error) {
-          NSLog(@"Error saving contact %@", error.localizedDescription);
+        @catch (NSException *ex) {
+          NSLog(@"Error saving contact %@",ex.reason);
         }
 
         
@@ -137,8 +137,8 @@
             NSLog(@"Error parsing phone number: %@ - %@", phoneNumberStr, [numberParseError localizedDescription]);
         }
 
-    }@catch(NSError *error){
-        NSLog(@"Unexpected phone parse error: %@ - %@", phoneNumberStr, [error localizedDescription]);
+    }@catch(NSException *ex){
+        NSLog(@"Unexpected phone parse error: %@ - %@", phoneNumberStr, ex.reason);
     }
     return e164Number;
 }

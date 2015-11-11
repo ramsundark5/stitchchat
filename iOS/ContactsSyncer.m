@@ -1,18 +1,41 @@
 
-
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 #import <UIKit/UIKit.h>
 #import "Contact.h"
 #import "FMDB.h"
 #import "NBPhoneNumberUtil.h"
+#import "RCTBridgeModule.h"
 
-@interface ContactsSyncer : NSObject
+@interface ContactsSyncer : NSObject <RCTBridgeModule>
 @end
 
 @implementation ContactsSyncer
 
--(void) syncContacts
+@synthesize bridge = _bridge;
+
+RCT_EXPORT_MODULE();
+
+RCT_EXPORT_METHOD (syncContacts:(RCTPromiseResolveBlock)resolve
+            rejecter:(RCTPromiseRejectBlock)reject){
+  @try {
+    NSString* countryCode = [self getCountryCode];
+    if(!countryCode){
+      resolve(@"no cuntry code found. Aborting sync.");
+      return;
+    }
+    [self syncContactsInternal];
+    NSNumber *currentTime = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+    [self updateLastContactSyncTime:currentTime];
+    resolve(@"sync started");
+  }@catch (NSException *ex) {
+    NSLog(@"Error syncing contacts%@", ex.reason);
+    resolve(@"error syncing contacts");
+  }
+  
+}
+
+-(void) syncContactsInternal
 {
   CFErrorRef creationError = nil;
   ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, &creationError);
@@ -23,7 +46,7 @@
   
   ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
     if (!granted) {
-      [ContactsSyncer blockingContactDialog];
+      [self blockingContactDialog];
     }
   });
   [self refreshContacts:addressBookRef];
@@ -35,7 +58,7 @@
   if(!addressBookRef){
     return;
   }
-  
+  NSNumber *lastContactSyncTime = [self getLastContactSyncTime];
   NSMutableArray *changedContacts = [[NSMutableArray alloc]init];
 
   CFArrayRef peopleRefs = ABAddressBookCopyArrayOfAllPeopleInSource(addressBookRef, kABSourceTypeLocal);
@@ -49,12 +72,12 @@
     ABRecordRef ref = CFArrayGetValueAtIndex(peopleRefs, i);
     NSDate* datemod = (__bridge_transfer NSDate *)(ABRecordCopyValue(ref, kABPersonModificationDateProperty));
     
-    
-    NSTimeInterval datemodifiedtime =[datemod timeIntervalSince1970];
+    NSNumber *datemodifiedtime = [NSNumber numberWithLongLong:
+                                  [datemod timeIntervalSince1970] * 1000];
     //int seconds = round(distanceBetweenDates);
     
     //compare datemodifiedtime of addressbook contact with lastmodified time in our db
-    if (true) {
+    if (datemodifiedtime > lastContactSyncTime) {
       ABRecordRef record = CFArrayGetValueAtIndex(peopleRefs,i);
       NSArray* contactsForRecord = [self contactsForRecord:record];
       [changedContacts addObjectsFromArray:contactsForRecord];
@@ -66,6 +89,7 @@
   }
   //save changed contacts to local db
   [self saveChangedContacts:changedContacts];
+  [self updateThreadWithChangedContacts:changedContacts];
 }
 
 - (NSArray *)contactsForRecord:(ABRecordRef)record
@@ -126,8 +150,72 @@
     }
 }
 
+- (void)blockingContactDialog{
+    NSString* AB_PERMISSION_MISSING_TITLE = @"Sorry!";
+    NSString* ADDRESSBOOK_RESTRICTED_ALERT_BODY = @"Stitchchat requires access to your contacts. Access to contacts is restricted. Stitchchat will close. You can disable the restriction temporarily to let Stitchchat access your contacts by going the Settings app >> General >> Restrictions >> Contacts >> Allow Changes.";
+    NSString* AB_PERMISSION_MISSING_BODY = @"Stitchchat requires access to your contacts. We do not store your contacts on our servers.";
+    NSString* AB_PERMISSION_MISSING_ACTION = @"Give access";
+             
+    switch (ABAddressBookGetAuthorizationStatus()) {
+      case kABAuthorizationStatusRestricted:{
+        UIAlertController *controller = [UIAlertController
+            alertControllerWithTitle:AB_PERMISSION_MISSING_TITLE
+            message:ADDRESSBOOK_RESTRICTED_ALERT_BODY
+            preferredStyle:UIAlertControllerStyleAlert];
+        
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close"
+            style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction *action) {exit(0);}
+         ]];
+        
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:controller animated:YES completion:nil];
+        
+        break;
+      }
+      case kABAuthorizationStatusDenied: {
+        UIAlertController *controller = [UIAlertController
+            alertControllerWithTitle:AB_PERMISSION_MISSING_TITLE
+            message:AB_PERMISSION_MISSING_BODY
+            preferredStyle:UIAlertControllerStyleAlert];
+        
+        [controller addAction:[UIAlertAction actionWithTitle:AB_PERMISSION_MISSING_ACTION
+            style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction *action) {
+                      [[UIApplication sharedApplication]
+                       openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                     }
+         ]];
+        
+        [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:controller animated:YES completion:nil];
+        break;
+      }
+        
+      case kABAuthorizationStatusNotDetermined: {
+        NSLog(@"AddressBook access not granted but status undetermined.");
+        break;
+      }
+        
+      case kABAuthorizationStatusAuthorized:{
+        NSLog(@"AddressBook access not granted but status authorized.");
+        [self syncContactsInternal];
+        break;
+      }
+        
+      default:
+        break;
+    }
+}
+
+
 -(void) saveChangedContacts:(NSArray*) changedContacts
 {
+  NSString* insertSqlStmt = @"INSERT OR IGNORE into Contact (phoneNumber, firstName, lastName, displayName, abRecordIdLink, lastModifiedTime) values "
+  "(:phoneNumber,:firstName,:lastName,:displayName,:abRecordIdLink,:lastModifiedTime)";
+  
+  NSString* updateSqlStmt = @"UPDATE Contact SET firstName=:firstName, lastName=:lastName, displayName=:displayName,abRecordIdLink=:abRecordIdLink,lastModifiedTime=:lastModifiedTime   where phoneNumber=:phoneNumber";
+  
+  NSNumber *currentTime = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+  NSString* countryCode = [self getCountryCode];
   NSString* dbPath = [self getDBPath:@"contacts.db"];
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
   
@@ -136,63 +224,53 @@
     
     for (NSUInteger i = 0; i < changedContacts.count; i++) {
       Contact *contact = changedContacts[i];
-      NSLog(@"ready to update contact @", contact.phoneNumber);
+      NSString* e164Number = [ContactsSyncer toE164:contact.phoneNumber countryCode:countryCode];
+      if(!e164Number){
+        continue;
+      }
+      NSNumber* abRecordID = [NSNumber numberWithInt:(int)contact.recordID];
+      NSMutableDictionary *params = [NSMutableDictionary dictionary];
+      [params setObject:e164Number forKey:@"phoneNumber"];
+      [params setObject:contact.firstName forKey:@"firstName"];
+      [params setObject:contact.lastName forKey:@"lastName"];
+      [params setObject:contact.displayName forKey:@"displayName"];
+      [params setObject:abRecordID forKey:@"abRecordIdLink"];
+      [params setObject:currentTime forKey:@"lastModifiedTime"];
+      
+      NSLog(@"ready to update contact %@", contact.phoneNumber);
+      [db executeUpdate:insertSqlStmt withParameterDictionary:params];
+      [db executeUpdate:updateSqlStmt withParameterDictionary:params];
     }
     
     [db commit];
   }];
   
-  
 }
 
-+ (void)blockingContactDialog{
-  switch (ABAddressBookGetAuthorizationStatus()) {
-    case kABAuthorizationStatusRestricted:{
-      UIAlertController *controller = [UIAlertController
-          alertControllerWithTitle:NSLocalizedString(@"AB_PERMISSION_MISSING_TITLE", nil)
-          message:NSLocalizedString(@"ADDRESSBOOK_RESTRICTED_ALERT_BODY", nil)
-          preferredStyle:UIAlertControllerStyleAlert];
+-(void) updateThreadWithChangedContacts:(NSArray*) changedContacts
+{
+  NSString* updateSqlStmt = @"UPDATE Thread SET displayName=:displayName where recipientPhoneNumber=:phoneNumber";
+  
+  NSString* dbPath = [self getDBPath:@"messages.db"];
+  NSString* countryCode = [self getCountryCode];
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  [queue inDatabase:^(FMDatabase *db) {
+    [db beginTransaction];
+    for (NSUInteger i = 0; i < changedContacts.count; i++) {
+      Contact *contact = changedContacts[i];
+      NSString* e164Number = [ContactsSyncer toE164:contact.phoneNumber countryCode:countryCode];
+      if(!e164Number){
+        continue;
+      }
+      NSMutableDictionary *params = [NSMutableDictionary dictionary];
+      [params setObject:e164Number forKey:@"phoneNumber"];
+      [params setObject:contact.displayName forKey:@"displayName"];
       
-      [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ADDRESSBOOK_RESTRICTED_ALERT_BUTTON", nil)
-          style:UIAlertActionStyleDefault
-          handler:^(UIAlertAction *action) {exit(0);}
-       ]];
-      
-      [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:controller animated:YES completion:nil];
-      
-      break;
+      [db executeUpdate:updateSqlStmt withParameterDictionary:params];
     }
-    case kABAuthorizationStatusDenied: {
-      UIAlertController *controller = [UIAlertController
-          alertControllerWithTitle:NSLocalizedString(@"AB_PERMISSION_MISSING_TITLE", nil)
-          message:NSLocalizedString(@"AB_PERMISSION_MISSING_BODY", nil)
-          preferredStyle:UIAlertControllerStyleAlert];
-      
-      [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"AB_PERMISSION_MISSING_ACTION", nil)
-          style:UIAlertActionStyleDefault
-          handler:^(UIAlertAction *action) {
-                    [[UIApplication sharedApplication]
-                     openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                   }
-       ]];
-      
-      [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:controller animated:YES completion:nil];
-      break;
-    }
-      
-    case kABAuthorizationStatusNotDetermined: {
-      NSLog(@"AddressBook access not granted but status undetermined.");
-      break;
-    }
-      
-    case kABAuthorizationStatusAuthorized:{
-      NSLog(@"AddressBook access not granted but status authorized.");
-      break;
-    }
-      
-    default:
-      break;
-  }
+    [db commit];
+  }];
+
 }
 
 - (NSString *)getDBPath:(NSString *)dbName
@@ -202,6 +280,53 @@
   NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
   NSLog(@"DB path is%@", dbPath);
   return dbPath;
+}
+
+-(NSNumber*) getLastContactSyncTime{
+  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* sqlStmt = @"SELECT value from Preferences where key = 'lastContactSyncTime'";
+  __block long long lastSync = 0;
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  [queue inDatabase:^(FMDatabase *db) {
+    FMResultSet *rs = [db executeQuery:sqlStmt];
+    if ([rs next]) {
+      //[results addObject:[rs resultDictionary]];
+      lastSync = [rs longLongIntForColumnIndex:0];
+    };
+    [rs close];
+  }];
+  
+  NSNumber *lastSyncTime = [NSNumber numberWithLongLong:lastSync];
+  return lastSyncTime;
+}
+
+-(void) updateLastContactSyncTime:(NSNumber*) contactSyncTime{
+  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* sqlStmt = @"INSERT OR REPLACE INTO Preferences (key,value) values (:key,:value)";
+  NSMutableDictionary *params = [NSMutableDictionary dictionary];
+  [params setObject:@"lastContactSyncTime" forKey:@"key"];
+  [params setObject:contactSyncTime forKey:@"value"];
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  [queue inDatabase:^(FMDatabase *db) {
+     [db executeUpdate:sqlStmt withParameterDictionary:params];
+  }];
+}
+
+-(NSString*) getCountryCode{
+  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* sqlStmt = @"SELECT value from Preferences where key = 'countryCode'";
+  __block NSString* countryCode;
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+  
+  [queue inDatabase:^(FMDatabase *db) {
+    FMResultSet *rs = [db executeQuery:sqlStmt];
+    if ([rs next]) {
+       countryCode = [rs stringForColumnIndex:0];
+    }
+    [rs close];
+  }];
+  
+  return countryCode;
 }
 
 + (NSString*) toE164:(NSString*) phoneNumberStr
@@ -227,8 +352,8 @@
       NSLog(@"Error parsing phone number: %@ - %@", phoneNumberStr, [numberParseError localizedDescription]);
     }
     
-  }@catch(NSError *error){
-    NSLog(@"Unexpected phone parse error: %@ - %@", phoneNumberStr, [error localizedDescription]);
+  }@catch(NSException *ex){
+    NSLog(@"Unexpected phone parse error: %@ - %@", phoneNumberStr, ex.reason);
   }
   return e164Number;
 }

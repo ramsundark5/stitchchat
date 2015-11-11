@@ -6,13 +6,14 @@
 
 + (Contact*)contactWithFirstName:(NSString*)firstName
                      andLastName:(NSString *)lastName
-                  andPhoneNumber:(NSArray*)phoneNumber
+                  andPhoneNumber:(NSString*)phoneNumber
                         andImage:(UIImage *)image
                     andContactID:(ABRecordID)record {
   
   Contact* contact = [Contact new];
   contact->firstName = firstName;
   contact->lastName = lastName;
+  contact->phoneNumber = phoneNumber;
   contact->recordID = record;
   
   NSMutableString *fullName = [NSMutableString string];
