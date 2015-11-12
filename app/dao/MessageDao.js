@@ -25,13 +25,26 @@ class MessageDao{
 
     async getMessages(threadId){
         let threadMessages = [];
-        let sqlStmt = 'SELECT * from Message where threadId = :threadId';
+        let sqlStmt = 'SELECT * from Message where threadId = :threadId order by timestamp';
         let paramMap = {threadId: threadId};
         try{
             threadMessages = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
             debugAsyncObject(threadMessages);
         }catch(err){
             console.log("Get message query threw error "+err);
+        }
+        return threadMessages;
+    }
+
+    async getGroupMessages(threadId){
+        let threadMessages = [];
+        let sqlStmt = 'SELECT * from GroupMessage where threadId = :threadId';
+        let paramMap = {threadId: threadId};
+        try{
+            threadMessages = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+            debugAsyncObject(threadMessages);
+        }catch(err){
+            console.log("Get group message query threw error "+err);
         }
         return threadMessages;
     }

@@ -20,7 +20,11 @@ class MessagePage extends Component {
         console.log("current thread is "+thread.id);
         let threadMessages = [];
         try{
-            threadMessages = await MessageDao.getMessages(thread.id);
+            if(thread.isGroupThread){
+                threadMessages = await MessageDao.getGroupMessages(thread.id);
+            }else{
+                threadMessages = await MessageDao.getMessages(thread.id);
+            }
             this.props.messageActions.loadMessagesForThread(threadMessages);
         }catch(err){
             console.log("error loading messages" + err);

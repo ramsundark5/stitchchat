@@ -5,7 +5,7 @@ class ContactsDao{
 
     async getAllContacts(){
         let sqlStmt = 'SELECT * from Contact GROUP BY displayName order by displayName';
-        let contacts = await DBHelper.executeQuery(AppConstants.CONTACTS_DB, sqlStmt);
+        let contacts = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt);
         return contacts;
     }
 }

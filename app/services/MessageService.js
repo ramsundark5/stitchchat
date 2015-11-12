@@ -3,9 +3,10 @@ import * as AppConfig from '../config/AppConfig';
 import Message from '../models/Message';
 import MessageDao from '../dao/MessageDao';
 import ThreadService from './ThreadService';
+import CacheService from './CacheService';
 import * as MessageActions from '../actions/MessageActions';
 import store from '../config/ConfigureStore';
-import FileUploadService from './FileUploadService';
+import * as AppConstants from '../constants/AppConstants';
 
 class MessageService{
 
@@ -39,6 +40,7 @@ class MessageService{
 
     buildMessageDetails(thread, newMessage){
         newMessage.threadId    = thread.id;
+        newMessage.remoteName  = CacheService.get(AppConstants.PROFILE_NAME);
         if(thread.isGroupThread){
             newMessage.receiverId=thread.groupUid;
             newMessage.isGroupThread = true;

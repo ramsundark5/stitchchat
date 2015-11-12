@@ -32,6 +32,8 @@ class InstallDB_v1{
                                             'direction              integer,'+
                                             'count                  integer,'+
                                             'unreadCount            integer,'+
+                                            'photo                  text,'+
+                                            'thumbNailPhoto         text,'+
                                             'mimeType               text,'+
                                             'lastMessageText        text,'+
                                             'lastMessageTime        integer,'+
@@ -44,6 +46,7 @@ class InstallDB_v1{
                                             'threadId               integer,'+
                                             'senderId               text,'+
                                             'receiverId             text,'+
+                                            'remoteName             text,'+ //used in group chat, sent from server
                                             'status                 integer,'+
                                             'mediaStatus            integer,'+
                                             'isGroupThread          integer,'+
@@ -69,23 +72,33 @@ class InstallDB_v1{
         let preferenceTable      = 'CREATE TABLE if not exists Preferences'+
                                             '(key         text  unique,'+
                                             'value        text       )';
-        /*let groupInfoTable     =  'CREATE TABLE GroupInfo id integer primary key autoincrement, uid text,' +
-         'name text, threadId integer, photoUrl text,'+
+
+        let groupMessageView    = 'CREATE VIEW IF NOT EXISTS  GroupMessage AS '+
+                                    'SELECT M.*, C.displayName as displayName from Message M, Contact C '+
+                                    'ON M.senderId = C.phoneNumber order by M.timestamp';
+        /*let groupInfoTable     =  'CREATE TABLE GroupInfo id integer primary key autoincrement, groupUid text unique,'+
+         'name text, threadId integer, photoUrl text, members text,'+
          'ownerId text, lastMessageOwner text, state text,'+
          'extras text, lastModifiedTime integer';
 
-         let groupMemberTable  =  'CREATE TABLE GroupMember groupId integer primary key,' +
+         let groupMemberTable  =  'CREATE TABLE GroupMember id integer primary key, groupUid text unique,'+
          'firstName text, lastName text, email text, displayName text,'+
          'remoteName text, status text, photoUrl text, lastSeenTime integer,'+
          'extras text, lastModifiedTime integer';*/
 
-        let promise1 = DBHelper.executeUpdate(AppConstants.CONTACTS_DB, createContactsTable);
-        let promise2 = DBHelper.executeUpdate(AppConstants.CONTACTS_DB, preferenceTable);
+        let threadPhoneNumberIndex = 'CREATE INDEX IF NOT EXISTS Thread_Phone_Number_idx ON Thread (recipientPhoneNumber)';
+        let threadGroupIdIndex     = 'CREATE INDEX IF NOT EXISTS Thread_Group_ID_idx ON Thread (groupUid)';
+
+        let promise1 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, createContactsTable);
+        let promise2 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, preferenceTable);
         let promise3 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, threadTable);
         let promise4 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, messageTable);
         let promise5 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, messageRemoteIdTable);
+        let promise6 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, threadPhoneNumberIndex);
+        let promise7 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, threadGroupIdIndex);
+        let promise8 = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, groupMessageView);
 
-        return Promise.all([promise1, promise2, promise3, promise4, promise5]);
+        return Promise.all([promise1, promise2, promise3, promise4, promise5, promise6, promise7, promise8]);
     }
 }
 export default new InstallDB_v1();

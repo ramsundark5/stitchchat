@@ -15,6 +15,8 @@ class LoginService{
 
     showLoginPage(){
         let DigitsLogin = NativeModules.DigitsLogin;
+        let ContactsSyncer = NativeModules.ContactsSyncer;
+        ContactsSyncer.syncContacts();
         DigitsLogin.startLoginProcess();
     }
 

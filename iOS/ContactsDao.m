@@ -15,7 +15,7 @@
                       ":localContactIdLink,:lastModifiedTime)";
   
   __block BOOL saveSuccess = FALSE;
-  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* dbPath = [self getDBPath:@"messages.db"];
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
   
   [queue inDatabase:^(FMDatabase *db) {

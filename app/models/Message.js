@@ -13,6 +13,7 @@ export default class Message{
         this.message                = text;
         this.thumbImageUrl          = '';
         this.mediaUrl               = '';  //this is the local url of stored media
+        this.remoteName             = '';
         this.mediaMimeType          = 'image/jpeg';
         this.mediaDesc              = '';
         this.latitude               = '';
@@ -26,6 +27,7 @@ export default class Message{
         this.status                 = MessageConstants.STATUS_PENDING;
         this.mediaStatus            = MessageConstants.PENDING_UPLOAD;
         this.isOwner                = true;
+        this.displayName            = ''; //internal use for group chat. will be derived from contacts table.
         this.timestamp              = 0;
         this.direction              = 0; //sent or received
         this.needsPush              = true; //indicates pending/draft message
@@ -51,6 +53,7 @@ export default class Message{
         let messageForDB         = _.clone(this);
         messageForDB.selected    = undefined;
         messageForDB.uid         = undefined;
+        messageForDB.displayName = undefined;
         return messageForDB;
     }
 }

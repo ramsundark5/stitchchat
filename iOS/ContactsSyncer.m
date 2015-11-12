@@ -216,7 +216,7 @@ RCT_EXPORT_METHOD (syncContacts:(RCTPromiseResolveBlock)resolve
   
   NSNumber *currentTime = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
   NSString* countryCode = [self getCountryCode];
-  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* dbPath = [self getDBPath:@"messages.db"];
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
   
   [queue inDatabase:^(FMDatabase *db) {
@@ -283,7 +283,7 @@ RCT_EXPORT_METHOD (syncContacts:(RCTPromiseResolveBlock)resolve
 }
 
 -(NSNumber*) getLastContactSyncTime{
-  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* dbPath = [self getDBPath:@"messages.db"];
   NSString* sqlStmt = @"SELECT value from Preferences where key = 'lastContactSyncTime'";
   __block long long lastSync = 0;
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
@@ -301,7 +301,7 @@ RCT_EXPORT_METHOD (syncContacts:(RCTPromiseResolveBlock)resolve
 }
 
 -(void) updateLastContactSyncTime:(NSNumber*) contactSyncTime{
-  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* dbPath = [self getDBPath:@"messages.db"];
   NSString* sqlStmt = @"INSERT OR REPLACE INTO Preferences (key,value) values (:key,:value)";
   NSMutableDictionary *params = [NSMutableDictionary dictionary];
   [params setObject:@"lastContactSyncTime" forKey:@"key"];
@@ -313,7 +313,7 @@ RCT_EXPORT_METHOD (syncContacts:(RCTPromiseResolveBlock)resolve
 }
 
 -(NSString*) getCountryCode{
-  NSString* dbPath = [self getDBPath:@"contacts.db"];
+  NSString* dbPath = [self getDBPath:@"messages.db"];
   NSString* sqlStmt = @"SELECT value from Preferences where key = 'countryCode'";
   __block NSString* countryCode;
   FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
