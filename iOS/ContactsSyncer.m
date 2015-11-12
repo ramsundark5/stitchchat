@@ -278,7 +278,6 @@ RCT_EXPORT_METHOD (syncContacts:(RCTPromiseResolveBlock)resolve
   NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
   NSString *documentsDir = [docPaths objectAtIndex:0];
   NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
-  NSLog(@"DB path is%@", dbPath);
   return dbPath;
 }
 

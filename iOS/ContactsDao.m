@@ -110,7 +110,7 @@
   NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
   NSString *documentsDir = [docPaths objectAtIndex:0];
   NSString *dbPath = [documentsDir   stringByAppendingPathComponent:dbName];
-  NSLog(@"DB path is%@", dbPath);
+  //NSLog(@"DB path is%@", dbPath);
   return dbPath;
 }
 
