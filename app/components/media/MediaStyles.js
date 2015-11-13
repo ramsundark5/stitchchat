@@ -17,7 +17,7 @@ export const mediaStyle = StyleSheet.create({
         margin: 10,
     },
     unselectedImage:{
-
+        backgroundColor: defaultStyle.selectedColor,
     },
     selectedImage:{
         backgroundColor: defaultStyle.selectedColor,

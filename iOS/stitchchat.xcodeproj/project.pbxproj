@@ -14,6 +14,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		8A2C77A4916836B649A45E15 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B144685E24B8C6F980574BA /* libPods.a */; };
+		A2060C1B1BF56538000D978A /* RNMediaPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A2060C1A1BF56538000D978A /* RNMediaPicker.m */; };
 		A211C7871BD061EE00653014 /* ContactsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A211C7861BD061EE00653014 /* ContactsDao.m */; };
 		A26873421BE5339F00487054 /* RNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A26873411BE5339F00487054 /* RNFileManager.m */; };
 		A281BBF71BF15074006B3FCB /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A281BBF61BF1504B006B3FCB /* libRCTVideo.a */; };
@@ -60,6 +61,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B144685E24B8C6F980574BA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2060C1A1BF56538000D978A /* RNMediaPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMediaPicker.m; sourceTree = "<group>"; };
+		A2060C1F1BF57090000D978A /* RNMediaPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMediaPicker.h; sourceTree = "<group>"; };
 		A211C7861BD061EE00653014 /* ContactsDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDao.m; sourceTree = "<group>"; };
 		A211C78A1BD06E3B00653014 /* ContactsDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDao.h; sourceTree = "<group>"; };
 		A26873411BE5339F00487054 /* RNFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFileManager.m; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A2060C161BF564E1000D978A /* RNMedia */,
 				A281BBF11BF1504A006B3FCB /* RCTVideo.xcodeproj */,
 				A26873431BE533AC00487054 /* RNFileManager */,
 				A2C6C4AD1BD710F80015AFA2 /* Fonts */,
@@ -170,6 +174,15 @@
 				00E356EE1AD99517003FC87E /* stitchchatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A2060C161BF564E1000D978A /* RNMedia */ = {
+			isa = PBXGroup;
+			children = (
+				A2060C1A1BF56538000D978A /* RNMediaPicker.m */,
+				A2060C1F1BF57090000D978A /* RNMediaPicker.h */,
+			);
+			name = RNMedia;
 			sourceTree = "<group>";
 		};
 		A243865D1BBC560D0056262F /* RNDigits */ = {
@@ -440,6 +453,7 @@
 				A2B411B21BBC74A900918E9E /* DigitsLogin.m in Sources */,
 				A26873421BE5339F00487054 /* RNFileManager.m in Sources */,
 				A281BBFC1BF2AA5B006B3FCB /* Contact.m in Sources */,
+				A2060C1B1BF56538000D978A /* RNMediaPicker.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				A281BBF91BF18880006B3FCB /* ContactsSyncer.m in Sources */,
 				A2F234131BA35ED9000A5A9E /* HelloManager.swift in Sources */,

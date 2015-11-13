@@ -1,6 +1,7 @@
 import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from 'react-native';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {NativeModules} from 'react-native';
 
 class MediaOptions extends Component {
     constructor(props, context) {
@@ -8,7 +9,9 @@ class MediaOptions extends Component {
     }
 
     openMediaGallery(){
-        this.props.router.toMediaGalleryView();
+        //this.props.router.toMediaGalleryView();
+        let RNMediaPicker = NativeModules.RNMediaPicker;
+        RNMediaPicker.showMediaPicker();
     }
 
     render() {

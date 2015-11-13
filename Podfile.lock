@@ -24,6 +24,8 @@ PODS:
   - AWSS3 (2.2.7):
     - AWSCore (= 2.2.7)
   - Crashlytics (3.3.4)
+  - CTAssetsPickerController (3.1.1):
+    - PureLayout (~> 3.0.0)
   - Digits (1.11.4)
   - Fabric (1.5.5):
     - Fabric/Base (= 1.5.5)
@@ -35,6 +37,7 @@ PODS:
     - FMDB/common
   - libPhoneNumber-iOS (0.8.8)
   - MQTTClient (0.3.3)
+  - PureLayout (3.0.1)
   - React (0.14.0):
     - React/Core (= 0.14.0)
   - react-native-sqlite3 (0.1.1):
@@ -64,6 +67,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - AWSS3
   - Crashlytics
+  - CTAssetsPickerController (~> 3.1.0)
   - Digits
   - Fabric
   - libPhoneNumber-iOS
@@ -91,11 +95,13 @@ SPEC CHECKSUMS:
   AWSCore: d81e1e534040780deb0f3877aaa207d297e54b4c
   AWSS3: d39bae2ebbcdc450aef30635c85e556317b92a33
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
+  CTAssetsPickerController: 6fba9134a230656ffe34ac0effb0060a1ead65cb
   Digits: 1a372fab25b58d1459adc6b8d95e2e155ae5b212
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
   MQTTClient: 8b40f3bd20c8ea35f66d82bce5039487873b9a5c
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   React: 64e01b787f4f2c215cbc15c61b92129fed4bdde9
   react-native-sqlite3: 978c732bf10575eae3d3acaede76062fbfba8880
   TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36

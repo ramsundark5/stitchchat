@@ -27,6 +27,26 @@ dispatch_queue_t attachmentsQueue() {
   return queue;
 }
 
+RCT_EXPORT_METHOD(downloadFile:(NSString*)downloadURL
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject){
+  
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURL *URL = [NSURL URLWithString:downloadURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+  
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+      NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+      return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+      NSLog(@"File downloaded to: %@", filePath);
+    }];
+    [downloadTask resume];
+}
+
 RCT_EXPORT_METHOD(uploadFile:(NSString*) filePath
                   fileName:(NSString*) fileName
                   signedUrl:(NSString*) signedUrl

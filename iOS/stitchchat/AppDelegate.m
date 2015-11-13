@@ -57,6 +57,10 @@
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+  
+  // Set reference to class property
+  self.rootViewController = rootViewController;
+  
   [self.window makeKeyAndVisible];
   [Fabric with:@[[Digits class]]];
 

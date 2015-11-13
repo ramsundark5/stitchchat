@@ -25,19 +25,19 @@ class MediaGallery extends Component {
             first: MEDIA_FETCH_LIMIT,
             assetType: 'All'
         };
-        CameraRoll.getPhotos(fetchParams, this.displayImages.bind(this), this.logImageError.bind(this));
+        CameraRoll.getPhotos(fetchParams, this.displayMedias.bind(this), this.logMediaFetchError.bind(this));
     }
 
-    fetchPhotos(endCursor, numberOfPhotos){
+    fetchMedias(endCursor, numberOfPhotos){
         const fetchParams = {
             first: numberOfPhotos,
             assetType: 'All',
             after: endCursor
         };
-        CameraRoll.getPhotos(fetchParams, this.displayImages.bind(this), this.logImageError.bind(this));
+        CameraRoll.getPhotos(fetchParams, this.displayMedias.bind(this), this.logMediaFetchError.bind(this));
     }
 
-     displayImages(data) {
+     displayMedias(data) {
         const assets = data.edges;
         let endCursor = data.page_info.end_cursor;
         let hasNextPage = data.page_info.has_next_page;
@@ -50,11 +50,11 @@ class MediaGallery extends Component {
         });
     }
 
-    logImageError(err) {
+    logMediaFetchError(err) {
         console.log(err);
     }
 
-    selectImage(image) {
+    selectMedia(image) {
         console.log('selected uri is :'+image.uri);
         image.selected = !image.selected;
         this.forceUpdate();
@@ -64,7 +64,7 @@ class MediaGallery extends Component {
         let hasNextPage = this.state.hasNextPage;
         let endCursor   = this.state.endCursor;
         if(hasNextPage){
-            this.fetchPhotos(endCursor, MEDIA_FETCH_LIMIT);
+            this.fetchMedias(endCursor, MEDIA_FETCH_LIMIT);
         }
     }
 
@@ -127,7 +127,7 @@ class MediaGallery extends Component {
 
         return (
             <TouchableHighlight key={image.uri}
-                                onPress={() => this.selectImage(image)}
+                                onPress={() => this.selectMedia(image)}
                                 style={imageContainerStyle}>
                 <Image style={mediaStyle.image} source={{ uri: image.uri }} />
             </TouchableHighlight>
@@ -142,9 +142,11 @@ class MediaGallery extends Component {
 
         return (
             <TouchableHighlight key={video.uri}
-                                onPress={() => this.selectImage(image)}
+                                onPress={() => this.selectMedia(video)}
                                 style={videoContainerStyle}>
-                <Video source={{uri: video.uri}} />
+                <Video source={{uri: video.uri}}
+                       style={mediaStyle.image}
+                       paused={true}/>
             </TouchableHighlight>
         );
     }
