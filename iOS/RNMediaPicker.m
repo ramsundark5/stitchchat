@@ -15,10 +15,6 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
 }
 
 -(void)showMediaPickerInternal {
-  if(self.mediaPicker == nil) {
-    self.mediaPicker = [[GMImagePickerController alloc] init];
-  }
-  
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
   
   
@@ -26,10 +22,8 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
     dispatch_async(dispatch_get_main_queue(), ^{
       
       // init picker
-      GMImagePickerController *picker = [[GMImagePickerController alloc] init];
+      CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
       picker.title = @"Gallery";
-      picker.customNavigationBarPrompt = @"Next";
-      
       // set delegate
       picker.delegate = self;
       
@@ -43,13 +37,50 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
   }];
 }
 
-- (void)assetsPickerController:(GMImagePickerController *)picker didFinishPickingAssets:(NSArray *)assets
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
   // assets contains PHAsset objects.
+  for(PHAsset* phAsset in assets){
+    PHAssetResource * resource = [[PHAssetResource assetResourcesForAsset:phAsset] firstObject];
+    
+    [RNMediaPicker writeResourceToTmp:resource pathCallback:^(NSURL *localUrl)
+     {
+       //[formData appendPartWithFileURL: localUrl name:@"data" fileName:entity.filename mimeType:mimeType error:&fileappenderror];
+       
+     }];
+  }
   hideMediaPicker();
-  //self.resolve(assets);
 }
 
++(void)getAassetUrl: (PHAsset*)mPhasset resultHandler:(void(^)(NSURL *imageUrl))dataResponse{
+  
+  PHImageRequestOptions * requestOption = [[PHImageRequestOptions alloc] init];
+  requestOption.synchronous = YES;
+  requestOption.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+  
+  [[PHImageManager defaultManager] requestImageDataForAsset:mPhasset options:requestOption resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+    
+    dataResponse([info objectForKey:@"PHImageFileURLKey"]);
+    
+  }];
+}
+
++(void)writeResourceToTmp: (PHAssetResource*)resource pathCallback: (void(^)(NSURL*localUrl))pathCallback {
+  // Get Asset Resource. Take first resource object. since it's only the one image.
+  NSString *filename = resource.originalFilename;
+  NSString *pathToWrite = [NSTemporaryDirectory() stringByAppendingString:filename];
+  NSURL *localpath = [NSURL fileURLWithPath:pathToWrite];
+  PHAssetResourceRequestOptions *options = [PHAssetResourceRequestOptions new];
+  options.networkAccessAllowed = YES;
+  [[PHAssetResourceManager defaultManager] writeDataForAssetResource:resource toFile:localpath options:options completionHandler:^(NSError * _Nullable error) {
+    if (error) {
+      NSLog(@"Failed to write a resource: %@",[error localizedDescription]);
+    }
+    
+    pathCallback(localpath);
+  }];
+  
+}
 
 #pragma mark private-methods
 

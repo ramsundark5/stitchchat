@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
 #import "RCTBridge.h"
 #import "RCTBridgeModule.h"
-#import "GMImagePickerController.h"
+#import <CTAssetsPickerController/CTAssetsPickerController.h>
 
-@interface RNMediaPicker : NSObject<GMImagePickerControllerDelegate, RCTBridgeModule>
+@interface RNMediaPicker : NSObject<CTAssetsPickerControllerDelegate, RCTBridgeModule>
 
-@property (nonatomic, retain) GMImagePickerController *mediaPicker;
+@property (nonatomic, retain) CTAssetsPickerController *mediaPicker;
 @property (nonatomic, strong) RCTPromiseResolveBlock resolve;
 @property (nonatomic, strong) RCTPromiseRejectBlock reject;
 
