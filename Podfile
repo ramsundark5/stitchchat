@@ -11,7 +11,7 @@ pod 'MQTTClient'
 pod 'libPhoneNumber-iOS'
 pod 'AFNetworking', '~> 2.5'
 pod 'AWSS3'
-pod 'CTAssetsPickerController',  '~> 3.1.0'
+pod 'GMImagePicker', '~> 0.0.1'
 
 post_install do |installer|
   target = installer.pods_project.targets.select{|t| 'React' == t.name}.first

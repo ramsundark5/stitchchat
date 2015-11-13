@@ -1,20 +1,22 @@
 #import "RNMediaPicker.h"
 #import "AppDelegate.h"
 
-
 @implementation RNMediaPicker
 
 RCT_EXPORT_MODULE();
 
 @synthesize bridge = _bridge;
 
-RCT_EXPORT_METHOD(showMediaPicker) {
+RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+  self.resolve = resolve;
+  self.reject  = reject;
   [self showMediaPickerInternal];
 }
 
 -(void)showMediaPickerInternal {
   if(self.mediaPicker == nil) {
-    self.mediaPicker = [[CTAssetsPickerController alloc] init];
+    self.mediaPicker = [[GMImagePickerController alloc] init];
   }
   
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -24,7 +26,9 @@ RCT_EXPORT_METHOD(showMediaPicker) {
     dispatch_async(dispatch_get_main_queue(), ^{
       
       // init picker
-      CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+      GMImagePickerController *picker = [[GMImagePickerController alloc] init];
+      picker.title = @"Gallery";
+      picker.customNavigationBarPrompt = @"Next";
       
       // set delegate
       picker.delegate = self;
@@ -39,9 +43,11 @@ RCT_EXPORT_METHOD(showMediaPicker) {
   }];
 }
 
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
+- (void)assetsPickerController:(GMImagePickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
   // assets contains PHAsset objects.
+  hideMediaPicker();
+  //self.resolve(assets);
 }
 
 
