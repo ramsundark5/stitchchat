@@ -179,8 +179,8 @@
 		A2060C161BF564E1000D978A /* RNMedia */ = {
 			isa = PBXGroup;
 			children = (
-				A2060C1A1BF56538000D978A /* RNMediaPicker.m */,
 				A2060C1F1BF57090000D978A /* RNMediaPicker.h */,
+				A2060C1A1BF56538000D978A /* RNMediaPicker.m */,
 			);
 			name = RNMedia;
 			sourceTree = "<group>";

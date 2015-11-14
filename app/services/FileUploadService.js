@@ -21,7 +21,9 @@ class FileUploadService{
 
     async uploadFileInternal(signedUrl, filePath, fileName){
         try{
-            let response = await this.fileManager.uploadFile(filePath, fileName, signedUrl);
+            let RNMediaPicker = NativeModules.RNMediaPicker;
+            //let response = await this.fileManager.uploadFile(filePath, fileName, signedUrl);
+            let response = await RNMediaPicker.uploadMedia(filePath, signedUrl);
             console.log("upload response is "+ response);
             debugAsyncObject(response);
         }catch(err){

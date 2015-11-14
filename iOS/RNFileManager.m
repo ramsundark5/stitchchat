@@ -2,7 +2,6 @@
 #import "AFHTTPSessionManager.h"
 #import "AFURLSessionManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-#import <AWSS3/AWSS3.h>
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "RCTBridgeModule.h"
 

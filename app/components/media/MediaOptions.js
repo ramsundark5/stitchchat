@@ -2,16 +2,25 @@ import React, { Component, View, TextInput, TouchableHighlight, PropTypes } from
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {NativeModules} from 'react-native';
+import FileUploadService from '../../services/FileUploadService';
 
 class MediaOptions extends Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    openMediaGallery(){
+    async openMediaGallery(){
         //this.props.router.toMediaGalleryView();
         let RNMediaPicker = NativeModules.RNMediaPicker;
-        RNMediaPicker.showMediaPicker();
+        let selectedMedias = await RNMediaPicker.showMediaPicker();
+        if(!selectedMedias){
+            return;
+        }
+        debugAsyncObject(selectedMedias);
+        for(let i = 0; i<selectedMedias.length; i++ ){
+            FileUploadService.uploadFile(selectedMedias[i].localIdentifier);
+            //console.log("upload completed with response "+uploadResponse);
+        }
     }
 
     render() {
