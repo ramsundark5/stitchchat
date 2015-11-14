@@ -6,24 +6,22 @@ class FileUploadService{
         this.fileManager = NativeModules.RNFileManager;
     }
 
-    async uploadFile(filePath){
+    async uploadFile(filePath, messageId){
         try{
             let signedUrl = await this.getSignedUrl();
-            let fileName  = 'file1.jpg';
             console.log("signed url is: "+ signedUrl);
             if(signedUrl){
-                this.uploadFileInternal(signedUrl, filePath, fileName);
+                this.uploadFileInternal(signedUrl, filePath, messageId);
             }
         }catch(err){
             console.log("Error uploading media "+ err);
         }
     }
 
-    async uploadFileInternal(signedUrl, filePath, fileName){
+    async uploadFileInternal(signedUrl, filePath, messageId){
         try{
             let RNMediaPicker = NativeModules.RNMediaPicker;
-            //let response = await this.fileManager.uploadFile(filePath, fileName, signedUrl);
-            let response = await RNMediaPicker.uploadMedia(filePath, signedUrl);
+            let response = await RNMediaPicker.uploadMedia(filePath, signedUrl, messageId);
             console.log("upload response is "+ response);
             debugAsyncObject(response);
         }catch(err){

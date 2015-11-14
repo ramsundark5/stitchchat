@@ -45,47 +45,51 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
 
   //assets contains PHAsset objects.
   for(PHAsset* phAsset in assets){
+    PHAssetResource * resource = [[PHAssetResource assetResourcesForAsset:phAsset] firstObject];
+    CFStringRef mimeType = UTTypeCopyPreferredTagWithClass((__bridge CFStringRef _Nonnull)(resource.uniformTypeIdentifier), kUTTagClassMIMEType);
+    NSString *mimeTypeString = (__bridge_transfer NSString *)mimeType;
+    CFStringRef extension = UTTypeCopyPreferredTagWithClass((__bridge CFStringRef _Nonnull)(resource.uniformTypeIdentifier), kUTTagClassFilenameExtension);
+    NSString *extensionStr = (__bridge_transfer NSString *)extension;
+    
     NSMutableDictionary *mediaDetails = [[NSMutableDictionary alloc] init];
     NSNumber* mediaType = [NSNumber numberWithInteger:phAsset.mediaType];
     [mediaDetails setObject:phAsset.localIdentifier  forKey:@"localIdentifier"];
     [mediaDetails setObject:mediaType  forKey:@"mediaType"];
+    [mediaDetails setObject:mimeTypeString  forKey:@"mimeType"];
+    [mediaDetails setObject:extensionStr  forKey:@"extension"];
     [selectedMediaDetails addObject:mediaDetails];
   }
   hideMediaPicker();
   self.resolve(selectedMediaDetails);
-  //upload media
-  /*for(PHAsset* phAsset in assets){
-    [self uploadMediaInternal:phAsset];
-  }*/
 }
 
 RCT_EXPORT_METHOD(uploadMedia:(NSString*)localIdentifier
                   uploadURL:(NSString*)uploadURL
+                  messageId:(NSInteger)messageId
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject){
   
   PHAsset* phAsset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier]
-                              options:nil].firstObject;
+                                                      options:nil].firstObject;
   if(!self.manager){
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
   }
-
-  [self uploadMediaInternal:phAsset uploadURL:uploadURL];
-  resolve(@"Upload initiated");
-}
--(void) uploadMediaInternal:(PHAsset*) phAsset uploadURL:(NSString*)uploadURL{
+  NSLog(@"got message id as %ld", (long)messageId);
    PHAssetResource * resource = [[PHAssetResource assetResourcesForAsset:phAsset] firstObject];
    __block NSURL *tempUrl;
    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:uploadURL]];
   request.HTTPMethod = @"PUT";
   [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-  
+  [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+
+  __block NSProgress* progress;
   [self writeResourceToTmp:resource pathCallback:^(NSURL *localTempUrl){
      tempUrl = localTempUrl;
      NSURLSessionUploadTask *uploadTask = [self.manager
         uploadTaskWithRequest:request
-        fromFile:tempUrl progress:nil
+        fromFile:tempUrl
+        progress:&progress
         completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
           if (error) {
             NSLog(@"Error: %@", error);
@@ -98,40 +102,7 @@ RCT_EXPORT_METHOD(uploadMedia:(NSString*)localIdentifier
     }];
     [uploadTask resume];
   }];
-  
-  
-
-  /*NSURLRequest *urlRequest =  [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"PUT"
-       URLString:uploadURL
-       parameters:nil
-       constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-   
-          [self writeResourceToTmp:resource pathCallback:^(NSURL *localTempUrl)
-           {
-             tempFilePath = [localTempUrl absoluteString];
-             [formData appendPartWithFileURL: localTempUrl
-                        name:@"data"
-                        fileName:@"file.jpg"
-                        mimeType:@"image/jpeg"
-                        error:nil];
-             
-           }];
-   }error:nil];
-  
-  AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-  NSProgress *progress = nil;
-  
-  NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithStreamedRequest:urlRequest progress:&progress completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-    if (error) {
-      NSLog(@"Error: %@", error);
-    } else {
-      NSLog(@"%@ %@", response, responseObject);
-      NSError* removeTempFile = nil;
-      [[NSFileManager defaultManager] removeItemAtPath:tempFilePath error:&removeTempFile];
-    }
-  }];
-  
-  [uploadTask resume];*/
+  resolve(@"Upload initiated");
 }
 
 -(void)writeResourceToTmp: (PHAssetResource*)resource pathCallback: (void(^)(NSURL*localUrl))pathCallback {

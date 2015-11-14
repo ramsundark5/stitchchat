@@ -3,6 +3,7 @@ import {commons, defaultStyle} from '../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {NativeModules} from 'react-native';
 import FileUploadService from '../../services/FileUploadService';
+import MediaService from '../../services/MediaService';
 
 class MediaOptions extends Component {
     constructor(props, context) {
@@ -17,10 +18,11 @@ class MediaOptions extends Component {
             return;
         }
         debugAsyncObject(selectedMedias);
-        for(let i = 0; i<selectedMedias.length; i++ ){
+        /*for(let i = 0; i<selectedMedias.length; i++ ){
             FileUploadService.uploadFile(selectedMedias[i].localIdentifier);
             //console.log("upload completed with response "+uploadResponse);
-        }
+        }*/
+        MediaService.addSelectedMedias(selectedMedias);
     }
 
     render() {
