@@ -3,6 +3,7 @@ import RefreshableListView from 'react-native-refreshable-listview';
 import MessageItem from './MessageItem';
 import {messageStyle} from './MessageStyles';
 import {commons, defaultStyle} from '../styles/CommonStyles';
+import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import moment from 'moment';
 
 class MessageList extends Component {
@@ -28,19 +29,19 @@ class MessageList extends Component {
     }
 
     render() {
-        const { messages, loadOlderMessages, deleteSelected, router} = this.props;
-        let groupedMessages = this.groupMessagesByDate(messages);
+        const { messages, loadOlderMessages, deleteSelected} = this.props;
+        //let groupedMessages = this.groupMessagesByDate(messages);
+
+        let rowIds = messages.map((row, index) => index).reverse();
         let messagesDS = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
-        messagesDS = messagesDS.cloneWithRowsAndSections(groupedMessages);
+            rowHasChanged: (r1, r2) => r1 !== r2});
+        messagesDS = messagesDS.cloneWithRows(messages, rowIds);
         return (
             <View style={commons.listContainer}>
-                <RefreshableListView
+                <ListView
+                    ref="messageListRef"
+                    renderScrollComponent={props => <InvertibleScrollView {...props} inverted/>}
                     dataSource={messagesDS}
-                    renderSectionHeader={this.renderSectionHeader}
-                    loadData={loadOlderMessages}
-                    refreshDescription="Loading messages"
                     renderRow={this.renderMessageItem.bind(this)}/>
                 <TouchableHighlight onPress={deleteSelected}>
                     <Text>Delete</Text>
