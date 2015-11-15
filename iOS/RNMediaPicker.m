@@ -1,13 +1,14 @@
 #import "RNMediaPicker.h"
 #import "AppDelegate.h"
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
-#import <AFNetworking/AFURLSessionManager.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
 
 @implementation RNMediaPicker
 
-RCT_EXPORT_MODULE();
-
 @synthesize bridge = _bridge;
+
+RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
@@ -63,94 +64,6 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
   self.resolve(selectedMediaDetails);
 }
 
-RCT_EXPORT_METHOD(uploadMedia:(NSString*)localIdentifier
-                  uploadURL:(NSString*)uploadURL
-                  messageId:(NSInteger)messageId
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject){
-  
-  PHAsset* phAsset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier]
-                                                      options:nil].firstObject;
-  if(!self.manager){
-    self.manager = [AFHTTPSessionManager manager];
-    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-  }
-  NSLog(@"got message id as %ld", (long)messageId);
-   PHAssetResource * resource = [[PHAssetResource assetResourcesForAsset:phAsset] firstObject];
-   __block NSURL *tempUrl;
-   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:uploadURL]];
-  request.HTTPMethod = @"PUT";
-  [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-  [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-
-  __block NSProgress* progress;
-  [self writeResourceToTmp:resource pathCallback:^(NSURL *localTempUrl){
-     tempUrl = localTempUrl;
-     NSURLSessionUploadTask *uploadTask = [self.manager
-        uploadTaskWithRequest:request
-        fromFile:tempUrl
-        progress:&progress
-        completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-          if (error) {
-            NSLog(@"Error: %@", error);
-            [self deleteTempFile:tempUrl];
-            //reject(error);
-          } else {
-            NSLog(@"Success: %@ %@", response, responseObject);
-            [self deleteTempFile:tempUrl];
-          }
-    }];
-    [uploadTask resume];
-  }];
-  resolve(@"Upload initiated");
-}
-
--(void)writeResourceToTmp: (PHAssetResource*)resource pathCallback: (void(^)(NSURL*localUrl))pathCallback {
-  
-  //Get Asset Resource. Take first resource object. since it's only the one image.
-  NSString *filename = resource.originalFilename;
-  NSString *pathToWrite = [NSTemporaryDirectory() stringByAppendingString:filename];
-  NSURL *localpath = [NSURL fileURLWithPath:pathToWrite];
-  BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:pathToWrite];
-  if(fileExists){
-    NSLog(@"File already exists at temp dir");
-    pathCallback(localpath);
-  }else{
-    PHAssetResourceRequestOptions *options = [PHAssetResourceRequestOptions new];
-    options.networkAccessAllowed = YES;
-    
-    [[PHAssetResourceManager defaultManager] writeDataForAssetResource:resource toFile:localpath options:options completionHandler:^(NSError * _Nullable error) {
-      if (error) {
-        NSLog(@"Failed to write a resource: %@",[error localizedDescription]);
-      }
-      
-      pathCallback(localpath);
-    }];
-  }
-  
-}
-
--(void) deleteTempFile:(NSURL*) tempURL{
-  NSError* removeTempFileError = nil;
-  [[NSFileManager defaultManager] removeItemAtURL:tempURL error:&removeTempFileError];
-  if (removeTempFileError) {
-    NSLog(@"Failed to remove temp file: %@",[removeTempFileError localizedDescription]);
-  }
-}
-
--(void)deleteAllTempData
-{
-  NSString *tmpDirectory = NSTemporaryDirectory();
-  NSFileManager *fileManager = [NSFileManager defaultManager];
-  NSError *error;
-  NSArray *cacheFiles = [fileManager contentsOfDirectoryAtPath:tmpDirectory error:&error];
-  for (NSString *file in cacheFiles)
-  {
-    error = nil;
-    [fileManager removeItemAtPath:[tmpDirectory stringByAppendingPathComponent:file]
-                            error:&error];
-  }
-}
 
 #pragma mark private-methods
 

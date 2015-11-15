@@ -26,7 +26,8 @@ class MediaService{
         let newMessage      = this.buildMediaMessage(media, true);
         let messageToBeSent = await MessageService.addMessage(currentThread, newMessage);
         try{
-            let uploadResponse  = await FileUploadService.uploadFile(media.localIdentifier, messageToBeSent.id);
+            let uploadResponse  = await FileUploadService.uploadFile(media.localIdentifier,
+                messageToBeSent.id, media.extension);
             console.log("upload completed with response "+uploadResponse);
             MessageDao.updateUploadStatus(messageToBeSent, MessageConstants.UPLOAD_COMPLETED);
             MessageService.sendMessage(messageToBeSent);

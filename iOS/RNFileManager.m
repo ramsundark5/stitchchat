@@ -1,9 +1,10 @@
-
+#import <Foundation/Foundation.h>
+#import <AFNetworking/AFURLSessionManager.h>
 #import "AFHTTPSessionManager.h"
-#import "AFURLSessionManager.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "RCTBridgeModule.h"
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
+#import <Photos/Photos.h>
 
 @interface RNFileManager : NSObject <RCTBridgeModule>
 
@@ -46,72 +47,100 @@ RCT_EXPORT_METHOD(downloadFile:(NSString*)downloadURL
     [downloadTask resume];
 }
 
-RCT_EXPORT_METHOD(uploadFile:(NSString*) filePath
-                  fileName:(NSString*) fileName
-                  signedUrl:(NSString*) signedUrl
+
+RCT_EXPORT_METHOD(uploadMedia:(NSString*)localIdentifier
+                  uploadURL:(NSString*)uploadURL
+                  messageId:(nonnull NSNumber*)messageId
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject){
   
+  PHAsset* phAsset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier]
+                                                      options:nil].firstObject;
   if(!self.manager){
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
   }
-  
   dispatch_async(attachmentsQueue(), ^{
+    NSLog(@"got message id as %@", messageId);
+    PHAssetResource * resource = [[PHAssetResource assetResourcesForAsset:phAsset] firstObject];
+    __block NSURL *tempUrl;
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:uploadURL]];
+    request.HTTPMethod = @"PUT";
+    [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
     
-       NSURL *assetUrl = [[NSURL alloc] initWithString:filePath];
-    
-       #pragma clang diagnostic push
-       #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-       ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-       __block BOOL isFinished = NO;
-       __block NSData * tempData = nil;
-    
-       [library assetForURL:assetUrl resultBlock:^(ALAsset *asset) {
-          ALAssetRepresentation *rep = [asset defaultRepresentation];
-          
-          CGImageRef fullScreenImageRef = [rep fullScreenImage];
-          UIImage *image = [UIImage imageWithCGImage:fullScreenImageRef];
-          tempData = UIImageJPEGRepresentation(image, 0.7);
-         
-          //tempData = UIImagePNGRepresentation(image);
-          isFinished = YES;
-        
-       } failureBlock:^(NSError *error) {
-          NSLog(@"ALAssetsLibrary assetForURL error:%@", error.localizedDescription);
-          isFinished = YES;
-          reject(error);
-       }];
-       #pragma clang diagnostic pop
-    
-        while (!isFinished) {
-          [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01f]];
-        }
-        [self uploadFileInternal:tempData signedUrl:signedUrl resolver:resolve rejecter:reject];
-    });
+    [self writeResourceToTmp:resource pathCallback:^(NSURL *localTempUrl){
+      tempUrl = localTempUrl;
+      NSURLSessionUploadTask *uploadTask = [self.manager
+                                            uploadTaskWithRequest:request
+                                            fromFile:tempUrl
+                                            progress:nil
+                                            completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                              if (error) {
+                                                NSLog(@"Error: %@", error);
+                                                [self deleteTempFile:tempUrl];
+                                                [self.bridge.eventDispatcher sendDeviceEventWithName:@"fileUploadFailed"
+                                                                                                body:messageId];
+                                              } else {
+                                                NSLog(@"Success: %@ %@", response, responseObject);
+                                                [self deleteTempFile:tempUrl];
+                                                [self.bridge.eventDispatcher sendDeviceEventWithName:@"fileUploadCompleted"
+                                                                                                body:messageId];
+                                                
+                                              }
+                                            }];
+      [uploadTask resume];
+    }];
+
+  });
+  resolve(@"Upload initiated");
 }
 
-- (void)uploadFileInternal:(NSData*)fileData
-                  signedUrl:(NSString*)signedUrl
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject{
+-(void)writeResourceToTmp: (PHAssetResource*)resource pathCallback: (void(^)(NSURL*localUrl))pathCallback {
   
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:signedUrl]];
-  request.HTTPMethod = @"PUT";
-  [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+  //Get Asset Resource. Take first resource object. since it's only the one image.
+  NSString *filename = resource.originalFilename;
+  NSString *pathToWrite = [NSTemporaryDirectory() stringByAppendingString:filename];
+  NSURL *localpath = [NSURL fileURLWithPath:pathToWrite];
+  BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:pathToWrite];
+  if(fileExists){
+    NSLog(@"File already exists at temp dir");
+    pathCallback(localpath);
+  }else{
+    PHAssetResourceRequestOptions *options = [PHAssetResourceRequestOptions new];
+    options.networkAccessAllowed = YES;
+    
+    [[PHAssetResourceManager defaultManager] writeDataForAssetResource:resource toFile:localpath options:options completionHandler:^(NSError * _Nullable error) {
+      if (error) {
+        NSLog(@"Failed to write a resource: %@",[error localizedDescription]);
+      }
+      
+      pathCallback(localpath);
+    }];
+  }
   
-  NSURLSessionUploadTask *uploadTask = [self.manager uploadTaskWithRequest:request
-      fromData:fileData progress:nil
-      completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-         if (error) {
-           NSLog(@"Error: %@", error);
-           reject(error);
-         } else {
-           NSLog(@"Success: %@ %@", response, responseObject);
-           resolve(@"File upload success");
-         }
-   }];
-  [uploadTask resume];
 }
+
+-(void) deleteTempFile:(NSURL*) tempURL{
+  NSError* removeTempFileError = nil;
+  [[NSFileManager defaultManager] removeItemAtURL:tempURL error:&removeTempFileError];
+  if (removeTempFileError) {
+    NSLog(@"Failed to remove temp file: %@",[removeTempFileError localizedDescription]);
+  }
+}
+
+//this should be never used in ideal scenario
+-(void)deleteAllTempData
+{
+  NSString *tmpDirectory = NSTemporaryDirectory();
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSError *error;
+  NSArray *cacheFiles = [fileManager contentsOfDirectoryAtPath:tmpDirectory error:&error];
+  for (NSString *file in cacheFiles)
+  {
+    error = nil;
+    [fileManager removeItemAtPath:[tmpDirectory stringByAppendingPathComponent:file]
+                            error:&error];
+  }
+}
+
 @end

@@ -56,10 +56,10 @@ class MessageDao{
         return addRemoteMessagePromise;
     }
 
-    updateUploadStatus(message, status){
+    updateUploadStatus(messageId, status){
         let currentTime = new Date().getTime();
         let sqlStmt = 'UPDATE Message set mediaStatus = :mediaStatus, timestamp = :timestamp where id = :messageId';
-        let paramMap = {messageId: message.id, mediaStatus: status, timestamp: currentTime};
+        let paramMap = {messageId: messageId, mediaStatus: status, timestamp: currentTime};
         let updateMediaStatusPromise = DBHelper.executeUpdate(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
         return updateMediaStatusPromise;
     }

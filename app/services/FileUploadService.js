@@ -6,9 +6,9 @@ class FileUploadService{
         this.fileManager = NativeModules.RNFileManager;
     }
 
-    async uploadFile(filePath, messageId){
+    async uploadFile(filePath, messageId, extension){
         try{
-            let signedUrl = await this.getSignedUrl();
+            let signedUrl = await this.getSignedUrl(extension);
             console.log("signed url is: "+ signedUrl);
             if(signedUrl){
                 this.uploadFileInternal(signedUrl, filePath, messageId);
@@ -20,8 +20,7 @@ class FileUploadService{
 
     async uploadFileInternal(signedUrl, filePath, messageId){
         try{
-            let RNMediaPicker = NativeModules.RNMediaPicker;
-            let response = await RNMediaPicker.uploadMedia(filePath, signedUrl, messageId);
+            let response = await this.fileManager.uploadMedia(filePath, signedUrl, messageId);
             console.log("upload response is "+ response);
             debugAsyncObject(response);
         }catch(err){
@@ -29,12 +28,13 @@ class FileUploadService{
         }
     }
 
-    getSignedUrl(){
+    getSignedUrl(extension){
         var options = {
             method: 'GET'
         };
 
-        return fetch('http://localhost:3000/attachments', options)
+        var url = 'http://localhost:3000/attachments'+'?ext='+extension;
+        return fetch(url, options)
             .then((response) => response.json())
             .then((jsonData) => {
                 let signedUrl = jsonData.url;

@@ -4,6 +4,8 @@ import CacheService from './CacheService';
 import MessageService from './MessageService';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 import * as AppConstants from '../constants/AppConstants';
+import MessageDao from '../dao/MessageDao';
+import * as MessageConstants from '../constants/MessageConstants';
 import moment from 'moment';
 
 class BackgroundService{
@@ -12,6 +14,8 @@ class BackgroundService{
         //MQTTClient.init();
         RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnected.bind(this));
         RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
+        RCTDeviceEventEmitter.addListener('fileUploadCompleted', this.onFileUploadCompleted);
+        RCTDeviceEventEmitter.addListener('fileUploadFailed', this.onFileUploadFailed);
         this.syncContacts();
     }
 
@@ -39,6 +43,14 @@ class BackgroundService{
         }else{
             console.log("got empty messages. something is wrong.");
         }
+    }
+
+    onFileUploadCompleted(messageId){
+        MessageDao.updateUploadStatus(messageId, MessageConstants.UPLOAD_COMPLETED)
+    }
+
+    onFileUploadFailed(messageId){
+        MessageDao.updateUploadStatus(messageId, MessageConstants.UPLOAD_FAILED)
     }
 }
 export default new BackgroundService();

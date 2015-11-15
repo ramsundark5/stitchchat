@@ -61,7 +61,7 @@ class MessageService{
         console.log('message is not for current thread');
         return false;
     }
-
+l
     sendMessage(message:Message){
         let encodedReceiverId = encodeURIComponent(message.receiverId);
         let publishTopic = AppConfig.PRIVATE_PUBSUB_TOPIC + encodedReceiverId;
