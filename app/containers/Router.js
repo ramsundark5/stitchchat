@@ -57,7 +57,7 @@ class Router {
             navigationBar: (
                 <NavigationBar
                     title={{ title: props.displayName }}
-                    leftButton={{ title: 'Back', handler: () => this.toInboxView()}}/>
+                    leftButton={{ title: 'Back', handler: () => this.replaceWithHome()}}/>
             )
         })
     }
@@ -92,7 +92,18 @@ class Router {
     }
 
     replaceWithHome() {
-        this.navigator.popToTop()
+        this.navigator.popToTop();
+        /*let homeRoute = {
+            name: 'inboxView',
+            index: 0,
+            component: InboxPage,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            navigationBar: (
+                <NavigationBar
+                    title={{ title: 'Inbox'}}/>
+            )
+        }
+        this.navigator.replace(homeRoute);*/
     }
 
 }

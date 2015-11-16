@@ -13,6 +13,7 @@
     "phoneformat.js": "^1.0.2",
     "react-native": "^0.14.0",
     "react-native-action-button": "^1.0.4",
+    "react-native-animatable": "^0.3.0",
     "react-native-clipboard": "0.0.1",
     "react-native-icons": "^0.4.0",
     "react-native-invertible-scroll-view": "^0.1.2",

@@ -21,5 +21,17 @@ export const mediaStyle = StyleSheet.create({
     },
     selectedImage:{
         backgroundColor: defaultStyle.selectedColor,
-    }
+    },
+    optionsModal: {
+        backgroundColor: 'red',
+        borderBottomRightRadius: 20,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        width: 250,
+        height: 100,
+        bottom: 35,
+    },
 });

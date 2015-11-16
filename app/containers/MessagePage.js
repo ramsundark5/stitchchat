@@ -1,17 +1,20 @@
-import React, { Component, View, Text } from 'react-native';
+import React, { Component, View, Text, TouchableHighlight } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import MessageComposer from '../components/messages/MessageComposer';
 import MessageList from '../components/messages/MessageList';
 import * as MessageActions from '../actions/MessageActions';
-import {commons} from '../components/styles/CommonStyles';
+import {commons, defaultStyle} from '../components/styles/CommonStyles';
 import MediaOptions from '../components/media/MediaOptions';
 import MessageDao from '../dao/MessageDao';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 class MessagePage extends Component {
 
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            mediaOptionsVisible: false
+        };
         this.loadInitialMessages();
     }
 
@@ -44,6 +47,7 @@ class MessagePage extends Component {
                                  loadOlderMessages={messageActions.loadOlderMessages}
                                  router={router}/>
                 </View>
+                {this._showMediaOptionsBox(router)}
                 <View style={[commons.horizontalNoWrap]}>
                     {this._renderMediaOptions(isEditing, router)}
                     <View style={{flex: 1}}>
@@ -56,14 +60,39 @@ class MessagePage extends Component {
         );
     }
 
+    toggleShowMediaOptions(){
+        let newShowMediaOptionsState = !this.state.mediaOptionsVisible;
+        this.setState({mediaOptionsVisible: newShowMediaOptionsState});
+    }
+
+    _showMediaOptionsBox(router){
+        if(!this.state.mediaOptionsVisible){
+            return;
+        }else{
+         return(
+            <MediaOptions router={router} animation="bounceInUp" duration={800} delay={1400}/>
+         );
+        }
+
+    }
+
     _renderMediaOptions(isEditing, router){
         //don't show media options in editing state
         if(isEditing){
             return;
+        }else{
+            return (
+                <View>
+                    <TouchableHighlight style={commons.defaultIconContainer}
+                                        onPress={this.toggleShowMediaOptions.bind(this)}>
+                        <Icon name='ios-plus-empty'
+                              size={defaultStyle.iconSize} color={defaultStyle.iconColor}
+                              style={commons.defaultIcon}/>
+                    </TouchableHighlight>
+                </View>
+            );
         }
-        return(
-            <MediaOptions router={router}/>
-        );
+
     }
 }
 
