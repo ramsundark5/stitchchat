@@ -92,3 +92,15 @@ export function resetMessageState() {
         type: Actions.RESET_MESSAGES_STATE,
     };
 }
+
+export function showMediaOptions() {
+    return {
+        type: Actions.SHOW_MEDIA_OPTIONS,
+    };
+}
+
+export function hideMediaOptions() {
+    return {
+        type: Actions.HIDE_MEDIA_OPTIONS,
+    };
+}

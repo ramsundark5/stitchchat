@@ -3,7 +3,7 @@ import Message from '../models/Message';
 import * as _ from 'lodash';
 import {copyMessagesToClipBoard} from '../services/CopyService';
 
-const initialState = { messages : [], isEditing: false, currentThread: null};
+const initialState = { messages : [], isEditing: false, currentThread: null, isMediaOptionsVisible: false};
 
 export function messageState(state = initialState, action = {}) {
     switch (action.type) {
@@ -80,6 +80,14 @@ export function messageState(state = initialState, action = {}) {
 
         case Action.LOAD_OLDER_MESSAGES:
             return state;
+
+        case Action.SHOW_MEDIA_OPTIONS:
+            let newStateAfterShowingMediaOptions =  _.assign({}, state, { 'isMediaOptionsVisible' : true });
+            return newStateAfterShowingMediaOptions ;
+
+        case Action.HIDE_MEDIA_OPTIONS:
+            let newStateAfterHidingMediaOptions =  _.assign({}, state, { 'isMediaOptionsVisible' : false });
+            return newStateAfterHidingMediaOptions ;
 
         case Action.RESET_MESSAGES_STATE:
             let newStateAfterReset = _.assign({}, state, initialState);

@@ -1,20 +1,17 @@
-import React, { Component, View, Text, TouchableHighlight } from 'react-native';
+import React, { Component, View, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import MessageComposer from '../components/messages/MessageComposer';
 import MessageList from '../components/messages/MessageList';
 import * as MessageActions from '../actions/MessageActions';
-import {commons, defaultStyle} from '../components/styles/CommonStyles';
+import {commons} from '../components/styles/CommonStyles';
 import MediaOptions from '../components/media/MediaOptions';
 import MessageDao from '../dao/MessageDao';
-import Icon from 'react-native-vector-icons/Ionicons';
+
 class MessagePage extends Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            mediaOptionsVisible: false
-        };
         this.loadInitialMessages();
     }
 
@@ -35,7 +32,7 @@ class MessagePage extends Component {
     }
 
     render() {
-        const { messages, messageActions, isEditing, currentThread, router } = this.props;
+        const { messages, messageActions, isEditing, isMediaOptionsVisible, currentThread, router } = this.props;
 
         return (
             <View style={commons.container}>
@@ -47,9 +44,8 @@ class MessagePage extends Component {
                                  loadOlderMessages={messageActions.loadOlderMessages}
                                  router={router}/>
                 </View>
-                {this._showMediaOptionsBox(router)}
                 <View style={[commons.horizontalNoWrap]}>
-                    {this._renderMediaOptions(isEditing, router)}
+                    {this._renderMediaOptions(isEditing, isMediaOptionsVisible, messageActions, router)}
                     <View style={{flex: 1}}>
                         <MessageComposer isEditing={isEditing}
                                          currentThread={currentThread}
@@ -60,39 +56,16 @@ class MessagePage extends Component {
         );
     }
 
-    toggleShowMediaOptions(){
-        let newShowMediaOptionsState = !this.state.mediaOptionsVisible;
-        this.setState({mediaOptionsVisible: newShowMediaOptionsState});
-    }
-
-    _showMediaOptionsBox(router){
-        if(!this.state.mediaOptionsVisible){
-            return;
-        }else{
-         return(
-            <MediaOptions router={router} animation="bounceInUp" duration={800} delay={1400}/>
-         );
-        }
-
-    }
-
-    _renderMediaOptions(isEditing, router){
+    _renderMediaOptions(isEditing, isMediaOptionsVisible, messageActions, router){
         //don't show media options in editing state
         if(isEditing){
             return;
-        }else{
-            return (
-                <View>
-                    <TouchableHighlight style={commons.defaultIconContainer}
-                                        onPress={this.toggleShowMediaOptions.bind(this)}>
-                        <Icon name='ios-plus-empty'
-                              size={defaultStyle.iconSize} color={defaultStyle.iconColor}
-                              style={commons.defaultIcon}/>
-                    </TouchableHighlight>
-                </View>
-            );
         }
-
+        return(
+            <MediaOptions router={router} isMediaOptionsVisible={isMediaOptionsVisible}
+                          showMediaOptions={messageActions.showMediaOptions}
+                          hideMediaOptions={messageActions.hideMediaOptions}/>
+        );
     }
 }
 
@@ -101,6 +74,7 @@ function mapStateToProps(state) {
     return {
         messages: state.messageState.messages,
         isEditing: state.messageState.isEditing,
+        isMediaOptionsVisible: state.messageState.isMediaOptionsVisible,
         currentThread: state.threadState.currentThread
     };
 }

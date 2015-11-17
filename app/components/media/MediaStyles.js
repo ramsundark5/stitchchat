@@ -23,15 +23,25 @@ export const mediaStyle = StyleSheet.create({
         backgroundColor: defaultStyle.selectedColor,
     },
     optionsModal: {
-        backgroundColor: 'red',
+        backgroundColor: 'transparent',
         borderBottomRightRadius: 20,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
         position: 'absolute',
-        width: 250,
-        height: 100,
+        width: 300,
+        height: 80,
         bottom: 35,
     },
+    optionsIconContainer:{
+        margin: 15,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    optionIcon:{
+        color: 'white',
+        fontSize: 35
+    }
 });
