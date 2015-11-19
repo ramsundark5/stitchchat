@@ -20,6 +20,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import java.util.Properties;
 
 import io.fabric.sdk.android.Fabric;
+import com.facebook.soloader.SoLoader;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
 
@@ -101,13 +102,21 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     }
 
     @Override
+    public void onBackPressed() {
+      if (mReactInstanceManager != null) {
+        mReactInstanceManager.onBackPressed();
+      } else {
+        super.onBackPressed();
+      }
+    }
+
+    @Override
     public void invokeDefaultOnBackPressed() {
       super.onBackPressed();
     }
 
     @Override
     protected void onPause() {
-        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
 
         if (mReactInstanceManager != null) {

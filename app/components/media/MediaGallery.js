@@ -1,5 +1,5 @@
 import React, { Component, View, ScrollView, ListView, Image, CameraRoll, TouchableHighlight, PropTypes } from 'react-native';
-import Video from 'react-native-video';
+//import Video from 'react-native-video';
 import MediaGalleryHeader from './MediaGalleryHeader';
 import {mediaStyle} from './MediaStyles';
 import {commons, defaultStyle} from '../styles/CommonStyles';
@@ -139,8 +139,8 @@ class MediaGallery extends Component {
         if(video.selected){
             videoContainerStyle = mediaStyle.selectedImage;
         }
-
-        return (
+        return;
+        /*return (
             <TouchableHighlight key={video.uri}
                                 onPress={() => this.selectMedia(video)}
                                 style={videoContainerStyle}>
@@ -148,7 +148,7 @@ class MediaGallery extends Component {
                        style={mediaStyle.image}
                        paused={true}/>
             </TouchableHighlight>
-        );
+        );*/
     }
 
      getQueryParamByName(uri, name) {

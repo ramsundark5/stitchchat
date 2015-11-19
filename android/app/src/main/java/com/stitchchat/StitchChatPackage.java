@@ -6,6 +6,8 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.stitchchat.mqtt.RNMQTTClient;
+import com.stitchchat.sqlite.DBManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +26,7 @@ public class StitchChatPackage implements ReactPackage {
         List<NativeModule> appModules = new ArrayList<NativeModule>();
         appModules.add(new RNMQTTClient(reactApplicationContext));
         appModules.add(new DigitsLoginModule(reactApplicationContext));
+        appModules.add(new DBManager(reactApplicationContext));
         return appModules;
     }
 

@@ -1,4 +1,4 @@
-import React, { Component, View, Text, PropTypes, Image, TouchableHighlight, Modal } from 'react-native';
+import React, { Component, View, Text, PropTypes, Image, TouchableHighlight } from 'react-native';
 import * as MessageConstants from '../../constants/MessageConstants.js';
 import {commons, defaultStyle} from '../styles/CommonStyles';
 import {messageStyle} from './MessageStyles';

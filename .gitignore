@@ -1,6 +1,3 @@
-/android/app/.idea
-/android/stitchchat.iml
-/android/app/app.iml
 # OSX
 #
 .DS_Store
@@ -25,11 +22,13 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+# Android/IJ
+#
+.idea
+.gradle
+local.properties
+
 # node.js
 #
 node_modules/
-/android/build
-/android/.gradle
-/android/app/build
 npm-debug.log
-/android/app/fabric.properties

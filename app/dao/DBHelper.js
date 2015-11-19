@@ -7,23 +7,23 @@ class DBHelper{
         this.db = sqlite3;
     }
 
-    open(dbName){
-        let openPromise = this.db.open(dbName);
+    initDB(dbName){
+        let openPromise = this.db.initDB(dbName);
         return openPromise;
     }
 
     executeInsert(dbName, sqlStmt, params){
-        let insertPromise = this.db.executeInsert(dbName, sqlStmt, params);
+        let insertPromise = this.db.executeInsert(sqlStmt, params);
         return insertPromise;
     }
 
     executeUpdate(dbName, sqlStmt, params){
-        let updatePromise = this.db.executeUpdate(dbName, sqlStmt, params);
+        let updatePromise = this.db.executeUpdate(sqlStmt, params);
         return updatePromise;
     }
 
     executeQuery(dbName, sqlStmt, params){
-       let queryPromise = this.db.executeQuery(dbName, sqlStmt, params);
+       let queryPromise = this.db.executeQuery(sqlStmt, params);
        return queryPromise;
     }
 
