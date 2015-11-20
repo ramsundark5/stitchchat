@@ -5,6 +5,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.stitchchat.contacts.RNContactsManager;
 import com.stitchchat.mqtt.RNMQTTClient;
 import com.stitchchat.sqlite.DBManager;
 
@@ -27,6 +28,7 @@ public class StitchChatPackage implements ReactPackage {
         appModules.add(new RNMQTTClient(reactApplicationContext));
         appModules.add(new DigitsLoginModule(reactApplicationContext));
         appModules.add(new DBManager(reactApplicationContext));
+        appModules.add(new RNContactsManager(reactApplicationContext));
         return appModules;
     }
 

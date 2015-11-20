@@ -94,6 +94,7 @@ dependencies {
     compile('com.digits.sdk.android:digits:1.9.1@aar') {
         transitive = true;
     }
+    compile('com.googlecode.libphonenumber:libphonenumber:7.2.1')
     compile project(':react-native-vector-icons')
     //compile "com.google.android.gms:play-services:8.1.0"
 }

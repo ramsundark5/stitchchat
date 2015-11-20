@@ -1,5 +1,7 @@
 package com.stitchchat.sqlite;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import javax.annotation.Nullable;
 
 import com.facebook.common.logging.FLog;
@@ -10,13 +12,11 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableNativeArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.common.ReactConstants;
 
 
 public final class DBManager extends ReactContextBaseJavaModule {
-	private @Nullable SQLiteManager mDb;
 	private boolean mShuttingDown = false;
 
 	public DBManager(ReactApplicationContext reactContext) {
@@ -37,26 +37,23 @@ public final class DBManager extends ReactContextBaseJavaModule {
 	@Override
 	public void onCatalystInstanceDestroy() {
 		mShuttingDown = true;
-		if (mDb != null && mDb.isOpen()) {
-			mDb.close();
-			mDb = null;
-		}
-	}	
+		SQLiteManager.closeAll();
+	}
 
 	@ReactMethod
-	public void initDB(final String name, final Callback callback) {
+	public void initDB(final String dbName, final Callback callback) {
 		new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
 			@Override
 			protected void doInBackgroundGuarded(Void ...params) {
-				FLog.w(ReactConstants.TAG, "dbmanager.init.name=%s", name);
-				SQLiteManager.init(getReactApplicationContext(), name);//new SQLiteManager(getReactApplicationContext(), name);
+				FLog.w(ReactConstants.TAG, "dbmanager.init.name=%s", dbName);
+				SQLiteManager.initDB(getReactApplicationContext(), dbName);
 				callback.invoke();
 			}
 		}.execute();
 	}
 
 	@ReactMethod
-	public void executeQuery(final String sql, final ReadableArray values, final Callback callback) {
+	public void executeQuery(final String dbName, final String sql, final ReadableArray values, final Callback callback) {
 		new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
 			@Override
 			protected void doInBackgroundGuarded(Void ...params) {
@@ -66,7 +63,7 @@ public final class DBManager extends ReactContextBaseJavaModule {
 				FLog.w(ReactConstants.TAG, "dbmanager.query.values.size()=%d", values.size());
 
 				try {
-					data = mDb.query(sql, values);
+					data = SQLiteManager.executeQuery(dbName, sql, values);
 				} catch(Exception e) {
 					FLog.w(ReactConstants.TAG, "Exception in database query: ", e);
 					callback.invoke(ErrorUtil.getError(null, e.getMessage()), null);
@@ -78,36 +75,29 @@ public final class DBManager extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void executeInsert(final String sql, final ReadableArray values, final Callback callback) {
+	public void executeInsert(final String dbName, final String sql, final ReadableArray values, final Callback callback) {
 		new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
 			@Override
 			protected void doInBackgroundGuarded(Void ...params) {
-				double lastInsertRowId = 0;
+				long lastInsertRowId = 0;
 				try {
-					mDb.exec(sql, values);
-					String sql = "select last_insert_rowid()";
-					//Arguments.createArray();
-					WritableArray result = mDb.query(sql, Arguments.createArray());
-					if(result != null && result.size() > 0){
-						lastInsertRowId = result.getDouble(0);
-					}
+					lastInsertRowId = SQLiteManager.executeInsert(dbName, sql, values);
 				} catch(Exception e) {
 					FLog.w(ReactConstants.TAG, "Exception in database exec: ", e);
 					callback.invoke(ErrorUtil.getError(null, e.getMessage()), null);
 				}
-
-				callback.invoke(null, lastInsertRowId);
+				callback.invoke(null, String.valueOf(lastInsertRowId));
 			}
 		}.execute();
 	}
 
 	@ReactMethod
-	public void executeUpdate(final String sql, final ReadableArray values, final Callback callback) {
+	public void executeUpdate(final String dbName, final String sql, final ReadableArray values, final Callback callback) {
 		new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
 			@Override
 			protected void doInBackgroundGuarded(Void ...params) {
 				try {
-					mDb.exec(sql, values);
+					SQLiteManager.executeUpdate(dbName, sql, values);
 				} catch(Exception e) {
 					FLog.w(ReactConstants.TAG, "Exception in database exec: ", e);
 					callback.invoke(ErrorUtil.getError(null, e.getMessage()), null);
@@ -119,12 +109,12 @@ public final class DBManager extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void close(final Callback callback) {
+	public void close(final String dbName, final Callback callback) {
 		new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
 			@Override
 			protected void doInBackgroundGuarded(Void ...params) {
 				try {
-					mDb.close();
+					SQLiteManager.close(dbName);
 				} catch(Exception e) {
 					FLog.w(ReactConstants.TAG, "Exception in database close: ", e);
 					callback.invoke(ErrorUtil.getError(null, e.getMessage()), null);

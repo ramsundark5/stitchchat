@@ -1,7 +1,5 @@
 package com.stitchchat.sqlite;
 
-import javax.annotation.Nullable;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,49 +14,55 @@ import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
-public class SQLiteManager extends SQLiteOpenHelper {
-	static final int DATABASE_VERSION = 1;
-	private static @Nullable SQLiteDatabase db;
-	private static SQLiteManager sInstance;
+import java.util.concurrent.ConcurrentHashMap;
 
-	public static synchronized SQLiteManager init(ReactApplicationContext context, final String dbName) {
+public class SQLiteManager extends SQLiteOpenHelper {
+	private static final int DATABASE_VERSION = 1;
+	private static ConcurrentHashMap<String,  SQLiteManager> dbMap = new ConcurrentHashMap<>();
+
+	public static synchronized SQLiteManager initDB(ReactApplicationContext context, final String dbName) {
 
 		// Use the application context, which will ensure that you
 		// don't accidentally leak an Activity's context.
 		// See this article for more information: http://bit.ly/6LRzfx
-		if (sInstance == null) {
-			sInstance = new SQLiteManager(context, dbName);
+		if(dbMap.get(dbName) == null){
+			final SQLiteManager newInstance = new SQLiteManager(context, dbName);
+			dbMap.put(dbName, newInstance);
 		}
-		db = sInstance.getWritableDatabase();
-		return sInstance;
+		return dbMap.get(dbName);
 	}
 
-	public SQLiteManager(ReactApplicationContext context, String dbName) {
+	private SQLiteManager(ReactApplicationContext context, final String dbName) {
 		super(context, dbName, null, DATABASE_VERSION);
 	}
 
-	public Boolean isOpen() {
+	public static Boolean isOpen(final String dbName) {
+		SQLiteDatabase db = getDatabaseForRead(dbName);
 		return db.isOpen();
 	}
 
-	public void close() {
-		db.close();
+	public static void closeAll(){
+		for(String dbName : dbMap.keySet()){
+			close(dbName);
+			dbMap.remove(dbName);
+		}
 	}
 
-	public void exec(final String sql, final ReadableArray values) {
+	public static void close(final String dbName) {
+		SQLiteDatabase db = getDatabaseForRead(dbName);
+		if(db!=null && db.isOpen()){
+			db.close();
+		}
+	}
+
+	public static void executeUpdate(final String dbName, final String sql, final ReadableArray values) {
+		SQLiteDatabase db = getDatabaseForWrite(dbName);
 		SQLiteStatement statement = db.compileStatement(sql);
 
 		db.beginTransaction();
 		try {
-			for (int i=0; i < values.size(); i++) {
-				if (values.getType(i) == ReadableType.Number) {
-					statement.bindLong(i+1, values.getInt(i));
-				} else {
-					statement.bindString(i+1, values.getString(i));
-				}
-			}
-
-			statement.execute();
+			bindArgstoStatement(statement, values);
+			statement.executeUpdateDelete();
 			db.setTransactionSuccessful();
 		} catch (Exception e) {
 			throw e;
@@ -67,7 +71,24 @@ public class SQLiteManager extends SQLiteOpenHelper {
 		}
 	}
 
-	public WritableArray query(final String sql, final ReadableArray values) {
+	public static long executeInsert(final String dbName, final String sql, final ReadableArray values) {
+		SQLiteDatabase db = getDatabaseForWrite(dbName);
+		SQLiteStatement statement = db.compileStatement(sql);
+		long insertedRowId = -1;
+		db.beginTransaction();
+		try {
+			bindArgstoStatement(statement, values);
+			insertedRowId = statement.executeInsert();
+			db.setTransactionSuccessful();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			db.endTransaction();
+		}
+		return insertedRowId;
+	}
+
+	public static WritableArray executeQuery(final String dbName, final String sql, final ReadableArray values) {
 		WritableArray data = Arguments.createArray();
 		// FLog.w(ReactConstants.TAG, "values.size()=%s", Integer.toString(values.size()));
 
@@ -76,12 +97,14 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
 		for ( int i=0; i < values.size(); i++) {
 			if (values.getType(i) == ReadableType.Number) {
-				args[i] = Integer.toString(values.getInt(i));
+				args[i] = String.valueOf(values.getDouble(i));
+			} else if (values.isNull(i)) {
+				args[i] = null;
 			} else {
 				args[i] = values.getString(i);
 			}
 		}
-
+		SQLiteDatabase db = getDatabaseForRead(dbName);
 		Cursor cursor = db.rawQuery(sql, args);
 
 		try {
@@ -91,10 +114,14 @@ public class SQLiteManager extends SQLiteOpenHelper {
 					for (int i=0; i < cursor.getColumnCount(); i++) {
 						switch( cursor.getType(i) ) {
 							case Cursor.FIELD_TYPE_INTEGER:
-								item.putInt(cursor.getColumnName(i), cursor.getInt(i));
+								item.putDouble(cursor.getColumnName(i), cursor.getDouble(i));
 								break;
 							default:
-								item.putString(cursor.getColumnName(i), cursor.getString(i));
+								if(cursor.isNull(i)){
+									item.putString(cursor.getColumnName(i), null);
+								}else{
+									item.putString(cursor.getColumnName(i), cursor.getString(i));
+								}
 								break;
 						}
 					}
@@ -109,6 +136,35 @@ public class SQLiteManager extends SQLiteOpenHelper {
 		}
 
 		return data;
+	}
+
+	public static SQLiteDatabase getDatabaseForWrite(final String dbName){
+		SQLiteManager sInstance = dbMap.get(dbName);
+		if(sInstance == null){
+			throw new RuntimeException("DB is not initialized "+dbName);
+		}
+		return sInstance.getWritableDatabase();
+	}
+
+	public static SQLiteDatabase getDatabaseForRead(final String dbName){
+		SQLiteManager sInstance = dbMap.get(dbName);
+		if(sInstance == null){
+			throw new RuntimeException("DB is not initialized "+dbName);
+		}
+		return sInstance.getReadableDatabase();
+	}
+
+	private static void bindArgstoStatement(SQLiteStatement statement, ReadableArray values){
+		for (int i=0; i < values.size(); i++) {
+			if (values.getType(i) == ReadableType.Number) {
+				statement.bindDouble(i+1, values.getDouble(i));
+				//statement.bindString(i + 1, values.getString(i));
+			} else if (values.isNull(i)) {
+				statement.bindNull(i + 1);
+			} else {
+				statement.bindString(i+1, values.getString(i));
+			}
+		}
 	}
 
 	@Override

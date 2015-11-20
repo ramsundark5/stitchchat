@@ -15,6 +15,7 @@ class InstallDB_v1{
                                         'phoneLabel             text,'+
                                         'localContactIdLink     text,'+
                                         'abRecordIdLink         text,'+
+                                        'androidLookupKey       text,'+
                                         'isRegisteredUser       integer,'+
                                         'status                 integer,'+
                                         'photo                  text,'+

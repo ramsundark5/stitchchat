@@ -29,7 +29,7 @@ class InboxPage extends Component {
     }
 
     componentWillUnmount() {
-        //RCTDeviceEventEmitter.removeListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
+        RCTDeviceEventEmitter.removeListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
     }
 
     async loadRecentThreads(){
