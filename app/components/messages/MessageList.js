@@ -1,53 +1,30 @@
-import React, { Component, View, Text, ListView, TouchableHighlight, PropTypes } from 'react-native';
-import RefreshableListView from 'react-native-refreshable-listview';
+import React, {Component, PropTypes} from 'react';
+import {View, Text, ListView, ScrollView, TouchableHighlight, Animated, StyleSheet, InteractionManager, Dimensions} from 'react-native';
 import MessageItem from './MessageItem';
-import {messageStyle} from './MessageStyles';
-import {commons, defaultStyle} from '../styles/CommonStyles';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import moment from 'moment';
+import MessageDao from '../../dao/MessageDao';
+import CustomMessageListView from './CustomMessageListView';
 
 class MessageList extends Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    groupMessagesByDate(messages){
-        let groupedMessage = {};
-        for(let i=0; i < messages.length; i++){
-            let date = messages[i].timestamp;
-            let formattedDate = moment(date).format('MM/DD/YYYY');
-            if(!groupedMessage[formattedDate]){
-                groupedMessage[formattedDate] = [];
-            }
-            groupedMessage[formattedDate].push(messages[i]);
-        }
-        return groupedMessage;
-    }
-
-    loadOlderMessages(){
-        this.props.loadOlderMessages();
-    }
-
     render() {
-        const { messages, loadOlderMessages, deleteSelected} = this.props;
-        //let groupedMessages = this.groupMessagesByDate(messages);
+        const { messages, loadOlderMessages, deleteSelected, scrollToBottom,
+            retainScrollPosition, resetScrollToBottom, router, showLoadingSpinner} = this.props;
 
-        let rowIds = messages.map((row, index) => index).reverse();
-        let messagesDS = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2});
-        messagesDS = messagesDS.cloneWithRows(messages, rowIds);
         return (
-            <View style={commons.listContainer}>
-                <ListView
-                    ref="messageListRef"
-                    renderScrollComponent={props => <InvertibleScrollView {...props} inverted/>}
-                    dataSource={messagesDS}
-                    renderRow={this.renderMessageItem.bind(this)}/>
-                <TouchableHighlight onPress={deleteSelected}>
-                    <Text>Delete</Text>
-                 </TouchableHighlight>
-            </View>
+            <CustomMessageListView rows={messages}
+                                   loadOlderMessages={loadOlderMessages}
+                                   renderRow={(rowData, sectionID, rowID) => this.renderMessageItem(rowData, sectionID, rowID)}
+                                   renderSectionHeader={(sectionData, sectionID)=>this.renderSectionHeader(sectionData, sectionID)}
+                                   scrollToBottom={scrollToBottom}
+                                   retainScrollPosition={retainScrollPosition}
+                                   resetScrollToBottom={resetScrollToBottom}
+                                   showLoadingSpinner={showLoadingSpinner}
+                                   router={router}/>
         );
+
     }
 
     renderMessageItem(rowData, sectionID, rowID) {
@@ -55,22 +32,38 @@ class MessageList extends Component {
             <MessageItem key={rowData.id} message={rowData}
                          isEditing={this.props.isEditing}
                          selectMessage={this.props.selectMessage}
+                         selectMessageOnlyInEditingMode={this.props.selectMessageOnlyInEditingMode}
                          router={this.props.router}/>
         );
     }
 
     renderSectionHeader(sectionData, sectionID){
         return(
-            <View style={messageStyle.msgDivider}><Text style={commons.defaultText}>{sectionID}</Text></View>
+                <Text style={styles.date}>{sectionID}</Text>
         );
     }
+
 }
 
+const styles = StyleSheet.create({
+    date: {
+        color: '#9c9393',
+        fontSize: 12,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+});
+
 MessageList.propTypes = {
-    messages: PropTypes.array.isRequired,
+    messages: PropTypes.object.isRequired,
     currentThread: PropTypes.object.isRequired,
     selectMessage: PropTypes.func.isRequired,
+    selectMessageOnlyInEditingMode: PropTypes.func.isRequired,
     loadOlderMessages: PropTypes.func.isRequired,
+    scrollToBottom: PropTypes.bool.isRequired,
+    showLoadingSpinner: PropTypes.bool.isRequired,
+    resetScrollToBottom: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired
 };
 

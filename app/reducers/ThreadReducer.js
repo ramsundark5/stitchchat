@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 const initialState = { threads : [], isEditing: false, currentThread: null};
 
-export function threadState(state = initialState, action = {}) {
+export default function threadState(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.LOAD_RECENT_THREADS:
@@ -54,7 +54,7 @@ export function threadState(state = initialState, action = {}) {
 
         case Action.DELETE_SELECTED_THREAD:
             let threadsAfterDeleteSelected = state.threads.filter(thread =>
-                thread.selected === false
+                thread.selected != true
             );
             let newStateAfterDeleteSelected =  _.assign({}, state, { 'threads' : threadsAfterDeleteSelected, 'isEditing': false });
             return newStateAfterDeleteSelected;

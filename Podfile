@@ -1,20 +1,13 @@
 xcodeproj './iOS/stitchchat.xcodeproj'
 
 source 'https://github.com/CocoaPods/Specs.git'
-pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', 'RCTPushNotification', 'RCTSettings', 'RCTLinkingIOS', 'RCTCameraRoll'], :path => 'node_modules/react-native'
-pod 'react-native-sqlite3', :path => 'node_modules/react-native-sqlite3'
+pod 'React', :subspecs => ['Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', 'RCTPushNotification', 'RCTSettings', 'RCTLinkingIOS', 'RCTCameraRoll', 'ART', 'RCTActionSheet'], :path => 'node_modules/react-native'
+pod 'react-native-image-picker', :path => 'node_modules/react-native-image-picker'
+pod 'CodePush', :path => './node_modules/react-native-code-push'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Digits'
 pod 'TwitterCore'
-pod 'MQTTClient'
 pod 'libPhoneNumber-iOS'
-pod 'AFNetworking', '~> 2.5'
-pod 'AWSS3'
-pod 'CTAssetsPickerController',  '~> 3.1.1'
-
-post_install do |installer|
-  target = installer.pods_project.targets.select{|t| 'React' == t.name}.first
-  phase = target.new_shell_script_build_phase('Run Script')
-  phase.shell_script = "if nc -w 5 -z localhost 8081 ; then\n  if ! curl -s \"http://localhost:8081/status\" | grep -q \"packager-status:running\" ; then\n    echo \"Port 8081 already in use, packager is either not running or not running correctly\"\n    exit 2\n  fi\nelse\n  open $SRCROOT/../node_modules/react-native/packager/launchPackager.command || echo \"Can't start packager automatically\"\nfi"
-end
+pod 'AFNetworking', '~> 3.0.4'
+pod 'CTAssetsPickerController',  '~> 3.3.1'

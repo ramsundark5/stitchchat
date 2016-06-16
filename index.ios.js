@@ -1,6 +1,6 @@
 import App from './app/containers/App';
-import React, { Component, AppRegistry, PropTypes } from 'react-native';
-require('regenerator/runtime');
+import { AppRegistry } from 'react-native';
+import React, {Component} from 'react';
 
 class stitchchat extends Component {
 

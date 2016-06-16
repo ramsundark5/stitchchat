@@ -1,37 +1,54 @@
-import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {View, TouchableHighlight, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {commons, defaultStyle} from '../styles/CommonStyles';
-import {messageStyle} from './MessageStyles';
+import {Theme} from '../common/Themes';
+import MessageService from '../../services/MessageService';
 
 class MessageOptionsBox extends Component {
 
+    copyMessages(){
+        MessageService.copyMessages();
+    }
+
+    deleteSelected(){
+        MessageService.deleteSelectedMessages();
+    }
+    
     render() {
-        const { copySelectedMessages, forwardSelected, deleteSelected } = this.props;
         return (
-            <View style={[messageStyle.msgOptions]}>
-                <TouchableHighlight style={[commons.defaultIconContainer]}
-                                    onPress={copySelectedMessages}>
+            <View style={[styles.msgOptions]}>
+                <TouchableHighlight style={[styles.defaultIconContainer]}
+                                    onPress={() => this.copyMessages()}>
                     <Icon name='ios-copy'
-                          style={commons.defaultIcon}/>
+                          style={styles.defaultIcon}/>
                 </TouchableHighlight>
-                <TouchableHighlight style={commons.defaultIconContainer}
-                                    onPress={forwardSelected}>
-                    <Icon name='forward'
-                          style={commons.defaultIcon}/>
-                </TouchableHighlight>
-                <TouchableHighlight style={commons.defaultIconContainer}
-                                    onPress={deleteSelected}>
+                <TouchableHighlight style={styles.defaultIconContainer}
+                                    onPress={()=> this.deleteSelected()}>
                     <Icon name='ios-trash'
-                          style={commons.defaultIcon}/>
+                          style={styles.defaultIcon}/>
                 </TouchableHighlight>
             </View>
         );
     }
 }
 
+const styles = StyleSheet.create({
+    defaultIconContainer:{
+    },
+    defaultIcon: {
+        // padding: 4,
+        fontSize : 30,
+        color: Theme.iconColor
+    },
+    msgOptions:{
+        flexDirection : 'row',
+        flexWrap      : 'nowrap',
+        justifyContent: 'space-around',
+    },
+});
+
 MessageOptionsBox.propTypes = {
     copySelectedMessages: PropTypes.func.isRequired,
-    forwardSelected: PropTypes.func.isRequired,
     deleteSelected: PropTypes.func.isRequired
 };
 

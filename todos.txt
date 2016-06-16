@@ -1,0 +1,4 @@
+jest tests
+firebase security
+realm async
+send invites

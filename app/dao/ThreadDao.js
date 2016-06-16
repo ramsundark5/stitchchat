@@ -1,77 +1,166 @@
-import DBHelper from './DBHelper';
-import * as AppConstants from '../constants/AppConstants';
+import realm from './Realm';
+import Thread from '../models/Thread';
+import SequenceDao from './SequenceDao';
+import Contact from '../models/Contact';
+import GroupInfo from '../models/GroupInfo';
 
 class ThreadDao{
 
-    async createThreadForContact(contact){
-        let currentTime = new Date().getTime();
-        let sqlStmt  = "INSERT into Thread (recipientPhoneNumber, displayName, isGroupThread, lastMessageTime)" +
-            "values (:recipientPhoneNumber, :displayName, :isGroupThread, :lastMessageTime)";
-        let paramMap = {recipientPhoneNumber: contact.phoneNumber, displayName: contact.displayName,
-                        isGroupThread: false, lastMessageTime: currentTime};
-        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
-        console.log("threadId created as "+ threadId);
-        let threadForPhoneNumber = await this.getThreadById(threadId);
-        return threadForPhoneNumber;
+     createThreadForPhoneNumber(phoneNumber, contact){
+         let newThread = new Thread(phoneNumber, false, null);
+         console.log("threadId created as "+ newThread.id);
+         try{
+             realm.write(() => {
+                 let threadId = SequenceDao.getNextSeqId('ThreadSequence');
+                 newThread.id = threadId;
+                 let realmThread = realm.create('Thread', newThread);
+                 if(contact && contact.phoneNumber){
+                     realmThread.contactInfo = contact;
+                     newThread.contactInfo = contact;
+                     newThread.displayName = contact.displayName;
+                 }
+                 console.log('Thread created in realm'+ realmThread);
+             });
+         }catch(err){
+             console.error("exception adding thread "+err);
+         }
+         return newThread;
     }
 
-    async createGroupThread(groupUid, displayName){
-        let currentTime = new Date().getTime();
-        let sqlStmt  = "INSERT into Thread (groupUid, displayName, isGroupThread, lastMessageTime)" +
-            "values (:groupUid, :displayName, :isGroupThread, :lastMessageTime)";
-        let paramMap = {groupUid: groupUid, displayName: displayName, isGroupThread: true, lastMessageTime: currentTime};
-        let threadId = await DBHelper.executeInsert(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
-        console.log("groupthreadId created as "+ threadId);
-        let threadForGroup = await this.getThreadById(threadId);
-        return threadForGroup;
-    }
-
-    async getThreadByPhoneNumber(phoneNumber){
-        let threadForPhoneNumber;
-        let sqlStmt  = "SELECT * from Thread where recipientPhoneNumber = :recipientPhoneNumber";
-        let paramMap = {recipientPhoneNumber: phoneNumber};
-        let existingThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
-        if(existingThreads && existingThreads.length > 0){
-            threadForPhoneNumber = existingThreads[0];
-            console.log("found existing thread found for phoneNumber"+phoneNumber);
+    createGroupThread(groupInfo){
+        let newThread = new Thread(null, true, groupInfo);
+        try{
+            realm.write(() => {
+                let threadId = SequenceDao.getNextSeqId('ThreadSequence');
+                newThread.id = threadId;
+                let realmThread = realm.create('Thread', newThread);
+                console.log('group Thread created in realm'+ realmThread);
+            });
+        }catch(err){
+            console.error("exception adding group thread "+err);
         }
-        return threadForPhoneNumber;
+        return newThread;
     }
 
-    async getThreadById(threadId){
-        let threadForPhoneNumber;
-        let sqlStmt  = "SELECT * from Thread where id = :id";
-        let paramMap = {id: threadId};
+     getThreadByPhoneNumber(phoneNumber){
+         let realmThread = realm.objects('Thread').filtered('recipientPhoneNumber = $0', phoneNumber)[0];
+         let threadForPhoneNumber = this.convertFromRealmObject(realmThread);
+         return threadForPhoneNumber;
+    }
 
-        let matchingThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+    getThreadByGroupId(groupUid){
+        let realmThread = realm.objects('Thread').filtered('groupInfo.uid = $0', groupUid)[0];
+        let threadForGroupId = this.convertFromRealmObject(realmThread);
+        return threadForGroupId;
+    }
 
-        if(matchingThreads && matchingThreads.length > 0){
-            threadForPhoneNumber = matchingThreads[0];
-            debugAsyncObject(threadForPhoneNumber);
-            console.log("thread for phone number is "+ threadForPhoneNumber);
+    getThreadById(threadId){
+        let threadForId;
+        let realmThreadForId = realm.objects('Thread').filtered('id = $0', threadId)[0];
+        if(realmThreadForId && realmThreadForId.id){
+            threadForId = this.convertFromRealmObject(realmThreadForId);
         }
-        return threadForPhoneNumber;
+        return threadForId;
     }
 
-    async loadRecentThreads(){
-        let sqlStmt  = "SELECT * from Thread order by lastMessageTime desc";
-        let recentThreads = await DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt);
+     loadRecentThreads(){
+        let recentRealmThreads = realm.objects('Thread');
+        let recentThreads = [];
+
+        //convert realm object to regular js object
+        for(let i=0; i< recentRealmThreads.length; i++){
+            let recentRealmThread = recentRealmThreads[i];
+            let recentThread = this.convertFromRealmObject(recentRealmThread);
+            recentThreads.push(recentThread);
+        }
         return recentThreads;
     }
 
-    updateLastMessageText(newMessage){
-        let currentTime = new Date().getTime();
-        let sqlStmt  = "UPDATE Thread set lastMessageText  = :lastMessageText, " +
-                                         "lastMessageTime = :lastMessageTime  " +
-                                         "where id = :id";
-        let paramMap = {id: newMessage.threadId, lastMessageText: newMessage.message, lastMessageTime: currentTime};
-        DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+    updateLastMessageTextAndUnreadCount(newMessage, updateUnreadCount){
+        try{
+            realm.write(() => {
+                let realmThread = realm.create('Thread', {'id': newMessage.threadId, 'lastMessageText': newMessage.message,
+                    'lastMessageTime': new Date()}, true);
+                if(updateUnreadCount){
+                    realmThread.unreadCount = realmThread.unreadCount + 1;
+                    console.log('updated unread count for thread '+newMessage.threadId);
+                }
+                console.log('last message text updated for thread '+newMessage.threadId);
+            });
+        }catch(err){
+            console.error("exception updating last message text "+err);
+        }
     }
 
-    updateUnreadCount(threadId, count){
-        let sqlStmt  = "UPDATE Thread set unreadCount  = unreadCount + :count where id = :id";
-        let paramMap = {id: threadId, count: count};
-        DBHelper.executeQuery(AppConstants.MESSAGES_DB, sqlStmt, paramMap);
+    resetUnreadCount(threadId){
+        try{
+            realm.write(() => {
+                realm.create('Thread', {'id': threadId, 'unreadCount': 0}, true);
+                console.log('reset unread count for thread '+threadId);
+            });
+        }catch(err){
+            console.error("exception resetting unread count "+err);
+        }
+    }
+
+    deleteThreads(threadsToBeDeleted){
+        try{
+            realm.write(() => {
+                for(let i=0; i< threadsToBeDeleted.length; i++){
+                    let thread = threadsToBeDeleted[i];
+                    let realmThread = realm.objects('Thread').filtered('id = $0', thread.id)[0];
+                    if(realmThread){
+                        realm.delete(realmThread);
+                    }
+                }
+            });
+        }catch(err){
+            console.error("exception deleting selected threads "+err);
+        }
+    }
+
+    muteThread(thread){
+        try{
+            realm.write(() => {
+                realm.create('Thread', {'id': thread.id, 'isMuted': thread.isMuted}, true);
+                console.log('updated isMuted flag for thread '+thread.id);
+            });
+        }catch(err){
+            console.error("exception updating muted flag "+err);
+        }
+    }
+
+    convertFromRealmObject(realmThread){
+        if(!(realmThread && realmThread.id)){
+            return null;
+        }
+        let thread = null;
+        if (typeof realmThread.snapshot == 'function') {
+            thread = realmThread.snapshot();
+        } else {
+            thread = Object.assign(new Thread(), realmThread);
+        }
+        if(!thread.isGroupThread && thread.contactInfo){
+            let contactInfo = {};
+            if (typeof thread.contactInfo.snapshot == 'function') {
+                contactInfo = thread.contactInfo.snapshot();
+            } else {
+                contactInfo = Object.assign(new Contact(), thread.contactInfo);
+            }
+            let displayName    = contactInfo.displayName;
+            thread.displayName = displayName;
+        }
+        else if(thread.isGroupThread && thread.groupInfo){
+            let groupInfo = {};
+            if (typeof thread.groupInfo.snapshot == 'function') {
+                groupInfo = thread.groupInfo.snapshot();
+            } else {
+                groupInfo = Object.assign(new GroupInfo(), thread.groupInfo);
+            }
+            let displayName    = groupInfo.displayName;
+            thread.displayName = displayName;
+        }
+        return thread;
     }
 }
 

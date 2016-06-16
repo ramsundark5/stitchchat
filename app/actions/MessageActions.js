@@ -1,5 +1,4 @@
 import * as Actions from '../constants/ActionTypes';
-import * as _ from 'lodash';
 
 export function loadMessagesForThread(messages){
     if(!messages){
@@ -11,17 +10,17 @@ export function loadMessagesForThread(messages){
     };
 }
 
-export function addMessage(message: Message) {
+export function addMessage(message) {
     return {
         type: Actions.ADD_MESSAGE,
         message
     };
 }
 
-export function deleteMessage(id) {
+export function deleteMessage(message) {
     return {
         type: Actions.DELETE_MESSAGE,
-        id
+        message
     };
 }
 
@@ -70,9 +69,13 @@ export function endEditing() {
     };
 }
 
-export function loadOlderMessages(){
+export function loadOlderMessages(messages){
+    if(!messages){
+        messages = [];
+    }
     return {
         type: Actions.LOAD_OLDER_MESSAGES,
+        messages
     };
 }
 
@@ -102,5 +105,35 @@ export function showMediaOptions() {
 export function hideMediaOptions() {
     return {
         type: Actions.HIDE_MEDIA_OPTIONS,
+    };
+}
+
+export function showMessageComposer() {
+    return {
+        type: Actions.SHOW_MESSAGE_COMPOSER,
+    };
+}
+
+export function hideMessageComposer() {
+    return {
+        type: Actions.HIDE_MESSAGE_COMPOSER,
+    };
+}
+
+export function resetScrollToBottom(){
+    return{
+        type: Actions.RESET_SCROLLTOBOTTOM
+    };
+}
+
+export function resetRetainScrollPosition(){
+    return{
+        type: Actions.RESET_REMEMBER_SCROLL_POSITION
+    };
+}
+
+export function showLoadingSpinner(){
+    return{
+        type: Actions.SHOW_LOADING_SPINNER
     };
 }

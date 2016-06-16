@@ -1,5 +1,6 @@
-import React, { Component, View, Navigator, PropTypes } from 'react-native';
-import MessagePage from '../containers/MessagePage';
+import {Component} from 'react';
+import {View, Navigator} from 'react-native';
+import React from 'react';
 import InboxPage from '../containers/InboxPage';
 import Router from './Router';
 import NavigationBar from '../components/navbar/NavigationBar';
@@ -17,8 +18,8 @@ class AppNavigator extends Component {
                 <NavigationBar
                     title={{ title: 'Inbox'}}/>
             )
-        }
-        new AppInitService();
+        };
+        AppInitService.init();
     }
 
     renderScene(route, navigator) {
@@ -27,7 +28,7 @@ class AppNavigator extends Component {
         let navBar = route.navigationBar;
 
         if (navBar) {
-            navBar = React.addons.cloneWithProps(navBar, {
+            navBar = React.cloneElement(navBar, {
                 navigator, route,
             });
         }
@@ -58,8 +59,8 @@ class AppNavigator extends Component {
             <Navigator
                 ref={view => this.navigator=view}
                 initialRoute={this.initialRoute}
-                renderScene={this.renderScene.bind(this)}
-                configureScene={this.configureScene.bind(this)}
+                renderScene={(route, navigator) => this.renderScene(route, navigator)}
+                configureScene={(route) => this.configureScene(route)}
                 />
         );
     }

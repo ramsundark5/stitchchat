@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A9F79A97081C443CBE63DA0588693FA7E6565409",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A9F79A97081C443CBE63DA0588693FA7E6565409" : 0,
+    "F6F96CA34C5878B0A9123C7C37855491A5E599DA" : 0,
+    "40F53A12E4AE40C654358321B91166ABD3E910A6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F571EFC0-E5AB-4BA3-9D96-00B902AAFFC7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A9F79A97081C443CBE63DA0588693FA7E6565409" : "stitchchat\/",
+    "F6F96CA34C5878B0A9123C7C37855491A5E599DA" : "realm-js\/vendor\/GCDWebServer\/",
+    "40F53A12E4AE40C654358321B91166ABD3E910A6" : "realm-js\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "stitchchat",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "stitchchat.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/realm\/realm-js.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "40F53A12E4AE40C654358321B91166ABD3E910A6"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ramsundark5\/stitchchat.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A9F79A97081C443CBE63DA0588693FA7E6565409"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/swisspol\/GCDWebServer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F6F96CA34C5878B0A9123C7C37855491A5E599DA"
+    }
+  ]
+}

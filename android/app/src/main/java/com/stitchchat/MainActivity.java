@@ -43,7 +43,12 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
-                .addPackage(new MainReactPackage())
+                .addPackage(new MainReactPackage(),
+            new CodePush(null, this, BuildConfig.DEBUG),
+            new ImagePickerPackage(),
+            new RNSharePackage(),
+            new RNFSPackage(),
+            new RealmReactPackage())
                 .addPackage(new StitchChatPackage())
                 .addPackage(new VectorIconsPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)

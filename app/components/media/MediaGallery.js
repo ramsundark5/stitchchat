@@ -1,71 +1,39 @@
-import React, { Component, View, ScrollView, ListView, Image, CameraRoll, TouchableHighlight, PropTypes } from 'react-native';
-//import Video from 'react-native-video';
-import MediaGalleryHeader from './MediaGalleryHeader';
-import {mediaStyle} from './MediaStyles';
-import {commons, defaultStyle} from '../styles/CommonStyles';
-import * as _ from 'lodash';
-
-const MEDIA_FETCH_LIMIT = 25;
+import React, {Component, PropTypes} from 'react';
+import {View, ListView, Image, CameraRoll, TouchableHighlight, StyleSheet} from 'react-native';
+import MessageDao from '../../dao/MessageDao';
+import LoadingSpinner from '../common/LoadingSpinner';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import MediaRenderer from './MediaRenderer';
+import {InteractionManager} from 'react-native';
+import { Dimensions } from 'react-native';
 
 class MediaGallery extends Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            images: [],
-            selected: '',
-            endCursor: 0,
-            hasNextPage: false,
-            isSelecting: false
-        };
+        this.state = {mediasForThread: [], isLoading: true};
     }
 
-    componentDidMount() {
-        const fetchParams = {
-            first: MEDIA_FETCH_LIMIT,
-            assetType: 'All'
-        };
-        CameraRoll.getPhotos(fetchParams, this.displayMedias.bind(this), this.logMediaFetchError.bind(this));
-    }
-
-    fetchMedias(endCursor, numberOfPhotos){
-        const fetchParams = {
-            first: numberOfPhotos,
-            assetType: 'All',
-            after: endCursor
-        };
-        CameraRoll.getPhotos(fetchParams, this.displayMedias.bind(this), this.logMediaFetchError.bind(this));
-    }
-
-     displayMedias(data) {
-        const assets = data.edges;
-        let endCursor = data.page_info.end_cursor;
-        let hasNextPage = data.page_info.has_next_page;
-        const images = assets.map((asset) => asset.node.image);
-        let appendedImages = this.state.images.concat(images);
-        this.setState({
-            images: appendedImages,
-            endCursor: endCursor,
-            hasNextPage: hasNextPage
+    componentDidMount(){
+        let threadId = this.props.threadId;
+        InteractionManager.runAfterInteractions(() => {
+            requestAnimationFrame(() => {
+                this.openGalleryForThread(threadId);
+            });
         });
     }
 
-    logMediaFetchError(err) {
-        console.log(err);
+    reloadMedia(){
+        let threadId = this.props.threadId;
+        this.openGalleryForThread(threadId);
     }
 
-    selectMedia(image) {
-        console.log('selected uri is :'+image.uri);
-        image.selected = !image.selected;
-        this.forceUpdate();
-    }
-
-    loadMoreImages(){
-        let hasNextPage = this.state.hasNextPage;
-        let endCursor   = this.state.endCursor;
-        if(hasNextPage){
-            this.fetchMedias(endCursor, MEDIA_FETCH_LIMIT);
-        }
+    openGalleryForThread(threadId){
+        let mediaResult = MessageDao.getMediasForThread(threadId);
+        this.setState({
+            mediasForThread: mediaResult.mediasForThread,
+            isLoading: false
+        });
     }
 
     render() {
@@ -73,90 +41,89 @@ class MediaGallery extends Component {
         let imagesDS = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2});
 
-        /*let lotOfImages = [];
-        const images = this.state.images;
-        if(images.length > 0){
-            for (let i = 0; i < 100; i++) {
-                if(i%2 == 0){
-                    lotOfImages[i] = this.state.images[0];
-                }
-                else{
-                    lotOfImages[i] = this.state.images[1];
-                }
-            }
+        //let lotOfImages = [];
+        //const images = this.state.mediasForThread;
+        //lotOfImages = lotOfImages.concat(images, images, images);
+        //imagesDS = imagesDS.cloneWithRows(lotOfImages);
+        imagesDS = imagesDS.cloneWithRows(this.state.mediasForThread);
+
+        if(this.state.isLoading){
+            return(
+                <View style={[styles.loadingContainer]}>
+                    <LoadingSpinner size="large"/>
+                </View>
+            );
         }
-         imagesDS = imagesDS.cloneWithRows(lotOfImages);*/
-
-        imagesDS = imagesDS.cloneWithRows(this.state.images);
-        const selectedMedias = this.state.images.filter(image =>
-            image.selected === true
-        );
-
-        return (
-            <View style={commons.container}>
-                <MediaGalleryHeader
-                    selectedMedias={selectedMedias}
-                    router={router}/>
-                <ListView contentContainerStyle={mediaStyle.imageGrid}
-                        dataSource={imagesDS}
-                        renderRow={this.renderMedia.bind(this)}
-                        onEndReached={this.loadMoreImages.bind(this)}
-                        onEndReachedThreshold ={25}
-                />
-            </View>
-        );
+        else{
+            return (
+                <View style={[styles.container]}>
+                    <ListView contentContainerStyle={styles.imageGrid}
+                              enableEmptySections={true}
+                              dataSource={imagesDS}
+                              renderRow={(media) => this.renderMedia(media)}
+                              initialListSize={15}
+                              scrollRenderAheadDistance={500}
+                              pagingEnabled={true}
+                              pageSize={1}
+                              removeClippedSubviews={true} />
+                </View>
+            );
+        }
     }
 
     renderMedia(media){
-        let videoExtensions = ['mov', 'MOV', 'mp4', 'mkv'];
-        let ext = this.getQueryParamByName(media.uri, 'ext');
-        console.log("media mimetype is "+ext);
-        if(_.includes(videoExtensions,ext)){
-            return this.renderVideo(media);
-        }else{
-            return this.renderImage(media);
-        }
-
-    }
-
-    renderImage(image) {
-        let imageContainerStyle = mediaStyle.unselectedImage;
-        if(image.selected){
-            imageContainerStyle = mediaStyle.selectedImage;
-        }
-
-        return (
-            <TouchableHighlight key={image.uri}
-                                onPress={() => this.selectMedia(image)}
-                                style={imageContainerStyle}>
-                <Image style={mediaStyle.image} source={{ uri: image.uri }} />
+        return(
+            <TouchableHighlight onPress={() => this.openMediaViewer(media)}>
+                <View>
+                    <MediaRenderer media={media}
+                                   router={this.props.router}
+                                   threadId={this.props.threadId}
+                                   mediaViewerEnabled={true}
+                                   mediaStyle={styles.image}/>
+                </View>
             </TouchableHighlight>
         );
     }
 
-    renderVideo(video) {
-        let videoContainerStyle = mediaStyle.unselectedImage;
-        if(video.selected){
-            videoContainerStyle = mediaStyle.selectedImage;
-        }
-        return;
-        /*return (
-            <TouchableHighlight key={video.uri}
-                                onPress={() => this.selectMedia(video)}
-                                style={videoContainerStyle}>
-                <Video source={{uri: video.uri}}
-                       style={mediaStyle.image}
-                       paused={true}/>
-            </TouchableHighlight>
-        );*/
+    openMediaViewer(media){
+        this.props.router.toMediaViewer({selectedMedia: media, threadId: this.props.threadId});
     }
 
-     getQueryParamByName(uri, name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(uri);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-     }
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'black',
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+        paddingBottom: 10
+    },
+    loadingContainer:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'black',
+        height: Dimensions.get('window').height,
+        width: Dimensions.get('window').width,
+    },
+    image: {
+        width: 100,
+        height: 100,
+        margin: 2,
+        justifyContent: 'center',
+    },
+    imageGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        marginBottom: 50
+    },
+});
+
+MediaRenderer.propTypes = {
+    router: PropTypes.object.isRequired,
+    threadId: PropTypes.number.isRequired,
+};
 export default MediaGallery;

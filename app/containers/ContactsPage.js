@@ -1,58 +1,118 @@
-import React, { Component, View, StyleSheet, ScrollView, Text } from 'react-native';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native';
-import {commons} from '../components/styles/CommonStyles';
+import React, {Component} from 'react';
+import {View, StyleSheet, TouchableOpacity, Text, InteractionManager, Dimensions} from 'react-native';
+import {Theme} from '../components/common/Themes';
 import ContactList from '../components/contacts/ContactList';
-import CreateGroup from '../components/contacts/NewContactGroup';
-import * as ThreadActions from '../actions/ThreadActions';
-import * as ContactActions from '../actions/ContactActions';
 import ContactsDao from '../dao/ContactsDao';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 class ContactsPage extends Component{
 
     constructor(props, context) {
         super(props, context);
-        this.loadAllContacts();
+        this.state = {contacts: [], isLoading: true};
     }
 
-    async loadAllContacts(){
-        let contacts = await ContactsDao.getAllContacts();
-        this.props.contactActions.loadContacts(contacts);
+    componentDidMount(){
+        this.loadRegisteredContacts();
     }
 
-    componentWillUnmount(){
-        this.props.contactActions.resetContactState();
+    loadRegisteredContacts(){
+        let showRegistered = false;
+        let contacts = ContactsDao.getContacts(showRegistered);
+        this.setState({contacts: contacts, isLoading: false});
+    }
+
+    onClickInvite(router){
+        router.toInviteContactsView();
     }
 
     render() {
-        const { threadActions, contactActions, filteredContacts, contacts, isSearching, router } = this.props;
+        const { router } = this.props;
+        const { contacts, isLoading } = this.state;
+        if(isLoading){
+            return(
+                <View style={styles.loadingContainer}>
+                    <LoadingSpinner size="large"/>
+                </View>
+            );
+        }else{
+            return (
+                <View style={styles.container}>
+                    <ContactList router={router}
+                                 showInviteButton={false}
+                                 contacts={contacts}/>
+                    {this.renderNoContactsMessage(contacts)}
+                    <View style={styles.inviteButtonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {this.onClickInvite(router)}}
+                            style={styles.inviteButton}>
+                            <Text style={styles.inviteButtonText}>
+                                Invite Friends!
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
+        }
+    }
 
-        return (
-            <View style={commons.container}>
-                <ContactList router={router}
-                             filteredContacts={filteredContacts}
-                             contacts={contacts}
-                             selectContact={contactActions.selectContact}
-                             searchContacts={contactActions.searchContacts}
-                             setCurrentThread={threadActions.setCurrentThread} />
-            </View>
-        );
+    renderNoContactsMessage(contacts){
+        if(contacts.length <= 3){
+            return(
+                <View style={styles.inviteFriendsMessageContainer}>
+                    <Text style={styles.inviteFriendsMessageText}>
+                        :( It's no fun without friends. Click below to invite your friends!
+                    </Text>
+                </View>
+            );
+        }else{
+            return null;
+        }
 
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        filteredContacts: state.contactState.filteredContacts,
-        contacts: state.contactState.contacts
-    };
-}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+        backgroundColor: '#FAFAFA',
+    },
+    loadingContainer:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: Dimensions.get('window').height,
+        width: Dimensions.get('window').width,
+    },
+    inviteFriendsMessageContainer:{
+      flex: 1,
+      justifyContent: 'center',
+    },
+    inviteFriendsMessageText:{
+        textAlign: 'center'
+    },
+    inviteButtonContainer:{
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
+    inviteButton:{
+        borderColor: Theme.primaryColor,
+        backgroundColor: Theme.primaryColor,
+        borderRadius: 5,
+        height: 40,
+        width: 200,
+        margin: 20,
+        justifyContent: 'center',
+    },
+    inviteButtonText:{
+        color: Theme.defaultTextColor,
+        fontSize: Theme.fontSize,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        threadActions: bindActionCreators(ThreadActions, dispatch),
-        contactActions: bindActionCreators(ContactActions, dispatch)
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsPage);
+export default ContactsPage;

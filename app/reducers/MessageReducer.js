@@ -1,85 +1,195 @@
 import * as Action from '../constants/ActionTypes';
 import Message from '../models/Message';
 import * as _ from 'lodash';
-import {copyMessagesToClipBoard} from '../services/CopyService';
+import moment from 'moment';
+import update from 'react-addons-update';
 
-const initialState = { messages : [], isEditing: false, currentThread: null, isMediaOptionsVisible: false};
+const initialState = { messages : {}, isEditing: false, showLoadingSpinner: false,
+    isMediaOptionsVisible: false, scrollToBottom: false, retainScrollPosition: false,
+    showMessageComposer: true};
 
-export function messageState(state = initialState, action = {}) {
+export default function messageState(state = initialState, action = {}) {
     switch (action.type) {
 
         case Action.ADD_MESSAGE:
             let newMessage = action.message;
-            let messagesAfterAdd = state.messages.concat(newMessage)
-            let newStateAfterAdd =  _.assign({}, state, { 'messages' : messagesAfterAdd });
+
+            let clonedMessagesForAdd = _.assign({}, state.messages);
+            let date = newMessage.timestamp;
+            let formattedDate = moment(date).format('MM/DD/YYYY');
+            if(!clonedMessagesForAdd[formattedDate]){
+                clonedMessagesForAdd[formattedDate] = [];
+            }
+            clonedMessagesForAdd[formattedDate].push(newMessage);
+
+            let newStateAfterAdd =  _.assign({}, state, { 'messages' : clonedMessagesForAdd, scrollToBottom: true });
             return newStateAfterAdd;
 
         case Action.DELETE_MESSAGE:
-            let messagesAfterDelete = state.messages.filter(message =>
-                message.id !== action.id
-            );
-            let newStateAfterDelete =  _.assign({}, state, { 'messages' : messagesAfterDelete });
+            let clonedMessagesForDelete = _.assign({}, state.messages);
+            for (let messageDate in state.messages) {
+                if (state.messages.hasOwnProperty(messageDate)) {
+                    if(!(state.messages[messageDate] && state.messages[messageDate].length > 0)){
+                        console.log('Something is not right'+ state.messages[messageDate]);
+                        continue;
+                    }
+                    for(let i=0; i < state.messages[messageDate].length; i++){
+                        let message = state.messages[messageDate][i];
+                        if(message.id == action.id){
+                            let newMessagesForDate = state.messages[messageDate].splice(i, 1);
+                            clonedMessagesForDelete[messageDate] = newMessagesForDate;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            let newStateAfterDelete =  _.assign({}, state, { 'messages' : clonedMessagesForDelete });
             return newStateAfterDelete;
 
         case Action.UPDATE_MESSAGE_STATUS:
-            let messagesAfterUpdate =  state.messages.map(message =>
-                    message.id === action.id
-                        ? _.assign({}, message, {status: action.status})
-                        : message
-            );
+            let clonedMessagesForUpdate = Object.assign({}, state.messages);
 
-            let newStateAfterUpdate =  _.assign({}, state, { 'messages' : messagesAfterUpdate });
+            for (let messageDate in state.messages) {
+                if (state.messages.hasOwnProperty(messageDate)) {
+                    if(!(state.messages[messageDate] && state.messages[messageDate].length > 0)){
+                        console.log('Something is not right'+ state.messages[messageDate]);
+                        continue;
+                    }
+                    for(let i=0; i < state.messages[messageDate].length; i++){
+                        let message = state.messages[messageDate][i];
+                        if(message.id == action.id){
+                            let newMessageForUpdate = Object.assign({}, new Message(), message);
+                            newMessageForUpdate.status = action.status;
+                            //replace the existing messages for date with new one. this is required to simulate deep clone
+                            let newMessagesForDate = update(state.messages[messageDate], {$splice: [[i, 1, newMessageForUpdate]]});
+                            clonedMessagesForUpdate[messageDate] = newMessagesForDate;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            let newStateAfterUpdate =  _.assign({}, state, { 'messages' : clonedMessagesForUpdate });
             return newStateAfterUpdate;
 
         case Action.SELECT_MESSAGE:
-            let messagesAfterSelect =  state.messages.map(message =>
-                    message.id === action.id ?
-                        _.assign({}, message, {selected: !message.selected}) :
-                        message
-            );
-            let atleastOneSelected = messagesAfterSelect.some(message => message.selected);
-            let newStateAfterSelect =  _.assign({}, state, { 'messages' : messagesAfterSelect, 'isEditing': atleastOneSelected });
+
+            let clonedMessagesForSelect = Object.assign({}, state.messages);
+            let atleastOneSelected = false;
+            for (let messageDate in state.messages) {
+                if (state.messages.hasOwnProperty(messageDate)) {
+                    if(!(state.messages[messageDate] && state.messages[messageDate].length > 0)){
+                        console.log('Something is not right'+ state.messages[messageDate]);
+                        continue;
+                    }
+                    for(let i=0; i < state.messages[messageDate].length; i++){
+                        let message = state.messages[messageDate][i];
+                        if(message.id == action.id){
+                            let newSelectedMessage = Object.assign({}, new Message(), message);
+                            newSelectedMessage.selected = !message.selected;
+                            //replace the existing messages for date with new one. this is required to simulate deep clone
+                            let newMessagesForDate = update(state.messages[messageDate], {$splice: [[i, 1, newSelectedMessage]]});
+                            clonedMessagesForSelect[messageDate] = newMessagesForDate;
+                        }
+                        if(clonedMessagesForSelect[messageDate][i].selected){
+                            atleastOneSelected = true;
+                        }
+                    }
+                }
+
+            }
+            let newStateAfterSelect =  Object.assign({}, state, { 'messages' : clonedMessagesForSelect, 'isEditing': atleastOneSelected });
             return newStateAfterSelect;
 
-        case Action.SELECT_ALL:
-            const areAllSelected = state.messages.every(message => message.selected);
-            let messagesAfterSelectAll =  state.map(message => _.assign({}, message, {
-                selected: !areAllSelected
-            }));
-            let enableEditingMode = messagesAfterSelectAll.some(message => message.selected);
-            let newStateAfterSelectAll =  _.assign({}, state, { 'messages' : messagesAfterSelectAll, 'isEditing': enableEditingMode });
-            return newStateAfterSelectAll;
-
         case Action.CLEAR_SELECTED_MESSAGE:
-            let messagesAfterClearSelected = state.messages.map(message => _.assign({}, message, {
-                selected: false
-            }));
-            let newStateAfterClearSelected =  _.assign({}, state, { 'messages' : messagesAfterClearSelected, 'isEditing': false });
-            return newStateAfterClearSelected ;
+            let clonedMessagesForClear = _.assign({}, state.messages);
+            for (let messageDate in clonedMessagesForClear) {
+                if (clonedMessagesForClear.hasOwnProperty(messageDate)) {
+                    if(!(clonedMessagesForClear[messageDate] && clonedMessagesForClear[messageDate].length > 0)){
+                        console.log('Something is not right'+ clonedMessagesForSelect[messageDate]);
+                        continue;
+                    }
+                    let newClearedMessagesForDate = clonedMessagesForClear[messageDate].map(message =>
+                        Object.assign({}, message, {
+                        selected: false
+                    }));
+                    clonedMessagesForClear[messageDate] = newClearedMessagesForDate;
+                }
+            }
+            let newStateAfterClearSelected =  _.assign({}, state, { 'messages' : clonedMessagesForClear, 'isEditing': false });
+            return newStateAfterClearSelected;
 
         case Action.DELETE_SELECTED_MESSAGE:
-            let messagesAfterDeleteSelected = state.messages.filter(message =>
-                message.selected === false
-            );
-            let newStateAfterDeleteSelected =  _.assign({}, state, { 'messages' : messagesAfterDeleteSelected, 'isEditing': false });
+            let clonedMessagesForDeleteSelected = _.assign({}, state.messages);
+            for (let messageDate in clonedMessagesForDeleteSelected) {
+                if (clonedMessagesForDeleteSelected.hasOwnProperty(messageDate)) {
+                    if(!(clonedMessagesForDeleteSelected[messageDate] && clonedMessagesForDeleteSelected[messageDate].length > 0)){
+                        continue;
+                    }
+                    let newMessagesForDate = clonedMessagesForDeleteSelected[messageDate].filter(message =>
+                        message.selected != true
+                    )
+                    clonedMessagesForDeleteSelected[messageDate] = newMessagesForDate;
+                }
+            }
+
+            let newStateAfterDeleteSelected =  _.assign({}, state, { 'messages' : clonedMessagesForDeleteSelected, 'isEditing': false });
             return newStateAfterDeleteSelected;
 
         case Action.COPY_SELECTED_MESSAGE:
-            let copiedMessageList = state.messages.filter(message =>
-                message.selected === true
-            );
-            copyMessagesToClipBoard(copiedMessageList);
             return messageState(state, {
                 type: Action.CLEAR_SELECTED_MESSAGE
             });
 
         case Action.LOAD_MESSAGES_FOR_THREAD:
             let messagesForThread = action.messages;
-            let newStateAfterLoadingMessages =  _.assign({}, state, { 'messages' : messagesForThread });
+
+            let groupedMessage = {};
+            for(let i=0; i < messagesForThread.length; i++){
+                let date = messagesForThread[i].timestamp;
+                let formattedDate = moment(date).format('MM/DD/YYYY');
+                if(!groupedMessage[formattedDate]){
+                    groupedMessage[formattedDate] = [];
+                }
+                groupedMessage[formattedDate].push(messagesForThread[i]);
+            }
+
+            let newStateAfterLoadingMessages =  _.assign({}, state, { 'messages' : groupedMessage});
             return newStateAfterLoadingMessages ;
 
         case Action.LOAD_OLDER_MESSAGES:
-            return state;
+            let olderMessages = action.messages;
+            let clonedMessagesForLoadOlder = Object.assign({}, state.messages);
+            let groupedOlderMessage = {};
+            let overlappingMessages = [];
+            let overlappingDate = null;
+            for(let i=0; i < olderMessages.length; i++){
+                let date = olderMessages[i].timestamp;
+                let formattedDate = moment(date).format('MM/DD/YYYY');
+
+                //capture overlapping messages for given date separately
+                if(state.messages[formattedDate]){
+                    overlappingDate = formattedDate;
+                    overlappingMessages.push(olderMessages[i]);
+                }else{
+                    if(!groupedOlderMessage[formattedDate]){
+                        groupedOlderMessage[formattedDate] = [];
+                    }
+                    groupedOlderMessage[formattedDate].push(olderMessages[i]);
+                }
+            }
+            let updatedMessages = overlappingMessages.concat(clonedMessagesForLoadOlder[overlappingDate]);
+            clonedMessagesForLoadOlder[overlappingDate] = updatedMessages;
+
+            let mergedMessages = Object.assign({}, groupedOlderMessage, clonedMessagesForLoadOlder);
+            let newStateAfterLoadOlder =  Object.assign({}, state, {
+                'messages' : mergedMessages,
+                'retainScrollPosition': true,
+                'showLoadingSpinner': false
+            });
+            return newStateAfterLoadOlder;
 
         case Action.SHOW_MEDIA_OPTIONS:
             let newStateAfterShowingMediaOptions =  _.assign({}, state, { 'isMediaOptionsVisible' : true });
@@ -89,9 +199,35 @@ export function messageState(state = initialState, action = {}) {
             let newStateAfterHidingMediaOptions =  _.assign({}, state, { 'isMediaOptionsVisible' : false });
             return newStateAfterHidingMediaOptions ;
 
+        case Action.SHOW_MESSAGE_COMPOSER:
+            if(state.showMessageComposer){
+                return state;
+            }
+            let newStateAfterShowingMessageComposer =  _.assign({}, state, { 'showMessageComposer' : true });
+            return newStateAfterShowingMessageComposer ;
+
+        case Action.HIDE_MESSAGE_COMPOSER:
+            if(!state.showMessageComposer){
+                return state;
+            }
+            let newStateAfterHidingMessageComposer =  _.assign({}, state, { 'showMessageComposer' : false });
+            return newStateAfterHidingMessageComposer ;
+
         case Action.RESET_MESSAGES_STATE:
             let newStateAfterReset = _.assign({}, state, initialState);
             return newStateAfterReset;
+
+        case Action.RESET_SCROLLTOBOTTOM:
+            let newStateAfterResetScrollToBottom =  _.assign({}, state, { scrollToBottom: false});
+            return newStateAfterResetScrollToBottom ;
+
+        case Action.SHOW_LOADING_SPINNER:
+            let newStateAfterShowLoadingSpinner =  _.assign({}, state, { 'showLoadingSpinner': true});
+            return newStateAfterShowLoadingSpinner ;
+
+        case Action.RESET_REMEMBER_SCROLL_POSITION:
+            let newStateAfterResetRetainScrollPosition =  _.assign({}, state, { 'retainScrollPosition': false});
+            return newStateAfterResetRetainScrollPosition ;
 
         default:
             return state;

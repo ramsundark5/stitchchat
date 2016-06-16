@@ -6,3 +6,34 @@
     ss.source_files     = "Libraries/CameraRoll/*.{h,m}"
     ss.preserve_paths   = "Libraries/CameraRoll/*.js"
   end
+
+
+
+  /Users/ramsundar/Library/Developer/CoreSimulator/Devices/A30F2928-06D1-48CB-9F5D-D0C11F8735C0/data/Containers/Data/
+  Application/FAC40CF9-D31D-4BFE-B3E4-7BE190B3E5A9/Documents
+
+  sample json message
+
+  {"header":{},"message":{"id":12,"uid":"6e4befd0-92e3-11e5-8075-4d7c651bea35",
+  "contactInfo":null,"senderId":"+15557664823","receiverId":"+15557664823","isGroupThread":false,
+  "message":"bbb","thumbImageUrl":null,"mediaUrl":null,"mediaMimeType":null,
+  "mediaDesc":null,"latitude":null,"longitude":null,"type":0,"ttl":0,"mediaStatus":0,"isOwner":true,
+  "displayName":"","timestamp":"2015-11-24T19:42:01.312Z"}}
+
+
+  only dao layer knows about realm
+  service has no idea about realm
+
+  after upgrading to 0.17 delete all .babelrc files from dependencies, especially all redux based ones.
+
+  Linking -> Dead Code stripping is currently NO
+
+
+  react-native bundle --entry-file index.ios.js --bundle-output iOS/stitchchat/main.jsbundle  — sourcemap-output stitchchat.map --platform ios --dev false
+  
+  
+  change useravatar.js
+        _this.state = {
+            color: "0000",
+
+  if error loading react-native.js try reinstalling react.js

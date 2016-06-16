@@ -1,105 +1,112 @@
-import React, { Component, View, Text, PropTypes, Image, TouchableHighlight } from 'react-native';
-import * as MessageConstants from '../../constants/MessageConstants.js';
-import {commons, defaultStyle} from '../styles/CommonStyles';
-import {messageStyle} from './MessageStyles';
-import Icon from 'react-native-vector-icons/Ionicons';
-import * as Status from '../../constants/MessageConstants';
-import moment from 'moment';
+import React, {Component, PropTypes} from 'react';
+import {View, Text, Image, TouchableHighlight, StyleSheet} from 'react-native';
+import * as MessageConstants from '../../constants/AppConstants.js';
+import {Theme} from '../common/Themes';
+import MessageTextItem from './MessageTextItem';
+import MediaRenderer from '../media/MediaRenderer';
+import MessageStatusIcon from './MessageStatusIcon';
 
 class MessageItem extends Component {
-    constructor(props, context) {
-        super(props, context);
-    }
 
     selectMessage(message) {
         this.props.selectMessage(message.id);
     }
 
     selectMessageOnlyInEditingMode(message){
-        if(this.props.isEditing){
-            this.selectMessage(message);
-        }
+        this.props.selectMessageOnlyInEditingMode(message);
     }
 
-    openImageViewer(message){
-        //this.props.router.toImageViewer(message);
-    }
-
-    getStatusIcon(msgStatus){
-        let statusIconName = 'load-c';
-        if(msgStatus === Status.STATUS_SENT){
-            statusIconName = 'android-done';
-        }
-        else if(msgStatus === Status.STATUS_RECEIVED){
-            statusIconName = 'android-done-all';
-        }
-        return statusIconName;
-    }
     render() {
         const {message, router} = this.props;
-        let msgAlign     = message.owner? commons.pullRight : commons.pullLeft;
-        let messageBgColor = message.selected ? messageStyle.msgSelected : messageStyle.msgUnselected;
+        let msgAlign     = message.isOwner? styles.pullRight : styles.pullLeft;
+        let messageBgColor = message.selected ? styles.msgSelected : styles.msgUnselected;
         return (
-            <TouchableHighlight style={[messageStyle.msgItemContainer, msgAlign, messageBgColor]}
-                                onPress = {() => this.selectMessageOnlyInEditingMode(message)}
-                                onLongPress={() => this.selectMessage(message)}>
-                <View>
-                    {this._renderTextMessage(message)}
-                    {this._renderMediaMessage(message, router)}
-                </View>
-            </TouchableHighlight>
-        );
-    }
-
-    _renderTextMessage(message){
-        if(message.type !=  MessageConstants.PLAIN_TEXT){
-            return;
-        }
-        let msgItemStyle = message.owner? messageStyle.msgItemSender : messageStyle.msgItemReceiver;
-        let msgTextStyle = message.owner? messageStyle.msgSentText : messageStyle.msgReceivedText;
-        return(
-            <View style={[messageStyle.msgItem, msgItemStyle]}>
-                <Text style={msgTextStyle}>
-                    {message.message}
-                </Text>
-                {this._renderStatusIcon(message)}
+            <View style={messageBgColor}>
+                <TouchableHighlight style={[styles.msgItemContainer, msgAlign]}
+                                    onPress = {() => this.selectMessageOnlyInEditingMode(message)}
+                                    onLongPress={() => this.selectMessage(message)}>
+                    <View>
+                        {this._renderMessageItem(message, router)}
+                    </View>
+                </TouchableHighlight>
             </View>
         );
     }
 
-    _renderMediaMessage(message){
-        if(message.type !=  MessageConstants.IMAGE_MEDIA){
-            return;
+    _renderMessageItem(message, router){
+        switch (message.type) {
+            case MessageConstants.PLAIN_TEXT:
+                return(
+                    <MessageTextItem message={message} router={router} style={this.props.style}/>
+                );
+            case MessageConstants.IMAGE_MEDIA:
+            case MessageConstants.VIDEO_MEDIA:
+                return(
+                    <TouchableHighlight onPress={() => this.openMediaViewer(message)}
+                                        onLongPress={() => this.selectMessage(message)}>
+                        <View style={[styles.msgItem, this.props.style]}>
+                            <MediaRenderer media={message}
+                                           router={router}
+                                           threadId={message.threadId}
+                                           mediaViewerEnabled={true}
+                                           mediaStyle={styles.image}/>
+                            <MessageStatusIcon message={message}/>
+                        </View>
+                    </TouchableHighlight>
+                );
+            default:
+                return(
+                    <View></View>
+                );
         }
-        return(
-            <TouchableHighlight onPress={() => this.openImageViewer(message)}>
-                <View style={[messageStyle.msgItem, messageStyle.imageContainer]}>
-                    <Image
-                        style={messageStyle.image}
-                        source={{ uri: message.mediaUrl }}/>
-                    {this._renderStatusIcon(message)}
-                </View>
-            </TouchableHighlight>
-        );
     }
 
-    _renderStatusIcon(message){
-        let statusIcon   = this.getStatusIcon(message.state);
-        let statusTime   = moment(message.timestamp).format("hh:mm a");
-        return(
-            <View style={[commons.horizontalNoWrap, commons.pullRight]}>
-                <Text style={commons.smallText}>{statusTime}</Text>
-                <Icon name={statusIcon}
-                      style={commons.smallIcon}/>
-            </View>
-        );
+    openMediaViewer(message){
+        let isEditingMode = this.props.selectMessageOnlyInEditingMode(message);
+        if(!isEditingMode){
+            this.props.router.toMediaViewer({selectedMedia: message, threadId: message.threadId});
+        }
     }
-
 }
+
+const styles = StyleSheet.create({
+    pullRight:{
+        alignSelf: 'flex-end',
+    },
+    pullLeft:{
+        alignSelf: 'flex-start',
+    },
+    msgItemContainer: {
+        //flex: 1,
+        //flexDirection: 'column',
+        marginBottom: 20,
+    },
+    image: {
+        width: 200,
+        height: 200,
+        margin: 10,
+        justifyContent: 'center',
+    },
+    msgItem: {
+        paddingTop: 8,
+        //flexDirection: 'column',
+        paddingBottom: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
+        borderRadius: 15,
+    },
+    msgSelected: {
+        backgroundColor: Theme.selectedColor,
+    },
+    msgUnselected: {
+        backgroundColor: 'transparent',
+    },
+});
 
 MessageItem.propTypes = {
     message: PropTypes.object.isRequired,
     selectMessage: PropTypes.func.isRequired,
+    selectMessageOnlyInEditingMode: PropTypes.func.isRequired,
     isEditing: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired
 };

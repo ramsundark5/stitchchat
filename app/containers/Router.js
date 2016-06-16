@@ -1,10 +1,13 @@
-import React, { Navigator } from 'react-native';
+import React from 'react';
+import {Navigator} from 'react-native';
 import InboxPage from './InboxPage';
 import LoginPage from './LoginPage';
 import MessagePage from './MessagePage';
 import ContactsPage from './ContactsPage';
+import InviteContactsPage from './InviteContactsPage';
 import CreateGroupsPage from './CreateGroupsPage';
 import MediaGallery from '../components/media/MediaGallery';
+import MediaViewer from '../components/media/MediaViewer';
 import NavigationBar from '../components/navbar/NavigationBar';
 import CreateGroupNavBar from '../components/contacts/NewContactGroupHeader';
 
@@ -14,11 +17,19 @@ class Router {
     }
 
     push(props, route) {
-        let routesList = this.navigator.getCurrentRoutes();
-        let nextIndex = routesList[routesList.length - 1].index + 1;
+        if(!props){
+            props = {};
+        }
         route.props = props;
-        route.index = nextIndex;
         this.navigator.push(route);
+    }
+
+    replace(props, route){
+        if(!props){
+            props = {};
+        }
+        route.props = props;
+        this.navigator.replace(route);
     }
 
     pop() {
@@ -29,24 +40,24 @@ class Router {
         this.push(props, {
             component: LoginPage,
             name: 'loginView',
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
-                    title={{ title: 'Login', }}/>
+                    title={{ title: 'Stitchchat', }}/>
             )
-        })
+        });
     }
 
     toInboxView(props) {
         this.push(props, {
             component: InboxPage,
             name: 'inboxView',
-            sceneConfig: Navigator.SceneConfigs.FloatFromLeft,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             navigationBar: (
                 <NavigationBar
                     title={{ title: 'Inbox'}}/>
             )
-        })
+        });
     }
 
     toMessageView(props) {
@@ -59,15 +70,7 @@ class Router {
                     title={{ title: props.displayName }}
                     leftButton={{ title: 'Back', handler: () => this.replaceWithHome()}}/>
             )
-        })
-    }
-
-    toMediaGalleryView(props) {
-        this.push(props, {
-            component: MediaGallery,
-            name: 'galleryView',
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-        })
+        });
     }
 
     toContactsView(props) {
@@ -77,10 +80,24 @@ class Router {
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
-                    title={{ title: 'Contacts', }}
+                    title={{ title: '', }}
+                    leftButton={{ title: 'Cancel', handler: () => this.pop()}}
+                    rightButton={{ title: 'Invite', handler: () => this.toInviteContactsView()}}/>
+            )
+        });
+    }
+
+    toInviteContactsView(props){
+        this.push(props, {
+            component: InviteContactsPage,
+            name: 'inviteContactsView',
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            navigationBar: (
+                <NavigationBar
+                    title={{ title: 'Invite', }}
                     leftButton={{ title: 'Cancel', handler: () => this.pop()}}/>
             )
-        })
+        });
     }
 
     toCreateGroupsView(props) {
@@ -88,22 +105,46 @@ class Router {
             component: CreateGroupsPage,
             name: 'createGroupsView',
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom
-        })
+        });
     }
 
-    replaceWithHome() {
-        this.navigator.popToTop();
-        /*let homeRoute = {
-            name: 'inboxView',
-            index: 0,
-            component: InboxPage,
+    toMediaViewer(props){
+        this.push(props, {
+            component: MediaViewer,
+            name: 'mediaViewer',
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+    }
+
+    toMediaGalleryView(props) {
+        this.push(props, {
+            component: MediaGallery,
+            name: 'galleryView',
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             navigationBar: (
                 <NavigationBar
-                    title={{ title: 'Inbox'}}/>
+                    title={{ title: 'Gallery', }}
+                    leftButton={{ title: 'Close', handler: () => this.pop()}}/>
             )
-        }
-        this.navigator.replace(homeRoute);*/
+        });
+    }
+
+    toGalleryViewFromMediaViewer(props) {
+        this.replace(props, {
+            component: MediaGallery,
+            name: 'galleryView2',
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            navigationBar: (
+                <NavigationBar
+                    title={{ title: 'Gallery', }}
+                    leftButton={{ title: 'Close', handler: () => this.pop()}}/>
+            )
+        });
+    }
+
+    replaceWithHome() {
+        //this.navigator.popToTop();
+        this.toInboxView({});
     }
 
 }

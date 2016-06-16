@@ -1,12 +1,7 @@
-import React, { Component, View, Text, TextInput, Image, TouchableOpacity, PropTypes } from 'react-native';
-import styles from '../navbar/styles';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native';
-import {commons, defaultStyle} from '../styles/CommonStyles';
-import {contactStyle} from './ContactStyles';
-import * as ThreadActions from '../../actions/ThreadActions';
-import * as ContactActions from '../../actions/ContactActions';
-import ThreadService from '../../services/ThreadService';
+import React, {Component, PropTypes} from 'react';
+import {View, TextInput, Image, StyleSheet} from 'react-native';
+import GroupInfoService from '../../services/GroupInfoService';
+import NavigationBar from '../navbar/NavigationBar';
 
 class NewContactGroupHeader extends Component{
 
@@ -23,9 +18,8 @@ class NewContactGroupHeader extends Component{
         });
     }
 
-    async onFinishGroupCreation(){
-        let newGroupThread = await ThreadService.addNewGroup(this.props.selectedContacts, this.state.groupNameText);
-        this.props.setCurrentThread(newGroupThread);
+    onFinishGroupCreation(){
+        let newGroupThread = GroupInfoService.openNewlyAddedGroup(this.props.selectedContacts, this.state.groupNameText);
         this.props.router.toMessageView(newGroupThread);
     }
 
@@ -33,51 +27,19 @@ class NewContactGroupHeader extends Component{
         this.props.router.pop();
     }
 
-    getTitleElement(title) {
-        return (
-            <Text
-                style={[styles.navBarTitleText, ]}>
-                {title}
-            </Text>
-        );
-    }
-
-    getLeftButtonElement(title) {
-        return (
-            <TouchableOpacity onPress={() => this.goBackToPrevPage()}>
-                <View style={styles.navBarButton}>
-                    <Text style={[styles.navBarButtonText ]}>{title}</Text>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-
-    getRightButtonElement(title) {
-        return (
-            <TouchableOpacity onPress={() => this.onFinishGroupCreation()}>
-                <View style={styles.navBarButton}>
-                    <Text style={[styles.navBarButtonText ]}>{title}</Text>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-
     render(){
         return (
             <View>
-                <View style={[styles.navBarContainer]}>
-                    <View style={[styles.navBar, this.props.style, ]}>
-                        {this.getTitleElement('New Group')}
-                        {this.getLeftButtonElement('Cancel', { marginLeft: 8, })}
-                        {this.getRightButtonElement('Next', { marginRight: 8, })}
-                    </View>
-                </View>
-                <View style={[commons.horizontalNoWrap, contactStyle.groupContactNameContainer]}>
+                <NavigationBar
+                    title={{ title: 'New Group', }}
+                    leftButton={{ title: 'Cancel', handler: () => this.goBackToPrevPage()}}
+                    rightButton={{ title: 'Invite', handler: () => this.onFinishGroupCreation()}} />
+                <View style={[styles.horizontalNoWrap, styles.groupContactNameContainer]}>
                     <Image source={require('../../../assets/images/ic_person_outline_white_48pt.png')}
-                           style={contactStyle.groupImage}/>
-                    <View style={[contactStyle.underline]}>
+                           style={styles.groupImage}/>
+                    <View style={[styles.underline]}>
                         <TextInput
-                            style={[commons.defaultTextInput]}
+                            style={[styles.defaultTextInput]}
                             onChange={(event) => this.onGroupNameChange(event.nativeEvent.text)}
                             value={this.state.groupNameText}
                             placeholder=" Type group name"
@@ -89,10 +51,37 @@ class NewContactGroupHeader extends Component{
     }
 }
 
+const styles = StyleSheet.create({
+    defaultTextInput: {
+        height  : 26,
+        fontSize: 14,
+        padding : 4,
+        flex    : 1,
+    },
+    horizontalNoWrap:{
+        flexDirection : 'row',
+        flexWrap      : 'nowrap'
+    },
+    groupContactNameContainer:{
+        margin: 20,
+    },
+    groupImage:{
+        width: 48,
+        height: 48,
+        borderRadius: 20,
+        backgroundColor: '#dddddd'
+    },
+    underline:{
+        borderBottomWidth: 1.5,
+        borderColor: '#333',
+        margin: 10,
+        flex: 1,
+    }
+});
+
 NewContactGroupHeader.propTypes = {
     router: PropTypes.object.isRequired,
     selectedContacts: PropTypes.array.isRequired,
-    setCurrentThread: PropTypes.func.isRequired
 };
 
 export default NewContactGroupHeader;

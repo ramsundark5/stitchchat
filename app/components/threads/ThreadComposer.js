@@ -1,8 +1,7 @@
-import React, { Component, PropTypes, View, TouchableHighlight } from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {View, TouchableHighlight, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {commons, defaultStyle} from '../styles/CommonStyles';
-import {threadStyle} from './ThreadStyles';
-import ActionButton from '../../utils/ActionButton';
+import ActionButton from '../common/ActionButton';
 
 class ThreadComposer extends Component {
 
@@ -22,15 +21,23 @@ class ThreadComposer extends Component {
         return (
             <ActionButton buttonColor="rgba(231,76,60,1)">
                 <ActionButton.Item buttonColor='#1abc9c' onPress={() => this._addNewGroupThread()}>
-                    <Icon name="ios-people-outline" style={commons.defaultIcon} />
+                    <Icon name="ios-people-outline" style={styles.actionButtonIcon} />
                 </ActionButton.Item>
                 <ActionButton.Item buttonColor='#3498db' onPress={() => this._addNewThread()}>
-                    <Icon name='ios-compose-outline' style={commons.defaultIcon}/>
+                    <Icon name='ios-create-outline' style={styles.actionButtonIcon}/>
                 </ActionButton.Item>
             </ActionButton>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize : 30,
+        color: 'white',
+        fontWeight: 'bold',
+    },
+});
 
 ThreadComposer.propTypes = {
     searchThreads: PropTypes.func.isRequired

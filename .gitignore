@@ -21,13 +21,24 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+.vscode/
+iOS/core/
+iOS/core*
+Pods/
+iOS/Crashlytics*
+*.iml
+com_crashlytics_export_strings.xml
+*.alloc
+application.properties
+fabric.properties
 
 # Android/IJ
 #
 .idea
 .gradle
 local.properties
-
+*.jar
+google-services.json
 # node.js
 #
 node_modules/

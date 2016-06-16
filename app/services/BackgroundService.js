@@ -1,56 +1,104 @@
-import MQTTClient from '../transport/MQTTClient';
-import {NativeModules} from 'react-native';
-import CacheService from './CacheService';
+import {Platform} from 'react-native';
+import PushNotification from 'react-native-push-notification';
 import MessageService from './MessageService';
+import FirebaseUserPreferenceHandler from '../transport/FirebaseUserPreferenceHandler';
+import LoginService from './LoginService';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
-import * as AppConstants from '../constants/AppConstants';
 import MessageDao from '../dao/MessageDao';
-import * as MessageConstants from '../constants/MessageConstants';
-import moment from 'moment';
+import * as MessageConstants from '../constants/AppConstants';
+import ProfileService from './ProfileService';
 
 class BackgroundService{
 
     init(){
-        //MQTTClient.init();
-        RCTDeviceEventEmitter.addListener('onMQTTConnected', this.onConnected.bind(this));
-        RCTDeviceEventEmitter.addListener('onMessageReceived', this.onMessageReceived);
-        RCTDeviceEventEmitter.addListener('fileUploadCompleted', this.onFileUploadCompleted);
-        RCTDeviceEventEmitter.addListener('fileUploadFailed', this.onFileUploadFailed);
-        this.syncContacts();
+        this.initFirebase();
+        this.initPushNotification();
+        RCTDeviceEventEmitter.addListener('fileUploadCompleted', this.onFileUploadCompleted.bind(this));
+        RCTDeviceEventEmitter.addListener('fileUploadFailed', this.onFileUploadFailed.bind(this));
+        RCTDeviceEventEmitter.addListener('fileDownloadCompleted', this.onFileDownloadCompleted.bind(this));
+        RCTDeviceEventEmitter.addListener('fileDownloadFailed', this.onFileDownloadFailed.bind(this));
     }
 
-    async syncContacts(){
-        try{
-            let ContactsSyncer = NativeModules.ContactsSyncer;
-            ContactsSyncer.syncContacts();
-        }catch(err){
-            console.log("Error syncing contacts "+err);
+    initFirebase(){
+        let isRegistered = ProfileService.isAppRegistered();
+        if(isRegistered){
+            //calling loginservice will init firebase
+            LoginService.authenticateWithDigits();
         }
     }
 
-    onConnected(){
-        console.log("connection initialized invoked");
-        //resend all pending messages
-    }
-
-    onMessageReceived(message){
-        if(message && message.data){
-            let messageWrapperObj = JSON.parse(message.data);
-            let messageObj = messageWrapperObj.message;
-
-            MessageService.handleIncomingTextMessage(messageObj);
-            console.log("received message in UI "+ messageObj.text);
-        }else{
-            console.log("got empty messages. something is wrong.");
+    initPushNotification(){
+        let isRegistered = ProfileService.isAppRegistered();
+        if(!isRegistered){
+            return;
         }
+
+        PushNotification.configure({
+
+            // (optional) Called when Token is generated (iOS and Android)
+            onRegister: function(response) {
+                console.log( 'TOKEN:', response.token );
+               /* let type = 'ios';
+                if (Platform.OS === 'android') {
+                    type = 'android';
+                }*/
+                FirebaseUserPreferenceHandler.updatePushNotificationDetails(response);
+            },
+
+            // (required) Called when a remote or local notification is opened or received
+            onNotification: function(notification) {
+                console.log( 'NOTIFICATION:', notification );
+                this._onNotification(notification);
+            },
+
+            // ANDROID ONLY: (optional) GCM Sender ID.
+            senderID: "YOUR GCM SENDER ID",
+
+            // IOS ONLY (optional): default: all - Permissions to register.
+            permissions: {
+                alert: true,
+                badge: true,
+                sound: true
+            },
+
+            // Should the initial notification be popped automatically
+            // default: true
+            popInitialNotification: true,
+
+            /**
+             * IOS ONLY: (optional) default: true
+             * - Specified if permissions will requested or not,
+             * - if not, you must call PushNotificationsHandler.requestPermissions() later
+             */
+            requestPermissions: true
+        });
     }
 
     onFileUploadCompleted(messageId){
-        MessageDao.updateUploadStatus(messageId, MessageConstants.UPLOAD_COMPLETED)
+        console.log("onFileUploadCompleted "+messageId);
+        MessageDao.updateMediaStatus(messageId, MessageConstants.UPLOAD_COMPLETED);
+        let messageForId = MessageDao.getMessageById(messageId);
+        MessageService.sendMessage(messageForId);
+    }
+
+    onFileDownloadCompleted(response){
+        console.log("onFileDownloadCompleted "+response.messageId);
+        MessageDao.updateMessageWithDownloadedMediaUrl(response.messageId, response.mediaUrl);
     }
 
     onFileUploadFailed(messageId){
-        MessageDao.updateUploadStatus(messageId, MessageConstants.UPLOAD_FAILED)
+        MessageDao.updateMediaStatus(messageId, MessageConstants.UPLOAD_FAILED);
+    }
+
+    onFileDownloadFailed(messageId){
+        MessageDao.updateMediaStatus(messageId, MessageConstants.DOWNLOAD_FAILED);
+    }
+
+    _onNotification(notification) {
+        PushNotification.localNotification({
+            'userInfo': {},
+            'message': notification.getMessage()
+        });
     }
 }
 export default new BackgroundService();

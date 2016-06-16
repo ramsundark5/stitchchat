@@ -96,7 +96,7 @@
   // Inspired by https://github.com/LiosK/UUID.js
   // and http://docs.python.org/library/uuid.html
 
-  // random #'s we need to init node and clockseq
+  // random #'s we need to connect node and clockseq
   var _seedBytes = _rng();
 
   // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)

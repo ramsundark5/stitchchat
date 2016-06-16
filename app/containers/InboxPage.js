@@ -1,40 +1,37 @@
-import React, { View, Text, TouchableHighlight, Platform } from 'react-native';
+import React from 'react';
+import {View, Text, TouchableHighlight, Platform, StyleSheet, InteractionManager} from 'react-native';
 import Component from '../components/PureComponent';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import ThreadList from '../components/threads/ThreadList';
 import ThreadComposer from '../components/threads/ThreadComposer';
 import ThreadOptionsBox from '../components/threads/ThreadOptionsBox';
 import * as ThreadActions from '../actions/ThreadActions';
-import {commons, defaultStyle} from '../components/styles/CommonStyles';
+import {Theme} from '../components/common/Themes';
 import LoginService from '../services/LoginService';
 import ThreadDao from '../dao/ThreadDao';
-import CacheService from '../services/CacheService';
-import Button from 'apsl-react-native-button'
-import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import ProfileService from '../services/ProfileService';
+import ContactsManger from '../services/ContactsManger';
+import PushNotification from 'react-native-push-notification';
 
 class InboxPage extends Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            isRegistered: true
-        };
-        this.loadRecentThreads();
     }
 
     componentDidMount(){
-        RCTDeviceEventEmitter.addListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
+        this.loadRecentThreads();
         this.showLoginPageIfRequired();
+        InteractionManager.runAfterInteractions(() => {
+            this.props.threadActions.setCurrentThread(null);
+            ContactsManger.syncContacts();
+            PushNotification.setApplicationIconBadgeNumber(0);
+        });
     }
 
-    componentWillUnmount() {
-        RCTDeviceEventEmitter.removeListener('registrationSuccess', this.onRegistrationSuccess.bind(this));
-    }
-
-    async loadRecentThreads(){
-        let recentThreads = await ThreadDao.loadRecentThreads();
-        debugAsyncObject(recentThreads);
+    loadRecentThreads(){
+        let recentThreads = ThreadDao.loadRecentThreads();
         this.props.threadActions.loadRecentThreads(recentThreads);
     }
 
@@ -42,8 +39,8 @@ class InboxPage extends Component {
         const { threads, threadActions, isEditing, router } = this.props;
 
         return (
-            <View style={commons.container}>
-                <View style={commons.listContainer}>
+            <View style={styles.container}>
+                <View style={styles.listContainer}>
                     <ThreadList threads={threads}
                                 loadMoreThreads={threadActions.loadMoreThreads}
                                 selectThread={threadActions.selectThread}
@@ -51,7 +48,6 @@ class InboxPage extends Component {
                                 isEditing={isEditing}
                                 router={router}/>
                     {this.renderThreadComposer(isEditing, threadActions, router)}
-                    {this.renderTempLoginUtil()}
                 </View>
                 <View style={{flex: 0}}>
                     {this.renderRemindRegistration()}
@@ -69,7 +65,6 @@ class InboxPage extends Component {
                 <ThreadComposer addNewThread={threadActions.addNewThread}
                                 addNewGroupThread={threadActions.addNewGroupThread}
                                 searchThreads={threadActions.searchThreads}
-                                deleteSelected={threadActions.deleteSelected}
                                 isEditing={isEditing}
                                 router={router}/>
             );
@@ -87,15 +82,16 @@ class InboxPage extends Component {
     }
 
     renderRemindRegistration(){
-        let isRegistered = this.state.isRegistered;
         let currentOS = Platform.OS;
-        if(currentOS == 'ios' && !isRegistered) {
+        if(currentOS == 'ios' && this.props.allowUnregistered) {
             return(
-                <Button
-                    style={commons.remindRegisterButton} textStyle={commons.remindRegisterButtonText}
-                    onPress={() => {LoginService.showLoginPage();} }>
-                    Click here to Register!
-                </Button>
+                <TouchableHighlight
+                    onPress={() => {this.props.router.pop()} }
+                    style={styles.remindRegisterButton}>
+                        <Text style={styles.remindRegisterButtonText}>
+                            Register me!
+                        </Text>
+                </TouchableHighlight>
             );
         }
         else{
@@ -103,30 +99,24 @@ class InboxPage extends Component {
         }
     }
 
-    async showLoginPageIfRequired(){
-        let isRegistered = await CacheService.isAppRegistered();
+     showLoginPageIfRequired(){
+        let isRegistered = ProfileService.isAppRegistered();
         if(!isRegistered){
-            LoginService.showLoginPage();
+            if(Platform.OS != 'ios') {
+                LoginService.authenticateWithDigits();
+            }else if(!this.props.allowUnregistered){
+                this.props.router.toLoginView({});
+            }
         }
-        this.setState({isRegistered: isRegistered});
-    }
-
-    onRegistrationSuccess(){
-        let currentOS = Platform.OS;
-        this.setState({isRegistered: true});
-        console.log("registration success in invoked and status updated");
-        if(currentOS == 'ios') {
-            this.forceUpdate();
-        }
-    }
+     }
 
     renderTempLoginUtil(){
         return(
             <View>
-                <TouchableHighlight onPress={this.showLoginPage.bind(this)}>
+                <TouchableHighlight onPress={() => this.showLoginPage()}>
                     <Text>Login</Text>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={this.logout.bind(this)}>
+                <TouchableHighlight onPress={() => this.logout()}>
                     <Text>Logout</Text>
                 </TouchableHighlight>
             </View>
@@ -134,13 +124,41 @@ class InboxPage extends Component {
     }
 
     showLoginPage(){
-        LoginService.showLoginPage();
+        LoginService.authenticateWithDigits();
     }
 
     logout(){
         LoginService.logout();
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+        backgroundColor: '#FAFAFA',
+    },
+    listContainer: {
+        flex: 1,
+    },
+    remindRegisterButton:{
+        borderColor: Theme.primaryColor,
+        backgroundColor: Theme.primaryColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 20,
+        marginRight: 20,
+        marginBottom: 20,
+        borderRadius: 7,
+        height: 40,
+    },
+    remindRegisterButtonText:{
+        color: Theme.defaultTextColor,
+        fontSize: 14
+    },
+});
 
 function mapStateToProps(state) {
     return {

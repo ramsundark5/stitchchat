@@ -1,22 +1,19 @@
-import {defaultStyle, commons} from '../styles/CommonStyles';
-
+import {Theme} from '../common/Themes';
+import { Platform } from 'react-native';
 const NAV_BAR_HEIGHT = 39;
 const STATUS_BAR_HEIGHT = 20;
 const NAV_HEIGHT = NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT;
 
-module.exports = {
+export const styles = {
   navBarContainer: {
-    height: NAV_HEIGHT,
-    backgroundColor: defaultStyle.bgColor,
+    backgroundColor: Platform.OS == 'ios' ? '#FAFAFA': Theme.primaryColor,
     paddingBottom: 5,
-    borderBottomColor: 'rgba(0, 0, 0, .5)',
-    borderBottomWidth: .5,
   },
   statusBar: {
     height: STATUS_BAR_HEIGHT,
   },
   navBar: {
-    height: NAV_HEIGHT,
+    height: NAV_BAR_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -32,16 +29,14 @@ module.exports = {
   },
   navBarButtonText: {
     fontSize: 17,
-    marginTop: 16,
-    marginLeft: 7,
-    marginRight: 7,
     letterSpacing: 0.5,
-    color: defaultStyle.headerColor
+    marginTop: 12,
+    color: Platform.OS == 'ios' ? '#0076FF' : Theme.defaultTextColor,
   },
   navBarTitleText: {
     fontSize: 17,
     letterSpacing: 0.5,
-    color: defaultStyle.headerColor,
+    color: Platform.OS == 'ios' ? '#0076FF' : Theme.defaultTextColor,
     fontWeight: '500',
     position: 'absolute',
     left: 0,
@@ -49,4 +44,7 @@ module.exports = {
     bottom: 7,
     textAlign: 'center',
   },
+  tintColor:{
+    color: Platform.OS == 'ios' ? '#0076FF' : Theme.defaultTextColor,
+  }
 };

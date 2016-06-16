@@ -1,11 +1,15 @@
+import uuid from '../utils/uuid';
+
 export default class GroupInfo{
-    constructor(){
-        this.id                = 0;
-        this.name              = '';
-        this.threadId          = '';
-        this.photoUrl          = '';
-        this.ownerId           = '';
-        this.lastMessageOwner  = '';
-        this.state             = '';
+
+    constructor(displayName){
+        this.uid               = uuid.v1();
+        this.displayName       = displayName;
+        this.photoUrl          = null;
+        this.thumbNailPhotoUrl = null;
+        this.ownerId           = null;
+        this.lastMessageOwner  = null;
+        this.status            = null;
+        this.statusMessage     = null;
     }
 }

@@ -1,13 +1,8 @@
-import uuid from '../utils/uuid';
-import ThreadDao from '../dao/ThreadDao';
-import * as ThreadActions from '../actions/ThreadActions';
 import MessageService from './MessageService';
-import * as AppConfig from '../config/AppConfig';
 import store from '../config/ConfigureStore';
 import Message from '../models/Message';
-import * as MessageConstants from '../constants/MessageConstants';
+import * as MessageConstants from '../constants/AppConstants';
 import FileUploadService from './FileUploadService';
-import MessageDao from '../dao/MessageDao';
 
 class MediaService{
 
@@ -16,25 +11,26 @@ class MediaService{
             return;
         }
         for(let i = 0; i<selectedMedias.length; i++ ){
-            this.handleOutgoingMediaMessage(selectedMedias[i]);
+            this.uploadMedia(selectedMedias[i]);
         }
     }
 
-    async handleOutgoingMediaMessage(media){
+    uploadMedia(media){
         let currentThreadState = store.getState().threadState;
         let currentThread      = currentThreadState.currentThread;
         let newMessage      = this.buildMediaMessage(media, true);
-        let messageToBeSent = await MessageService.addMessage(currentThread, newMessage);
-        try{
-            let uploadResponse  = await FileUploadService.uploadFile(media.localIdentifier,
-                messageToBeSent.id, media.extension);
-            console.log("upload completed with response "+uploadResponse);
-            MessageDao.updateUploadStatus(messageToBeSent, MessageConstants.UPLOAD_COMPLETED);
-            MessageService.sendMessage(messageToBeSent);
-        }catch(err){
-            MessageDao.updateUploadStatus(messageToBeSent, MessageConstants.UPLOAD_FAILED);
+        let messageToBeSent = MessageService.addMessage(currentThread, newMessage);
+        if(!media.extension){
+            media.extension = "jpg";
+            if(media.type == MessageConstants.VIDEO_MEDIA){
+                media.extension = "mov";
+            }
         }
-        return messageToBeSent;
+        try{
+            FileUploadService.uploadFile(messageToBeSent, media.extension);
+        }catch(err){
+            console.log("error uploading media "+ err);
+        }
     }
 
     buildMediaMessage(media, isOutgoing){
@@ -43,12 +39,18 @@ class MediaService{
         newMessage.type          = media.mediaType || MessageConstants.IMAGE_MEDIA;
         if(isOutgoing){
             //hack for photo kit library
-            newMessage.mediaUrl  = 'ph://'+media.localIdentifier;
+            if(media.localIdentifier && media.localIdentifier.length > 1){
+                newMessage.mediaUrl  = 'ph://'+media.localIdentifier;
+            }else{
+                newMessage.mediaUrl  = media.mediaUrl;
+            }
         }else{
             newMessage.mediaUrl  = media.uri;
         }
+        console.log('mediaUrl is '+ newMessage.mediaUrl);
+        console.log('media mimeType is '+ media.mimeType);
         newMessage.mediaMimeType = media.mimeType || 'image/jpeg';
-        newMessage.mediaStatus   = '';
+        newMessage.mediaStatus   = MessageConstants.PENDING_UPLOAD;
         return newMessage;
     }
 }

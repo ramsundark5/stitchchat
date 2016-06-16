@@ -35,7 +35,7 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
         picker.modalPresentationStyle = UIModalPresentationFormSheet;
       
       //present picker
-      [delegate.rootViewController presentViewController:picker animated:YES completion:nil];
+      [delegate.window.rootViewController presentViewController:picker animated:YES completion:nil];
     });
   }];
 }
@@ -69,6 +69,6 @@ RCT_EXPORT_METHOD(showMediaPicker:(RCTPromiseResolveBlock)resolve
 
 void hideMediaPicker() {
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  [delegate.rootViewController dismissViewControllerAnimated:YES completion:nil];
+  [delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 @end

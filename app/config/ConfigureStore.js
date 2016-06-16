@@ -11,7 +11,7 @@ let loggerMiddleware = createLogger();
 let middlewares      = [thunkMiddleware];
 
 if (process.env.NODE_ENV != 'production') {
-    middlewares.push(loggerMiddleware);
+    //middlewares.push(loggerMiddleware);
 }
 
 const createStoreWithMiddleware = compose(
