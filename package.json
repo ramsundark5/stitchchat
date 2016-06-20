@@ -8,6 +8,14 @@
     "lint": "eslint .",
     "postinstall": "pod install && rnpm link realm && rnpm link react-native-fs && rnpm link react-native-message-composer && rnpm link react-native-code-push"
   },
+  "keywords": [
+    "react",
+    "native",
+    "react-native",
+    "chat",
+    "messaging",
+    "whatsapp"
+  ],
   "jest": {
     "scriptPreprocessor": "node_modules/react-native-babel-jest",
     "setupEnvScriptFile": "node_modules/react-native-babel-jest/env.js",
