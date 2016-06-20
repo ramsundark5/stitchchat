@@ -17,3 +17,4 @@ General purpose messaging app built with react native. Created this to learn rea
 2. Update Fabric consumer key and secret in Info.plist
 3. (optional) specify Microsoft code push key in Info.plist for remote updates.
 4. Update server url in source/AppConstants.js. 
+5. The compose message action will show all contacts instead of registered contacts(for testing purpose). You can easily change this by setting showRegistered = true in line#20 of app/container/ContactsPage.js 
