@@ -6,6 +6,13 @@ General purpose messaging app built with react native. Created this to learn rea
 2. Firebase - for backend
 3. AWS S3 for media storage
 
+# Appstore link
+https://itunes.apple.com/us/app/stitchchat/id1124511781?mt=8
+
+# Demo
+![Demo1](demo1.gif "Main")
+![Demo2](demo2.gif "Media")
+
 # How to install:
 
 1. Install cocoapods
