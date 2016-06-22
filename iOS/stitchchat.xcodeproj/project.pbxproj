@@ -999,6 +999,7 @@
 				A25EFEFD1D11D88800766F85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
