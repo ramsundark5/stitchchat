@@ -11,6 +11,8 @@ https://itunes.apple.com/us/app/stitchchat/id1124511781?mt=8
 
 # Demo
 ![Demo1](demo1.gif "Main")
+
+
 ![Demo2](demo2.gif "Media")
 
 # How to install:
